@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Food as Infrastructure — A London-Wide Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+
+  /* ===================== TOKENS ===================== */
+  :root{
+    --ink:#101010;
+    --ink-2:#171717;
+    --surface:#1a1a1a;
+    --paper:#f5f5f2;
+    --paper-dim:#a3a39c;
+    --line: rgba(245,245,242,0.14);
+    --line-strong: rgba(245,245,242,0.26);
+
+    --supply:#c98a3b;   /* ochre — Supply track  */
+    --hub:#2e7d6b;      /* teal  — Hub track     */
+    --demand:#ff5a1f;   /* signal orange — Demand track */
+
+    --supply-dim: rgba(201,138,59,0.14);
+    --hub-dim: rgba(46,125,107,0.16);
+    --demand-dim: rgba(255,90,31,0.14);
+
+    --display: "Poppins", sans-serif;
+    --body: "Poppins", sans-serif;
+    --mono: "IBM Plex Mono", monospace;
+
+    --maxw: 1180px;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--ink);
+    color:var(--paper);
+    font-family:var(--body);
+    font-size:17px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{animation:none !important; transition:none !important;}
+    .hero-video{display:none;}
+  }
+
+  h1,h2,h3,h4{font-family:var(--display); margin:0; font-weight:600; letter-spacing:-0.01em;}
+  a{color:inherit;}
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 32px;}
+  .eyebrow{
+    font-family:var(--mono); text-transform:uppercase; letter-spacing:0.14em;
+    font-size:12px; color:var(--paper-dim); display:flex; align-items:center; gap:10px;
+  }
+  .eyebrow::before{content:""; width:16px; height:2px; background:var(--paper-dim); display:inline-block;}
+
+  /* road-marking divider */
+  .roadline{
+    height:1px; background-image:repeating-linear-gradient(90deg, var(--line-strong) 0 22px, transparent 22px 40px);
+    margin: 0;
+  }
+
+  /* ===================== NAV ===================== */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(11,13,11,0.86); backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  nav{
+    display:flex; align-items:center; justify-content:space-between;
+    max-width:var(--maxw); margin:0 auto; padding:16px 32px;
+  }
+  .brand{
+    display:flex; align-items:center; gap:10px; font-family:var(--mono); font-size:13px;
+    letter-spacing:0.04em; text-decoration:none; text-transform:uppercase;
+  }
+  .dm-logo{
+    height:26px; width:auto; display:block;
+    border-radius:3px; /* logo ships as a light tile with dark "Dm" mark */
+  }
+  .brand-div{color:var(--line-strong); font-weight:400;}
+  .navlinks{display:flex; gap:26px; font-family:var(--mono); font-size:12.5px; letter-spacing:0.05em;}
+  .navlinks a{text-decoration:none; color:var(--paper-dim); text-transform:uppercase; transition:color .2s;}
+  .navlinks a:hover{color:var(--paper);}
+  @media (max-width:800px){ .navlinks{display:none;} }
+
+  /* ===================== HERO ===================== */
+  .hero{
+    position:relative; overflow:hidden;
+    min-height:88vh; display:flex; align-items:center;
+    padding:120px 0 80px;
+  }
+  .hero-video{
+    position:absolute; inset:0; width:100%; height:100%;
+    object-fit:cover; z-index:0;
+  }
+  .hero-scrim{
+    position:absolute; inset:0; z-index:1;
+    background:linear-gradient(180deg, rgba(16,16,16,0.72) 0%, rgba(16,16,16,0.55) 45%, rgba(16,16,16,0.88) 100%);
+  }
+  .hero-content{position:relative; z-index:2;}
+  .hero h1{
+    font-size:clamp(42px, 6.4vw, 84px); line-height:0.98; margin:18px 0 22px;
+  }
+  .hero h1 .accent{text-decoration:underline; text-decoration-color:var(--paper-dim); text-decoration-thickness:3px; text-underline-offset:8px;}
+  .hero p.lede{
+    font-size:19px; color:var(--paper); max-width:560px; margin:0 0 28px; opacity:0.95;
+  }
+  .hero .meta{
+    font-family:var(--mono); font-size:12.5px; color:var(--paper-dim); letter-spacing:0.03em;
+    border-top:1px solid var(--line); padding-top:16px; max-width:640px;
+  }
+  .footage-credit{
+    font-family:var(--mono); font-size:11px; color:var(--paper-dim); letter-spacing:0.03em;
+    margin-top:14px; opacity:0.8;
+  }
+  .cta-row{display:flex; gap:14px; flex-wrap:wrap; margin-bottom:30px;}
+  .btn{
+    font-family:var(--mono); font-size:12.5px; text-transform:uppercase; letter-spacing:0.07em;
+    padding:13px 20px; border:1px solid var(--line-strong); text-decoration:none;
+    display:inline-flex; align-items:center; gap:8px; transition:all .2s; color:var(--paper);
+  }
+  .btn.solid{background:var(--paper); border-color:var(--paper); color:var(--ink); font-weight:600;}
+  .btn:hover{border-color:var(--paper); color:var(--paper);}
+  .btn.solid:hover{filter:brightness(0.92); color:var(--ink);}
+
+  /* hero junction diagram */
+  .junction{width:100%; height:auto;}
+  .junction text{font-family:var(--mono); fill:var(--paper-dim); font-size:11px; letter-spacing:0.05em;}
+  .junction .node-label{fill:var(--ink); font-weight:600;}
+
+  /* ===================== SECTION SHELL ===================== */
+  section{padding:88px 0;}
+  section.tight{padding:64px 0;}
+  .section-head{max-width:640px; margin-bottom:48px;}
+  .section-head h2{font-size:clamp(28px,3.4vw,42px); margin-top:14px;}
+  .section-head p{color:var(--paper-dim); font-size:16px; margin-top:14px;}
+  .plain-summary{
+    background: rgba(245,245,242,0.06); border-left:3px solid var(--paper-dim);
+    padding:16px 20px; margin:18px 0 6px; max-width:680px;
+  }
+  .plain-summary .ps-label{
+    font-family:var(--mono); font-size:11px; letter-spacing:0.08em; text-transform:uppercase;
+    color:var(--paper-dim); display:block; margin-bottom:8px;
+  }
+  .plain-summary p{font-size:15.5px; line-height:1.55; margin:0; color:var(--paper); opacity:0.95;}
+  .tracks-head-grid{
+    display:grid; grid-template-columns:1.2fr 0.8fr; gap:40px; align-items:center; margin-bottom:48px;
+  }
+  @media (max-width:900px){ .tracks-head-grid{grid-template-columns:1fr;} .tracks-head-grid .junction{max-width:320px;} }
+
+  /* ===================== AUDIENCE ===================== */
+  .audience-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:20px;}
+  @media (max-width:860px){ .audience-grid{grid-template-columns:1fr;} }
+  .audience-card{border:1px solid var(--line); padding:24px 22px; background:var(--surface);}
+  .a-tag{font-family:var(--mono); font-size:11px; letter-spacing:0.08em; color:var(--paper-dim); text-transform:uppercase; margin-bottom:14px;}
+  .audience-card h3{font-size:18px; line-height:1.28; margin-bottom:10px;}
+  .audience-card p{font-size:14.5px; color:var(--paper-dim); margin:0;}
+
+  /* ===================== WHY NOW ===================== */
+  .why-now-grid{display:grid; grid-template-columns:0.9fr 1.1fr; gap:48px; align-items:start;}
+  @media (max-width:900px){ .why-now-grid{grid-template-columns:1fr;} }
+
+  /* ===================== EXPERT VOICES ===================== */
+  .quotes-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:20px;}
+  @media (max-width:860px){ .quotes-grid{grid-template-columns:1fr;} }
+  .quote-card{border-top:2px solid var(--paper-dim); padding-top:18px;}
+  .quote-text{font-family:var(--display); font-size:16.5px; line-height:1.4; color:var(--paper); margin:0 0 14px;}
+  .quote-attr{font-family:var(--mono); font-size:12px; color:var(--paper-dim); letter-spacing:0.03em;}
+
+  /* ===================== PLAQUES (assumptions) ===================== */
+  .plaques{display:grid; grid-template-columns:repeat(3,1fr); gap:22px;}
+  @media (max-width:860px){ .plaques{grid-template-columns:1fr;} }
+  .plaque{
+    position:relative; background:var(--surface); border:1px solid var(--line);
+    padding:26px 24px 24px; min-height:230px;
+  }
+  .plaque::before, .plaque::after,
+  .plaque .bolt-tl, .plaque .bolt-br{
+    content:""; position:absolute; width:5px; height:5px; border-radius:50%;
+    background:var(--paper-dim); opacity:0.5;
+  }
+  .plaque::before{top:10px; left:10px;}
+  .plaque::after{bottom:10px; right:10px;}
+  .plaque .code{
+    font-family:var(--mono); font-size:12px; color:var(--paper-dim); letter-spacing:0.06em;
+  }
+  .plaque h3{font-size:19px; margin:12px 0 12px; line-height:1.25;}
+  .plaque p{font-size:15px; color:var(--paper-dim); margin:0;}
+
+  /* ===================== REFRAME ===================== */
+  .reframe{
+    display:grid; grid-template-columns:0.9fr 1.1fr; gap:56px; align-items:start;
+  }
+  @media (max-width:900px){ .reframe{grid-template-columns:1fr;} }
+  .reframe .big-quote{
+    font-family:var(--display); font-size:clamp(24px,3vw,34px); line-height:1.22;
+    border-left:2px solid var(--paper-dim); padding-left:22px;
+  }
+  .reframe .body p{margin:0 0 16px; color:var(--paper); opacity:0.9; font-size:16.5px;}
+  .compare{
+    display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:26px;
+  }
+  @media (max-width:560px){.compare{grid-template-columns:1fr;}}
+  .compare .col{border:1px solid var(--line); padding:18px 18px;}
+  .compare .col h4{font-family:var(--mono); font-size:12px; letter-spacing:0.06em; text-transform:uppercase; color:var(--paper-dim); margin-bottom:8px;}
+  .compare .col.no h4{color:#e05a3d;}
+  .compare .col.yes h4{color:var(--hub);}
+  .compare .col p{font-size:14.5px; margin:0; color:var(--paper-dim);}
+
+  /* ===================== TRACKS ===================== */
+  .tracks{display:grid; grid-template-columns:repeat(3,1fr); gap:2px; background:var(--line);}
+  @media (max-width:900px){ .tracks{grid-template-columns:1fr;} }
+  .track{background:var(--ink); padding:30px 26px;}
+  .track .track-head{display:flex; align-items:center; gap:10px; margin-bottom:6px;}
+  .track .swatch{width:12px; height:12px; flex:none;}
+  .track.supply .swatch{background:var(--supply);}
+  .track.hub .swatch{background:var(--hub);}
+  .track.demand .swatch{background:var(--demand);}
+  .track h3{font-family:var(--mono); font-size:13px; text-transform:uppercase; letter-spacing:0.1em;}
+  .track .track-def{font-size:14.5px; color:var(--paper-dim); margin:10px 0 22px; min-height:44px;}
+  .node{border-top:1px solid var(--line); padding:14px 0;}
+  .node:first-of-type{border-top:1px solid var(--line-strong);}
+  .node .node-title{font-family:var(--display); font-size:15.5px; font-weight:600; margin-bottom:4px;}
+  .node .node-desc{font-size:14px; color:var(--paper-dim); line-height:1.5;}
+  .track.supply .node-title::before{content:"— "; color:var(--supply);}
+  .track.hub .node-title::before{content:"— "; color:var(--hub);}
+  .track.demand .node-title::before{content:"— "; color:var(--demand);}
+
+  /* ===================== GOVERNANCE ===================== */
+  .gov-wrap{display:grid; grid-template-columns:1fr 1fr; gap:56px;}
+  @media (max-width:900px){ .gov-wrap{grid-template-columns:1fr;} }
+  .ladder{display:flex; flex-direction:column; gap:0;}
+  .rung{
+    border:1px solid var(--line); padding:20px 22px; position:relative;
+  }
+  .rung + .rung{border-top:none;}
+  .rung .tier{font-family:var(--mono); font-size:11.5px; letter-spacing:0.08em; color:var(--paper-dim); text-transform:uppercase;}
+  .rung h4{font-size:17px; margin:8px 0 6px;}
+  .rung p{font-size:14.5px; color:var(--paper-dim); margin:0;}
+  .callout{
+    background:var(--surface); border:1px solid var(--line); padding:26px;
+    font-size:15px; color:var(--paper); align-self:start;
+  }
+  .callout .code{font-family:var(--mono); font-size:12px; color:var(--hub); letter-spacing:0.06em; display:block; margin-bottom:10px;}
+  .callout p{margin:0 0 14px; opacity:0.92;}
+  .callout p:last-child{margin-bottom:0;}
+  .precedent-note{margin-top:32px; border-top:1px dashed var(--line-strong); padding-top:24px; max-width:760px;}
+  .precedent-note .code{font-family:var(--mono); font-size:12px; letter-spacing:0.06em; display:block; margin-bottom:10px;}
+  .precedent-note p{font-size:15px; color:var(--paper-dim); margin:0;}
+  .precedent-note a{color:var(--paper); text-decoration:underline; text-decoration-color:var(--supply);}
+  .precedent-note a:hover{color:var(--supply);}
+
+  /* ===================== RESILIENCE COMMITTEE ===================== */
+  .resilience-grid{display:grid; grid-template-columns:1fr 1fr; gap:40px; margin-bottom:32px;}
+  @media (max-width:860px){ .resilience-grid{grid-template-columns:1fr;} }
+  .res-col h4{font-family:var(--mono); font-size:12px; text-transform:uppercase; letter-spacing:0.06em; color:var(--paper-dim); margin-bottom:6px;}
+  .res-list{margin:0; padding:0; list-style:none;}
+  .res-list li{font-size:14.5px; color:var(--paper); opacity:0.9; line-height:1.5; padding:12px 0; border-top:1px solid var(--line);}
+  .res-list li:first-child{border-top:1px solid var(--line-strong);}
+
+  /* ===================== FURTHER READING ===================== */
+  .reading-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:32px;}
+  @media (max-width:860px){ .reading-grid{grid-template-columns:1fr;} }
+  .reading-col h4{font-family:var(--mono); font-size:12px; text-transform:uppercase; letter-spacing:0.06em; color:var(--paper-dim); margin-bottom:14px;}
+  .reading-list{margin:0; padding:0; list-style:none;}
+  .reading-list li{font-size:14.5px; color:var(--paper-dim); line-height:1.5; padding:12px 0; border-top:1px solid var(--line);}
+  .reading-list li:first-child{border-top:1px solid var(--line-strong);}
+  .reading-list a{color:var(--paper); text-decoration:underline; text-decoration-color:var(--line-strong); font-weight:500;}
+  .reading-list a:hover{text-decoration-color:var(--paper);}
+
+  /* ===================== HORIZONS ===================== */
+  .horizons{display:grid; grid-template-columns:repeat(3,1fr); gap:0; border:1px solid var(--line);}
+  @media (max-width:860px){ .horizons{grid-template-columns:1fr;} }
+  .horizon{padding:26px 24px; border-left:1px solid var(--line);}
+  .horizon:first-child{border-left:none;}
+  @media (max-width:860px){ .horizon{border-left:none; border-top:1px solid var(--line);} .horizon:first-child{border-top:none;} }
+  .horizon .htag{font-family:var(--mono); font-size:11.5px; letter-spacing:0.08em; text-transform:uppercase; color:var(--paper-dim);}
+  .horizon h4{font-size:18px; margin:10px 0 10px;}
+  .horizon p{font-size:14.5px; color:var(--paper-dim); margin:0;}
+
+  /* ===================== TOOLS ===================== */
+  .tools-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:20px;}
+  @media (max-width:800px){ .tools-grid{grid-template-columns:1fr;} }
+  .tool-card{
+    display:flex; flex-direction:column; justify-content:space-between;
+    border:1px solid var(--line); background:var(--surface); padding:26px 24px 22px;
+    position:relative; min-height:200px; text-decoration:none; color:inherit;
+    transition:border-color .2s, transform .2s;
+  }
+  .tool-card:hover{border-color:var(--paper-dim); transform:translateY(-2px);}
+  .tool-top{display:flex; justify-content:space-between; align-items:flex-start; gap:14px;}
+  .tool-code{
+    font-family:var(--mono); font-size:11px; letter-spacing:0.06em; color:var(--ink);
+    background:var(--paper); padding:4px 8px; white-space:nowrap;
+  }
+  .tool-card h3{font-size:20px; margin:16px 0 10px; line-height:1.2;}
+  .tool-card p{font-size:14.5px; color:var(--paper-dim); margin:0 0 18px;}
+  .tool-link{
+    font-family:var(--mono); font-size:12px; text-transform:uppercase; letter-spacing:0.06em;
+    display:flex; align-items:center; gap:8px; color:var(--paper);
+  }
+  .tool-link .arrow{transition:transform .2s;}
+  .tool-card:hover .tool-link{color:var(--paper);}
+  .tool-card:hover .arrow{transform:translate(3px,-3px);}
+  .tool-card.wide{grid-column:1 / -1;}
+  .tool-card.is-pending{cursor:default; opacity:0.7; border-style:dashed;}
+  .tool-card.is-pending:hover{transform:none; border-color:var(--line-strong);}
+  .tool-card.is-pending .tool-code{background:transparent; color:var(--paper-dim); border:1px solid var(--line-strong);}
+  .tool-card.is-pending .tool-link{color:var(--paper-dim);}
+
+  /* ===================== FOOTER ===================== */
+  footer{border-top:1px solid var(--line); padding:56px 0 40px;}
+  .foot-top{display:flex; justify-content:space-between; align-items:center; gap:20px; flex-wrap:wrap; margin-bottom:40px; padding-bottom:32px; border-bottom:1px solid var(--line);}
+  .foot-logo{height:26px;}
+  .foot-social{display:flex; gap:22px; font-family:var(--mono); font-size:12px; letter-spacing:0.04em; text-transform:uppercase;}
+  .foot-social a{text-decoration:none; color:var(--paper-dim); transition:color .2s;}
+  .foot-social a:hover{color:var(--paper);}
+  .foot-grid{display:flex; justify-content:space-between; gap:40px; flex-wrap:wrap;}
+  .foot-brand{font-family:var(--mono); font-size:13px; max-width:340px; color:var(--paper-dim); line-height:1.6;}
+  .foot-brand strong{color:var(--paper); font-family:var(--display); display:block; font-size:16px; margin-bottom:10px;}
+  .foot-links{display:flex; gap:36px; flex-wrap:wrap;}
+  .foot-col h5{font-family:var(--mono); font-size:11.5px; text-transform:uppercase; letter-spacing:0.07em; color:var(--paper-dim); margin-bottom:12px;}
+  .foot-col a{display:block; font-size:14px; margin-bottom:8px; text-decoration:none; color:var(--paper); opacity:0.85;}
+  .foot-col a:hover{color:var(--paper); opacity:1;}
+  .foot-bottom{margin-top:44px; padding-top:20px; border-top:1px solid var(--line); font-family:var(--mono); font-size:11.5px; color:var(--paper-dim); display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;}
+
+  /* reveal on scroll — visible by default; JS opts elements into the fade-in.
+     If JS fails for any reason, content stays visible, never hidden. */
+  .reveal{opacity:1; transform:none;}
+  .reveal.pre{opacity:0; transform:translateY(14px);}
+  .reveal.pre.in{opacity:1; transform:translateY(0); transition:opacity .6s ease, transform .6s ease;}
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <a class="brand" href="https://darkmatterlabs.org/" target="_blank" rel="noopener">
+      <img src="https://darkmatterlabs.org/_next/static/media/DmLogoFull.d4ebb743.png" alt="Dark Matter Labs" class="dm-logo">
+      <span class="brand-div">/</span>FOOD MISSION
+    </a>
+    <div class="navlinks">
+      <a href="#audience">For You</a>
+      <a href="#foundations">Foundations</a>
+      <a href="#tracks">Portfolio</a>
+      <a href="#governance">Governance</a>
+      <a href="#resilience">Resilience</a>
+      <a href="#horizons">Horizons</a>
+      <a href="#tools">Tools</a>
+      <a href="#reading">Reading</a>
+    </div>
+  </nav>
+</header>
+
+<div id="top"></div>
+
+<!-- ===================== HERO ===================== -->
+<section class="hero">
+  <video class="hero-video" autoplay muted loop playsinline poster="https://www.cramond-barnton.org/wp-content/uploads/2026/08/camden-hero-poster.jpg">
+    <source src="https://www.cramond-barnton.org/wp-content/uploads/2026/08/camden-hero.mp4" type="video/mp4">
+  </video>
+  <div class="hero-scrim"></div>
+  <div class="wrap hero-content">
+    <div class="eyebrow">A COORDINATION FRAMEWORK — COUNCILS · NATIONAL GOVERNMENT · THE FRONTLINE</div>
+    <h1>Treat food<br>like <span class="accent">roads.</span></h1>
+    <p class="lede">Food is back on the front page, and every level of government is being asked what it's going to do about it. This portfolio is the shared answer — a common set of foundations that council leaders, national government and the people running food projects on the ground can build on together, instead of forty boroughs improvising forty different pilots.</p>
+    <div class="cta-row">
+      <a class="btn solid" href="#foundations">Read the foundations ↓</a>
+      <a class="btn" href="#tools">Open the working tools ↗</a>
+    </div>
+    <div class="meta">ORIGIN — Borough-level food missions &amp; food partnerships across London · MATRIX — sits alongside Regen Nutrition (RN) &amp; Nature as Infrastructure (NI) · CARRIER — a portfolio of interventions + a shared toolset, not a single project</div>
+    <div class="footage-credit">Footage — Future Food dinner &amp; workshop, Calthorpe Community Garden &amp; The Crowndale Centre</div>
+  </div>
+</section>
+
+<div class="wrap"><div class="roadline"></div></div>
+
+<!-- ===================== AUDIENCE ===================== -->
+<section class="tight" id="audience">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">WHO THIS IS FOR</div>
+      <h2>Three seats at the same table</h2>
+      <p>Everyone reading this is being asked a version of the same question right now — what do we actually do. The foundations below are built to answer all three at once, not in sequence.</p>
+    </div>
+    <div class="audience-grid reveal">
+      <div class="audience-card">
+        <div class="a-tag">COUNCIL LEADERS</div>
+        <h3>A shared standard, not another pilot</h3>
+        <p>A procurement protocol and buying coalition you can join without giving up your own local decisions — so the next borough doesn't have to start from zero.</p>
+      </div>
+      <div class="audience-card">
+        <div class="a-tag">NATIONAL GOVERNMENT</div>
+        <h3>Evidence a policy can be built on</h3>
+        <p>A working model, tested locally, of how public procurement and collective buying can grow organic and nutrient-dense supply — ready to be scaled through national policy, not just funded as a pilot.</p>
+      </div>
+      <div class="audience-card">
+        <div class="a-tag">PEOPLE ON THE GROUND</div>
+        <h3>Infrastructure behind the work you're already doing</h3>
+        <p>The grocers, growers, dinners and workshops carrying this forward get a governance layer and a funding case behind them — not a new set of instructions from above.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== WHY NOW ===================== -->
+<section class="tight" style="background:var(--surface); border-top:1px solid var(--line); border-bottom:1px solid var(--line);">
+  <div class="wrap why-now-grid">
+    <div class="reveal">
+      <div class="eyebrow">WHY NOW</div>
+      <h2 style="font-size:clamp(26px,3vw,36px); margin-top:14px;">The crisis is finally getting attention. Coordination is the part that's missing.</h2>
+    </div>
+    <div class="reveal" style="color:var(--paper-dim); font-size:15.5px;">
+      <p style="margin:0 0 14px;">Food inflation is forecast to reach around 9% by the end of 2026, and the Food Foundation's basic-basket tracker already shows prices roughly 30% higher than in April 2022 — a second price shock inside four years, arriving on top of the first.</p>
+      <p style="margin:0 0 14px;">The Joint Intelligence Committee and Defra have both gone further, warning of a strategic risk of catastrophic UK food system failure <strong>by 2030</strong> — not a distant scenario, but inside the term of whoever is in office right now.</p>
+      <p style="margin:0 0 14px;">This isn't the first attempt. The UK has passed roughly <strong>689 food and health policies and 14 national strategies over the past 30 years</strong>, with no measurable dent in obesity or health inequality to show for it.</p>
+      <p style="margin:0;">That's exactly the moment forty London boroughs risk running forty more uncoordinated pilots — each rediscovering the same procurement problem alone, the way national policy already has, repeatedly. The foundations below exist so that doesn't happen again.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PREMISE / FOUNDATIONS ===================== -->
+<section id="foundations">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">THE FOUNDATIONS</div>
+      <h2>Three foundations, in this order</h2>
+      <p>Every intervention in this portfolio sits on one of these. The order matters — each one makes the next possible, and skipping one is usually why a pilot doesn't survive contact with scale.</p>
+      <div class="plain-summary">
+        <span class="ps-label">In plain terms</span>
+        <p>We're proposing three things: food that actually nourishes people, enough buying power from councils and businesses together to help more farms go organic, and local people and projects doing the everyday work of getting it onto plates.</p>
+      </div>
+    </div>
+    <div class="plaques">
+      <div class="plaque reveal">
+        <div class="code">FOUNDATION 01</div>
+        <h3>Nutrient density is the target, not calories</h3>
+        <p>The baseline shifts from "enough food" to genuinely nourishing food — because a system that only solves for calories quietly manufactures the next public-health crisis while claiming to have solved the last one.</p>
+      </div>
+      <div class="plaque reveal">
+        <div class="code">FOUNDATION 02</div>
+        <h3>Organic supply grows through collective buying power</h3>
+        <p>No single borough's contract is big enough to move a farmer's decision. A buying coalition of London boroughs and businesses is — turning committed public and commercial demand into the confidence a grower needs to convert land.</p>
+      </div>
+      <div class="plaque reveal">
+        <div class="code">FOUNDATION 03</div>
+        <h3>Civic-led delivery is what actually brings it to life</h3>
+        <p>Procurement protocols and buying coalitions don't feed anyone on their own. Grocers, dinners, workshops and community-run hubs are the layer where the foundations above turn into food someone can actually buy or receive.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== EXPERT VOICES ===================== -->
+<section class="tight" style="background:var(--surface); border-top:1px solid var(--line); border-bottom:1px solid var(--line);">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">THE CASE, IN THEIR WORDS</div>
+      <h2>Dark Matter Labs research, coordinated with Camden and other London boroughs — echoed well beyond any one of us</h2>
+    </div>
+    <div class="quotes-grid reveal">
+      <div class="quote-card">
+        <p class="quote-text">"We need to be preparing a system that will have a lot less surplus and waste in it."</p>
+        <div class="quote-attr">Carl Saxton-Pizzie — CEO, Wholegood</div>
+      </div>
+      <div class="quote-card">
+        <p class="quote-text">Rather than "chasing cut-price deals around the world," public buying power should back domestic, resilient supply.</p>
+        <div class="quote-attr">Andy Burnham — Mayor of Greater Manchester</div>
+      </div>
+      <div class="quote-card">
+        <p class="quote-text">In Bury, embedding health and climate value into catering contracts pushed school-meal menus to <strong>up to 25% organic</strong> ingredients — proof collective procurement can move real farmland, not just budgets.</p>
+        <div class="quote-attr">Soil Association, on Bury's local food system transformation</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== REFRAME ===================== -->
+<section class="tight" style="background:var(--surface); border-top:1px solid var(--line); border-bottom:1px solid var(--line);">
+  <div class="wrap reframe">
+    <div class="reveal">
+      <div class="eyebrow">WHY ADJUSTMENT ISN'T ENOUGH</div>
+      <div class="big-quote" style="margin-top:16px;">The market isn't failing.<br>It has failed.</div>
+    </div>
+    <div class="body reveal">
+      <div class="plain-summary">
+        <span class="ps-label">In plain terms</span>
+        <p>Small fixes — a nicer label, a voluntary pledge — won't solve this. We need genuinely cheaper, fairer ways to get food to people, like proper discount grocers and shops people can actually have a stake in.</p>
+      </div>
+      <p>Look at the current food market as a product that's failing and you get edge-adjustments: a nicer label, a voluntary pledge, a food bank with better branding. Look at it as a product that has already failed — generating externalities and vulnerability faster than it delivers continuity — and the theory of intervention changes completely.</p>
+      <p>Public-interest grocers already show the gap: prices structurally lower on a fixed cadence, not "voluntary contributions" bolted onto a still-too-expensive shelf. The economics of food don't move by tinkering at the edges — they move with a genuinely new arrangement of ownership, contribution, and price.</p>
+      <div class="compare">
+        <div class="col no">
+          <h4>Adjusting the edges</h4>
+          <p>Voluntary schemes, pledges, food-bank partnerships bolted onto an unchanged price structure.</p>
+        </div>
+        <div class="col yes">
+          <h4>Rebuilding the arrangement</h4>
+          <p>Public-interest grocers, contribution ledgers, part-volunteer/part-commercial ownership, open micro-procurement.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== TRACKS ===================== -->
+<section id="tracks">
+  <div class="wrap tracks-head-grid">
+    <div class="section-head reveal" style="margin-bottom:0;">
+      <div class="eyebrow">THE PORTFOLIO</div>
+      <h2>Supply, Hub, Demand</h2>
+      <div class="plain-summary">
+        <span class="ps-label">In plain terms</span>
+        <p><strong>Demand</strong> makes healthy food easier to choose. <strong>Hub</strong> is the shops, pharmacies and services people actually walk into. <strong>Supply</strong> makes sure enough good food is being grown in the first place.</p>
+      </div>
+      <p>These three tracks — Supply, Hub, Demand — work the same way in every tool linked from this page. Once they make sense here, the diagrams and models further down will make sense too.</p>
+    </div>
+    <div class="reveal">
+      <svg class="junction" viewBox="0 0 420 380" xmlns="http://www.w3.org/2000/svg">
+        <line x1="210" y1="10" x2="210" y2="370" stroke="var(--line-strong)" stroke-width="1"/>
+        <line x1="20" y1="190" x2="400" y2="190" stroke="var(--line-strong)" stroke-width="1"/>
+        <line x1="210" y1="190" x2="210" y2="60" stroke="var(--demand)" stroke-width="2"/>
+        <line x1="210" y1="190" x2="90" y2="280" stroke="var(--supply)" stroke-width="2"/>
+        <line x1="210" y1="190" x2="330" y2="280" stroke="var(--hub)" stroke-width="2"/>
+
+        <circle cx="210" cy="190" r="30" fill="var(--ink-2)" stroke="var(--line-strong)"/>
+        <text x="210" y="194" text-anchor="middle" class="node-label" fill="var(--paper)" font-family="IBM Plex Mono" font-size="10">BOROUGH</text>
+
+        <rect x="176" y="30" width="68" height="30" fill="var(--demand)"/>
+        <text x="210" y="49" text-anchor="middle" class="node-label" font-weight="600">DEMAND</text>
+
+        <rect x="40" y="278" width="68" height="30" fill="var(--supply)"/>
+        <text x="74" y="297" text-anchor="middle" class="node-label" font-weight="600">SUPPLY</text>
+
+        <rect x="296" y="278" width="68" height="30" fill="var(--hub)"/>
+        <text x="330" y="297" text-anchor="middle" class="node-label" font-weight="600">HUB</text>
+
+        <text x="30" y="182" font-size="10" letter-spacing="1">LDN W</text>
+        <text x="360" y="182" font-size="10" letter-spacing="1">LDN E</text>
+      </svg>
+    </div>
+  </div>
+  <div class="wrap" style="padding:0;">
+    <div class="tracks reveal">
+      <div class="track demand">
+        <div class="track-head"><span class="swatch"></span><h3>Demand</h3></div>
+        <div class="track-def">Constructing pull for a different kind of food — through money, protocol, and information.</div>
+        <div class="node"><div class="node-title">Marketing Investment Fund</div><div class="node-desc">A cross-retailer fund investing in demand construction for healthy food and new food cultures, priced against the revenue uplift it creates.</div></div>
+        <div class="node"><div class="node-title">Procurement Protocol</div><div class="node-desc">A shared standard that public and institutional buyers sign into, from the largest anchor institution to the smallest, without giving up their own local procurement.</div></div>
+        <div class="node"><div class="node-title">Consumption Transparency</div><div class="node-desc">An annual receipt totalling spend, salt, and sugar against delivery-app orders — no verdict attached, just the number, the way cigarette packaging works.</div></div>
+        <div class="node"><div class="node-title">Street Food Licensing</div><div class="node-desc">A formal micro-economy built around the most carbon- and infrastructure-efficient food format there is.</div></div>
+      </div>
+      <div class="track hub">
+        <div class="track-head"><span class="swatch"></span><h3>Hub</h3></div>
+        <div class="track-def">The physical and civic nodes where supply and demand actually meet a person.</div>
+        <div class="node"><div class="node-title">(Farmacy) Pharmacy as a neighbourhood performance-and-nutrition node</div><div class="node-desc">Pick up a prescription and walk out with a bag of seasonal veg, a free blood-pressure check, and a spot in Saturday's community run. The corner pharmacy becomes the place you drop into even when you're not ill — fresh food, real nutrition advice, and a reason to know your neighbours.</div></div>
+        <div class="node"><div class="node-title">Public interest grocers</div><div class="node-desc">Next-generation, membership-model grocers with genuinely lower prices on a fixed cadence, not a voluntary top-up.</div></div>
+        <div class="node"><div class="node-title">Multi-ledger ownership</div><div class="node-desc">Part-volunteer, part-paid, part-commercial contribution structures — a people's supermarket that several kinds of stake can hold at once.</div></div>
+        <div class="node"><div class="node-title">Collective buying engine</div><div class="node-desc">One B2B conversation standing behind dozens of community organisations — run like a business, governed like a non-profit.</div></div>
+      </div>
+      <div class="track supply">
+        <div class="track-head"><span class="swatch"></span><h3>Supply</h3></div>
+        <div class="track-def">The baseline production that has to survive the shock, not just look good before it.</div>
+        <div class="node"><div class="node-title">Organic growth via collective buying</div><div class="node-desc">London boroughs and businesses pooling committed demand into contracts big enough to justify a farmer converting land — the buying power no single borough has alone.</div></div>
+        <div class="node"><div class="node-title">Nutrient density as the baseline</div><div class="node-desc">A network of community aquaponics and hydroponics infrastructure, autonomous and self-managing, framed as nutritional security infrastructure rather than lifestyle.</div></div>
+        <div class="node"><div class="node-title">Climate-controlled growing</div><div class="node-desc">Indoor and peri-urban production built for genuine winter resilience — not a romanticised return to 1970s self-sufficiency that two heatwaves would end.</div></div>
+        <div class="node"><div class="node-title">Undervalued labour &amp; assets</div><div class="node-desc">Recognising food's essential workforce and community-value assets — from warehousing to leases that specify supplier standards as planning conditions.</div></div>
+        <div class="node"><div class="node-title">Baseline food stack</div><div class="node-desc">Background food supply designed to hold when the "closed-loop" techno-dream can't — the stack that deals with volatility, not just ambition.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="roadline"></div></div>
+
+<!-- ===================== GOVERNANCE ===================== -->
+<section id="governance">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">WHO HOLDS THE LINE</div>
+      <h2>Governance that can't be voted back onto the market</h2>
+      <div class="plain-summary">
+        <span class="ps-label">In plain terms</span>
+        <p>We need rules that stop this work being sold off or quietly undone later — similar to how some housing co-ops are set up so no single vote can ever put the building back on the open market.</p>
+      </div>
+      <p>For a council leader, this is the answer to "who else is doing this and how do we join." For national government, it's the delivery chain a policy actually runs through. In Germany's <em>Mietshäuser Syndikat</em>, a tenants' association and a wider syndicate each hold 50% of a building — so no single vote, however popular, can ever put it back on the speculative market. The question underneath this portfolio is whether food infrastructure can be governed the same way.</p>
+    </div>
+    <div class="gov-wrap">
+      <div class="ladder reveal">
+        <div class="rung">
+          <div class="tier">Tier 1 — Borough</div>
+          <h4>An independent Food Partnership</h4>
+          <p>The Council keeps a seat at the table — funding, convening, advertising the work — without holding the steering wheel. A declared, public work programme replaces "come and collaborate."</p>
+        </div>
+        <div class="rung">
+          <div class="tier">Tier 2 — London</div>
+          <h4>A coalition of boroughs</h4>
+          <p>Peer boroughs — starting with a founding group of neighbours — take on shared standards, collective buying, and a common protocol, so the model compounds rather than repeats from zero each time.</p>
+        </div>
+        <div class="rung">
+          <div class="tier">Tier 3 — National</div>
+          <h4>Permission from the centre</h4>
+          <p>A policy briefing routed through Oxford to national government, timed to a six-month window, arguing for the deregulation that lets already-brilliant local actors build without red tape.</p>
+        </div>
+      </div>
+      <div class="callout reveal">
+        <span class="code">ACCOUNTABILITY LAYER</span>
+        <p>A charter sits above individual projects: minimum requirements to count as a genuine partner, and visibility between members so nobody drifts from the same goal. A food bank can be a member — but only if it's providing real wraparound support, not a parcel and a goodbye.</p>
+        <p>The same logic extends to a borough market's trader waiting list, hotel-development leases, and any contract long enough to lock in a supplier's behaviour rather than just their price.</p>
+      </div>
+    </div>
+    <div class="precedent-note reveal">
+      <span class="code" style="color:var(--supply);">PRECEDENT</span>
+      <p>This isn't the first time the "as infrastructure" reframe has done real work inside Dark Matter Labs. <a href="https://darkmatterlabs.org/initiatives/treesai" target="_blank" rel="noopener">Trees as Infrastructure (TreesAI)</a> made the same move for urban canopy — building the funding infrastructure for something previously treated as decoration. Food follows the same logic, one step down the same road.</p>
+      <p style="margin-top:14px;">Dark Matter Labs' role here is researcher, coordinator, and orchestrator of the work and the funding behind it. Camden is one of several London boroughs genuinely moving the needle on this — a partner, not a commissioner — each testing a local answer to what is, underneath, a global pattern. Cities everywhere are hitting the same wall: food fragility that no single council, or country, can price its way out of alone.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== RESILIENCE COMMITTEE ===================== -->
+<section id="resilience">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">A CONCRETE FIRST MOVE</div>
+      <h2>Set up a Local Food Resilience Committee — before the law requires it</h2>
+      <div class="plain-summary">
+        <span class="ps-label">In plain terms</span>
+        <p>Every council should set up a small group — public health, local food businesses, food banks, community groups — whose job is spotting food problems early and knowing what to do if supply is disrupted. Government is deciding by 5 October 2026 whether to make this a legal requirement.</p>
+      </div>
+      <p>The National Preparedness Commission's 2025 review, led by Tim Lang, recommends every local authority establish one as a matter of urgency. The Cabinet Office is now reviewing the Civil Contingencies Act 2004 to decide whether to make it statutory — with a call for views closing <strong>5 October 2026</strong>. A borough that moves first has already done most of that work before the law asks for it.</p>
+    </div>
+
+    <div class="resilience-grid reveal">
+      <div class="res-col">
+        <h4>What it actually does</h4>
+        <ul class="res-list">
+          <li>Maps local food supply chains — most places genuinely don't know where their food comes from or where the vulnerabilities sit</li>
+          <li>Feeds local risk data into Community Risk Registers and the borough's existing Resilience Forum</li>
+          <li>Acts as an early-warning system for civil society on food matters, tailoring national advice to the local context</li>
+          <li>Builds the cross-sector trust and expertise network a real emergency response actually needs</li>
+        </ul>
+      </div>
+      <div class="res-col">
+        <h4>Who sits on it</h4>
+        <ul class="res-list">
+          <li>Public health &amp; environmental health specialists, trading standards</li>
+          <li>Food businesses across the system — present, not dominant</li>
+          <li>Civil society: food banks, Citizens Advice, faith and community groups</li>
+          <li>Co-chaired by someone with local standing — typically the Director of Public Health or an Emergency Planning lead</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="compare reveal" style="margin-top:8px;">
+      <div class="col no">
+        <h4>What coops are for</h4>
+        <p>Cost-of-living, food access, and community ownership. Valuable — but not built for emergency planning, risk assessment, or public communication during a shock.</p>
+      </div>
+      <div class="col yes">
+        <h4>What the committee is for</h4>
+        <p>Emergency prevention and response — working alongside the coops, the Food Partnership and the Borough Resilience Forum, not replacing any of them.</p>
+      </div>
+    </div>
+
+    <div class="cta-row reveal" style="margin-top:30px; margin-bottom:0;">
+      <a class="btn" href="https://nationalpreparednesscommission.uk/wp-content/uploads/2025/02/NPC-Just-in-Case-Main-Report_PDF-Download.pdf" target="_blank" rel="noopener">Read Tim Lang's report ↗</a>
+      <a class="btn solid" href="https://www.gov.uk/government/calls-for-evidence/civil-contingencies-act-2004-call-for-views/civil-contingencies-act-2004-call-for-views-html" target="_blank" rel="noopener">Respond before 5 Oct 2026 ↗</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== HORIZONS ===================== -->
+<section id="horizons" style="background:var(--surface); border-top:1px solid var(--line); border-bottom:1px solid var(--line);">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">SEQUENCING THE RESPONSE</div>
+      <h2>Three horizons, not one deadline</h2>
+      <p>The portfolio is built to be true at three different speeds at once — because the people in the room for this work are living in different horizons already.</p>
+    </div>
+    <div class="horizons reveal">
+      <div class="horizon">
+        <div class="htag">Now — before 5 Oct 2026</div>
+        <h4>Shock absorption</h4>
+        <p>Food-price volatility and nutrition inequality are already moving cognition and health outcomes. The immediate, concrete move is standing up a Local Food Resilience Committee and responding to the Cabinet's call for views before it closes — not waiting for a council procurement cycle to catch up.</p>
+      </div>
+      <div class="horizon">
+        <div class="htag">Next — 12–18 months</div>
+        <h4>Coalition &amp; charter</h4>
+        <p>The Food Partnership publishes a declared work programme, four London boroughs sit down together on collective buying, and a policy briefing lands with national government inside its six-month window.</p>
+      </div>
+      <div class="horizon">
+        <div class="htag">2028 and beyond</div>
+        <h4>The labour shock</h4>
+        <p>Automation reaches logistics and white-collar work at scale. Food-as-infrastructure is the argument for treating nutrition as social-contract security before that shock arrives — not the response to it afterwards.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== TOOLS ===================== -->
+<section id="tools">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">LIVE, NOT SLIDES</div>
+      <h2>The tools and work developing behind the argument</h2>
+      <p>Each of these is a real, evolving model rather than a static deck — built to be interrogated, forked, and carried into the next room.</p>
+    </div>
+
+    <div class="tools-grid reveal">
+      <a class="tool-card" href="https://camden-horizon-navigator.vercel.app/" target="_blank" rel="noopener">
+        <div>
+          <div class="tool-top">
+            <h3>The Negative Portfolio</h3>
+            <span class="tool-code">NP 2.0</span>
+          </div>
+          <p>An indicative portfolio of work that treats food fragility not as a supply deficit, but as a demand-construction opportunity. The Negative Portfolio v2.0.</p>
+        </div>
+        <div class="tool-link">Open the navigator <span class="arrow">↗</span></div>
+      </a>
+
+      <a class="tool-card" href="https://adam-darkmatterlabs.github.io/DML-Food-Systems/Portfolio.html#idea" target="_blank" rel="noopener">
+        <div>
+          <div class="tool-top">
+            <h3>Implementation Pathway</h3>
+            <span class="tool-code">PATH</span>
+          </div>
+          <p>A breakdown of the pathway to actually implement the portfolio — from idea to intervention, in sequence.</p>
+        </div>
+        <div class="tool-link">Open the pathway <span class="arrow">↗</span></div>
+      </a>
+
+      <a class="tool-card" href="https://dark-matter-labs.github.io/indy-llm-wiki/nutrition-cascade-model.html" target="_blank" rel="noopener">
+        <div>
+          <div class="tool-top">
+            <h3>Nutrition Cascade Model</h3>
+            <span class="tool-code">CASCADE</span>
+          </div>
+          <p>A working model of how a single food-system shock fans out across many pathways at once — not one line, but a system moving together.</p>
+        </div>
+        <div class="tool-link">Run the model <span class="arrow">↗</span></div>
+      </a>
+
+      <a class="tool-card" href="https://dark-matter-labs.github.io/indy-llm-wiki/nutrition-supply-map.html" target="_blank" rel="noopener">
+        <div>
+          <div class="tool-top">
+            <h3>Nutrition Supply Map</h3>
+            <span class="tool-code">SUPPLY</span>
+          </div>
+          <p>Where the food actually comes from — and the shocks that travel home with it along the same routes.</p>
+        </div>
+        <div class="tool-link">Trace the supply lines <span class="arrow">↗</span></div>
+      </a>
+
+      <a class="tool-card wide" href="https://camden-map.vercel.app/" target="_blank" rel="noopener">
+        <div>
+          <div class="tool-top">
+            <h3>The Live Map — with audio briefing</h3>
+            <span class="tool-code">LIVE MAP</span>
+          </div>
+          <p>A dynamic map bringing together the existing food system across London — hubs, retailers, growers, and routes in one place, with a built-in audio update for anyone who'd rather listen than read.</p>
+        </div>
+        <div class="tool-link">Open the live map <span class="arrow">↗</span></div>
+      </a>
+
+      <div class="tool-card wide is-pending">
+        <div>
+          <div class="tool-top">
+            <h3>Hubs and Markets Working Group</h3>
+            <span class="tool-code">COMING SOON</span>
+          </div>
+          <p>Where existing food hubs, markets and civic spaces get mapped, matched and coordinated with each other — the working group carrying that forward.</p>
+        </div>
+        <div class="tool-link">Link to be added ↗</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FURTHER READING ===================== -->
+<section class="tight" id="reading" style="background:var(--surface); border-top:1px solid var(--line); border-bottom:1px solid var(--line);">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">NEW TO THIS?</div>
+      <h2>Start here</h2>
+      <p>This page makes a lot of claims. These are the primary sources behind them — useful whether you're a council officer checking the evidence or a community group looking for who else is already working on this.</p>
+    </div>
+    <div class="reading-grid reveal">
+      <div class="reading-col">
+        <h4>Government &amp; risk assessment</h4>
+        <ul class="reading-list">
+          <li><a href="https://www.gov.uk/government/organisations/joint-intelligence-organisation" target="_blank" rel="noopener">Joint Intelligence Committee</a> — national risk assessments, including food system resilience</li>
+          <li><a href="https://www.gov.uk/government/organisations/department-for-environment-food-rural-affairs" target="_blank" rel="noopener">Defra</a> — UK Food Security Report &amp; food system oversight</li>
+          <li><a href="https://www.nationalfoodstrategy.org/" target="_blank" rel="noopener">The National Food Strategy</a> — the independent review this portfolio sits alongside</li>
+          <li><a href="https://www.gov.uk/government/groups/food-data-transparency-partnership" target="_blank" rel="noopener">Food Data Transparency Partnership</a> — Defra's work on nutrition &amp; climate labelling</li>
+        </ul>
+      </div>
+      <div class="reading-col">
+        <h4>Research &amp; evidence</h4>
+        <ul class="reading-list">
+          <li><a href="https://www.nesta.org.uk/report/nourishing-britain/" target="_blank" rel="noopener">Nourishing Britain</a> — Dr Dolly van Tulleken, on why UK food policy struggles to stick</li>
+          <li><a href="https://nationalpreparednesscommission.uk/wp-content/uploads/2025/02/NPC-Just-in-Case-Main-Report_PDF-Download.pdf" target="_blank" rel="noopener">Just in Case</a> — Tim Lang's National Preparedness Commission review</li>
+          <li><a href="https://data.hasp.ac.uk/browser/dataset/5276/0" target="_blank" rel="noopener">Priority Places for Food Insecurity Index</a> — where the risk actually concentrates</li>
+        </ul>
+      </div>
+      <div class="reading-col">
+        <h4>On the ground</h4>
+        <ul class="reading-list">
+          <li><a href="https://cityharvest.org.uk/" target="_blank" rel="noopener">City Harvest</a> — surplus food redistribution at scale in London</li>
+          <li><a href="https://www.foodaidnetwork.org.uk/" target="_blank" rel="noopener">Independent Food Aid Network</a> — the UK's independent food bank network</li>
+          <li><a href="https://www.magicbreakfast.com/" target="_blank" rel="noopener">Magic Breakfast</a> — school breakfast provision &amp; advocacy</li>
+          <li><a href="https://vegpower.org.uk/" target="_blank" rel="noopener">Veg Power</a> &amp; <a href="https://www.biteback2030.com/" target="_blank" rel="noopener">Bite Back</a> — youth-led campaigns on food marketing</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FOOTER ===================== -->
+<footer>
+  <div class="wrap">
+    <div class="foot-top">
+      <a href="https://darkmatterlabs.org/" target="_blank" rel="noopener">
+        <img src="https://darkmatterlabs.org/_next/static/media/DmLogoFull.d4ebb743.png" alt="Dark Matter Labs" class="dm-logo foot-logo">
+      </a>
+      <div class="foot-social">
+        <a href="https://www.linkedin.com/company/darkmatterlabs" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://provocations.darkmatterlabs.org/" target="_blank" rel="noopener">Provocations ↗</a>
+        <a href="https://x.com/DarkMatter_Labs" target="_blank" rel="noopener">X</a>
+        <a href="https://www.instagram.com/darkmatter_labs/" target="_blank" rel="noopener">Instagram</a>
+      </div>
+    </div>
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <strong>We are building options for the next economies.</strong>
+        Food as Infrastructure is a Dark Matter Labs research, coordination and funding-orchestration programme — working with Camden and other London boroughs genuinely moving the needle on this work. It is stewarded to be lifted, borough by borough, into a London-wide portfolio — not owned by any one of them.
+      </div>
+      <div class="foot-links">
+        <div class="foot-col">
+          <h5>Portfolio</h5>
+          <a href="#audience">Who it's for</a>
+          <a href="#foundations">The foundations</a>
+          <a href="#tracks">Supply / Hub / Demand</a>
+          <a href="#governance">Governance</a>
+          <a href="#resilience">Resilience committee</a>
+          <a href="#horizons">Horizons</a>
+        </div>
+        <div class="foot-col">
+          <h5>Tools</h5>
+          <a href="https://camden-horizon-navigator.vercel.app/" target="_blank" rel="noopener">Negative Portfolio</a>
+          <a href="https://adam-darkmatterlabs.github.io/DML-Food-Systems/Portfolio.html#idea" target="_blank" rel="noopener">Implementation pathway</a>
+          <a href="https://dark-matter-labs.github.io/indy-llm-wiki/nutrition-cascade-model.html" target="_blank" rel="noopener">Cascade model</a>
+          <a href="https://dark-matter-labs.github.io/indy-llm-wiki/nutrition-supply-map.html" target="_blank" rel="noopener">Supply map</a>
+          <a href="https://camden-map.vercel.app/" target="_blank" rel="noopener">Live food system map</a>
+        </div>
+        <div class="foot-col">
+          <h5>Dark Matter Labs</h5>
+          <a href="https://darkmatterlabs.org/initiatives" target="_blank" rel="noopener">Initiatives</a>
+          <a href="https://darkmatterlabs.org/feed" target="_blank" rel="noopener">Projects</a>
+          <a href="https://darkmatterlabs.org/contact" target="_blank" rel="noopener">Contact</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>A LONDON-WIDE PORTFOLIO, 2026</span>
+      <span>FOOD AS INFRASTRUCTURE — WORKING DRAFT · DARK MATTER LABORATORIES</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function(){
+    var els = document.querySelectorAll('.reveal');
+    if(!('IntersectionObserver' in window) || !els.length) return;
+
+    els.forEach(function(el){ el.classList.add('pre'); });
+
+    var obs = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          entry.target.classList.add('in');
+          obs.unobserve(entry.target);
+        }
+      });
+    }, {threshold:0.1});
+    els.forEach(function(el){ obs.observe(el); });
+
+    /* safety net: guarantee everything is visible even if the observer
+       never fires for some reason */
+    setTimeout(function(){
+      els.forEach(function(el){ el.classList.add('in'); });
+    }, 2500);
+  });
+</script>
+
+</body>
+</html>
