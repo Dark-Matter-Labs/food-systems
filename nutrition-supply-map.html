@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Where Camden's Food Comes From — a nutrition supply-risk map</title>
+<meta name="description" content="An interactive transmission map of the global systems Camden's calories, protein and micronutrients depend on — breadbaskets, fertiliser producers and chokepoints — and how their disruption cascades onto UK shelves.">
+<meta name="author" content="Dark Matter Labs — Expanding Civilisational Optionality">
+<meta property="og:title" content="Where Camden's food comes from — a nutrition supply-risk map">
+  <meta property="og:url" content="https://food.darkmatterlabs.org/nutrition-supply-map.html">
+  <meta property="og:image" content="https://dark-matter-labs.github.io/indy-llm-wiki/assets/social-card.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="https://food.darkmatterlabs.org/nutrition-supply-map.html">
+<meta property="og:description" content="The global sources Camden's nutrition rests on, and the cascades their disruption runs through to the UK core.">
+<meta property="og:type" content="article">
+<style>
+  /* Self-contained system-font stack (no network / CSP-safe), same roles as the xCO system */
+  @font-face{font-family:'Crimson Pro';font-style:normal;font-weight:400 500;src:local('Georgia'),local('Times New Roman'),local('Times');}
+  @font-face{font-family:'Crimson Pro';font-style:normal;font-weight:600 700;src:local('Georgia Bold'),local('Georgia'),local('Times New Roman Bold'),local('Times');}
+  @font-face{font-family:'Inter';src:local('Helvetica Neue'),local('Helvetica'),local('Arial'),local('Segoe UI'),local('Roboto');}
+  @font-face{font-family:'DM Mono';src:local('SFMono-Regular'),local('SF Mono'),local('Menlo'),local('Consolas'),local('Roboto Mono'),local('Courier New');}
+
+  :root{
+    --shadow:#192640;--shadow-deep:#101a2e;--shadow-panel:#141f36;
+    --hi:#eef2f9;--hi-dim:#8a97ae;--line:#2b3a58;--orange:#f27f3d;
+    /* pathway hues */
+    --calorie:#f27f3d;--protein:#d9573d;--produce:#4fa8ac;--input:#e9b44c;--logistics:#5b8def;--climate:#9a7bc8;--feedback:#6b7a99;
+    /* supply-risk ring */
+    --heat-passing:#ff6b4a;--heat-risk:#ffb13c;--heat-watch:#ffe08a;
+  }
+  *{box-sizing:border-box;}
+  .visually-hidden{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;}
+  html,body{margin:0;padding:0;}
+  body{background:var(--shadow);color:var(--hi);font-family:'Inter',system-ui,sans-serif;-webkit-font-smoothing:antialiased;line-height:1.5;}
+  .wrap{max-width:1280px;margin:0 auto;padding:28px 22px 60px;}
+  header.masthead{border-bottom:1px solid var(--line);padding-bottom:20px;margin-bottom:22px;}
+  .eyebrow{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--orange);margin:0 0 10px;}
+  h1{font-family:'Crimson Pro',serif;font-weight:500;font-size:clamp(28px,4.4vw,46px);line-height:1.06;letter-spacing:-.01em;margin:0 0 12px;max-width:24ch;}
+  .standfirst{font-family:'Crimson Pro',serif;font-size:clamp(15px,1.7vw,18px);color:#c3ccdd;max-width:66ch;margin:0;font-weight:400;}
+  .stage{display:grid;grid-template-columns:minmax(0,1fr) 372px;gap:22px;align-items:start;}
+  @media (max-width:920px){.stage{grid-template-columns:1fr;}}
+  .mapcard{background:var(--shadow-deep);border:1px solid var(--line);border-radius:4px;overflow:hidden;position:relative;}
+  .maptools{display:flex;flex-wrap:wrap;gap:7px;align-items:center;padding:12px 14px;border-bottom:1px solid var(--line);background:linear-gradient(#16223a,#131d33);}
+  .toolslabel{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--hi-dim);margin-right:2px;}
+  .chip{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.02em;border:1px solid var(--line);background:transparent;color:#c3ccdd;padding:5px 10px 5px 8px;border-radius:20px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;transition:border-color .15s,opacity .15s,background .15s;}
+  .chip .sw{width:9px;height:9px;border-radius:2px;flex:none;}
+  .chip[aria-pressed="false"]{opacity:.38;}
+  .chip:hover{border-color:#3f5279;}
+  .chip:focus-visible{outline:2px solid var(--orange);outline-offset:2px;}
+  svg#map{display:block;width:100%;height:auto;aspect-ratio:1000/500;background:radial-gradient(120% 90% at 44% 30%, #1c2c4c 0%, #172341 46%, #0f1830 100%);}
+  .grid-line{stroke:#22304c;stroke-width:.6;fill:none;}
+  .continent{fill:#20304f;opacity:.5;stroke:none;}
+  .continent.eu{fill:#26385c;opacity:.7;}
+  .basin-label{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.22em;fill:#4a5c7e;text-transform:uppercase;}
+  .edge{fill:none;stroke-linecap:round;transition:opacity .2s;}
+  .edge.flow{stroke-dasharray:2 9;animation:flow 2.6s linear infinite;}
+  @keyframes flow{to{stroke-dashoffset:-110;}}
+  @media (prefers-reduced-motion:reduce){.edge.flow{animation:none;}}
+  .modline{fill:none;stroke:var(--feedback);stroke-width:1;stroke-dasharray:1 6;opacity:.5;stroke-linecap:round;}
+  .core-sink{fill:none;stroke:#f27f3d;stroke-width:1.4;stroke-dasharray:3 4;opacity:.6;}
+  .core-label{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.16em;text-transform:uppercase;fill:#f4a06b;paint-order:stroke;stroke:#0f1830;stroke-width:3px;}
+  .bnode{cursor:pointer;}
+  .bnode .core{fill:#f27f3d;transition:fill .15s;}
+  .bnode .halo{fill:none;stroke-width:2;}
+  .bnode .sysring{fill:none;stroke-dasharray:2 3;opacity:.85;}
+  .bnode .code{font-family:'DM Mono',monospace;font-size:8.5px;font-weight:500;fill:#0f1830;text-anchor:middle;dominant-baseline:central;pointer-events:none;}
+  .bnode .bname{font-family:'Crimson Pro',serif;font-size:12.5px;font-weight:600;fill:#eef2f9;pointer-events:none;paint-order:stroke;stroke:#0f1830;stroke-width:3.2px;stroke-linejoin:round;}
+  .bnode.ext .core{fill:#d9573d;}
+  .bnode:focus-visible{outline:none;}
+  .bnode:focus-visible .focusring{opacity:1;}
+  .focusring{fill:none;stroke:#fff;stroke-width:1.4;stroke-dasharray:2 3;opacity:0;}
+  .bnode{transform-box:fill-box;transform-origin:center;}
+  @media (prefers-reduced-motion:no-preference){
+    .bnode{animation:pop .5s cubic-bezier(.2,.7,.3,1) backwards;}
+    @keyframes pop{from{opacity:0;transform:scale(.35);}to{opacity:1;transform:scale(1);}}
+  }
+  .leftcol{display:flex;flex-direction:column;gap:22px;min-width:0;}
+  .mapcaption{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.02em;color:#7c8aa6;margin:0;padding:11px 15px 13px;border-top:1px solid var(--line);line-height:1.55;}
+  .indexcard{background:var(--shadow-panel);border:1px solid var(--line);border-radius:4px;padding:16px 18px 6px;}
+  .idxsplit{display:grid;grid-template-columns:1fr 1fr;gap:0 26px;}
+  @media (max-width:560px){.idxsplit{grid-template-columns:1fr;}}
+  .idx-group-h{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--hi-dim);margin:6px 0 4px;grid-column:1/-1;}
+  .idx-group-h.ext{color:#e08a72;}
+  .idx-hint{font-size:12px;color:#8f9cb3;margin:0 0 12px;line-height:1.45;}
+  .idx-row{display:grid;grid-template-columns:26px 1fr auto;gap:10px;align-items:center;width:100%;text-align:left;background:transparent;border:0;border-bottom:1px solid var(--line);padding:9px 4px;cursor:pointer;color:inherit;transition:background .12s;}
+  .idx-row:hover,.idx-row.active{background:#1b2841;}
+  .idx-row:focus-visible{outline:2px solid var(--orange);outline-offset:-2px;}
+  .idx-code{font-family:'DM Mono',monospace;font-size:11px;color:#101a2e;font-weight:600;background:#f27f3d;border-radius:3px;text-align:center;padding:2px 0;}
+  .idx-code.sys{background:transparent;color:#9fb0cc;border:1px dashed #6b7a99;}
+  .idx-code.ext{background:#d9573d;}
+  .idx-name{font-family:'Crimson Pro',serif;font-size:15px;font-weight:600;color:#eef2f9;line-height:1.15;}
+  .idx-dep{font-family:'Inter',sans-serif;font-size:10.5px;color:#8493ac;display:block;margin-top:1px;}
+  .idx-dot{width:9px;height:9px;border-radius:50%;flex:none;}
+  .dimmed{opacity:.12 !important;}
+  .edge.hot{opacity:1 !important;}
+  .panel{background:var(--shadow-panel);border:1px solid var(--line);border-radius:4px;padding:0;position:sticky;top:16px;min-height:440px;display:flex;flex-direction:column;}
+  @media (max-width:920px){.panel{position:static;}}
+  .panel-head{padding:16px 18px 14px;border-bottom:1px solid var(--line);}
+  .panel-kicker{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--hi-dim);margin:0 0 6px;}
+  .panel-title{font-family:'Crimson Pro',serif;font-weight:500;font-size:22px;line-height:1.1;margin:0;color:#fff;}
+  .panel-body{padding:16px 18px;overflow-y:auto;flex:1;}
+  .legend-group{margin-bottom:20px;}
+  .legend-h{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--hi-dim);margin:0 0 10px;}
+  .legrow{display:flex;align-items:center;gap:10px;margin-bottom:8px;font-size:12.5px;color:#c8d1e2;}
+  .legrow .sw{width:22px;height:0;border-top:2px solid;flex:none;}
+  .legrow .dot{width:12px;height:12px;border-radius:50%;flex:none;border:2px solid;}
+  .legrow .sysdot{width:14px;height:14px;border-radius:50%;flex:none;border:1.5px dashed #9fb0cc;background:#f27f3d33;}
+  .legrow .extdot{width:14px;height:14px;border-radius:50%;flex:none;background:#d9573d;}
+  .legend-note{font-size:11px;color:#8493ac;margin-top:4px;line-height:1.4;}
+  .sizescale{display:flex;align-items:flex-end;gap:14px;margin-top:4px;}
+  .sizescale .s{display:flex;flex-direction:column;align-items:center;gap:5px;}
+  .sizescale .s span{font-family:'DM Mono',monospace;font-size:9.5px;color:#8493ac;}
+  .sizescale .c{border-radius:50%;background:#f27f3d33;border:1.5px solid #f27f3d;}
+  .dz{display:none;}
+  .dz.on{display:block;}
+  .meta-grid{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;margin:2px 0 16px;}
+  .meta-k{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--hi-dim);padding-top:2px;}
+  .meta-v{font-size:13px;color:#dce3f0;}
+  .meta-v .big{font-family:'Crimson Pro',serif;font-size:17px;color:#fff;font-weight:600;line-height:1.1;}
+  .tip-badge{display:inline-block;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.06em;padding:2px 8px;border-radius:3px;color:#101a2e;font-weight:500;}
+  .sec-h{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--orange);margin:18px 0 8px;}
+  .mech{font-size:13px;color:#c8d1e2;margin:0 0 6px;}
+  .tipnote{border-left:2px solid var(--heat-risk);padding-left:11px;color:#b7c1d6;font-size:12.5px;margin:0 0 4px;}
+  .euimpact{border-left:2px solid var(--orange);padding-left:11px;color:#e7c3a8;font-size:12.5px;margin:0 0 4px;}
+  .chain{list-style:none;margin:8px 0 0;padding:0;}
+  .chain li{position:relative;padding:0 0 12px 20px;font-size:12.5px;color:#c8d1e2;}
+  .chain li::before{content:"";position:absolute;left:4px;top:5px;width:7px;height:7px;border-radius:50%;background:var(--orange);}
+  .chain li::after{content:"";position:absolute;left:7px;top:12px;bottom:0;width:1px;background:var(--line);}
+  .chain li:last-child{padding-bottom:0;}
+  .chain li:last-child::after{display:none;}
+  .chain li.landfall::before{background:#fff;box-shadow:0 0 0 3px #f27f3d55;}
+  .backhint{font-family:'DM Mono',monospace;font-size:10px;color:#6c7c98;margin-top:16px;letter-spacing:.04em;}
+  .foot{margin-top:26px;border-top:1px solid var(--line);padding-top:16px;font-size:11.5px;color:#7d8aa3;max-width:96ch;}
+  .foot b{color:#aab6cc;font-weight:600;}
+  .foot .src{font-family:'DM Mono',monospace;font-size:10.5px;color:#8592ab;}
+  .foot a{color:#e7c3a8;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="masthead">
+    <p class="eyebrow">Civilisational Optionality · Nutrition Continuity · Supply-risk cartography</p>
+    <h1>Where Camden's food comes from, and the shocks that travel home with it.</h1>
+    <p class="standfirst">Camden grows almost none of its own food — so its nutrition rests on a global web of breadbaskets, fertiliser producers and shipping chokepoints. This map reads that web inward: each node is a system the UK's calories, protein or fresh produce depend on, and each arrow is the pathway by which its disruption reaches Camden's shelves. Orange nodes are the supply sources the UK imports from directly; red nodes are the input and chokepoint systems whose disruption lands on that supply anyway. Select any node for what it supplies, its current risk, and the cascade chain that carries it home.</p>
+  </header>
+
+  <div class="stage">
+    <div class="leftcol">
+    <div class="mapcard">
+      <div class="maptools" id="tools" role="group" aria-labelledby="toolslabel">
+        <span class="toolslabel" id="toolslabel">Pathways</span>
+      </div>
+      <svg id="map" viewBox="0 0 1000 500" width="1000" height="500" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="map-title map-desc">
+        <title id="map-title">The global systems Camden's nutrition depends on, and how their disruption cascades to the UK</title>
+        <desc id="map-desc">A world schematic centred on the UK. Fifteen systems are plotted at their geographic positions and sized by UK-supply exposure: orange nodes are sources the UK imports calories, protein and produce from; red nodes are fertiliser, energy and chokepoint systems whose disruption lands on that supply. Coloured arrows converge on the UK core, tracing how each disruption transmits home through calories, protein, produce, input cost, logistics and climate. Use the pathway filters above, or the grouped list of systems below the map.</desc>
+      </svg>
+      <p class="mapcaption">UK-centred transmission cartography — node position is geographic; node size and pathway weight encode relative UK-supply exposure, not tonnage. A qualitative orientation map, not a trade model.</p>
+    </div>
+    <div class="indexcard">
+      <p class="idx-hint">Fifteen systems, split into the sources the UK imports from and the input/chokepoint systems that disrupt them. Tap any card — or any node on the map — to trace its cascade to Camden.</p>
+      <div id="nodeindex" class="idxsplit"></div>
+    </div>
+    </div>
+
+    <aside class="panel" aria-label="Selected system detail">
+      <div id="sr-status" class="visually-hidden" role="status" aria-live="polite"></div>
+      <div class="panel-head">
+        <p class="panel-kicker" id="pk">Reading the map</p>
+        <h2 class="panel-title" id="pt">Legend &amp; method</h2>
+      </div>
+      <div class="panel-body">
+        <div class="dz on" id="dz-overview">
+          <div class="legend-group">
+            <p class="legend-h">Transmission pathway to the UK</p>
+            <div class="legrow"><span class="sw" style="border-color:var(--calorie)"></span>Calories — grain &amp; staples</div>
+            <div class="legrow"><span class="sw" style="border-color:var(--protein)"></span>Protein — feed, livestock, fish</div>
+            <div class="legrow"><span class="sw" style="border-color:var(--produce)"></span>Fresh produce — fruit &amp; veg</div>
+            <div class="legrow"><span class="sw" style="border-color:var(--input)"></span>Fertiliser &amp; energy input</div>
+            <div class="legrow"><span class="sw" style="border-color:var(--logistics)"></span>Shipping / chokepoint</div>
+            <div class="legrow"><span class="sw" style="border-color:var(--climate)"></span>Climate driver</div>
+            <div class="legrow"><span class="sw" style="border-color:var(--feedback);border-top-style:dashed"></span>Protectionism feedback</div>
+          </div>
+          <div class="legend-group">
+            <p class="legend-h">Node type</p>
+            <div class="legrow"><span class="dot" style="border-color:#f27f3d;background:#f27f3d33"></span>Supply source — the UK imports from it</div>
+            <div class="legrow"><span class="extdot"></span>Input / chokepoint — its disruption lands on supply</div>
+            <div class="legrow"><span class="sysdot"></span>Systemic node — global reach, not a tonnage</div>
+            <div class="sizescale">
+              <div class="s"><span class="c" style="width:12px;height:12px"></span><span>lower</span></div>
+              <div class="s"><span class="c" style="width:18px;height:18px"></span><span>higher</span></div>
+              <div class="s"><span class="c" style="width:24px;height:24px"></span><span>UK-supply exposure</span></div>
+            </div>
+          </div>
+          <div class="legend-group">
+            <p class="legend-h">Supply-risk status (outer ring)</p>
+            <div class="legrow"><span class="dot" style="border-color:var(--heat-passing);background:transparent"></span>Acute / disrupted now</div>
+            <div class="legrow"><span class="dot" style="border-color:var(--heat-risk);background:transparent"></span>High near-term risk</div>
+            <div class="legrow"><span class="dot" style="border-color:var(--heat-watch);background:transparent"></span>On watch</div>
+          </div>
+          <p class="legend-note">All arrows converge on the UK core (dashed ring), where the UK's own ~60%-and-falling domestic production sits. El Niño (C7) is a master node — its dashed tethers modulate the breadbaskets it stresses at once; the Strait of Hormuz (C1) gates the fertiliser and energy the others depend on. Line weight tracks relative UK-supply exposure.</p>
+        </div>
+        <div class="dz" id="dz-detail">
+          <div class="meta-grid" id="meta"></div>
+          <div id="mechwrap"></div>
+          <p class="backhint">Tap empty sea, or press Esc, to return. Use ← / → to step between systems.</p>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <div class="foot">
+    <b>How to read this map.</b> Nodes are keystone not by size but by the reach of their disruption into UK — and therefore Camden's — nutrition. Supply sources (orange) are systems the UK imports calories, protein or produce from directly; input &amp; chokepoint systems (red) sit elsewhere but transmit inward — a fertiliser-export halt raises the cost of every grain; a chokepoint blockade reroutes and reprices whole cargo classes; an El Niño stresses several breadbaskets in one season. Pathways show the dominant channel each disruption travels toward the UK core; the protectionism feedback edge (dashed) is the loop by which a price spike triggers export bans that thin the market and raise the next spike. This is the geographic companion to <a href="nutrition-cascade-model.html">the dynamic pathway model</a> and the worked <a href="https://dark-matter-labs.github.io/indy-llm-wiki/camden-nutrition-risk-model.html">Camden risk model</a>.
+    <br><br>
+    <span class="src">Sources: WMO ENSO update 2026 · World Bank Commodity Markets / fertiliser &amp; Strait of Hormuz 2026 · FAO Food Outlook 2026 · UK DEFRA food-security &amp; self-sufficiency statistics · USDA FAS fertiliser market · Food &amp; Drink Federation. Figures and node sizes are order-of-magnitude and intended for orientation, not precision. Node placement is schematic.</span>
+    <br><br>
+    <a href="index.html">← Food as Infrastructure</a>
+  </div>
+</div>
+
+<script>
+/* ---------- world window projection (equirectangular, UK-centred) ---------- */
+const W=1000,H=500;
+const LON0=-130,LON1=155,LAT0=-52,LAT1=76;
+const proj=(lon,lat)=>[(lon-LON0)/(LON1-LON0)*W,(LAT1-lat)/(LAT1-LAT0)*H];
+const projC=(lon,lat)=>{let[x,y]=proj(lon,lat);x=Math.max(14,Math.min(W-14,x));y=Math.max(14,Math.min(H-14,y));return[x,y];};
+
+/* ---------- coarse schematic continents ---------- */
+const CONTINENTS=[
+ {ring:[[-125,49],[-128,60],[-95,60],[-82,52],[-62,49],[-64,45],[-72,41],[-77,35],[-81,25],[-97,16],[-106,23],[-115,31],[-124,40],[-125,49]]},
+ {ring:[[-78,8],[-60,10],[-50,0],[-35,-6],[-40,-22],[-58,-35],[-71,-45],[-73,-32],[-76,-14],[-81,-3],[-78,8]]},
+ {ring:[[-16,14],[-16,26],[-8,35],[10,37],[25,32],[35,31],[43,11],[51,12],[42,-3],[40,-16],[25,-34],[18,-34],[12,-16],[8,4],[-8,4],[-16,14]]},
+ {eu:true,ring:[[-10,36],[-10,58],[4,62],[28,60],[40,52],[42,45],[28,41],[16,40],[2,43],[-10,36]]},
+ {ring:[[26,40],[30,55],[45,68],[75,74],[110,73],[143,68],[145,54],[138,44],[122,32],[108,20],[95,8],[80,6],[70,20],[58,25],[46,30],[38,36],[26,40]]},
+ {ring:[[113,-20],[130,-11],[143,-13],[153,-27],[147,-38],[133,-33],[116,-34],[113,-20]]},
+ {ring:[[-45,60],[-30,64],[-22,70],[-30,76],[-45,78],[-52,72],[-48,64],[-45,60]]},
+ {eu:true,ring:[[-8,50],[-2,51],[1,53],[-1,56],[-5,58],[-7,57],[-6,54],[-9,52],[-8,50]]}
+];
+const BASINS=[["N. Atlantic",-38,30],["Pacific",-118,10],["Indian Ocean",82,-20],["Black Sea",36,46],["Persian Gulf",56,20],["S. Atlantic",-25,-25]];
+
+/* ---------- system nodes ----------
+   grp:'supply' (orange, UK imports it) | 'sys' (red input/chokepoint)
+   kind:'pop' sized by wt | 'sys' fixed
+*/
+const NODES=[
+ /* ---- SUPPLY SOURCES ---- */
+ {id:"S1",name:"EU / near-Europe produce",grp:"supply",kind:"pop",wt:22,lon:3,lat:45,heat:"watch",paths:["produce"],
+  region:"Spain · Netherlands · Morocco (winter)",popLabel:"most of the UK's imported fruit & veg",
+  trigger:"Heat & drought in Spain; Channel & post-Brexit border friction",
+  tip:"UK produces just 16% of its fruit and 53% of its vegetables; the shortfall leans heavily on a few near-Europe suppliers already hitting climate limits.",
+  euimpact:"This is the micronutrient lifeline. When Spanish harvests fail in a heat year and Channel friction slows the rest, UK fresh-produce shelves empty first and prices for fruit & veg spike — the diet-quality end of the burden.",
+  mech:"Short, just-in-time supply chains for perishable produce with almost no buffer; the first thing to visibly fail in a shock.",
+  chain:["Heat/drought or border friction hits near-Europe supply","Fresh fruit & veg supply tightens","Produce prices rise, quality falls","Camden's micronutrient intake drops — diet quality falls"],
+  edges:[["produce"]]},
+
+ {id:"S2",name:"Black Sea grains",grp:"supply",kind:"pop",wt:24,lon:36,lat:49,heat:"passing",paths:["calorie"],
+  region:"Ukraine · Russia · Kazakhstan",popLabel:"a top global wheat & oil exporter",
+  trigger:"War, Black Sea / Bosphorus blockade, and grain export bans",
+  tip:"The 2022 Black Sea disruption drove the sharpest global food-price spike in a decade; the corridor remains a live geopolitical chokepoint.",
+  euimpact:"The single most volatile calorie source. A blockade or export ban here moves world wheat and sunflower-oil prices, and the UK imports the price even where it doesn't import the grain.",
+  mech:"A concentrated, contested export corridor: a large share of traded calories leaving through one sea and one strait.",
+  chain:["Blockade / war / export ban in the Black Sea","World wheat & oil markets spike","UK food-price inflation rises (≥9% in 2026)","Cheapest-calorie floor cost rises for Camden households"],
+  edges:[["calorie"]]},
+
+ {id:"S3",name:"North American grains & oilseeds",grp:"supply",kind:"pop",wt:20,lon:-98,lat:43,heat:"watch",paths:["calorie","protein"],
+  region:"US Midwest · Canadian Prairies",popLabel:"wheat, maize & soy (calories + feed)",
+  trigger:"Drought, La Niña/El Niño flips, and rising input costs",
+  tip:"A swing supplier for both human calories and animal feed; yield hinges on Pacific climate cycles now flipping toward El Niño.",
+  euimpact:"A dual pathway: bread-wheat calories and the soy/maize that feeds livestock. A drought year here tightens both the calorie floor and the feed→protein chain at once.",
+  mech:"A vast but climate-exposed breadbasket whose feed grains sit upstream of meat, eggs and dairy prices worldwide.",
+  chain:["Drought / climate flip cuts yields","Grain and feed prices rise together","Calorie floor + livestock-feed cost rise","Camden: cheaper calories up, protein up"],
+  edges:[["calorie"],["protein"]]},
+
+ {id:"S4",name:"South American soy & maize",grp:"supply",kind:"pop",wt:18,lon:-58,lat:-18,heat:"risk",paths:["protein"],
+  region:"Brazil · Argentina",popLabel:"the world's feed-protein engine",
+  trigger:"El Niño drought and river-logistics failure",
+  tip:"El Niño years repeatedly hit Argentine and southern-Brazilian output; the feed-protein market is thin and price-sensitive.",
+  euimpact:"The protein pathway's origin. Soy and maize here become the feed behind the eggs, poultry, pork and farmed fish the UK relies on — so a shock here is a protein-price shock at one remove.",
+  mech:"Concentrated feed exports feeding global livestock; disruption transmits up the whole animal-protein chain.",
+  chain:["El Niño drought / logistics failure","Feed soy & maize prices rise","Livestock & aquaculture costs rise","Camden: protein is dropped first under budget stress"],
+  edges:[["protein"]]},
+
+ {id:"S5",name:"South Asian rice",grp:"supply",kind:"pop",wt:16,lon:80,lat:21,heat:"risk",paths:["calorie"],
+  region:"India (+ Pakistan · Thailand · Vietnam)",popLabel:"~40% of world rice trade, one sovereign decision",
+  trigger:"Monsoon failure and unilateral export controls",
+  tip:"India alone controls roughly 40% of the world's rice exports; a single policy decision (as in 2023) can reprice the global staple.",
+  euimpact:"A concentration risk: a huge share of a global staple sits behind one government's export policy. A ban ripples into all substitutable grains — and UK prices with them.",
+  mech:"Extreme supply concentration plus monsoon dependence — a staple with a single point of political failure.",
+  chain:["Monsoon failure or export ban","Global rice market tightens, buyers switch grains","Cross-staple price contagion","UK calorie-floor cost rises"],
+  edges:[["calorie"]]},
+
+ {id:"S6",name:"Australian wheat",grp:"supply",kind:"pop",wt:12,lon:134,lat:-28,heat:"risk",paths:["calorie"],
+  region:"Australia",popLabel:"a swing wheat exporter",
+  trigger:"El Niño drought",
+  tip:"Australian wheat output could fall ~9 Mt in 2026/27 under a strong El Niño — a swing that moves the global balance.",
+  euimpact:"The clearest El-Niño-to-price line: Australia swings the world wheat balance, so a strong El Niño year removes a buffer just as other breadbaskets are stressed together.",
+  mech:"A high-variance swing supplier whose good and bad years amplify or dampen global tightness.",
+  chain:["El Niño drought cuts the Australian crop","A global buffer is removed","World wheat tightens further","UK calorie-floor cost rises"],
+  edges:[["calorie"]]},
+
+ {id:"S7",name:"UK domestic production",grp:"supply",kind:"pop",wt:20,lon:-3,lat:55,heat:"watch",paths:["produce"],
+  region:"United Kingdom",popLabel:"~60% self-sufficient, and falling",
+  trigger:"Input costs, labour shortages, weather; −16% fruit/veg since 2015",
+  tip:"UK food self-sufficiency fell from 65% to 60% by value in 2025; domestic fruit & veg production is down ~16% since 2015 — the home buffer is shrinking.",
+  euimpact:"The buffer that should absorb global shocks is thinning. As domestic output falls, a larger share of every shock passes straight through to shelves — the amplifier behind every other pathway on this map.",
+  mech:"The only node the UK sits on directly; its decline is what makes the borough a pure consumption geography.",
+  chain:["Input costs & weather cut domestic output","Self-sufficiency falls (65%→60%)","Import dependence rises","Global shocks hit Camden's shelves faster and harder"],
+  edges:[["produce"]]},
+
+ {id:"S8",name:"Marine & aquaculture protein",grp:"supply",kind:"pop",wt:12,lon:-77,lat:-12,heat:"risk",paths:["protein"],
+  region:"Peru upwelling + N. Atlantic fisheries",popLabel:"fishmeal for feed + wild-fish protein",
+  trigger:"El Niño, overfishing, warming & acidification",
+  tip:"The Peruvian anchoveta (the world's largest single fishery, and the basis of fishmeal) collapses in strong El Niño years; North Atlantic stocks are shifting under warming.",
+  euimpact:"A double protein hit: fishmeal feeds farmed fish and livestock, and wild fish are a direct protein source. El Niño can take out the largest feed fishery just as it stresses the breadbaskets.",
+  mech:"A climate-triggered protein pathway that couples ocean and land protein prices through feed.",
+  chain:["El Niño / overfishing cuts the fishery","Fishmeal & wild-fish supply falls","Aquaculture & livestock feed costs rise","Camden: protein supply tightens and reprices"],
+  edges:[["protein"]]},
+
+ /* ---- INPUT & CHOKEPOINT SYSTEMS ---- */
+ {id:"C1",name:"Strait of Hormuz",grp:"sys",kind:"sys",lon:56,lat:26,heat:"passing",paths:["input"],
+  region:"Persian Gulf",popLabel:"~⅓ of world fertiliser trade + LNG",
+  trigger:"Conflict / blockade (2026 Middle East escalation)",
+  tip:"Roughly a third of global seaborne fertiliser trade (~16 Mt/yr) routes through Hormuz; disruption pushed the World Bank fertiliser index to its highest since 2022.",
+  euimpact:"The master input chokepoint. Closing it raises the cost of the fertiliser and energy that grow every breadbasket's crop — a delayed but universal price rise arriving a season later.",
+  mech:"A single strait gating a third of the world's fertiliser and much of its gas — the feedstock behind next year's harvest.",
+  chain:["Hormuz disrupted","Fertiliser & gas exports blocked / repriced","Next-season yields cut as farmers cut application","Delayed, universal food-price rise reaches the UK"],
+  edges:[["input"]],modulates:["C2","C3","C4"]},
+
+ {id:"C2",name:"Gulf nitrogen & gas",grp:"sys",kind:"sys",lon:51,lat:30,heat:"risk",paths:["input"],
+  region:"Qatar · Iran · Gulf producers",popLabel:"nitrogen fertiliser + gas feedstock",
+  trigger:"Gas prices, Hormuz exposure, production halts",
+  tip:"World Bank projects urea up ~60% in 2026; Iran ceased ammonia production and Qatar suspended urea/ammonia/sulphur after facility damage.",
+  euimpact:"Nitrogen is the fertiliser that most directly sets cereal yields. A Gulf supply halt is a straight line to thinner harvests and higher grain prices worldwide.",
+  mech:"Gas-to-ammonia-to-urea: energy prices converted directly into the cost of growing calories.",
+  chain:["Gas price / production halt","Nitrogen fertiliser price spikes (urea +60%)","Cereal yields & margins squeezed","Grain prices rise into the UK"],
+  edges:[["input"]]},
+
+ {id:"C3",name:"Russia + Belarus potash",grp:"sys",kind:"sys",lon:44,lat:55,heat:"risk",paths:["input"],
+  region:"Russia · Belarus (with Canada)",popLabel:">two-thirds of world potash exports",
+  trigger:"Sanctions and export limits",
+  tip:"Potash exports are dominated by Canada, Russia and Belarus; sanctions on the latter two concentrate a critical nutrient in few, contested hands.",
+  euimpact:"Potash has no quick substitute and few suppliers. Restrictions here raise input costs across every crop, feeding slowly but broadly into food prices.",
+  mech:"An extreme producer-concentration risk for one of the three essential crop nutrients.",
+  chain:["Sanctions / export limits on potash","A concentrated nutrient tightens globally","Fertiliser costs rise across all crops","Slow, broad food-price pressure into the UK"],
+  edges:[["input"]]},
+
+ {id:"C4",name:"Morocco phosphate",grp:"sys",kind:"sys",lon:-8,lat:31,heat:"watch",paths:["input"],
+  region:"Morocco (+ China)",popLabel:"dominant phosphate rock reserves",
+  trigger:"Export policy and extreme reserve concentration",
+  tip:"Morocco holds the majority of the world's phosphate-rock reserves; China has periodically restricted phosphate exports — a structural concentration risk.",
+  euimpact:"The third essential nutrient, held even more narrowly than potash. Any restriction is a slow squeeze on global yields and therefore on price.",
+  mech:"A near-monopoly on a finite, non-substitutable crop nutrient.",
+  chain:["Export restriction / concentration","Phosphate availability tightens","Yields and fertiliser costs affected globally","Adds to the input-driven price floor in the UK"],
+  edges:[["input"]]},
+
+ {id:"C5",name:"Suez / Red Sea",grp:"sys",kind:"sys",lon:34,lat:22,heat:"risk",paths:["logistics"],
+  region:"Red Sea · Suez Canal",popLabel:"shipping lane for Asian & Gulf cargo",
+  trigger:"Attacks and diversions round the Cape",
+  tip:"Red Sea disruption forces long re-routes round the Cape of Good Hope, adding weeks and cost to food and fertiliser cargoes between Asia, the Gulf and Europe.",
+  euimpact:"A logistics multiplier: it doesn't destroy supply, it delays and reprices it — raising the landed cost of rice, produce and fertiliser reaching UK ports.",
+  mech:"A maritime chokepoint whose closure lengthens and reprices whole cargo classes at once.",
+  chain:["Red Sea / Suez disrupted","Cargoes re-route round the Cape","Freight cost & delay rise for food & fertiliser","Landed UK prices rise across categories"],
+  edges:[["logistics"]],modulates:["S1","S5"]},
+
+ {id:"C6",name:"H5N1 / livestock disease",grp:"sys",kind:"sys",lon:108,lat:40,heat:"risk",paths:["protein"],
+  region:"Global (avian influenza)",popLabel:"eggs & poultry protein",
+  trigger:"HPAI clade 2.3.4.4b; spillover into cattle",
+  tip:"H5N1 has caused 175M+ US bird losses since 2022 (illustrative of a global fragility); the UK runs its own recurrent housing-order cycle.",
+  euimpact:"A disease pathway that bypasses climate and trade entirely: it removes protein supply directly, spiking egg and poultry prices and thinning the cheapest animal protein.",
+  mech:"A recurring biological shock to the protein system, independent of and additive to the climate and fertiliser pathways.",
+  chain:["Avian-influenza outbreak / cull","Egg & poultry supply falls sharply","The cheapest animal protein reprices","Camden: protein deficit deepens for low-income households"],
+  edges:[["protein"]]},
+
+ {id:"C7",name:"El Niño / ENSO",grp:"sys",kind:"sys",lon:-110,lat:2,heat:"passing",paths:["climate"],
+  region:"Tropical Pacific",popLabel:"the multi-breadbasket climate driver",
+  trigger:"WMO 80–90% probability for 2026; possibly historic strength",
+  tip:"The WMO put the chance of El Niño over 2026 at 80–90%, with a possibility of an unprecedented event — the correlated stressor behind several breadbaskets at once.",
+  euimpact:"The master node. El Niño is why several sources on this map can fail in the same season — it correlates drought across South America, Australia, South Asia and the Pacific fishery, removing the diversification that normally protects the UK.",
+  mech:"A single climate oscillation that synchronises otherwise-independent breadbasket and fishery risks — the danger the whole model turns on.",
+  chain:["Strong El Niño develops (80–90%)","Correlated drought across breadbaskets & the Pacific fishery","Multiple sources fail in one season — no diversification","A synchronised, multiplicative price shock reaches the UK"],
+  edges:[["climate"]],modulates:["S3","S4","S5","S6","S8"]}
+];
+
+/* the UK core sink */
+const CORE={lon:-1,lat:52,label:"UK / CAMDEN"};
+/* protectionism feedback: a price spike at the core triggers export bans that thin the Black Sea market */
+const LOOP=[["S2","feedback"]];
+
+/* Resolve CSS custom properties to concrete colours (SVG setAttribute rejects var() in WebKit). */
+const cssVar=name=>getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+const PATH_COLOR={calorie:cssVar("--calorie"),protein:cssVar("--protein"),produce:cssVar("--produce"),
+  input:cssVar("--input"),logistics:cssVar("--logistics"),climate:cssVar("--climate"),feedback:cssVar("--feedback")};
+const HEAT={passing:cssVar("--heat-passing"),risk:cssVar("--heat-risk"),watch:cssVar("--heat-watch")};
+const HEAT_LABEL={passing:["Acute / disrupted now",HEAT.passing],risk:["High near-term risk",HEAT.risk],watch:["On watch",HEAT.watch]};
+
+const SVGNS="http://www.w3.org/2000/svg";
+const svg=document.getElementById("map");
+const el=(n,a={})=>{const e=document.createElementNS(SVGNS,n);for(const k in a)e.setAttribute(k,a[k]);return e;};
+const rOf=n=> n.kind==="sys" ? 8.5 : Math.max(7, Math.sqrt(n.wt)*1.7);
+
+const gGeo=el("g"),gEdge=el("g"),gOut=el("g"),gNode=el("g");
+
+/* graticule */
+for(let lon=-120;lon<=150;lon+=30){const[a,]=proj(lon,LAT1),[b,]=proj(lon,LAT0);gGeo.appendChild(el("line",{class:"grid-line",x1:a,y1:0,x2:b,y2:H}));}
+for(let lat=-30;lat<=60;lat+=30){const[,a]=proj(LON0,lat);gGeo.appendChild(el("line",{class:"grid-line",x1:0,y1:a,x2:W,y2:a}));}
+/* landmasses */
+CONTINENTS.forEach(obj=>{const ring=obj.ring;const d=ring.map((p,i)=>{const[x,y]=proj(p[0],p[1]);return (i?"L":"M")+x.toFixed(1)+" "+y.toFixed(1);}).join(" ")+" Z";gGeo.appendChild(el("path",{class:"continent"+(obj.eu?" eu":""),d}));});
+BASINS.forEach(([t,lon,lat])=>{const[x,y]=proj(lon,lat);const tx=el("text",{class:"basin-label",x,y});tx.textContent=t;gGeo.appendChild(tx);});
+
+/* arrowhead markers per colour */
+const defs=el("defs");
+Object.entries(PATH_COLOR).forEach(([k,c])=>{const m=el("marker",{id:"ah-"+k,viewBox:"0 0 10 10",refX:"8",refY:"5",markerWidth:"6",markerHeight:"6",orient:"auto-start-reverse"});m.appendChild(el("path",{d:"M0 1 L9 5 L0 9 z",fill:c}));defs.appendChild(m);});
+svg.appendChild(defs);
+
+function edgePath(a,b,curve=0.16){const[x1,y1]=a,[x2,y2]=b;const mx=(x1+x2)/2,my=(y1+y2)/2;const dx=x2-x1,dy=y2-y1;const nx=-dy,ny=dx;const cx=mx+nx*curve,cy=my+ny*curve;return `M${x1} ${y1} Q${cx} ${cy} ${x2} ${y2}`;}
+
+/* ---------- UK core sink ---------- */
+const corePos=proj(CORE.lon,CORE.lat);
+gOut.appendChild(el("circle",{class:"core-sink",cx:corePos[0],cy:corePos[1],r:30}));
+gOut.appendChild(el("circle",{class:"core-sink",cx:corePos[0],cy:corePos[1],r:20,opacity:.35}));
+const clab=el("text",{class:"core-label",x:corePos[0],y:corePos[1]-36,"text-anchor":"middle"});clab.textContent="UK / CAMDEN";gOut.appendChild(clab);
+
+/* build edges: each node → UK core, one per path, curved by hemisphere to reduce overlap */
+const EDGES=[];
+NODES.forEach(n=>{
+  const from=projC(n.lon,n.lat);
+  const side=from[0]<corePos[0]?1:-1;
+  (n.edges||[]).forEach((e,i)=>{
+    const type=e[0];
+    const curve=side*(0.10+0.05*i);
+    const path=el("path",{class:"edge flow",d:edgePath(from,corePos,curve),stroke:PATH_COLOR[type],
+      "stroke-width":Math.max(1.3,rOf(n)/7+0.6),"marker-end":`url(#ah-${type})`,"data-type":type,"data-owner":n.id,opacity:.85});
+    gEdge.appendChild(path);EDGES.push({path,type,owner:n.id});
+  });
+});
+/* protectionism feedback loop: core → breadbasket (dashed) */
+LOOP.forEach(([tid,type])=>{
+  const t=NODES.find(n=>n.id===tid);const to=projC(t.lon,t.lat);
+  const path=el("path",{class:"edge flow",d:edgePath(corePos,to,0.28),stroke:PATH_COLOR[type],"stroke-width":1.3,
+    "marker-end":`url(#ah-${type})`,"data-type":"feedback","data-owner":"__loop__",opacity:.5,"stroke-dasharray":"2 7"});
+  gEdge.appendChild(path);EDGES.push({path,type:"feedback",owner:"__loop__"});
+});
+/* modulation tethers */
+const MOD=[];
+NODES.filter(n=>n.modulates).forEach(n=>{
+  const from=projC(n.lon,n.lat);
+  n.modulates.forEach(tid=>{const t=NODES.find(m=>m.id===tid);const to=projC(t.lon,t.lat);
+    const path=el("path",{class:"modline",d:edgePath(from,to,0.12),"data-owner":n.id});
+    gEdge.appendChild(path);MOD.push({path,owner:n.id,target:tid});});
+});
+
+/* build system nodes */
+NODES.forEach((n,i)=>{
+  const[x,y]=projC(n.lon,n.lat);const r=rOf(n);
+  const g=el("g",{class:"bnode"+(n.grp==="sys"?" ext":""),tabindex:"0",role:"button","aria-label":n.name+" — "+n.popLabel+". "+n.trigger+"."});
+  g.style.animationDelay=(i*40)+"ms";
+  g.appendChild(el("circle",{cx:x,cy:y,r:Math.max(r+11,17),fill:"transparent"}));
+  g.appendChild(el("circle",{class:"focusring",cx:x,cy:y,r:r+7}));
+  g.appendChild(el("circle",{class:"halo",cx:x,cy:y,r:r+3.5,stroke:HEAT[n.heat]}));
+  if(n.kind==="sys"){g.appendChild(el("circle",{class:"sysring",cx:x,cy:y,r:r+6.5,stroke:"#9fb0cc","stroke-width":1}));}
+  g.appendChild(el("circle",{class:"core",cx:x,cy:y,r}));
+  const code=el("text",{class:"code",x,y});code.textContent=n.id;g.appendChild(code);
+  const near=y-r-8<16;
+  const nm=el("text",{class:"bname"});
+  nm.setAttribute("x", x>840? x-r-2 : (x<160? x+r+2 : x+r+4));
+  nm.setAttribute("y", near? y+r+13 : y-r-8);
+  nm.setAttribute("text-anchor", x>840?"end":"start");
+  nm.textContent=n.name;g.appendChild(nm);
+  g.addEventListener("click",e=>{e.stopPropagation();select(n.id);});
+  g.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();select(n.id);}});
+  g.addEventListener("mouseenter",()=>hoverIn(n.id));
+  g.addEventListener("mouseleave",hoverOut);
+  g.addEventListener("focus",()=>hoverIn(n.id));
+  g.addEventListener("blur",hoverOut);
+  gNode.appendChild(g);n._g=g;n._xy=[x,y];
+});
+
+svg.appendChild(gGeo);svg.appendChild(gEdge);svg.appendChild(gOut);svg.appendChild(gNode);
+svg.addEventListener("click",()=>select(null));
+
+/* ---------- filter chips ---------- */
+const TYPES=[["calorie","Calories"],["protein","Protein"],["produce","Produce"],["input","Input"],["logistics","Logistics"],["climate","Climate"],["feedback","Feedback"]];
+const tools=document.getElementById("tools");
+const active=new Set(TYPES.map(t=>t[0]));
+TYPES.forEach(([k,label])=>{
+  const b=document.createElement("button");b.type="button";b.className="chip";b.setAttribute("aria-pressed","true");
+  b.innerHTML=`<span class="sw" style="background:${PATH_COLOR[k]}"></span>${label}`;
+  b.addEventListener("click",()=>{if(active.has(k)){active.delete(k);b.setAttribute("aria-pressed","false");}else{active.add(k);b.setAttribute("aria-pressed","true");}applyFilter();});
+  tools.appendChild(b);
+});
+function applyFilter(){EDGES.forEach(e=>{e.path.style.display=active.has(e.type)?"":"none";});MOD.forEach(m=>{m.path.style.display=active.has("feedback")?"":"none";});}
+applyFilter();
+
+/* ---------- selection & highlight ---------- */
+let current=null;
+const primaryType=n=>(n.edges&&n.edges[0])?n.edges[0][0]:"feedback";
+function applyHighlight(id){
+  if(!id){
+    EDGES.forEach(e=>e.path.classList.remove("dimmed","hot"));
+    MOD.forEach(m=>{m.path.classList.remove("dimmed","hot");m.path.style.opacity="";});
+    NODES.forEach(n=>n._g.classList.remove("dimmed"));
+    document.querySelectorAll(".idx-row").forEach(r=>r.classList.remove("active"));
+    return;
+  }
+  const n=NODES.find(x=>x.id===id);
+  const related=new Set([id,...(n.modulates||[])]);
+  EDGES.forEach(e=>{const lit=e.owner===id;e.path.classList.toggle("hot",lit);e.path.classList.toggle("dimmed",!lit);});
+  MOD.forEach(m=>{const on=m.owner===id;m.path.classList.toggle("hot",on);m.path.classList.toggle("dimmed",!on);m.path.style.opacity=on?"0.9":"";});
+  NODES.forEach(x=>x._g.classList.toggle("dimmed",!related.has(x.id)));
+  document.querySelectorAll(".idx-row").forEach(r=>r.classList.toggle("active",r.dataset.id===id));
+}
+function setPanel(id){
+  const ov=document.getElementById("dz-overview"),dt=document.getElementById("dz-detail"),status=document.getElementById("sr-status");
+  if(!id){ov.classList.add("on");dt.classList.remove("on");document.getElementById("pk").textContent="Reading the map";document.getElementById("pt").textContent="Legend & method";if(status)status.textContent="Legend and method shown.";return;}
+  const n=NODES.find(x=>x.id===id);
+  ov.classList.remove("on");dt.classList.add("on");
+  document.getElementById("pk").textContent=n.region;
+  document.getElementById("pt").textContent=n.name;
+  const[hl,hc]=HEAT_LABEL[n.heat];
+  const grpLabel=n.grp==="sys"?"Input / chokepoint — lands on supply":"Supply source — the UK imports it";
+  if(status)status.textContent=`${n.name}. ${grpLabel}. ${n.region}. Supplies: ${n.popLabel}. Status: ${hl}. ${n.euimpact||n.mech}`;
+  document.getElementById("meta").innerHTML=`
+    <div class="meta-k">Class</div><div class="meta-v">${grpLabel}</div>
+    <div class="meta-k">Supplies</div><div class="meta-v"><span class="big">${n.popLabel}</span></div>
+    <div class="meta-k">Trigger</div><div class="meta-v">${n.trigger}</div>
+    <div class="meta-k">Status</div><div class="meta-v"><span class="tip-badge" style="background:${hc}">${hl}</span></div>`;
+  document.getElementById("mechwrap").innerHTML=`
+    <p class="mech">${n.mech}</p>
+    ${n.euimpact?`<p class="sec-h">Why it reaches Camden</p><p class="mech euimpact">${n.euimpact}</p>`:""}
+    ${n.tip?`<p class="sec-h">Exposure evidence</p><p class="mech tipnote">${n.tip}</p>`:""}
+    <p class="sec-h">Cascade to the UK shelf</p>
+    <ul class="chain">${n.chain.map((c,i)=>`<li class="${i===n.chain.length-1?'landfall':''}">${c}</li>`).join("")}</ul>`;
+}
+function select(id){current=id;setPanel(id);applyHighlight(id);}
+function hoverIn(id){applyHighlight(id);}
+function hoverOut(){applyHighlight(current);}
+
+/* ---------- node index (grouped) ---------- */
+(function buildIndex(){
+  const host=document.getElementById("nodeindex");
+  const groups=[["supply","Supply sources — the UK imports from them"],["sys","Input & chokepoint systems — disruption lands on supply"]];
+  groups.forEach(([g,label])=>{
+    const h=document.createElement("p");h.className="idx-group-h"+(g==="sys"?" ext":"");h.textContent=label;host.appendChild(h);
+    NODES.filter(n=>n.grp===g).forEach(n=>{
+      const row=document.createElement("button");row.type="button";row.className="idx-row";row.dataset.id=n.id;
+      row.setAttribute("aria-label",n.name+" — "+n.popLabel);
+      const codeCls="idx-code "+(n.grp==="sys"?"ext":"");
+      row.innerHTML=`<span class="${codeCls}">${n.id}</span><span><span class="idx-name">${n.name}</span><span class="idx-dep">${n.popLabel}</span></span><span class="idx-dot" style="background:${PATH_COLOR[primaryType(n)]}"></span>`;
+      row.addEventListener("click",()=>select(n.id));
+      row.addEventListener("mouseenter",()=>hoverIn(n.id));
+      row.addEventListener("mouseleave",hoverOut);
+      host.appendChild(row);
+    });
+  });
+})();
+
+if(window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches){document.querySelectorAll(".edge.flow").forEach(e=>e.classList.remove("flow"));}
+document.addEventListener("keydown",e=>{
+  if(e.key==="Escape"){const g=current?NODES.find(n=>n.id===current)?._g:null;select(null);if(g&&typeof g.focus==="function")g.focus();return;}
+  if(e.key!=="ArrowRight"&&e.key!=="ArrowLeft")return;
+  const t=document.activeElement;if(t&&(t.classList.contains("chip")||t.classList.contains("idx-row")))return;
+  e.preventDefault();
+  const i=current?NODES.findIndex(n=>n.id===current):-1;const step=e.key==="ArrowRight"?1:-1;
+  const next=NODES[(i+step+NODES.length)%NODES.length];select(next.id);next._g.focus();
+});
+</script>
+</body>
+</html>
