@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Sovereign Food System (Draft)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#101010; --ink-2:#171717; --surface:#1a1a1a;
+    --paper:#f5f5f2; --paper-dim:#a3a39c;
+    --line: rgba(245,245,242,0.14); --line-strong: rgba(245,245,242,0.26);
+    --supply:#c98a3b; --hub:#2e7d6b; --demand:#ff5a1f;
+    --display:"Poppins", sans-serif; --body:"Poppins", sans-serif; --mono:"IBM Plex Mono", monospace;
+    --maxw:1180px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0; background:var(--ink); color:var(--paper); font-family:var(--body); font-size:17px; line-height:1.6; -webkit-font-smoothing:antialiased;}
+  @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto;} }
+  h1,h2,h3,h4{font-family:var(--display); margin:0; font-weight:600; letter-spacing:-0.01em;}
+  a{color:inherit;}
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 32px;}
+  .eyebrow{font-family:var(--mono); text-transform:uppercase; letter-spacing:0.14em; font-size:12px; color:var(--paper-dim); display:flex; align-items:center; gap:10px;}
+  .eyebrow::before{content:""; width:16px; height:2px; background:var(--paper-dim); display:inline-block;}
+  .roadline{height:1px; background-image:repeating-linear-gradient(90deg, var(--line-strong) 0 22px, transparent 22px 40px);}
+
+  header{position:sticky; top:0; z-index:50; background:rgba(16,16,16,0.9); backdrop-filter:blur(8px); border-bottom:1px solid var(--line);}
+  nav{display:flex; align-items:center; justify-content:space-between; max-width:var(--maxw); margin:0 auto; padding:16px 32px;}
+  .brand{display:flex; align-items:center; gap:10px; font-family:var(--mono); font-size:13px; letter-spacing:0.04em; text-decoration:none; text-transform:uppercase;}
+  .dm-logo{height:22px; width:auto; display:block; border-radius:3px;}
+  .brand-div{color:var(--line-strong); font-weight:400;}
+  .navlinks{display:flex; gap:22px; font-family:var(--mono); font-size:12px; letter-spacing:0.05em;}
+  .navlinks a{text-decoration:none; color:var(--paper-dim); text-transform:uppercase; transition:color .2s;}
+  .navlinks a:hover{color:var(--paper);}
+  @media (max-width:900px){ .navlinks{display:none;} }
+
+  .hero{padding:88px 0 56px;}
+  .hero h1{font-size:clamp(38px, 5.6vw, 68px); line-height:1.02; margin:16px 0 6px;}
+  .hero .subtitle{font-family:var(--mono); font-size:13px; letter-spacing:0.04em; color:var(--paper-dim); text-transform:uppercase; margin:0 0 18px;}
+  .hero p.lede{font-size:18px; max-width:680px; margin:0 0 24px; opacity:0.94;}
+  .hero .meta{font-family:var(--mono); font-size:12.5px; color:var(--paper-dim); border-top:1px solid var(--line); padding-top:14px; max-width:760px;}
+  .hero .credit-line{font-family:var(--mono); font-size:11.5px; color:var(--paper-dim); opacity:0.75; max-width:760px; margin-top:10px; line-height:1.6;}
+  .btn{font-family:var(--mono); font-size:12.5px; text-transform:uppercase; letter-spacing:0.07em; padding:12px 18px; border:1px solid var(--line-strong); text-decoration:none; display:inline-flex; align-items:center; gap:8px; transition:all .2s; color:var(--paper);}
+  .btn.solid{background:var(--paper); border-color:var(--paper); color:var(--ink); font-weight:600;}
+  .btn:hover{border-color:var(--paper); color:var(--paper);}
+  .cta-row{display:flex; gap:14px; flex-wrap:wrap; margin:22px 0 0;}
+
+  section{padding:72px 0;}
+  section.tight{padding:52px 0;}
+  .section-head{max-width:720px; margin-bottom:36px;}
+  .section-head h2{font-size:clamp(26px,3vw,38px); margin-top:12px;}
+  .section-head p{color:var(--paper-dim); font-size:15.5px; margin-top:12px;}
+
+  .plain-summary{background: rgba(245,245,242,0.06); border-left:3px solid var(--paper-dim); padding:16px 20px; margin:16px 0 6px; max-width:680px;}
+  .plain-summary .ps-label{font-family:var(--mono); font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:var(--paper-dim); display:block; margin-bottom:8px;}
+  .plain-summary p{font-size:15px; line-height:1.55; margin:0; color:var(--paper); opacity:0.95;}
+
+  /* audience cards */
+  .audience-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:16px;}
+  @media (max-width:1000px){ .audience-grid{grid-template-columns:repeat(2,1fr);} }
+  @media (max-width:600px){ .audience-grid{grid-template-columns:1fr;} }
+  .audience-card{border:1px solid var(--line); padding:20px 18px; background:var(--surface);}
+  .a-tag{font-family:var(--mono); font-size:10.5px; letter-spacing:0.07em; color:var(--paper-dim); text-transform:uppercase; margin-bottom:12px;}
+  .audience-card h3{font-size:16px; line-height:1.3; margin-bottom:8px;}
+  .audience-card p{font-size:13.5px; color:var(--paper-dim); margin:0;}
+
+  /* diagnosis plaques */
+  .plaques{display:grid; grid-template-columns:repeat(5,1fr); gap:14px;}
+  @media (max-width:1050px){ .plaques{grid-template-columns:repeat(2,1fr);} }
+  @media (max-width:600px){ .plaques{grid-template-columns:1fr;} }
+  .plaque{background:var(--surface); border:1px solid var(--line); padding:20px 16px;}
+  .plaque .code{font-family:var(--mono); font-size:11px; color:var(--paper-dim); letter-spacing:0.06em;}
+  .plaque h3{font-size:15.5px; margin:10px 0 8px; line-height:1.25;}
+  .plaque p{font-size:13px; color:var(--paper-dim); margin:0; line-height:1.5;}
+
+  /* vision goals */
+  .goals-grid{display:grid; grid-template-columns:repeat(5,1fr); gap:14px;}
+  @media (max-width:1050px){ .goals-grid{grid-template-columns:repeat(2,1fr);} }
+  @media (max-width:600px){ .goals-grid{grid-template-columns:1fr;} }
+  .goal-card{border-top:2px solid var(--paper-dim); padding-top:14px;}
+  .goal-num{font-family:var(--mono); font-size:12px; color:var(--paper-dim); margin-bottom:8px;}
+  .goal-card h4{font-size:15px; margin-bottom:6px; line-height:1.3;}
+  .goal-card p{font-size:13px; color:var(--paper-dim); margin:0; line-height:1.5;}
+
+  /* accordions */
+  .accordion{border:1px solid var(--line); background:var(--surface); margin-bottom:8px;}
+  .accordion summary{cursor:pointer; padding:15px 18px; display:flex; align-items:baseline; gap:14px; list-style:none; font-family:var(--display); font-size:15.5px; font-weight:600;}
+  .accordion summary::-webkit-details-marker{display:none;}
+  .accordion summary::after{content:"+"; margin-left:auto; font-family:var(--mono); color:var(--paper-dim); font-size:19px; flex:none;}
+  .accordion[open] summary::after{content:"\2013";}
+  .accordion .acc-code{font-family:var(--mono); font-size:10.5px; color:var(--paper-dim); letter-spacing:0.05em; flex:none; min-width:38px; padding-top:2px;}
+  .accordion .acc-body{padding:0 18px 18px 18px;}
+  .accordion .acc-body p{font-size:14.5px; color:var(--paper-dim); line-height:1.65; margin:0;}
+  .accordion .acc-body strong{color:var(--paper);}
+  .accordion.level-local{border-left:3px solid var(--supply);}
+  .accordion.level-regional{border-left:3px solid var(--hub);}
+  .accordion.level-national{border-left:3px solid var(--demand);}
+  .accordion.level-money{border-left:3px solid var(--paper-dim);}
+
+  .level-legend{display:flex; gap:22px; flex-wrap:wrap; margin-bottom:28px; font-family:var(--mono); font-size:11.5px; letter-spacing:0.04em; color:var(--paper-dim);}
+  .level-legend span{display:inline-flex; align-items:center; gap:8px;}
+  .level-legend .dot{width:10px; height:10px; display:inline-block;}
+  .dot-local{background:var(--supply);} .dot-regional{background:var(--hub);} .dot-national{background:var(--demand);} .dot-money{background:var(--paper-dim);}
+
+  /* phases */
+  .phases-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:0; border:1px solid var(--line);}
+  @media (max-width:900px){ .phases-grid{grid-template-columns:1fr;} }
+  .phase-card{padding:22px 20px; border-left:1px solid var(--line);}
+  .phase-card:first-child{border-left:none;}
+  @media (max-width:900px){ .phase-card{border-left:none; border-top:1px solid var(--line);} .phase-card:first-child{border-top:none;} }
+  .phase-num{font-family:var(--mono); font-size:11px; letter-spacing:0.07em; color:var(--paper-dim); margin-bottom:10px;}
+  .phase-card h4{font-size:16px; margin-bottom:6px;}
+  .phase-who{font-family:var(--mono); font-size:12px; color:var(--paper-dim); margin-bottom:10px; opacity:0.85;}
+  .phase-card p{font-size:13.5px; color:var(--paper-dim); margin:0; line-height:1.55;}
+
+  /* vision scenario expand */
+  .scenario-toggle{margin-top:24px;}
+
+  footer{border-top:1px solid var(--line); padding:44px 0 32px;}
+  .foot-grid{display:flex; justify-content:space-between; gap:32px; flex-wrap:wrap;}
+  .foot-brand{font-family:var(--mono); font-size:12.5px; max-width:420px; color:var(--paper-dim); line-height:1.6;}
+  .foot-brand strong{color:var(--paper); font-family:var(--display); display:block; font-size:15px; margin-bottom:8px;}
+  .foot-col h5{font-family:var(--mono); font-size:11px; text-transform:uppercase; letter-spacing:0.06em; color:var(--paper-dim); margin-bottom:10px;}
+  .foot-col a{display:block; font-size:13.5px; margin-bottom:7px; text-decoration:none; color:var(--paper); opacity:0.85;}
+  .foot-col a:hover{color:var(--paper); opacity:1;}
+  .foot-bottom{margin-top:32px; padding-top:16px; border-top:1px solid var(--line); font-family:var(--mono); font-size:11px; color:var(--paper-dim); display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;}
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <a class="brand" href="https://darkmatterlabs.org/" target="_blank" rel="noopener">
+      <img src="https://darkmatterlabs.org/_next/static/media/DmLogoFull.d4ebb743.png" alt="Dark Matter Labs" class="dm-logo">
+      <span class="brand-div">/</span>SOVEREIGN FOOD SYSTEM
+    </a>
+    <div class="navlinks">
+      <a href="#diagnosis">Diagnosis</a>
+      <a href="#vision">Vision</a>
+      <a href="#local">Local</a>
+      <a href="#money">Money</a>
+      <a href="#regional">Regional</a>
+      <a href="#national">National</a>
+      <a href="#sovereign">Sovereign Money</a>
+      <a href="#implementation">Implementation</a>
+    </div>
+  </nav>
+</header>
+
+<!-- ===================== HERO ===================== -->
+<section class="hero">
+  <div class="wrap">
+    <div class="eyebrow">A UBNI MISSION RESOURCE — MUNICIPAL · REGIONAL · NATIONAL</div>
+    <h1>A Sovereign Food System</h1>
+    <p class="subtitle">Draft: Unpublished work from our work in Sweden</p>
+    <p class="lede">A food system doesn't become resilient through better intentions. It becomes resilient when the money running through it &mdash; who creates it, who gets it first, how it circulates, how it's withdrawn &mdash; is redesigned to reward nourishment, preparedness and local value instead of cheap calories and leakage. This is a portfolio of economic and monetary instruments for doing exactly that, from a municipal kitchen contract to a central bank's digital currency.</p>
+    <div class="cta-row">
+      <a class="btn solid" href="#diagnosis">Start with the diagnosis ↓</a>
+      <a class="btn" href="#local">Jump to local tools ↗</a>
+    </div>
+    <div class="meta">SCOPE — instruments designed for Swedish municipal, regional and national institutions · LOGIC — each instrument stands alone, but the portfolio compounds when instruments are combined and sequenced · PRIMARY ENTRY POINT — municipalities, who hold the most levers closest to the food system</div>
+    <div class="credit-line">Adapted from <em>A Sovereign Food System</em>, written by Samuel F&auml;rdow Kazen (Positiva Pengar), Jessica Johansson and Gino Carciola (Milj&ouml;Matematik Malm&ouml;), and Aleksander Nowak (Dark Matter Labs), as part of the Universal Basic Nutrient Income (UBNI) mission — a collaboration with RISE Research Institutes of Sweden and Krinova, supported by Vinnova.</div>
+  </div>
+</section>
+
+<div class="wrap"><div class="roadline"></div></div>
+
+<!-- ===================== AUDIENCE ===================== -->
+<section class="tight" id="audience">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">WHO THIS IS FOR</div>
+      <h2>Four ways in</h2>
+    </div>
+    <div class="audience-grid">
+      <div class="audience-card">
+        <div class="a-tag">Municipal official</div>
+        <h3>Public meals, procurement, land, preparedness</h3>
+        <p>This maps the economic tools already inside your mandate, and shows how to combine them into a local food transition strategy.</p>
+      </div>
+      <div class="audience-card">
+        <div class="a-tag">Regional authority</div>
+        <h3>Public health, healthcare financing, infrastructure</h3>
+        <p>Shows how food-system investment at regional level can cut healthcare costs, build resilience, and coordinate what municipalities are already doing.</p>
+      </div>
+      <div class="audience-card">
+        <div class="a-tag">National policymaker</div>
+        <h3>Central bank, treasury, parliament</h3>
+        <p>Proposes the enabling infrastructure &mdash; frameworks, fiscal instruments, investment banks and monetary tools &mdash; that make local and regional action scale coherently.</p>
+      </div>
+      <div class="audience-card">
+        <div class="a-tag">Producer &amp; civil society</div>
+        <h3>Farms, cooperatives, food hubs, investors</h3>
+        <p>Maps the policy environment that could support your work, and the economic circuits you could realistically become part of.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== DIAGNOSIS ===================== -->
+<section id="diagnosis">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">THE DIAGNOSIS</div>
+      <h2>A mispriced economy, not a failing one</h2>
+      <p>Food's real costs &mdash; to public health, ecosystems, rural economies and future resilience &mdash; almost never show up at the point of purchase. That single fact drives five distinct, compounding failures.</p>
+      <div class="plain-summary">
+        <span class="ps-label">In plain terms</span>
+        <p>The food that's worst for us and the planet is often the cheapest, because nobody has to pay its real costs upfront. Fixing that price signal is the lever everything else in this page pulls on.</p>
+      </div>
+    </div>
+    <div class="plaques">
+      <div class="plaque ">
+        <div class="code">01</div>
+        <h3>Preparedness &amp; Resilience</h3>
+        <p>Food production depends heavily on imported fertiliser, feed and fuel, while retail is concentrated in a handful of dominant chains &mdash; a system optimised for efficiency in calm conditions and fragile under shock.</p>
+      </div>
+      <div class="plaque ">
+        <div class="code">02</div>
+        <h3>Environmental Degradation</h3>
+        <p>Emissions, biodiversity loss, soil depletion and nutrient pollution carry no price at the point of purchase, so the food doing the most damage often remains the cheapest on the shelf.</p>
+      </div>
+      <div class="plaque ">
+        <div class="code">03</div>
+        <h3>Healthcare Costs</h3>
+        <p>Unhealthy diets are cheap and convenient by design, while preventive nutrition remains structurally underfunded &mdash; diet-related disease becomes one of the largest, most preventable cost lines in the welfare system.</p>
+      </div>
+      <div class="plaque ">
+        <div class="code">04</div>
+        <h3>Inequality</h3>
+        <p>Healthy, sustainable food is structurally more expensive and harder to access, so the diets most likely to protect long-term health are the ones lowest-income households can least afford.</p>
+      </div>
+      <div class="plaque ">
+        <div class="code">05</div>
+        <h3>Rural Economic Stagnation</h3>
+        <p>Value is extracted from food-producing regions rather than retained and recirculated locally &mdash; leaving rural places less economically viable and harder to sustain for the next generation.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="roadline"></div></div>
+
+<!-- ===================== VISION ===================== -->
+<section id="vision">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">THE VISION</div>
+      <h2>Five goals for 2040</h2>
+      <p>A sovereign food system means moving from &ldquo;enough calories&rdquo; to a society genuinely able to provide nutritious, culturally meaningful food within planetary boundaries &mdash; even during crisis.</p>
+    </div>
+    <div class="goals-grid">
+      <div class="goal-card">
+        <div class="goal-num">I</div>
+        <h4>Prepared &amp; resilient</h4>
+        <p>Less dependent on imported inputs, healthier soils, able to withstand shocks and global disruption.</p>
+      </div>
+      <div class="goal-card">
+        <div class="goal-num">II</div>
+        <h4>Environmentally sustainable</h4>
+        <p>Agroecological and regenerative production, shorter supply chains, genuinely circular systems.</p>
+      </div>
+      <div class="goal-card">
+        <div class="goal-num">III</div>
+        <h4>Healthy &amp; nourishing</h4>
+        <p>Plant-forward, minimally processed diets that are the convenient and affordable default, not the exception.</p>
+      </div>
+      <div class="goal-card">
+        <div class="goal-num">IV</div>
+        <h4>Equitable &amp; fair</h4>
+        <p>Fair compensation for producers, less power concentration in the value chain, food as a guaranteed social right.</p>
+      </div>
+      <div class="goal-card">
+        <div class="goal-num">V</div>
+        <h4>Economically revitalising</h4>
+        <p>Local value retained and recirculated, rural municipalities strong enough to attract the next generation.</p>
+      </div>
+
+    </div>
+    <details class="accordion level-money scenario-toggle">
+      <summary><span class="acc-code">2040</span><span>Read the full scenario</span></summary>
+      <div class="acc-body">
+        <p>By 2040, the turning point at national level is a Food Sovereignty Framework with a Universal Basic Nutrient Income (UBNI) at its centre &mdash; every resident holds a nutritional entitlement to healthy, sustainably produced food, administered through a NutrientBank that manages which foods qualify and adjusts that list as supply conditions change. It's financed through a fiscal system rebalanced around true cost accounting: foods that generate public costs carry those costs, foods that generate public value are made cheaper. A national investment bank channels patient capital into regional processing and storage, and the e-krona &mdash; a public digital currency &mdash; carries UBNI payments directly to residents.</p>
+        <p style="margin-top:14px;">At regional level, healthcare becomes an engine of change: health impact bonds finance food-as-medicine programmes that prescribe fresh food through primary care, paid for out of the diet-related disease costs they prevent. At municipal level &mdash; where the transformation is most tangible &mdash; procurement criteria open kitchens to smaller producers, living preparedness storages replace static stockpiles, land is managed under long-term stewardship, and Food for Work programmes move people from unemployment into agroecological skills. Many municipalities issue local food credits, interoperable with the e-krona, keeping value circulating locally for months instead of leaking out through national chains within days.</p>
+        <p style="margin-top:14px;">The system isn't finished and isn't perfect &mdash; true cost accounting remains contested at its edges, and global volatility still tests the buffers. But the five outcomes the old system couldn't deliver &mdash; preparedness, environmental regeneration, health, equity and a revitalised local economy &mdash; are no longer working against the grain of the economy. They're what the economy is designed to produce.</p>
+      </div>
+    </details>
+  </div>
+</section>
+
+<div class="wrap"><div class="roadline"></div></div>
+
+<!-- ===================== LOCAL ===================== -->
+<section id="local">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">MUNICIPAL LEVEL — THE PRIMARY ENTRY POINT</div>
+      <h2>Thirteen local instruments</h2>
+      <p>Municipalities hold the most practical, immediately actionable levers &mdash; public meals, procurement, land, waste streams, social programmes and preparedness responsibilities, combined with local knowledge. Expand any instrument below for what it does and a real example of it working.</p>
+    </div>
+    <div class="level-legend">
+      <span><span class="dot dot-local"></span>Municipal</span>
+      <span><span class="dot dot-money"></span>Money &amp; currency design</span>
+      <span><span class="dot dot-regional"></span>Regional</span>
+      <span><span class="dot dot-national"></span>National</span>
+    </div>
+      <details class="accordion level-local">
+        <summary><span class="acc-code">4.1</span><span>Innovative Public Procurement</span></summary>
+        <div class="acc-body"><p>Use procurement thresholds, legally-justified award criteria (health, environment, resilience, animal welfare), and local-currency payment bonuses to steer public meal contracts toward local, organic and resilient suppliers &mdash; without breaching EU state-aid rules. <strong>In practice:</strong> S&ouml;dert&auml;lje now runs rolling &ldquo;preparedness as a service&rdquo; contracts with regional producers, aiming for around 30% of the municipality&rsquo;s food supply to come from them.</p></div>
+      </details>
+      <details class="accordion level-local">
+        <summary><span class="acc-code">4.2</span><span>A Living Preparedness Storage</span></summary>
+        <div class="acc-body"><p>Replace static emergency stockpiles with a continuously-used community pantry: producers place food into shared storage and retain ownership until it sells, while the system rotates stock automatically so reserves stay fresh and double as everyday supply. <strong>Precedent:</strong> Finland&rsquo;s National Emergency Supply Agency runs this logic at national scale &mdash; this translates it to municipal scale, connected directly to local producers.</p></div>
+      </details>
+      <details class="accordion level-local">
+        <summary><span class="acc-code">4.3</span><span>Food as an Employee Benefit</span></summary>
+        <div class="acc-body"><p>Extend existing tax-favoured wellness-allowance frameworks to cover nutritious food directly &mdash; a &ldquo;<em>friskmatsbidrag</em>&rdquo; &mdash; giving employers a recognised way to subsidise healthy eating the same way they already subsidise gym membership. France&rsquo;s meal-voucher system and Finland&rsquo;s tax-favoured lunch benefit show the regulatory path already exists elsewhere.</p></div>
+      </details>
+      <details class="accordion level-local">
+        <summary><span class="acc-code">4.4</span><span>Food as Livelihood Support</span></summary>
+        <div class="acc-body"><p>Move social assistance from one-off food boxes toward food vouchers, nutrient credits, and eventually a full Universal Basic Nutrient Income &mdash; guaranteed monthly purchasing power for pre-approved healthy food, preserving dignity and choice. <strong>In practice:</strong> Montpellier&rsquo;s Caisse Alimentaire Commune cut food insecurity among participants from 11% to 5%, paid through a local currency.</p></div>
+      </details>
+      <details class="accordion level-local">
+        <summary><span class="acc-code">4.5</span><span>Food for Work</span></summary>
+        <div class="acc-body"><p>Pay unemployed people, young people outside work or education, and people in rehabilitation to work in agroecological food production, land restoration and preparedness infrastructure &mdash; meaningful, labour-intensive work that a mechanised food system rarely offers. <strong>In practice:</strong> Barcelona&rsquo;s green-trades apprenticeships move roughly three-quarters of participants into work or further study.</p></div>
+      </details>
+      <details class="accordion level-local">
+        <summary><span class="acc-code">4.6</span><span>Food as Medicine (municipal)</span></summary>
+        <div class="acc-body"><p>Treat the food a municipality already controls &mdash; school meals, elderly care, public kitchens &mdash; as a preventive health tool, not just a cost line. Sweden&rsquo;s own school-lunch reform has been linked to higher lifetime earnings, with the largest gains among children from poorer households.</p></div>
+      </details>
+      <details class="accordion level-local">
+        <summary><span class="acc-code">4.7</span><span>Protect &amp; Secure Farmland</span></summary>
+        <div class="acc-body"><p>Create protected food-production reserves &mdash; land held specifically for cultivation, equipped with water access, storage and shared logistics, leased to new growers and cooperatives on terms that reward agroecological practice.</p></div>
+      </details>
+      <details class="accordion level-local">
+        <summary><span class="acc-code">4.8</span><span>Land Conversion: Perennial Systems</span></summary>
+        <div class="acc-body"><p>Fund the shift from annual cropping to orchards, agroforestry and perennial vegetables on municipal or private land &mdash; production that builds soil, sequesters carbon, supports pollinators and pays back over decades rather than seasons.</p></div>
+      </details>
+      <details class="accordion level-local">
+        <summary><span class="acc-code">4.9</span><span>Local Carbon Credits &amp; Transition Income</span></summary>
+        <div class="acc-body"><p>Let the municipality and local businesses become anchor buyers of carbon, biodiversity and ecosystem-service credits &mdash; rewarding farmers for public benefits alongside food, creating a new income stream that makes regenerative practice financially viable.</p></div>
+      </details>
+      <details class="accordion level-local">
+        <summary><span class="acc-code">4.10</span><span>Municipal Cows &amp; Pigs as a Service</span></summary>
+        <div class="acc-body"><p>Procure grazing and landscape management as a service rather than simply buying meat: farmers are contracted to keep animals on municipal land for biodiversity upkeep, with the resulting meat feeding schools and care homes.</p></div>
+      </details>
+      <details class="accordion level-local">
+        <summary><span class="acc-code">4.11</span><span>Part-Time Growers &amp; Civic Production</span></summary>
+        <div class="acc-body"><p>Open municipal food production to anyone &mdash; workers, retirees, students, newcomers, people in rehabilitation &mdash; for one day a week in exchange for pay, building food literacy and identifying the next generation of growers and food entrepreneurs.</p></div>
+      </details>
+      <details class="accordion level-local">
+        <summary><span class="acc-code">4.12</span><span>Large-Scale Composting &amp; Soil Inputs</span></summary>
+        <div class="acc-body"><p>Turn garden waste and food residue into local soil fertility at scale, rewarding residents for the biomass they contribute and reducing dependence on synthetic fertiliser imports.</p></div>
+      </details>
+      <details class="accordion level-local">
+        <summary><span class="acc-code">4.13</span><span>Local Fund for Nature-Based Solutions</span></summary>
+        <div class="acc-body"><p>Pool municipal, business and resident capital into a fund that finances wetlands, agroforestry and soil restoration, with contributors receiving modest returns or local credits in exchange.</p></div>
+      </details>
+
+  </div>
+</section>
+
+<!-- ===================== MONEY ===================== -->
+<section id="money" class="tight" style="background:var(--surface); border-top:1px solid var(--line); border-bottom:1px solid var(--line);">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">REDESIGNING MONEY ITSELF</div>
+      <h2>What a local currency is actually for</h2>
+      <p>A municipal complementary currency isn't a gimmick &mdash; it's one of the fastest, cheapest ways to change behaviour when budgets and legal room are both tight. It shows up as an option throughout the local instruments above.</p>
+      <div class="plain-summary">
+        <span class="ps-label">In plain terms</span>
+        <p>A council can create its own local money, spendable mainly with local producers and shops, and use it to top up wages, pay part of a supplier contract, or reward organic and low-carbon deliveries &mdash; all without breaking EU competition rules.</p>
+      </div>
+    </div>
+      <details class="accordion level-money">
+        <summary><span class="acc-code">5.2</span><span>What a Local Currency Actually Does</span></summary>
+        <div class="acc-body"><p>A municipal complementary currency can be designed to reward the exact behaviours a food transition needs: bonus payments for organic or local produce, &ldquo;eco-demurrage&rdquo; that loses value unless spent on sustainable categories, and guaranteed circulation within the local economy rather than leaking out through national chains within days.</p></div>
+      </details>
+      <details class="accordion level-money">
+        <summary><span class="acc-code">5.3</span><span>Local Currency in Public Procurement</span></summary>
+        <div class="acc-body"><p>A council can require part of a supplier payment &mdash; say 30% &mdash; in its own local currency without breaching EU competition law, provided the currency is open to anyone on equal, non-discriminatory terms. It ends up favouring local suppliers through genuine market attractiveness, not legal restriction.</p></div>
+      </details>
+      <details class="accordion level-money">
+        <summary><span class="acc-code">5.2b</span><span>Designing the Currency</span></summary>
+        <div class="acc-body"><p>Four design choices determine what a local currency actually achieves: who is allowed to issue it, what spending behaviour it rewards, how it&rsquo;s eventually taken back out of circulation, and who governs those decisions democratically. Get these four right and the currency does real work; get them wrong and it&rsquo;s just a gift card.</p></div>
+      </details>
+
+  </div>
+</section>
+
+<!-- ===================== REGIONAL ===================== -->
+<section id="regional">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">REGIONAL LEVEL</div>
+      <h2>Where healthcare becomes the engine</h2>
+      <p>Regions carry the healthcare cost of diet-related disease directly &mdash; which makes them the natural home for financing prevention as infrastructure, not just treatment.</p>
+    </div>
+      <details class="accordion level-regional">
+        <summary><span class="acc-code">6.1</span><span>Food as Medicine (regional)</span></summary>
+        <div class="acc-body"><p>Diet-related disease costs Swedish regions tens of billions of kronor a year in healthcare spending, while only a few percent of health budgets go toward prevention. Targeted food prescriptions, medically tailored meals and dietary support for high-risk patients can be financed upfront through <strong>health impact bonds</strong> &mdash; investors fund the intervention, and repayment is tied to the healthcare costs it verifiably avoids. <strong>In practice:</strong> Region Stockholm&rsquo;s diabetes-prevention bond and Region Uppsala&rsquo;s cardiovascular-risk bond already run on exactly this structure.</p></div>
+      </details>
+
+  </div>
+</section>
+
+<div class="wrap"><div class="roadline"></div></div>
+
+<!-- ===================== NATIONAL ===================== -->
+<section id="national">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">NATIONAL LEVEL</div>
+      <h2>Nine national instruments</h2>
+      <p>The role of the state is to provide the mandate, financing instruments, legal clarity and coordination that let local and regional actors act at sufficient scale &mdash; not to run the food system from the centre.</p>
+    </div>
+      <details class="accordion level-national">
+        <summary><span class="acc-code">7.1</span><span>A National Food Sovereignty Framework</span></summary>
+        <div class="acc-body"><p>A permanent coordination structure across the ministries responsible for food, health, civil defence, environment and finance &mdash; turning preparedness, nutrition and rural development from separate silos into one policy architecture with shared targets.</p></div>
+      </details>
+      <details class="accordion level-national">
+        <summary><span class="acc-code">7.2</span><span>A National NutrientBank &amp; Food Eligibility Standard</span></summary>
+        <div class="acc-body"><p>A single public standard defining which foods qualify for every public food programme &mdash; UBNI, subsidies, procurement, food-as-medicine &mdash; based on nutrition, sustainability and resilience rather than brand or geographic origin, and updated as supply conditions and seasons change.</p></div>
+      </details>
+      <details class="accordion level-national">
+        <summary><span class="acc-code">7.3</span><span>A National UBNI</span></summary>
+        <div class="acc-body"><p>A guaranteed monthly food allowance, spendable only on foods that meet the national eligibility standard, phased in starting with households in food poverty before widening toward the general population &mdash; purchasing power with a floor under it, not a blank cheque.</p></div>
+      </details>
+      <details class="accordion level-national">
+        <summary><span class="acc-code">7.4</span><span>A National Fresh Food Subsidy (<em>Friskmatsbidrag</em>)</span></summary>
+        <div class="acc-body"><p>A simpler, faster-to-implement precursor to a full UBNI: a targeted subsidy for nutritious food, delivered through existing employer wellness-benefit and welfare channels rather than requiring new infrastructure from scratch.</p></div>
+      </details>
+      <details class="accordion level-national">
+        <summary><span class="acc-code">7.5</span><span>True Cost Pricing &amp; Fiscal Reform</span></summary>
+        <div class="acc-body"><p>Use Sweden&rsquo;s existing reduced food VAT as the entry point to shift relative prices: lower tax or direct support for foods that meet the eligibility standard, higher charges on ultra-processed products whose real costs currently land on the healthcare system instead of the shelf price.</p></div>
+      </details>
+      <details class="accordion level-national">
+        <summary><span class="acc-code">7.6</span><span>A National Food-System Investment Bank</span></summary>
+        <div class="acc-body"><p>Patient public capital for the infrastructure ordinary bank lending won&rsquo;t touch &mdash; regional mills, cold storage, food hubs, agroforestry &mdash; evaluated against preparedness and resilience value, not just short-term financial return.</p></div>
+      </details>
+      <details class="accordion level-national">
+        <summary><span class="acc-code">7.7</span><span>A National Support System for Preparedness Storage</span></summary>
+        <div class="acc-body"><p>Fund a distributed network of many small local reserves rather than a handful of central state warehouses, with a paid &ldquo;preparedness service&rdquo; for producers who agree to keep strategic stock in continuous rotation.</p></div>
+      </details>
+      <details class="accordion level-national">
+        <summary><span class="acc-code">7.8</span><span>National Land, Soil &amp; Water Sovereignty Programme</span></summary>
+        <div class="acc-body"><p>Treat farmland, soil health and water retention as strategic national infrastructure &mdash; protecting agricultural land from conversion, funding soil-building practices, and cutting dependence on imported fertiliser and feed.</p></div>
+      </details>
+      <details class="accordion level-national">
+        <summary><span class="acc-code">7.9</span><span>A National Programme for Food Work &amp; Civic Production</span></summary>
+        <div class="acc-body"><p>A labour-market pathway that channels unemployed people into paid agroecological work, alongside a &ldquo;four-plus-one&rdquo; model letting already-employed people trade one day a week of their time for food-growing work.</p></div>
+      </details>
+
+  </div>
+</section>
+
+<!-- ===================== SOVEREIGN MONEY ===================== -->
+<section id="sovereign" style="background:var(--surface); border-top:1px solid var(--line); border-bottom:1px solid var(--line);">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">SOVEREIGN MONEY, SOVEREIGN FOOD</div>
+      <h2>Why the monetary system itself is the constraint</h2>
+      <p>None of the above is impossible under the current monetary architecture. It's just harder, more expensive, and more dependent on private credit conditions than it needs to be.</p>
+      <div class="plain-summary">
+        <span class="ps-label">In plain terms</span>
+        <p>Right now, new money mostly comes from private bank loans chasing safe, easily-resellable assets &mdash; not from investing in soil, food storage or rural jobs. Fixing that means changing how money itself gets created, not just spending more of it.</p>
+      </div>
+    </div>
+    <h3 style="font-size:16px; margin-bottom:14px; color:var(--paper-dim); font-family:var(--mono); letter-spacing:0.04em; text-transform:uppercase;">The barriers</h3>
+      <details class="accordion level-money">
+        <summary><span class="acc-code">A</span><span>Money created for private profit, not public value</span></summary>
+        <div class="acc-body"><p>Most new money enters the economy as commercial bank loans, chasing profitable and easily-collateralised lending rather than public value &mdash; exactly the opposite of the long-horizon, place-based investment a food transition needs.</p></div>
+      </details>
+      <details class="accordion level-money">
+        <summary><span class="acc-code">B</span><span>Asset inflation over productive investment</span></summary>
+        <div class="acc-body"><p>Credit flows toward assets that are easy to collateralise and resell &mdash; property, land, financial assets &mdash; not toward soil restoration or food-processing capacity, even when the latter creates far more real public value.</p></div>
+      </details>
+      <details class="accordion level-money">
+        <summary><span class="acc-code">C</span><span>The monetary centre&ndash;periphery problem</span></summary>
+        <div class="acc-body"><p>New money flows toward cities and capital-rich sectors with strong collateral, leaving rural and food-producing regions &mdash; which hold the actual land, labour and production capacity food sovereignty needs &mdash; starved of financing.</p></div>
+      </details>
+      <details class="accordion level-money">
+        <summary><span class="acc-code">D</span><span>How risk regulation underfinances the transition</span></summary>
+        <div class="acc-body"><p>Because everyday payments run on commercial bank deposits, the state can&rsquo;t treat big banks like ordinary companies &mdash; which quietly biases the whole financial system toward protecting bank balance sheets over funding transition.</p></div>
+      </details>
+      <details class="accordion level-money">
+        <summary><span class="acc-code">E</span><span>Debt dependence and financial fragility</span></summary>
+        <div class="acc-body"><p>When new money only enters the economy through debt, the food transition&rsquo;s financing becomes hostage to interest rates and credit appetite, not to what the transition actually needs.</p></div>
+      </details>
+      <details class="accordion level-money">
+        <summary><span class="acc-code">F</span><span>Payment-system fragility</span></summary>
+        <div class="acc-body"><p>Everyday payments depend almost entirely on private banks and payment providers, who have little commercial incentive to build in the redundancy a genuine supply crisis would require.</p></div>
+      </details>
+      <details class="accordion level-money">
+        <summary><span class="acc-code">G</span><span>Blunt side effects of interest-rate policy</span></summary>
+        <div class="acc-body"><p>Raising interest rates to fight food inflation doesn&rsquo;t produce fertiliser alternatives, local storage or resilient supply chains &mdash; it just suppresses demand while leaving the actual bottlenecks untouched.</p></div>
+      </details>
+
+    <h3 style="font-size:16px; margin:28px 0 14px; color:var(--paper-dim); font-family:var(--mono); letter-spacing:0.04em; text-transform:uppercase;">The tools</h3>
+      <details class="accordion level-money">
+        <summary><span class="acc-code">A</span><span>Sovereign money: public control over creation</span></summary>
+        <div class="acc-body"><p>Separate lending from money creation, so new purchasing power enters the economy through public issuance under a democratic mandate &mdash; not solely as a byproduct of private bank loans.</p></div>
+      </details>
+      <details class="accordion level-money">
+        <summary><span class="acc-code">B</span><span>Currency sovereignty as policy space</span></summary>
+        <div class="acc-body"><p>Keep monetary authority &mdash; interest rates, digital currency infrastructure, crisis tools &mdash; within domestic institutions, so food-system policy has room to design tools suited to local conditions rather than inheriting someone else&rsquo;s priorities.</p></div>
+      </details>
+      <details class="accordion level-money">
+        <summary><span class="acc-code">C</span><span>A public digital currency as infrastructure</span></summary>
+        <div class="acc-body"><p>A central-bank digital currency (Sweden&rsquo;s e-krona) would give the state a direct channel to households and producers for payment resilience and targeted purchasing power &mdash; the infrastructure a national UBNI would actually run on.</p></div>
+      </details>
+      <details class="accordion level-money">
+        <summary><span class="acc-code">D</span><span>Monetary tools beyond the interest rate</span></summary>
+        <div class="acc-body"><p>With a public digital currency in place, institutions could influence money supply and demand directly, rather than relying entirely on hoping private banks lend more or less.</p></div>
+      </details>
+
+  </div>
+</section>
+
+<!-- ===================== IMPLEMENTATION ===================== -->
+<section id="implementation">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">IMPLEMENTATION</div>
+      <h2>Four expanding circles</h2>
+      <p>None of this depends on one national reform or every actor moving at once. It starts with existing municipal mandates, and widens as capacity, evidence and political support build.</p>
+    </div>
+    <div class="phases-grid">
+      <div class="phase-card">
+        <div class="phase-num">PHASE 1</div>
+        <h4>Most vulnerable</h4>
+        <div class="phase-who">People in food poverty, welfare recipients</div>
+        <p>Food as livelihood support, food vouchers, nutrient credits, targeted UBNI pilots, community kitchens.</p>
+      </div>
+      <div class="phase-card">
+        <div class="phase-num">PHASE 2</div>
+        <h4>Risk groups</h4>
+        <div class="phase-who">People with diet-related disease, elderly people, children</div>
+        <p>Food as Medicine, school-food transformation, elderly-care nutrition, regional health impact bonds.</p>
+      </div>
+      <div class="phase-card">
+        <div class="phase-num">PHASE 3</div>
+        <h4>Broader population</h4>
+        <div class="phase-who">Everyone</div>
+        <p>Employee food benefits, fresh food subsidies, local currencies, procurement reform, food-literacy work.</p>
+      </div>
+      <div class="phase-card">
+        <div class="phase-num">PHASE 4</div>
+        <h4>Whole system</h4>
+        <div class="phase-who">Producers, municipalities, the national economy</div>
+        <p>Land conversion, national eligibility standards, the investment bank, sovereign monetary infrastructure.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FOOTER ===================== -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <strong>A Sovereign Food System</strong>
+        A portfolio of economic and monetary instruments for food-system transformation &mdash; municipal, regional, national and monetary. Each instrument can stand on its own; the transformative effect compounds when they're combined and sequenced together.
+        <br><br>
+        Draft: unpublished work from our work in Sweden. Adapted from <em>A Sovereign Food System</em> by Samuel F&auml;rdow Kazen (Positiva Pengar), Jessica Johansson and Gino Carciola (Milj&ouml;Matematik Malm&ouml;), and Aleksander Nowak (Dark Matter Labs) &mdash; part of the Universal Basic Nutrient Income (UBNI) mission, with RISE Research Institutes of Sweden and Krinova, supported by Vinnova.
+      </div>
+      <div class="foot-col">
+        <h5>On this page</h5>
+        <a href="#diagnosis">The diagnosis</a>
+        <a href="#vision">The vision</a>
+        <a href="#local">Local instruments</a>
+        <a href="#money">Money &amp; currency design</a>
+        <a href="#regional">Regional instruments</a>
+        <a href="#national">National instruments</a>
+        <a href="#sovereign">Sovereign money</a>
+        <a href="#implementation">Implementation</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span><a href="index.html" style="text-decoration:underline;">← Food as Infrastructure</a> · MUNICIPAL → REGIONAL → NATIONAL → MONETARY</span>
+      <span>A SOVEREIGN FOOD SYSTEM — WORKING PORTFOLIO</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
