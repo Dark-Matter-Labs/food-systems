@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Media &amp; Inspiration (Draft)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#101010; --ink-2:#171717; --surface:#1a1a1a;
+    --paper:#f5f5f2; --paper-dim:#a3a39c;
+    --line: rgba(245,245,242,0.14); --line-strong: rgba(245,245,242,0.26);
+    --supply:#c98a3b; --hub:#2e7d6b; --demand:#ff5a1f;
+    --display:"Poppins", sans-serif; --body:"Poppins", sans-serif; --mono:"IBM Plex Mono", monospace;
+    --maxw:1180px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0; background:var(--ink); color:var(--paper); font-family:var(--body); font-size:17px; line-height:1.6; -webkit-font-smoothing:antialiased;}
+  @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto;} }
+  h1,h2,h3,h4{font-family:var(--display); margin:0; font-weight:600; letter-spacing:-0.01em;}
+  a{color:inherit;}
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 32px;}
+  .eyebrow{font-family:var(--mono); text-transform:uppercase; letter-spacing:0.14em; font-size:12px; color:var(--paper-dim); display:flex; align-items:center; gap:10px;}
+  .eyebrow::before{content:""; width:16px; height:2px; background:var(--paper-dim); display:inline-block;}
+  .roadline{height:1px; background-image:repeating-linear-gradient(90deg, var(--line-strong) 0 22px, transparent 22px 40px);}
+
+  header{position:sticky; top:0; z-index:50; background:rgba(16,16,16,0.9); backdrop-filter:blur(8px); border-bottom:1px solid var(--line);}
+  nav{display:flex; align-items:center; justify-content:space-between; max-width:var(--maxw); margin:0 auto; padding:16px 32px;}
+  .brand{display:flex; align-items:center; gap:10px; font-family:var(--mono); font-size:13px; letter-spacing:0.04em; text-decoration:none; text-transform:uppercase;}
+  .dm-logo{height:22px; width:auto; display:block; border-radius:3px;}
+  .brand-div{color:var(--line-strong); font-weight:400;}
+  .navlinks{display:flex; gap:22px; font-family:var(--mono); font-size:12px; letter-spacing:0.05em;}
+  .navlinks a{text-decoration:none; color:var(--paper-dim); text-transform:uppercase; transition:color .2s;}
+  .navlinks a:hover{color:var(--paper);}
+  @media (max-width:900px){ .navlinks{display:none;} }
+
+  .hero{padding:88px 0 56px;}
+  .hero h1{font-size:clamp(34px, 5vw, 58px); line-height:1.06; margin:16px 0 6px; max-width:20ch;}
+  .hero .subtitle{font-family:var(--mono); font-size:13px; letter-spacing:0.04em; color:var(--paper-dim); text-transform:uppercase; margin:0 0 18px;}
+  .hero p.lede{font-size:18px; max-width:680px; margin:0 0 24px; opacity:0.94;}
+  .hero .meta{font-family:var(--mono); font-size:12.5px; color:var(--paper-dim); border-top:1px solid var(--line); padding-top:14px; max-width:780px;}
+  .btn{font-family:var(--mono); font-size:12.5px; text-transform:uppercase; letter-spacing:0.07em; padding:12px 18px; border:1px solid var(--line-strong); text-decoration:none; display:inline-flex; align-items:center; gap:8px; transition:all .2s; color:var(--paper);}
+  .btn.solid{background:var(--paper); border-color:var(--paper); color:var(--ink); font-weight:600;}
+  .btn:hover{border-color:var(--paper); color:var(--paper);}
+  .cta-row{display:flex; gap:14px; flex-wrap:wrap; margin:22px 0 0;}
+
+  section{padding:72px 0;}
+  section.tight{padding:52px 0;}
+  .section-head{max-width:720px; margin-bottom:36px;}
+  .section-head h2{font-size:clamp(26px,3vw,36px); margin-top:12px;}
+  .section-head p{color:var(--paper-dim); font-size:15.5px; margin-top:12px;}
+
+  .plain-summary{background: rgba(245,245,242,0.06); border-left:3px solid var(--paper-dim); padding:16px 20px; margin:16px 0 6px; max-width:680px;}
+  .plain-summary .ps-label{font-family:var(--mono); font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:var(--paper-dim); display:block; margin-bottom:8px;}
+  .plain-summary p{font-size:15px; line-height:1.55; margin:0; color:var(--paper); opacity:0.95;}
+
+  /* ===================== MEDIA CARDS ===================== */
+  .media-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:18px;}
+  @media (max-width:1000px){ .media-grid{grid-template-columns:repeat(2,1fr);} }
+  @media (max-width:640px){ .media-grid{grid-template-columns:1fr;} }
+  .media-card{
+    display:flex; flex-direction:column; justify-content:space-between;
+    border:1px solid var(--line); background:var(--surface); padding:22px 20px 20px;
+    min-height:190px; text-decoration:none; color:inherit; transition:border-color .2s, transform .2s;
+  }
+  .media-card:hover{border-color:var(--paper-dim); transform:translateY(-2px);}
+  .media-tag{font-family:var(--mono); font-size:10.5px; letter-spacing:0.07em; color:var(--paper-dim); text-transform:uppercase; margin-bottom:12px;}
+  .media-tag.podcast{color:var(--supply);}
+  .media-tag.social{color:var(--demand);}
+  .media-tag.reading{color:var(--hub);}
+  .media-card h3{font-size:17px; line-height:1.28; margin-bottom:8px;}
+  .media-card p{font-size:13.5px; color:var(--paper-dim); margin:0 0 14px;}
+  .media-card p:last-of-type{margin-bottom:0;}
+  .media-link{font-family:var(--mono); font-size:11.5px; text-transform:uppercase; letter-spacing:0.06em; display:flex; align-items:center; gap:8px; color:var(--paper);}
+  .media-link .arrow{transition:transform .2s;}
+  .media-card:hover .arrow{transform:translate(3px,-3px);}
+
+  .media-card.is-pending{cursor:default; opacity:0.65; border-style:dashed;}
+  .media-card.is-pending:hover{transform:none; border-color:var(--line-strong);}
+  .media-card.is-pending .media-tag{color:var(--paper-dim); border:1px solid var(--line-strong); display:inline-block; padding:3px 8px;}
+  .media-card.is-pending .media-link{color:var(--paper-dim);}
+
+  footer{border-top:1px solid var(--line); padding:44px 0 32px;}
+  .foot-grid{display:flex; justify-content:space-between; gap:32px; flex-wrap:wrap;}
+  .foot-brand{font-family:var(--mono); font-size:12.5px; max-width:460px; color:var(--paper-dim); line-height:1.6;}
+  .foot-brand strong{color:var(--paper); font-family:var(--display); display:block; font-size:15px; margin-bottom:8px;}
+  .foot-col h5{font-family:var(--mono); font-size:11px; text-transform:uppercase; letter-spacing:0.06em; color:var(--paper-dim); margin-bottom:10px;}
+  .foot-col a{display:block; font-size:13.5px; margin-bottom:7px; text-decoration:none; color:var(--paper); opacity:0.85;}
+  .foot-col a:hover{color:var(--paper); opacity:1;}
+  .foot-bottom{margin-top:32px; padding-top:16px; border-top:1px solid var(--line); font-family:var(--mono); font-size:11px; color:var(--paper-dim); display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;}
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <a class="brand" href="https://darkmatterlabs.org/" target="_blank" rel="noopener">
+      <img src="https://darkmatterlabs.org/_next/static/media/DmLogoFull.d4ebb743.png" alt="Dark Matter Labs" class="dm-logo">
+      <span class="brand-div">/</span>MEDIA &amp; INSPIRATION
+    </a>
+    <div class="navlinks">
+      <a href="#podcasts">Podcasts</a>
+      <a href="#social">Social</a>
+      <a href="#reading">Reading</a>
+      <a href="#about">Why This Exists</a>
+    </div>
+  </nav>
+</header>
+
+<!-- ===================== HERO ===================== -->
+<section class="hero">
+  <div class="wrap">
+    <div class="eyebrow">A LIVING FEED — DRAFT, NOT YET LINKED FROM THE MAIN SITE</div>
+    <h1>Where this movement shows up in the world.</h1>
+    <p class="subtitle">Podcasts, posts, and pieces that shaped the thinking here</p>
+    <p class="lede">Every so often someone asks where they can actually see or hear this work happening, beyond a deck or a webpage. This is that answer — a running, hand-picked shelf of podcasts, social posts from people on the ground, and writing that's shaped how we think about food as infrastructure. No live embeds, no algorithm feeding it — just links worth your time, added by hand.</p>
+    <div class="cta-row">
+      <a class="btn solid" href="#podcasts">Start listening ↓</a>
+      <a class="btn" href="index.html">← Food as Infrastructure</a>
+    </div>
+    <div class="meta">STATUS — draft, not yet linked from the main portfolio · FORMAT — simple cards, no third-party embeds · UPKEEP — added by hand as things come in, not automated</div>
+  </div>
+</section>
+
+<div class="wrap"><div class="roadline"></div></div>
+
+<!-- ===================== WHY THIS EXISTS ===================== -->
+<section class="tight" id="about">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">WHY THIS EXISTS</div>
+      <h2>A shelf, not a feed</h2>
+      <div class="plain-summary">
+        <span class="ps-label">In plain terms</span>
+        <p>Nothing on this page updates itself. Someone adds a link because it's worth fifteen minutes of your time — a podcast, a post from a dinner or a workshop, a piece of writing that changed how we think about this. That's the whole idea.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="roadline"></div></div>
+
+<!-- ===================== PODCASTS ===================== -->
+<section id="podcasts">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">PODCASTS</div>
+      <h2>Worth your commute</h2>
+      <p>Episodes and series that dig into food systems, resilience, and the economics underneath them — added as they're found, not as a comprehensive archive.</p>
+    </div>
+    <div class="media-grid">
+      <div class="media-card is-pending">
+        <div>
+          <div class="media-tag podcast">Add a podcast</div>
+          <h3>Episode name, show &amp; host</h3>
+          <p>One line on why it's worth listening to — then swap this card out for the real thing.</p>
+        </div>
+        <div class="media-link">Link to be added</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="roadline"></div></div>
+
+<!-- ===================== SOCIAL ===================== -->
+<section id="social">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">SOCIAL &amp; ON THE GROUND</div>
+      <h2>The edges of the movement, in their own words</h2>
+      <p>Dinners, workshops, growers and grocers already testing pieces of this system — shared as simple links, not embedded widgets, so the page stays fast and looks like the rest of the site.</p>
+    </div>
+    <div class="media-grid">
+      <a class="media-card" href="https://www.instagram.com/reel/Db6cYfpsmsQ/" target="_blank" rel="noopener">
+        <div>
+          <div class="media-tag social">Instagram reel</div>
+          <h3>Add a one-line caption here</h3>
+          <p><em>Link is live — swap this text for your own caption when you're ready.</em></p>
+        </div>
+        <div class="media-link">View the reel <span class="arrow">↗</span></div>
+      </a>
+      <div class="media-card is-pending">
+        <div>
+          <div class="media-tag social">Add a post</div>
+          <h3>Platform, who posted it &amp; what it shows</h3>
+          <p>One line on why it belongs here — then swap this card out for the real thing.</p>
+        </div>
+        <div class="media-link">Link to be added</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="roadline"></div></div>
+
+<!-- ===================== READING & INSPIRATION ===================== -->
+<section id="reading">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">READING &amp; INSPIRATION</div>
+      <h2>Writing that shaped how we think about this</h2>
+      <p>Not the primary evidence base — that lives on the <a href="index.html#reading" style="text-decoration:underline;">homepage's Further Reading</a> — but the pieces that shifted how we frame the problem, or made the case better than we could.</p>
+    </div>
+    <div class="media-grid">
+      <a class="media-card" href="https://www.nesta.org.uk/report/nourishing-britain/" target="_blank" rel="noopener">
+        <div>
+          <div class="media-tag reading">Report</div>
+          <h3>Nourishing Britain</h3>
+          <p>Dr Dolly van Tulleken, on why UK food policy struggles to stick.</p>
+        </div>
+        <div class="media-link">Read it <span class="arrow">↗</span></div>
+      </a>
+      <a class="media-card" href="https://www.biteback2030.com/" target="_blank" rel="noopener">
+        <div>
+          <div class="media-tag reading">Campaign</div>
+          <h3>Bite Back 2030</h3>
+          <p>A youth-led campaign taking on food marketing — a reminder of who this system is actually failing.</p>
+        </div>
+        <div class="media-link">Explore it <span class="arrow">↗</span></div>
+      </a>
+      <div class="media-card is-pending">
+        <div>
+          <div class="media-tag reading">Add a piece</div>
+          <h3>Title, author &amp; where it's from</h3>
+          <p>One line on why it belongs here — then swap this card out for the real thing.</p>
+        </div>
+        <div class="media-link">Link to be added</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FOOTER ===================== -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <strong>Media &amp; Inspiration</strong>
+        A running, hand-curated shelf of podcasts, social posts and writing connected to the Food as Infrastructure portfolio — built to make it easy to point someone toward the human side of this work, not just the plans.
+        <br><br>
+        This page is a working draft, not yet linked from the main portfolio homepage. Add or swap cards by editing this file directly.
+      </div>
+      <div class="foot-col">
+        <h5>On this page</h5>
+        <a href="#podcasts">Podcasts</a>
+        <a href="#social">Social &amp; on the ground</a>
+        <a href="#reading">Reading &amp; inspiration</a>
+        <a href="#about">Why this exists</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span><a href="index.html" style="text-decoration:underline;">← Food as Infrastructure</a> · MEDIA &amp; INSPIRATION</span>
+      <span>A WORKING DRAFT</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
