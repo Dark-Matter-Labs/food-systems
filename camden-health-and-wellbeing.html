@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Camden's Healthy Weight Acceleration Plan — Health &amp; Wellbeing Department</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#101010; --ink-2:#171717; --surface:#1a1a1a;
+    --paper:#f5f5f2; --paper-dim:#a3a39c;
+    --line: rgba(245,245,242,0.14); --line-strong: rgba(245,245,242,0.26);
+    --supply:#c98a3b; --hub:#2e7d6b; --demand:#ff5a1f;
+    --display:"Poppins", sans-serif; --body:"Poppins", sans-serif; --mono:"IBM Plex Mono", monospace;
+    --maxw:1180px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0; background:var(--ink); color:var(--paper); font-family:var(--body); font-size:17px; line-height:1.6; -webkit-font-smoothing:antialiased;}
+  @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto;} }
+  h1,h2,h3,h4{font-family:var(--display); margin:0; font-weight:600; letter-spacing:-0.01em;}
+  a{color:inherit;}
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 32px;}
+  .eyebrow{font-family:var(--mono); text-transform:uppercase; letter-spacing:0.14em; font-size:12px; color:var(--paper-dim); display:flex; align-items:center; gap:10px;}
+  .eyebrow::before{content:""; width:16px; height:2px; background:var(--paper-dim); display:inline-block;}
+  .roadline{height:1px; background-image:repeating-linear-gradient(90deg, var(--line-strong) 0 22px, transparent 22px 40px);}
+
+  header{position:sticky; top:0; z-index:50; background:rgba(16,16,16,0.9); backdrop-filter:blur(8px); border-bottom:1px solid var(--line);}
+  nav{display:flex; align-items:center; justify-content:space-between; max-width:var(--maxw); margin:0 auto; padding:16px 32px;}
+  .brand{display:flex; align-items:center; gap:10px; font-family:var(--mono); font-size:13px; letter-spacing:0.04em; text-decoration:none; text-transform:uppercase;}
+  .dm-logo{height:22px; width:auto; display:block; border-radius:3px;}
+  .brand-div{color:var(--line-strong); font-weight:400;}
+  .navlinks{display:flex; gap:22px; font-family:var(--mono); font-size:12px; letter-spacing:0.05em;}
+  .navlinks a{text-decoration:none; color:var(--paper-dim); text-transform:uppercase; transition:color .2s;}
+  .navlinks a:hover{color:var(--paper);}
+  @media (max-width:900px){ .navlinks{display:none;} }
+
+  .hero{padding:88px 0 56px;}
+  .hero h1{font-size:clamp(36px, 5.2vw, 62px); line-height:1.04; margin:16px 0 6px;}
+  .hero .subtitle{font-family:var(--mono); font-size:13px; letter-spacing:0.04em; color:var(--paper-dim); text-transform:uppercase; margin:0 0 18px;}
+  .hero p.lede{font-size:18px; max-width:700px; margin:0 0 24px; opacity:0.94;}
+  .hero .meta{font-family:var(--mono); font-size:12.5px; color:var(--paper-dim); border-top:1px solid var(--line); padding-top:14px; max-width:780px;}
+  .hero .credit-line{font-family:var(--mono); font-size:11.5px; color:var(--paper-dim); opacity:0.75; max-width:780px; margin-top:10px; line-height:1.6;}
+  .btn{font-family:var(--mono); font-size:12.5px; text-transform:uppercase; letter-spacing:0.07em; padding:12px 18px; border:1px solid var(--line-strong); text-decoration:none; display:inline-flex; align-items:center; gap:8px; transition:all .2s; color:var(--paper);}
+  .btn.solid{background:var(--paper); border-color:var(--paper); color:var(--ink); font-weight:600;}
+  .btn:hover{border-color:var(--paper); color:var(--paper);}
+  .cta-row{display:flex; gap:14px; flex-wrap:wrap; margin:22px 0 0;}
+
+  section{padding:72px 0;}
+  section.tight{padding:52px 0;}
+  .section-head{max-width:760px; margin-bottom:36px;}
+  .section-head h2{font-size:clamp(26px,3vw,38px); margin-top:12px;}
+  .section-head p{color:var(--paper-dim); font-size:15.5px; margin-top:12px;}
+
+  .plain-summary{background: rgba(245,245,242,0.06); border-left:3px solid var(--paper-dim); padding:16px 20px; margin:16px 0 6px; max-width:700px;}
+  .plain-summary .ps-label{font-family:var(--mono); font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:var(--paper-dim); display:block; margin-bottom:8px;}
+  .plain-summary p{font-size:15px; line-height:1.55; margin:0; color:var(--paper); opacity:0.95;}
+
+  /* audience-style cards, reused for "who's in the room" */
+  .audience-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:16px;}
+  @media (max-width:1000px){ .audience-grid{grid-template-columns:repeat(2,1fr);} }
+  @media (max-width:600px){ .audience-grid{grid-template-columns:1fr;} }
+  .audience-card{border:1px solid var(--line); padding:20px 18px; background:var(--surface);}
+  .a-tag{font-family:var(--mono); font-size:10.5px; letter-spacing:0.07em; color:var(--paper-dim); text-transform:uppercase; margin-bottom:12px;}
+  .audience-card h3{font-size:16px; line-height:1.3; margin-bottom:8px;}
+  .audience-card p{font-size:13.5px; color:var(--paper-dim); margin:0;}
+
+  /* two-box callout pairs (Aims / Goals) */
+  .pair-grid{display:grid; grid-template-columns:1fr 1fr; gap:20px;}
+  @media (max-width:800px){ .pair-grid{grid-template-columns:1fr;} }
+  .pair-box{border:1px solid var(--line); background:var(--surface); padding:22px 22px 20px;}
+  .pair-box h4{font-family:var(--mono); font-size:12px; letter-spacing:0.08em; text-transform:uppercase; color:var(--hub); margin-bottom:14px;}
+  .pair-box ul{margin:0; padding-left:18px;}
+  .pair-box li{font-size:14.5px; color:var(--paper-dim); margin-bottom:10px; line-height:1.55;}
+  .pair-box li:last-child{margin-bottom:0;}
+  .pair-box li strong{color:var(--paper);}
+
+  /* progress cards */
+  .plaques{display:grid; grid-template-columns:repeat(3,1fr); gap:18px;}
+  @media (max-width:1050px){ .plaques{grid-template-columns:repeat(2,1fr);} }
+  @media (max-width:640px){ .plaques{grid-template-columns:1fr;} }
+  .plaque{position:relative; background:var(--surface); border:1px solid var(--line); padding:22px 20px 20px;}
+  .plaque .code{font-family:var(--mono); font-size:11px; color:var(--paper-dim); letter-spacing:0.06em;}
+  .plaque h3{font-size:16.5px; margin:10px 0 10px; line-height:1.28;}
+  .plaque p{font-size:13.5px; color:var(--paper-dim); margin:0 0 10px; line-height:1.55;}
+  .plaque p:last-of-type{margin-bottom:0;}
+  .plaque p strong{color:var(--paper); font-weight:600;}
+  .plaque .crossover{
+    display:inline-block; margin-top:12px; font-family:var(--mono); font-size:10.5px; letter-spacing:0.04em;
+    text-transform:uppercase; color:var(--hub); border:1px solid rgba(46,125,107,0.4); padding:5px 9px;
+    text-decoration:none; transition:border-color .2s, color .2s;
+  }
+  .plaque .crossover:hover{border-color:var(--hub); color:var(--paper);}
+
+  /* landmark actions ladder */
+  .ladder{display:flex; flex-direction:column; gap:0;}
+  .rung{border:1px solid var(--line); padding:18px 20px; position:relative;}
+  .rung + .rung{border-top:none;}
+  .rung .tier{font-family:var(--mono); font-size:11px; letter-spacing:0.06em; color:var(--supply); text-transform:uppercase;}
+  .rung h4{font-size:16px; margin:8px 0 6px;}
+  .rung p{font-size:14px; color:var(--paper-dim); margin:0;}
+
+  /* comms strategy row */
+  .horizons{display:grid; grid-template-columns:repeat(3,1fr); gap:0; border:1px solid var(--line);}
+  @media (max-width:860px){ .horizons{grid-template-columns:1fr;} }
+  .horizon{padding:24px 22px; border-left:1px solid var(--line);}
+  .horizon:first-child{border-left:none;}
+  @media (max-width:860px){ .horizon{border-left:none; border-top:1px solid var(--line);} .horizon:first-child{border-top:none;} }
+  .horizon .htag{font-family:var(--mono); font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:var(--paper-dim);}
+  .horizon h4{font-size:17px; margin:10px 0 10px;}
+  .horizon p{font-size:14px; color:var(--paper-dim); margin:0;}
+
+  /* crossover / tool-style link cards */
+  .tools-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:18px;}
+  @media (max-width:800px){ .tools-grid{grid-template-columns:1fr;} }
+  .tool-card{
+    display:flex; flex-direction:column; justify-content:space-between;
+    border:1px solid var(--line); background:var(--surface); padding:22px 22px 20px;
+    position:relative; min-height:170px; text-decoration:none; color:inherit;
+    transition:border-color .2s, transform .2s;
+  }
+  .tool-card:hover{border-color:var(--paper-dim); transform:translateY(-2px);}
+  .tool-top{display:flex; justify-content:space-between; align-items:flex-start; gap:14px;}
+  .tool-code{font-family:var(--mono); font-size:10.5px; letter-spacing:0.06em; color:var(--ink); background:var(--paper); padding:4px 8px; white-space:nowrap;}
+  .tool-card h3{font-size:17px; margin:14px 0 8px; line-height:1.25;}
+  .tool-card p{font-size:13.5px; color:var(--paper-dim); margin:0 0 14px;}
+  .tool-link{font-family:var(--mono); font-size:11.5px; text-transform:uppercase; letter-spacing:0.06em; display:flex; align-items:center; gap:8px; color:var(--paper);}
+  .tool-link .arrow{transition:transform .2s;}
+  .tool-card:hover .arrow{transform:translate(3px,-3px);}
+
+  footer{border-top:1px solid var(--line); padding:44px 0 32px;}
+  .foot-grid{display:flex; justify-content:space-between; gap:32px; flex-wrap:wrap;}
+  .foot-brand{font-family:var(--mono); font-size:12.5px; max-width:460px; color:var(--paper-dim); line-height:1.6;}
+  .foot-brand strong{color:var(--paper); font-family:var(--display); display:block; font-size:15px; margin-bottom:8px;}
+  .foot-col h5{font-family:var(--mono); font-size:11px; text-transform:uppercase; letter-spacing:0.06em; color:var(--paper-dim); margin-bottom:10px;}
+  .foot-col a{display:block; font-size:13.5px; margin-bottom:7px; text-decoration:none; color:var(--paper); opacity:0.85;}
+  .foot-col a:hover{color:var(--paper); opacity:1;}
+  .foot-bottom{margin-top:32px; padding-top:16px; border-top:1px solid var(--line); font-family:var(--mono); font-size:11px; color:var(--paper-dim); display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;}
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <a class="brand" href="https://darkmatterlabs.org/" target="_blank" rel="noopener">
+      <img src="https://darkmatterlabs.org/_next/static/media/DmLogoFull.d4ebb743.png" alt="Dark Matter Labs" class="dm-logo">
+      <span class="brand-div">/</span>HEALTHY WEIGHT
+    </a>
+    <div class="navlinks">
+      <a href="#driving-group">The Driving Group</a>
+      <a href="#plan">The Plan</a>
+      <a href="#progress">Two Years In</a>
+      <a href="#early-years">Early Years</a>
+      <a href="#comms">Reaching Residents</a>
+      <a href="#crossover">Portfolio Crossover</a>
+    </div>
+  </nav>
+</header>
+
+<!-- ===================== HERO ===================== -->
+<section class="hero">
+  <div class="wrap">
+    <div class="eyebrow">A PARTNER WORKSTREAM — HEALTH &amp; WELLBEING DEPARTMENT, LONDON BOROUGH OF CAMDEN</div>
+    <h1>Making the healthy choice the easy choice.</h1>
+    <p class="subtitle">A coordination view of Camden's Healthy Weight Acceleration Plan</p>
+    <p class="lede">Camden's Health &amp; Wellbeing Department convenes a Multi-Agency Healthy Weight Driving Group — schools, community organisations, primary care, adult social care and residents working from one plan rather than forty separate initiatives. This page pulls together what that group has built over its first two years, what it's doing next, and where it connects into the wider Food as Infrastructure portfolio.</p>
+    <div class="cta-row">
+      <a class="btn solid" href="#plan">Read the plan ↓</a>
+      <a class="btn" href="#crossover">See the portfolio crossover ↗</a>
+    </div>
+    <div class="meta">CONVENED BY — Camden's Health &amp; Wellbeing Department · ORIGIN — the Healthy Weight Acceleration Plan, Year 2 review &amp; Year 3 plans (April 2026) · STATUS — a coordination view, not yet linked from the main portfolio</div>
+    <div class="credit-line">Drawing on the Multi-Agency Healthy Weight Driving Group's Year 2 review deck, presented by Ayanna Griffith, Eoin McGinley and Piers Simey, Health &amp; Wellbeing Department, 15 April 2026.</div>
+  </div>
+</section>
+
+<div class="wrap"><div class="roadline"></div></div>
+
+<!-- ===================== WHO'S IN THE ROOM ===================== -->
+<section class="tight" id="driving-group">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">WHO'S IN THE ROOM</div>
+      <h2>One driving group, not forty separate initiatives</h2>
+      <p>The Driving Group exists so that health, education, VCS and community partners are working from the same plan and the same evidence — the same logic the wider food portfolio uses to coordinate across boroughs, applied here across Camden's own services and partners.</p>
+    </div>
+    <div class="audience-grid">
+      <div class="audience-card">
+        <div class="a-tag">Council services</div>
+        <h3>Health &amp; Wellbeing, Early Years, Adult Social Care</h3>
+        <p>The Health &amp; Wellbeing Department convenes and drives the plan; Reablement and adult social care teams, the Integrated Early Years Service, and the Learning Disabilities team deliver it on the ground.</p>
+      </div>
+      <div class="audience-card">
+        <div class="a-tag">Schools &amp; settings</div>
+        <h3>Nurseries, primary and secondary schools</h3>
+        <p>Family Hubs, nurseries, Kingsgate Primary, Hampstead, Acland Burghley, St Albans, Edith Neville and Richard Cobden are all live delivery sites for one part of the plan or another.</p>
+      </div>
+      <div class="audience-card">
+        <div class="a-tag">Community &amp; VCS partners</div>
+        <h3>Trusted local organisations</h3>
+        <p>Queens Crescent Community Association and local religious leaders, Brite Box, MoreLife, Arsenal's Shape Up, the Gospel Oak Living Room, the London Irish Centre and Youth Sport Trust each carry a piece of delivery no council team could reach alone.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== THE PLAN ===================== -->
+<section id="plan">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">THE PLAN</div>
+      <h2>Camden's Healthy Weight Acceleration Plan</h2>
+      <div class="plain-summary">
+        <span class="ps-label">In plain terms</span>
+        <p>Help people of all ages reach and stay at a healthy weight, close the gap between Camden's most and least deprived residents, and do it through a mix of whole-system change and support tailored to the people who need it most.</p>
+      </div>
+    </div>
+    <div class="pair-grid">
+      <div class="pair-box">
+        <h4>Aims</h4>
+        <ul>
+          <li>Set out the most up-to-date picture of the obesity crisis, its impact, and the most effective actions</li>
+          <li>Support people of all ages to reach and maintain a healthy weight, through a combination of whole-system working and targeted support</li>
+          <li>Ensure greater collective action through organisations and citizens, and identify the key areas where concerted national action is needed</li>
+        </ul>
+      </div>
+      <div class="pair-box">
+        <h4>Population health goals</h4>
+        <ul>
+          <li><strong>Increase levels of healthy weight</strong> across different population groups, with a priority first focus on early years and primary-school-aged children</li>
+          <li><strong>Narrow the gap</strong> in overweight and obesity between the most and least deprived citizens, by addressing this inequality in everything that can make a difference</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="roadline"></div></div>
+
+<!-- ===================== TWO YEARS IN ===================== -->
+<section id="progress">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">TWO YEARS IN</div>
+      <h2>Where the plan is actually landing</h2>
+      <p>Camden's reception-age obesity prevalence has been tracking below the national rate since around 2014/15 — though the gap between the most and least deprived areas persists, and Bangladeshi, Indian and Chinese communities show lower prevalence in Camden than the White British population, evidence that a single national picture hides very different local stories. Seven examples from the Driving Group's first two years show the pattern behind that number: identify a specific barrier, respond with something tailored, then decide what's worth scaling.</p>
+    </div>
+    <div class="plaques">
+      <div class="plaque">
+        <div class="code">01 — TRAINING</div>
+        <h3>Frontline staff, not just clinicians</h3>
+        <p><strong>Issue:</strong> frontline professionals often lack the confidence and consistent materials to have good conversations about food and nutrition.</p>
+        <p><strong>Response:</strong> Nutrition &amp; Hydration training built by the Health &amp; Wellbeing Dept, delivered to all Reablement staff — 5 sessions, 75 staff trained.</p>
+        <p><strong>2026/27:</strong> rolled out to other adult social care teams via a train-the-trainer model, starting with Extra Care staff.</p>
+      </div>
+      <div class="plaque">
+        <div class="code">02 — COMMUNICATIONS</div>
+        <h3>Behavioural-insight campaigns</h3>
+        <p><strong>Issue:</strong> residents find it hard to understand units of alcohol, which blunts messaging on harmful drinking — and higher drinking directly affects healthy weight.</p>
+        <p><strong>Response:</strong> the 3-month "Know What You're Drinking" campaign — 2,400 webpage views, paid social ads seen 72,000 times.</p>
+        <p><strong>2026/27:</strong> a dedicated resident-facing healthy-weight campaign, built on what worked here.</p>
+      </div>
+      <div class="plaque">
+        <div class="code">03 — FAMILY DINNERS</div>
+        <h3>Cooking together, not just being told to</h3>
+        <p><strong>Issue:</strong> how to support families of Year 6 children (height/weight recorded nationally) to cook easy, nutritious meals together.</p>
+        <p><strong>Response:</strong> Family Dinners piloted at Kingsgate Primary with Brite Box — children ate more vegetables, everyone learned new skills.</p>
+        <p><strong>2026/27:</strong> extends into Year 4 at Kilburn for earlier prevention, plus a local Year 6 scheme at Edith Neville &amp; Richard Cobden with menus co-developed with residents.</p>
+        <a class="crossover" href="index.html#tracks">↳ Crosses into the portfolio's Hub track</a>
+      </div>
+      <div class="plaque">
+        <div class="code">04 — TEMPORARY ACCOMMODATION</div>
+        <h3>Removing the equipment barrier</h3>
+        <p><strong>Issue:</strong> families in temporary accommodation face greater risk of poor health and malnutrition — lack of equipment, knowledge and cost are the main barriers.</p>
+        <p><strong>Response:</strong> a "one pot" programme providing slow cookers plus workshops with VCS partners.</p>
+        <p><strong>2026/27:</strong> rolled out to 43 families at Levine &amp; Abbotts family hostel, then to other accommodation if successful.</p>
+      </div>
+      <div class="plaque">
+        <div class="code">05 — HEALTHY MUSLIM FAMILIES</div>
+        <h3>Faith-led, not just translated</h3>
+        <p><strong>Issue:</strong> overweight and obesity is more common among South Asian communities.</p>
+        <p><strong>Response:</strong> the Healthy Muslim Families Working Group with Queens Crescent Community Association and local religious leaders — health checks via the Health &amp; Wellbeing Bus at Friday Prayers and Mothers' groups, leaflets co-designed with a local Imam, a Muslim GP speaking at prayers.</p>
+        <p><strong>2026/27:</strong> ongoing work with the Bus team across communities at greater risk.</p>
+      </div>
+      <div class="plaque">
+        <div class="code">06 — LEARNING DISABILITIES</div>
+        <h3>Tailored, not adapted after the fact</h3>
+        <p><strong>Issue:</strong> unhealthy weight is a major driver of health conditions for people with learning disabilities, who need genuinely tailored support.</p>
+        <p><strong>Response:</strong> a piloted approach at the Greenwood Centre with Camden's Learning Disabilities team and MoreLife — interactive, accessible content, support workers included.</p>
+        <p><strong>2026/27:</strong> a further session before autumn 2026, with more practical cooking and physical-activity content.</p>
+      </div>
+      <div class="plaque">
+        <div class="code">07 — PUPIL ADVOCACY</div>
+        <h3>Young people as the advocates</h3>
+        <p><strong>Issue:</strong> young people can be powerful advocates for change, if given the platform.</p>
+        <p><strong>Response:</strong> the Food &amp; Health Champions programme returned at Hampstead School, leading to the pupil-led "veggie vibes" initiative and more vegetable access across the school day.</p>
+        <p><strong>2026/27:</strong> another Hampstead cohort, expanding to Acland Burghley and St Albans Primary.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="roadline"></div></div>
+
+<!-- ===================== EARLY YEARS / YEAR 3 ===================== -->
+<section id="early-years">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">WORKSTREAM 1 — YEAR 3 LANDMARK ACTIONS</div>
+      <h2>Early years stays the priority focus</h2>
+      <p>Training front-line workers, easy access to local support pathways, consistent messaging for parents and staff, and Family Hubs as the delivery setting that ties it together.</p>
+    </div>
+    <div class="ladder">
+      <div class="rung">
+        <div class="tier">1.1 — Training</div>
+        <h4>Full roll-out across the Integrated Early Years Service</h4>
+        <p>"Nutrition for under 5s" and "Public Health Priorities" modules, developed last year, extended to Private, Voluntary and Independent settings — mainly nurseries.</p>
+      </div>
+      <div class="rung">
+        <div class="tier">1.2 — Pathways</div>
+        <h4>Review the age-specific weight management pathways</h4>
+        <p>By October 2026, to ensure they meet the needs of children and families and are easy to navigate.</p>
+      </div>
+      <div class="rung">
+        <div class="tier">1.3 — Communications campaign</div>
+        <h4>A summer awareness campaign, then a service directory</h4>
+        <p>Also reaching young people at school — promoting healthy behaviours and local, low-cost physical activity.</p>
+      </div>
+      <div class="rung">
+        <div class="tier">1.4 — Little Steps to Healthy Lives</div>
+        <h4>A revamped umbrella programme for early years settings</h4>
+        <p>Guidance on food available on site and healthy celebrations, with an easier path through the levels for greater impact. Launch event in summer term.</p>
+      </div>
+      <div class="rung">
+        <div class="tier">1.5 — Infant feeding deep dive</div>
+        <h4>Understanding the barriers to maintaining breastfeeding</h4>
+        <p>And the practical support that could help — completed by September 2026.</p>
+      </div>
+      <div class="rung">
+        <div class="tier">1.6 — Healthy Movers Programme</div>
+        <h4>11 more settings trained by March 2027</h4>
+        <p>Reaching an estimated 400+ more children (subject to Youth Sport Trust funding) — 34 settings trained since October 2024.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="roadline"></div></div>
+
+<!-- ===================== REACHING RESIDENTS ===================== -->
+<section id="comms">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">REACHING RESIDENTS</div>
+      <h2>Tailored where it matters, general where it scales</h2>
+      <p>NICE published guidance in January 2025 on overweight and obesity, including recommendations that preventive communications be clear, consistent, specific, non-judgemental and tailored to need. Two workshops with Families for Life Champions and other Community Champions point the same way: residents want very tailored communications reaching into communities, alongside general information through organisation channels — delivered through culturally competent channels including group chats like WhatsApp, and with real appetite among parents to be upskilled in public health messaging, without any further commitment expected of them.</p>
+    </div>
+    <div class="horizons">
+      <div class="horizon">
+        <div class="htag">Approach 1</div>
+        <h4>Co-develop tailored campaigns</h4>
+        <p>Built with different communities directly, not translated after the fact — the same logic behind the Healthy Muslim Families work above.</p>
+      </div>
+      <div class="horizon">
+        <div class="htag">Approach 2</div>
+        <h4>Ride existing high-reach campaigns</h4>
+        <p>Fold specific healthy-weight input into campaigns that already have reach — such as the "Look After You" campaign, developed by young people in Camden for under-25s.</p>
+      </div>
+      <div class="horizon">
+        <div class="htag">Approach 3</div>
+        <h4>Make local services easy to find</h4>
+        <p>Ensure information on key local services has good reach across the platforms and channels residents actually use.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="roadline"></div></div>
+
+<!-- ===================== PORTFOLIO CROSSOVER ===================== -->
+<section id="crossover">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">WHERE THIS CONNECTS</div>
+      <h2>The same logic, a different entry point</h2>
+      <p>The Healthy Weight Acceleration Plan and the wider Food as Infrastructure portfolio grew up side by side in Camden, and the overlaps aren't a coincidence — they're the same underlying moves, seen from the health side rather than the food-system side.</p>
+    </div>
+    <div class="tools-grid">
+      <a class="tool-card" href="index.html#tracks" target="_blank" rel="noopener">
+        <div>
+          <div class="tool-top">
+            <h3>Hub-style delivery, already in motion</h3>
+            <span class="tool-code">HUB TRACK</span>
+          </div>
+          <p>Family Dinners, the Health &amp; Wellbeing Bus, and Family Hubs are exactly the neighbourhood delivery points the portfolio's Hub track describes — the (Farmacy) concept of a local node people already trust, doing more than its original job.</p>
+        </div>
+        <div class="tool-link">See the Supply / Hub / Demand tracks <span class="arrow">↗</span></div>
+      </a>
+      <a class="tool-card" href="index.html#resilience" target="_blank" rel="noopener">
+        <div>
+          <div class="tool-top">
+            <h3>Food insecurity belongs in crisis planning</h3>
+            <span class="tool-code">RESILIENCE</span>
+          </div>
+          <p>Bringing food insecurity to the forefront of crisis planning — and making it a shared priority across council teams, not just the Health &amp; Wellbeing Department's own workstream — is the same case the portfolio makes for a Local Food Resilience Committee.</p>
+        </div>
+        <div class="tool-link">Read the resilience committee case <span class="arrow">↗</span></div>
+      </a>
+      <a class="tool-card" href="sovereign-food-system.html" target="_blank" rel="noopener">
+        <div>
+          <div class="tool-top">
+            <h3>Cheaper healthy food, not just better information</h3>
+            <span class="tool-code">MONEY &amp; POLICY</span>
+          </div>
+          <p>Camden's own "money-first" thinking, in-sourcing school catering away from a for-profit model, and using something like a local currency to give people choice without losing direction — these are municipal-instrument questions the Sovereign Food System portfolio is built to work through.</p>
+        </div>
+        <div class="tool-link">Explore the money &amp; policy portfolio <span class="arrow">↗</span></div>
+      </a>
+      <a class="tool-card" href="hubs-and-markets-working-group.html" target="_blank" rel="noopener">
+        <div>
+          <div class="tool-top">
+            <h3>One coordination space, not two</h3>
+            <span class="tool-code">HUBS &amp; MARKETS</span>
+          </div>
+          <p>The Driving Group's community and VCS partners sit close to the same food hubs and markets this working group is mapping and coordinating — a natural link so neither effort duplicates the other.</p>
+        </div>
+        <div class="tool-link">Open the working group <span class="arrow">↗</span></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FOOTER ===================== -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <strong>Camden's Healthy Weight Acceleration Plan</strong>
+        A coordination view of the Multi-Agency Healthy Weight Driving Group, convened by Camden's Health &amp; Wellbeing Department — built so that health, education, VCS and community partners can see each other's work in one place, alongside the wider food-system portfolio it sits next to.
+        <br><br>
+        This page is a working draft, not yet linked from the main portfolio homepage. Sourced from the Driving Group's Year 2 review &amp; Year 3 plans deck (15 April 2026) and internal planning conversations.
+      </div>
+      <div class="foot-col">
+        <h5>On this page</h5>
+        <a href="#driving-group">The Driving Group</a>
+        <a href="#plan">The plan</a>
+        <a href="#progress">Two years in</a>
+        <a href="#early-years">Early years</a>
+        <a href="#comms">Reaching residents</a>
+        <a href="#crossover">Portfolio crossover</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span><a href="index.html" style="text-decoration:underline;">← Food as Infrastructure</a> · CAMDEN HEALTH &amp; WELLBEING DEPARTMENT</span>
+      <span>HEALTHY WEIGHT ACCELERATION PLAN — YEAR 2 REVIEW, APRIL 2026</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
