@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Where's the Energy? — Camden Food Partnership</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FFFFFF;
+    --paper-2:#F5F3EC;
+    --paper-3:#EFECE1;
+    --ink:#1E211C;
+    --ink-soft:#5B5A50;
+    --rule:#E0DDD0;
+    --green:#33502F;
+    --green-deep:#243A21;
+    --green-soft:#E7EDE1;
+    --ochre:#B4791E;
+    --ochre-soft:#F3E4CB;
+    --teal:#274955;
+    --teal-soft:#DFE8EA;
+    --maxw: 1080px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0; background:var(--paper); color:var(--ink);
+    font-family:'Inter', -apple-system, sans-serif; font-size:16px; line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,h4{font-family:'Fraunces', serif; font-weight:600; line-height:1.08; margin:0; letter-spacing:-0.01em;}
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 28px;}
+  a{color:var(--green); text-decoration-color: rgba(51,80,47,0.35);}
+  a:hover{text-decoration-color: var(--green);}
+  .eyebrow{font-family:'IBM Plex Mono', monospace; font-size:11.5px; letter-spacing:0.14em; text-transform:uppercase; color:var(--ink-soft);}
+  .rule{border:none; border-top:1px solid var(--rule); margin:0;}
+
+  nav{position:sticky; top:0; z-index:50; background:rgba(255,255,255,0.94); backdrop-filter: blur(6px); border-bottom:1px solid var(--rule);}
+  .navrow{display:flex; align-items:center; justify-content:space-between; padding:14px 28px; max-width:var(--maxw); margin:0 auto; gap:16px; flex-wrap:wrap;}
+  .navbrand{font-family:'IBM Plex Mono', monospace; font-size:12px; letter-spacing:0.08em; color:var(--ink-soft); text-transform:uppercase;}
+  .navlinks{display:flex; gap:20px; flex-wrap:wrap;}
+  .navlinks a{font-size:13px; color:var(--ink); text-decoration:none; font-weight:500; border-bottom:2px solid transparent; padding-bottom:3px;}
+  .navlinks a:hover{border-bottom-color:var(--ochre);}
+
+  /* HERO - light */
+  .hero{background:var(--paper); padding:80px 0 54px; border-bottom:1px solid var(--rule);}
+  .hero .eyebrow{color:var(--green);}
+  .hero h1{font-size:clamp(36px, 5vw, 58px); color:var(--ink); margin-top:14px; max-width:16ch;}
+  .hero .sub{max-width:640px; font-size:18.5px; color:var(--ink-soft); margin-top:20px; line-height:1.55;}
+  .hero .ctarow{display:flex; gap:14px; margin-top:30px; flex-wrap:wrap;}
+  .btn{display:inline-block; font-size:14px; font-weight:600; padding:12px 20px; border-radius:2px; text-decoration:none; font-family:'Inter',sans-serif;}
+  .btn-primary{background:var(--green); color:#FBF8EF;}
+  .btn-primary:hover{background:var(--green-deep);}
+  .btn-ghost{border:1px solid #B7C2AC; color:var(--green);}
+  .btn-ghost:hover{border-color:var(--green);}
+  .hero-meta{display:flex; gap:0; margin-top:40px; flex-wrap:wrap; border-top:1px solid var(--rule);}
+  .hero-meta div{flex:1 1 220px; font-size:13px; color:var(--ink-soft); padding:18px 20px 0 0;}
+  .hero-meta b{display:block; color:var(--ink); font-family:'Fraunces',serif; font-size:15px; font-weight:600; margin-bottom:4px;}
+
+  section{padding:60px 0;}
+  .sec-head{max-width:680px; margin-bottom:32px;}
+  .sec-head h2{font-size:clamp(25px,3.1vw,34px); margin-top:10px;}
+  .sec-head p{color:var(--ink-soft); margin-top:14px; font-size:16.5px;}
+
+  .band-tint{background:var(--paper-2);}
+  .band-line{border-top:1px solid var(--rule); border-bottom:1px solid var(--rule);}
+
+  .plain{background:var(--paper-2); border-left:3px solid var(--green); padding:16px 20px; font-size:14.5px; color:var(--ink-soft); margin:20px 0; border-radius:2px;}
+  .plain b{color:var(--ink); font-weight:600;}
+
+  .note{background:var(--ochre-soft); border-left:3px solid var(--ochre); padding:14px 18px; font-size:13.5px; color:#5B4A2E; margin:14px 0; border-radius:2px;}
+
+  /* Foundations overview strip */
+  .found-strip{display:flex; flex-direction:column; margin-top:10px;}
+  .found-row{display:grid; grid-template-columns:70px 1fr; gap:20px; padding:26px 0; border-top:1px solid var(--rule);}
+  .found-row:first-child{border-top:1px solid var(--rule);}
+  .found-row .num{font-family:'Fraunces',serif; font-size:36px; color:var(--rule); font-weight:600;}
+  .found-row h4{font-size:19px;}
+  .found-row p{margin-top:8px; color:var(--ink-soft); font-size:15px;}
+  .found-row.f01 .num{color:var(--teal);}
+  .found-row.f02 .num{color:var(--green);}
+  .found-row.f03 .num{color:var(--ochre);}
+
+  /* Foundation section headers (big banner style) */
+  .fnd-head{
+    display:flex; align-items:baseline; gap:18px; margin-bottom:8px; flex-wrap:wrap;
+  }
+  .fnd-num{font-family:'Fraunces',serif; font-weight:700; font-size:46px; line-height:1;}
+  .fnd-head.f01 .fnd-num{color:var(--teal);}
+  .fnd-head.f02 .fnd-num{color:var(--green);}
+  .fnd-head.f03 .fnd-num{color:var(--ochre);}
+  .fnd-title{font-size:clamp(24px,3vw,32px);}
+  .fnd-sub{color:var(--ink-soft); font-size:15.5px; max-width:680px; margin:10px 0 30px;}
+  .fnd-rule{height:3px; border-radius:2px; margin-bottom:34px;}
+  .fnd-rule.f01{background:var(--teal);}
+  .fnd-rule.f02{background:var(--green);}
+  .fnd-rule.f03{background:var(--ochre);}
+
+  .legend{display:flex; gap:18px; margin:0 0 22px; flex-wrap:wrap;}
+  .legend span{display:inline-flex; align-items:center; gap:8px; font-size:12.5px; font-weight:600; color:var(--ink-soft);}
+  .dot{width:9px; height:9px; border-radius:50%; display:inline-block;}
+  .dot.supply{background:var(--green);}
+  .dot.hub{background:var(--ochre);}
+  .dot.demand{background:var(--teal);}
+
+  .cardgrid{display:grid; grid-template-columns:repeat(2,1fr); gap:16px; margin-bottom:10px;}
+  .card{background:var(--paper); border:1px solid var(--rule); border-radius:4px; padding:20px; border-left:4px solid var(--rule);}
+  .card.supply{border-left-color:var(--green);}
+  .card.hub{border-left-color:var(--ochre);}
+  .card.demand{border-left-color:var(--teal);}
+  .card-top{display:flex; justify-content:space-between; align-items:flex-start; gap:10px;}
+  .card h4{font-size:16.5px; font-weight:600; font-family:'Inter',sans-serif;}
+  .card p{font-size:14px; color:var(--ink-soft); margin-top:8px;}
+  .track-tag{font-family:'IBM Plex Mono',monospace; font-size:10px; text-transform:uppercase; letter-spacing:0.05em; padding:3px 8px; border-radius:20px; color:#fff; white-space:nowrap;}
+  .track-tag.supply{background:var(--green);}
+  .track-tag.hub{background:var(--ochre);}
+  .track-tag.demand{background:var(--teal);}
+  .grounded{display:block; margin-top:12px; font-size:12px; font-family:'IBM Plex Mono',monospace; color:var(--ink-soft); opacity:0.9; line-height:1.5;}
+  .grounded b{color:var(--ink); font-weight:500;}
+
+  .subhead-mini{font-family:'IBM Plex Mono',monospace; font-size:11px; text-transform:uppercase; letter-spacing:0.08em; color:var(--ink-soft); margin:38px 0 14px; display:flex; align-items:center; gap:10px;}
+  .subhead-mini::after{content:""; flex:1; height:1px; background:var(--rule);}
+
+  .origin-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-top:26px;}
+  .origin-card{background:var(--paper); border:1px solid var(--rule); padding:20px; border-radius:3px;}
+  .origin-card .tag{font-family:'IBM Plex Mono',monospace; font-size:10.5px; letter-spacing:0.07em; text-transform:uppercase; color:var(--ochre);}
+  .origin-card h4{font-size:16.5px; margin-top:8px; font-family:'Inter',sans-serif;}
+  .origin-card p{font-size:13.5px; color:var(--ink-soft); margin-top:8px;}
+
+  .horizons{display:grid; grid-template-columns:repeat(3,1fr); gap:0; margin-top:26px; border:1px solid var(--rule); border-radius:4px; overflow:hidden;}
+  .hz{padding:24px 20px; border-right:1px solid var(--rule);}
+  .hz:last-child{border-right:none;}
+  .hz h4{font-size:18px; margin-top:8px;}
+  .hz ul{margin:12px 0 0; padding-left:18px; font-size:13.5px; color:var(--ink-soft);}
+  .hz li{margin-bottom:8px;}
+  .hz.now{background:var(--ochre-soft);}
+  .hz.next{background:var(--green-soft);}
+  .hz.later{background:var(--teal-soft);}
+
+  table.grid-table{width:100%; border-collapse:collapse; margin-top:22px; font-size:14px;}
+  table.grid-table th{text-align:left; font-family:'IBM Plex Mono',monospace; font-size:10.5px; text-transform:uppercase; letter-spacing:0.05em; color:#fff; background:var(--green); padding:11px 13px;}
+  table.grid-table td{padding:13px; border-bottom:1px solid var(--rule); vertical-align:top;}
+  table.grid-table tr:nth-child(even) td{background:var(--paper-2);}
+  table.grid-table td.ws{font-weight:600; width:22%;}
+
+  .tiers{display:flex; flex-direction:column; gap:12px; margin-top:24px;}
+  .tier{display:grid; grid-template-columns:120px 1fr; gap:18px; align-items:start; background:var(--paper); border:1px solid var(--rule); border-radius:4px; padding:18px 20px;}
+  .tier .tlabel{font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--ink-soft); text-transform:uppercase; letter-spacing:0.05em;}
+  .tier h4{font-size:16.5px; margin-top:4px;}
+  .tier p{font-size:13.5px; color:var(--ink-soft); margin-top:6px;}
+
+  .cta-box{background:var(--green-deep); color:#F4F1E6; border-radius:6px; padding:34px 30px; margin-top:18px;}
+  .cta-box .eyebrow{color:#B9C7A9;}
+  .cta-box h3{color:#FBF8EF; font-size:23px; margin-top:8px;}
+  .cta-box p{color:#DCE4D3; margin-top:10px; font-size:14.5px; max-width:640px;}
+  .cta-box .ctarow{display:flex; gap:12px; margin-top:18px; flex-wrap:wrap;}
+  .cta-box .btn-primary{background:#EEDFB6; color:#20200F;}
+  .cta-box .btn-ghost{border:1px solid #587056; color:#EDEFE4;}
+
+  .tension{display:grid; grid-template-columns:1fr 1fr; gap:12px; padding:16px 0; border-top:1px solid var(--rule);}
+  .tension:last-child{border-bottom:1px solid var(--rule);}
+  .tension .q{font-weight:600; font-size:14.5px;}
+  .tension .a{font-size:13.5px; color:var(--ink-soft);}
+
+  .toolgrid{display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-top:24px;}
+  .tool{background:var(--paper); border:1px solid var(--rule); border-radius:4px; padding:16px; text-decoration:none; display:block;}
+  .tool:hover{border-color:var(--green);}
+  .tool .tag{font-family:'IBM Plex Mono',monospace; font-size:10px; text-transform:uppercase; color:var(--ochre); letter-spacing:0.05em;}
+  .tool h4{font-size:15px; margin-top:8px; color:var(--ink); font-family:'Inter',sans-serif; font-weight:600;}
+  .tool p{font-size:12.5px; color:var(--ink-soft); margin-top:6px;}
+
+  footer{background:var(--green-deep); color:#B9C0A8; padding:40px 0; font-size:13px;}
+  footer a{color:#DCE4D3;}
+  footer .wrap{display:flex; justify-content:space-between; flex-wrap:wrap; gap:20px;}
+
+  @media (max-width: 760px){
+    .origin-grid, .cardgrid, .horizons, .toolgrid{grid-template-columns:1fr;}
+    .horizons .hz{border-right:none; border-bottom:1px solid var(--rule);}
+    .tension{grid-template-columns:1fr;}
+    .tier{grid-template-columns:1fr;}
+    .found-row{grid-template-columns:44px 1fr;}
+  }
+
+  .reveal{opacity:0; transform:translateY(12px); transition:opacity 0.5s ease, transform 0.5s ease;}
+  .reveal.in{opacity:1; transform:translateY(0);}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="navrow">
+    <div class="navbrand">Camden Food Partnership · Where's the energy</div>
+    <div class="navlinks">
+      <a href="#origin">Where it comes from</a>
+      <a href="#foundations">Foundations</a>
+      <a href="#f01">01</a><a href="#f02">02</a><a href="#f03">03</a>
+      <a href="#horizons">Horizons</a>
+      <a href="#energy">The energy</a>
+      <a href="#resilience">First move</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Ideas from the room — not a plan handed down</div>
+    <h1>Where's the energy to<br>actually drive this?</h1>
+    <p class="sub">You were in the room — at the Camden Future Food Dinner, at the Future Food System Workshop on 6 August, or in the research sessions before either. Nothing below has been decided. It's what participants and Food Partnership members actually said, organised against the same three foundations the wider Food as Infrastructure portfolio is built on — so we can go find out who has the energy to carry each piece forward in Camden.</p>
+    <div class="ctarow">
+      <a class="btn btn-primary" href="#foundations">See the foundations ↓</a>
+      <a class="btn btn-ghost" href="https://food.darkmatterlabs.org/" target="_blank">Open the full portfolio site ↗</a>
+    </div>
+    <div class="hero-meta">
+      <div><b>Camden Future Food Dinner</b>Calthorpe Community Garden — where this conversation started for many in the room.</div>
+      <div><b>Future Food System Workshop</b>6 August — five tables, one facilitator reflection, dozens of ideas.</div>
+      <div><b>Research to date</b>Negative Portfolio v2.0, Hubs &amp; Markets Working Group, Nutrition Supply Map, Live Map.</div>
+      <div><b>Next deadline</b>5 Oct 2026 — Cabinet's call for views on the Civil Contingencies Act.</div>
+    </div>
+  </div>
+</header>
+
+<section id="origin" class="reveal">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">Where this comes from</div>
+      <h2>Three rooms, one thread running through them</h2>
+      <p>Nothing here is new, and none of it is decided. It's a synthesis of what was actually said, pulled together so it reads as one shared memory instead of three separate ones.</p>
+    </div>
+    <div class="origin-grid">
+      <div class="origin-card">
+        <div class="tag">The dinner</div>
+        <h4>Camden Future Food Dinner</h4>
+        <p>Held at Calthorpe Community Garden. The first time many partners sat down together around the size of the challenge — and the first outline of Camden as a demand-shaper rather than a producer.</p>
+      </div>
+      <div class="origin-card">
+        <div class="tag">The workshop</div>
+        <h4>Future Food System Workshop</h4>
+        <p>6 August — five parallel table conversations and a closing reflection. Almost every idea below traces back to something said at one of these tables.</p>
+      </div>
+      <div class="origin-card">
+        <div class="tag">The research</div>
+        <h4>Built and published so far</h4>
+        <p>The Negative Portfolio v2.0, the Hubs &amp; Markets Working Group, the Nutrition Supply Map, and the Live Camden food-system map — the evidence base this page sits on top of.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="foundations" class="band-tint reveal">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">The theory of change hasn't moved</div>
+      <h2>Treat food like roads</h2>
+      <p>Everything raised in the room is organised below against the same three foundations the wider Food as Infrastructure portfolio is built on. They're the test every idea on this page eventually has to pass.</p>
+    </div>
+    <div class="found-strip">
+      <div class="found-row f01">
+        <div class="num">01</div>
+        <div><h4>Nutrient density is the target, not calories</h4><p>The baseline shifts from "enough food" to genuinely nourishing food — because a system that only solves for calories quietly manufactures the next public-health crisis while claiming to have solved the last one.</p></div>
+      </div>
+      <div class="found-row f02">
+        <div class="num">02</div>
+        <div><h4>Organic supply grows through collective buying power</h4><p>No single borough's contract is big enough to move a farmer's decision. A buying coalition of London boroughs and businesses is — turning committed public and commercial demand into the confidence a grower needs to convert land.</p></div>
+      </div>
+      <div class="found-row f03">
+        <div class="num">03</div>
+        <div><h4>Civic-led delivery is what actually brings it to life</h4><p>Procurement protocols and buying coalitions don't feed anyone on their own. Grocers, dinners, workshops and community-run hubs are the layer where the foundations above turn into food someone can actually buy or receive.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOUNDATION 01 -->
+<section id="f01" class="reveal">
+  <div class="wrap">
+    <div class="fnd-head f01"><span class="fnd-num">01</span><h3 class="fnd-title">Nutrient density is the target, not calories</h3></div>
+    <div class="fnd-rule f01"></div>
+    <p class="fnd-sub">Ideas raised in the room that shift what Camden measures and pays attention to — from "enough food" to food that actually nourishes people.</p>
+
+    <div class="legend">
+      <span><i class="dot supply"></i> Supply</span>
+      <span><i class="dot hub"></i> Hub</span>
+      <span><i class="dot demand"></i> Demand</span>
+      <span style="margin-left:6px;">— the wider portfolio's own tracks, tagged for reference</span>
+    </div>
+
+    <div class="cardgrid">
+      <div class="card supply">
+        <div class="card-top"><h4>Nutrition &amp; supply-gap mapping</h4><span class="track-tag supply">Supply</span></div>
+        <p>Map what Camden residents actually need nutritionally against what's currently grown and available, before committing to new contracts or sponsored farmland.</p>
+        <span class="grounded"><b>Grounded in:</b> the regional-sourcing table, Future Food System Workshop — feeds the existing Nutrition Supply Map tool.<br><b>Energy in the room:</b> Open — no one at the table claimed this as theirs to drive.</span>
+      </div>
+      <div class="card demand">
+        <div class="card-top"><h4>Consumption transparency</h4><span class="track-tag demand">Demand</span></div>
+        <p>An annual receipt totalling spend, salt and sugar against delivery-app orders — no verdict attached, just the number, the way cigarette packaging works.</p>
+        <span class="grounded"><b>Grounded in:</b> the Indy reflection session, the "£8,000 on Uber Eats" moment.<br><b>Energy in the room:</b> A vivid anecdote, not yet a plan. Open.</span>
+      </div>
+      <div class="card demand">
+        <div class="card-top"><h4>Marketing Investment Fund</h4><span class="track-tag demand">Demand</span></div>
+        <p>A cross-retailer fund investing in demand for healthy food and new food cultures, priced against the revenue uplift it creates — because no public body can out-spend existing food marketing budgets alone.</p>
+        <span class="grounded"><b>Grounded in:</b> the Indy reflection session — a named item on the main portfolio site's Demand track.<br><b>Energy in the room:</b> Indy's own framing; more a research agenda right now than a pick-up-and-run item.</span>
+      </div>
+      <div class="card hub">
+        <div class="card-top"><h4>Farmacy pilot</h4><span class="track-tag hub">Hub</span></div>
+        <p>Pharmacies reframed as neighbourhood performance-and-nutrition nodes — fresh food, dietary advice and community links, framed around aspiration rather than illness.</p>
+        <span class="grounded"><b>Grounded in:</b> the new-economics table — already named and scoped identically on the main portfolio site.<br><b>Energy in the room:</b> Indy's idea — landed hard enough that a business owner in the room (Carl) reacted to it as a live opportunity for his own pivot.</span>
+      </div>
+      <div class="card hub">
+        <div class="card-top"><h4>Food training for health practitioners</h4><span class="track-tag hub">Hub</span></div>
+        <p>Basic nutrition training and food-prescription routes for GPs and health workers — related to, but distinct from, the Farmacy pilot itself.</p>
+        <span class="grounded"><b>Grounded in:</b> the health-link conversation, Future Food System Workshop.<br><b>Energy in the room:</b> Raised, not yet claimed. Open.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOUNDATION 02 -->
+<section id="f02" class="band-tint reveal">
+  <div class="wrap">
+    <div class="fnd-head f02"><span class="fnd-num">02</span><h3 class="fnd-title">Organic supply grows through collective buying power</h3></div>
+    <div class="fnd-rule f02"></div>
+    <p class="fnd-sub">Ideas raised in the room about turning Camden's buying power — and Camden alongside other boroughs' buying power — into the confidence a grower or supplier needs to convert land or change practice.</p>
+
+    <div class="cardgrid">
+      <div class="card supply">
+        <div class="card-top"><h4>Sponsored / underwritten farmland</h4><span class="track-tag supply">Supply</span></div>
+        <p>Camden-backed relationships with farms outside the borough, scaling proven cooperative wholesale models (e.g. the Better Food Traders network) rather than duplicating them.</p>
+        <span class="grounded"><b>Grounded in:</b> the regional-sourcing table — with an open governance question about sponsorship vs. ownership still unresolved.<br><b>Energy in the room:</b> Dorothea pushed hardest for this at the table — worth following up with her directly.</span>
+      </div>
+      <div class="card supply">
+        <div class="card-top"><h4>Organic-transition bridge financing</h4><span class="track-tag supply">Supply</span></div>
+        <p>Support for farms through the multi-year dip in income ("J-curve") that agroecological conversion typically causes, financed against a long-term buying commitment.</p>
+        <span class="grounded"><b>Grounded in:</b> the Future Food Dinner and the Indy reflection session, echoing the Danish 90%-by-2040 procurement model.<br><b>Energy in the room:</b> Raised in Indy's session; no named lead yet.</span>
+      </div>
+      <div class="card supply">
+        <div class="card-top"><h4>Automated farm-to-farm coverage</h4><span class="track-tag supply">Supply</span></div>
+        <p>A forecasting engine that predicts surplus and shortfall across a network of farms and routes supply between them before a contract breaks.</p>
+        <span class="grounded"><b>Grounded in:</b> the Indy reflection session, in the supply-chain conversation with Andy and Carl.<br><b>Energy in the room:</b> Carl and Andy were already thinking this through out loud, unprompted — a real signal.</span>
+      </div>
+      <div class="card supply">
+        <div class="card-top"><h4>Community water infrastructure</h4><span class="track-tag supply">Supply</span></div>
+        <p>Subsidised water butts and sustainable drainage capture linked to growing spaces, treating water access as a limiting factor worth investing in directly.</p>
+        <span class="grounded"><b>Grounded in:</b> the regional-sourcing table, referencing NYC precedent.<br><b>Energy in the room:</b> A passing idea, written down on the spot. Open.</span>
+      </div>
+      <div class="card hub">
+        <div class="card-top"><h4>Collective buying engine</h4><span class="track-tag hub">Hub</span></div>
+        <p>Scale the existing "one conversation instead of a hundred" model (Young Foundation / Carl) into a repeatable, institutional capability rather than a personal relationship.</p>
+        <span class="grounded"><b>Grounded in:</b> the Indy reflection session — matches the site's own definition almost word for word.<br><b>Energy in the room:</b> Carl's own business needs this to exist within six months — about as real as energy gets in the room.</span>
+      </div>
+      <div class="card demand">
+        <div class="card-top"><h4>Procurement charter</h4><span class="track-tag demand">Demand</span></div>
+        <p>A joint public/private Camden charter, deliberately set beyond existing certifications — Food for Life Served Here's gold standard only requires around 15% organic.</p>
+        <span class="grounded"><b>Grounded in:</b> the procurement table, both workshops — the direct precursor to the portfolio's Procurement Protocol.<br><b>Energy in the room:</b> Rosemary put her name to this directly on the day: "if anyone wants to talk about a charter, let's do it."</span>
+      </div>
+      <div class="card demand">
+        <div class="card-top"><h4>Conditions on scarce, sought-after assets</h4><span class="track-tag demand">Demand</span></div>
+        <p>Attaching living-wage and healthy-catering conditions to access that's already in high demand — such as Camden Market/Lock's three-year trader waiting list.</p>
+        <span class="grounded"><b>Grounded in:</b> the procurement table — a low-cost lever using existing leverage, not new money.<br><b>Energy in the room:</b> Raised with a concrete example already in hand — practical enough that it just needs someone to start the conversation.</span>
+      </div>
+      <div class="card demand">
+        <div class="card-top"><h4>Incentives &amp; disincentives policy</h4><span class="track-tag demand">Demand</span></div>
+        <p>A broader policy ask than the procurement charter alone — shaping what's easy and hard to buy across the borough, not just what the council itself buys.</p>
+        <span class="grounded"><b>Grounded in:</b> the table-summaries session, Future Food System Workshop.<br><b>Energy in the room:</b> Named as a gap, not yet claimed by anyone.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOUNDATION 03 -->
+<section id="f03" class="reveal">
+  <div class="wrap">
+    <div class="fnd-head f03"><span class="fnd-num">03</span><h3 class="fnd-title">Civic-led delivery is what actually brings it to life</h3></div>
+    <div class="fnd-rule f03"></div>
+    <p class="fnd-sub">The largest group of ideas from the room — the hubs, co-ops, grocers, matchmaking and organising that turn the two foundations above into food someone can actually buy or receive.</p>
+
+    <div class="cardgrid">
+      <div class="card hub">
+        <div class="card-top"><h4>Camden food hub(s)</h4><span class="track-tag hub">Hub</span></div>
+        <p>The single biggest tangible near-term idea named at the workshop — a hub-and-spoke model, anchored at Regis Road, with composting/anaerobic digestion planned alongside it.</p>
+        <span class="grounded"><b>Grounded in:</b> multiple tables — directly continued by the London Hubs &amp; Markets Working Group.<br><b>Energy in the room:</b> Already has a name behind it — Damien Conrad (Felix Project) is directing the Hubs &amp; Markets Working Group carrying this forward.</span>
+      </div>
+      <div class="card hub">
+        <div class="card-top"><h4>Co-op toolkit, minimum standards &amp; branding</h4><span class="track-tag hub">Hub</span></div>
+        <p>A recognisable, minimum-standards toolkit so anyone can start a co-op and residents can recognise one the way they'd recognise a supermarket or the Underground.</p>
+        <span class="grounded"><b>Grounded in:</b> the co-ops table, Future Food System Workshop.<br><b>Energy in the room:</b> Strong table consensus; no single name attached yet.</span>
+      </div>
+      <div class="card hub">
+        <div class="card-top"><h4>Micro-enterprise &amp; community kitchen routes</h4><span class="track-tag hub">Hub</span></div>
+        <p>Referral routes into compliant community kitchens for residents who want to batch-cook or sell food but whose home kitchens aren't set up for it.</p>
+        <span class="grounded"><b>Grounded in:</b> the regional-sourcing table, Future Food System Workshop.<br><b>Energy in the room:</b> Raised, not yet claimed.</span>
+      </div>
+      <div class="card hub">
+        <div class="card-top"><h4>Public-interest grocers &amp; multi-ledger ownership</h4><span class="track-tag hub">Hub</span></div>
+        <p>Next-generation, membership-model grocers with genuinely lower prices on a fixed cadence, and part-volunteer/part-paid/part-commercial ownership structures.</p>
+        <span class="grounded"><b>Grounded in:</b> the Indy reflection session, riffing on the Mamdani NYC grocery model.<br><b>Energy in the room:</b> Indy's own thread; still abstract enough that no one's picked it up locally.</span>
+      </div>
+      <div class="card hub">
+        <div class="card-top"><h4>Fresh food access points</h4><span class="track-tag hub">Hub</span></div>
+        <p>UK-viable versions of vending-style fresh produce access (the Farmer's Fridge model) for transit and other high-footfall locations.</p>
+        <span class="grounded"><b>Grounded in:</b> raised independently at both the action-options and regional-group tables.<br><b>Energy in the room:</b> Floated twice, independently — a real signal, but still no owner.</span>
+      </div>
+      <div class="card hub">
+        <div class="card-top"><h4>Social value live-matchmaking</h4><span class="track-tag hub">Hub</span></div>
+        <p>A real-time mechanism connecting community projects with contractors and developers already on site, so in-kind support isn't lost once a contract ends.</p>
+        <span class="grounded"><b>Grounded in:</b> Kira's (Camden social value lead) contribution at the regional-group table.<br><b>Energy in the room:</b> Kira is already doing versions of this — the clearest existing energy on this page.</span>
+      </div>
+      <div class="card hub">
+        <div class="card-top"><h4>Neighbourhood action groups</h4><span class="track-tag hub">Hub</span></div>
+        <p>Local groups covering every area of the borough, deliberately linked to the parallel health neighbourhood networks work.</p>
+        <span class="grounded"><b>Grounded in:</b> the table-summaries session, Future Food System Workshop.<br><b>Energy in the room:</b> Named as a gap, not yet a plan. Open.</span>
+      </div>
+      <div class="card demand">
+        <div class="card-top"><h4>Street food &amp; micro-licensing</h4><span class="track-tag demand">Demand</span></div>
+        <p>Formalising licensing for street food and small-scale enterprise — the most carbon- and infrastructure-efficient food format there is.</p>
+        <span class="grounded"><b>Grounded in:</b> the new-economics table — matches the site's Street Food Licensing item directly.<br><b>Energy in the room:</b> Conceptual for now; no named owner.</span>
+      </div>
+      <div class="card supply">
+        <div class="card-top"><h4>School land-sharing for growing &amp; education</h4><span class="track-tag supply">Supply</span></div>
+        <p>Pairing schools with spare playing fields against schools that have growing space. The table's own conclusion: safeguarding and DBS constraints mean this lands as an education role, not a supply source — worth stating plainly rather than quietly dropping.</p>
+        <span class="grounded"><b>Grounded in:</b> the regional-sourcing table, Future Food System Workshop.<br><b>Energy in the room:</b> The table talked itself out of this one in real time — land and safeguarding both cited as genuine blockers.</span>
+      </div>
+    </div>
+
+    <div class="subhead-mini">Civic muscle — organising &amp; accountability</div>
+    <p style="color:var(--ink-soft); font-size:14.5px; margin-bottom:20px;">These don't have a Supply/Hub/Demand tag because they're not infrastructure — they're what makes the Partnership itself credible enough to run any of the above.</p>
+    <div class="origin-grid">
+      <div class="origin-card">
+        <div class="tag">Precedent</div>
+        <h4>Right to Grow</h4>
+        <p>Already has council officer time behind it — the table's point was that it needs community weight alongside that, not instead of it.</p>
+      </div>
+      <div class="origin-card">
+        <div class="tag">Inside the council</div>
+        <h4>A food champion in every department</h4>
+        <p>The Enfield example: someone from Properties having to work out how food relates to their own remit. No one owns making this happen yet.</p>
+      </div>
+      <div class="origin-card">
+        <div class="tag">Reaching residents</div>
+        <h4>A resident-facing newsletter</h4>
+        <p>Distinct from the existing partner-facing one. Open — raised as a gap, not claimed.</p>
+      </div>
+      <div class="origin-card">
+        <div class="tag">Reaching residents</div>
+        <h4>Piggyback on existing engagement</h4>
+        <p>Came from someone already running the health bus — practical and ready to extend, not hypothetical.</p>
+      </div>
+      <div class="origin-card">
+        <div class="tag">Resilience</div>
+        <h4>A People's Emergency Briefing</h4>
+        <p>Named directly in the closing round; no single lead confirmed yet.</p>
+      </div>
+      <div class="origin-card">
+        <div class="tag">Resilience</div>
+        <h4>A food-activity &amp; risk register</h4>
+        <p>Distinct from the Nutrition Supply Map. A good pairing with whoever picks up the resilience committee below.</p>
+      </div>
+      <div class="origin-card">
+        <div class="tag">Accountability</div>
+        <h4>Bring in elected councillors directly</h4>
+        <p>A challenge thrown to the room, not picked up on the day — worth asking who felt strongly enough to say it.</p>
+      </div>
+      <div class="origin-card">
+        <div class="tag">Who's missing</div>
+        <h4>Non-traditional food actors</h4>
+        <p>Farah is already doing some engagement with convenience stores and small shops — worth checking what would help her do more.</p>
+      </div>
+    </div>
+
+    <div class="note" style="margin-top:28px;">A few ideas from the room are being left out deliberately, not by oversight: declaring a national state of emergency, taxing the rich to fund co-ops, and planning food capacity for climate refugees. All were raised as genuine provocations about the scale of the risk — but none are things Camden or the Partnership can pick up and drive right now.</div>
+  </div>
+</section>
+
+<section id="horizons" class="band-line reveal">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">Sequencing</div>
+      <h2>Three horizons, not one deadline</h2>
+      <p>The wider portfolio runs on three speeds at once. Here's what that means for the ideas above.</p>
+    </div>
+    <div class="horizons">
+      <div class="hz now">
+        <div class="eyebrow">Now — before 5 Oct 2026</div>
+        <h4>Shock absorption</h4>
+        <ul>
+          <li>Respond to the Cabinet's Civil Contingencies Act call for views</li>
+          <li>Stand up a Local Food Resilience Committee, statutory or not</li>
+          <li>Start the nutrition &amp; supply-gap mapping</li>
+          <li>Open up Food Partnership meetings — low-stakes topics first</li>
+        </ul>
+      </div>
+      <div class="hz next">
+        <div class="eyebrow">Next — 12–18 months</div>
+        <h4>Coalition &amp; charter</h4>
+        <ul>
+          <li>Publish a declared Food Partnership work programme</li>
+          <li>Camden and 3–4 peer boroughs align on collective buying</li>
+          <li>Camden food hub(s) go live on the hub-and-spoke model</li>
+          <li>Procurement charter published; Farmacy pilot scoped and tested</li>
+        </ul>
+      </div>
+      <div class="hz later">
+        <div class="eyebrow">2028 and beyond</div>
+        <h4>The labour shock</h4>
+        <ul>
+          <li>Automation reaches logistics and white-collar work at scale</li>
+          <li>Food-as-infrastructure is the argument made <em>before</em> that shock, not the response after it</li>
+          <li>Co-op branding, collective buying and sponsored farmland mature into the default, not the pilot</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="energy" class="reveal">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">The actual job right now</div>
+      <h2>Where's the energy?</h2>
+      <p>Not a RACI chart. This is a reading of the room — where someone already showed up with real energy for an idea, named or not, and what's still an open question. The point of the next Partnership conversation is to test these readings out loud, not to confirm them from behind a desk.</p>
+    </div>
+    <table class="grid-table">
+      <tr><th>Idea</th><th>Energy already visible on the day</th><th>Open question to ask the room</th></tr>
+      <tr><td class="ws">Resilience committee</td><td>Tanya brought the proposal and put her name to it directly</td><td>Who convenes it locally and keeps the risk register alive after the first meeting?</td></tr>
+      <tr><td class="ws">Procurement charter</td><td>Rosemary: "if anyone wants to talk about a charter, let's do it"</td><td>Who else wants in, and who owns the supplier relationships day to day?</td></tr>
+      <tr><td class="ws">Social value live-matchmaking</td><td>Kira is already doing versions of this as Camden's social value lead</td><td>Does she want this to become a repeatable process, or stay as it is?</td></tr>
+      <tr><td class="ws">Camden food hub(s)</td><td>Damien Conrad (Felix Project) is already directing the Hubs &amp; Markets Working Group carrying this forward</td><td>Who from Camden sits alongside him on it day to day?</td></tr>
+      <tr><td class="ws">Collective buying engine</td><td>Carl's own business needs this to exist within six months</td><td>Who helps that urgency become an institutional capability, not just Carl's own relationships?</td></tr>
+      <tr><td class="ws">Sponsored / underwritten farmland</td><td>Dorothea pushed hardest for this at the table</td><td>Who follows up on the sponsorship-vs-ownership question she raised?</td></tr>
+      <tr><td class="ws">Farmacy pilot</td><td>Indy's idea; Carl reacted to it live as an opportunity for his own business pivot</td><td>Who scopes an actual pilot site and partner?</td></tr>
+      <tr><td class="ws">Non-traditional food actors</td><td>Farah is already doing some of this engagement</td><td>What would help her do more of it?</td></tr>
+      <tr><td class="ws">Co-op toolkit &amp; standards</td><td>Strong consensus at the table — no single name attached yet</td><td>Who's willing to put their name on this first?</td></tr>
+      <tr><td class="ws">London-wide coalition</td><td>Camden is already several boroughs ahead via the Hubs &amp; Markets Working Group</td><td>Which peer borough lead picks up the phone next?</td></tr>
+    </table>
+    <div class="cta-box">
+      <div class="eyebrow">If any of this is you</div>
+      <h3>Put your name to it</h3>
+      <p>If you recognise your own energy in any row above — or in any card further up this page — say so at the next Partnership meeting, or reply directly so it doesn't sit as an unclaimed idea for another quarter. The job right now is finding out who's genuinely ready to carry something, not assigning it.</p>
+    </div>
+  </div>
+</section>
+
+<section class="band-tint reveal">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">Governance tiers, restated</div>
+      <h2>The same three tiers as the wider portfolio</h2>
+    </div>
+    <div class="tiers">
+      <div class="tier">
+        <div class="tlabel">Tier 1 — Borough</div>
+        <div><h4>An independent Food Partnership</h4><p>Camden Council keeps a seat at the table — funding, convening, advertising the work — without holding the steering wheel. A declared, public work programme replaces "come and collaborate."</p></div>
+      </div>
+      <div class="tier">
+        <div class="tlabel">Tier 2 — London</div>
+        <div><h4>A coalition of boroughs</h4><p>Camden and a founding group of neighbouring boroughs take on shared standards and collective buying — the exact agenda the London Hubs &amp; Markets Working Group is already running, several boroughs early.</p></div>
+      </div>
+      <div class="tier">
+        <div class="tlabel">Tier 3 — National</div>
+        <div><h4>Permission from the centre</h4><p>A policy briefing, routed through Oxford, arguing for the deregulation that lets already-brilliant local actors build without red tape — timed to the Civil Contingencies Act review window.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="resilience" class="reveal">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">The concrete first move</div>
+      <h2>Set up a Local Food Resilience Committee — before the law requires it</h2>
+      <p>This is the one action from the workshop that appears almost word for word in the wider portfolio's own "concrete first move" — proposed independently at the table by a Partnership member, and matched exactly by the National Preparedness Commission's review.</p>
+    </div>
+    <div class="cta-box">
+      <div class="eyebrow">Cabinet call for views closes 5 October 2026</div>
+      <h3>Food isn't part of Camden's emergency response yet. That's the gap to close first.</h3>
+      <p>The Borough Resilience Forum already covers police, hospitals, ambulance and fire. Tim Lang's National Preparedness Commission review recommends every local authority add a food resilience committee — the Cabinet Office is deciding whether to make that statutory. A borough that moves first has already done most of the work before the law asks for it.</p>
+      <div class="ctarow">
+        <a class="btn btn-primary" href="https://nationalpreparednesscommission.uk/wp-content/uploads/2025/02/NPC-Just-in-Case-Main-Report_PDF-Download.pdf" target="_blank">Read Tim Lang's report ↗</a>
+        <a class="btn btn-ghost" href="https://www.gov.uk/government/calls-for-evidence/civil-contingencies-act-2004-call-for-views/civil-contingencies-act-2004-call-for-views-html" target="_blank">Respond before 5 Oct ↗</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band-line reveal">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">Held, not resolved</div>
+      <h2>The open tensions worth naming out loud</h2>
+      <p>A few genuine disagreements ran through the room. They're decisions the Partnership needs to make deliberately, not oversights in this synthesis.</p>
+    </div>
+    <div class="tension">
+      <div class="q">Independence vs. council backing</div>
+      <div class="a">How far the Partnership moves from council control, given even the most dynamic independent food partnerships nationally still rely on council funding and a seat at the table.</div>
+    </div>
+    <div class="tension">
+      <div class="q">Sponsorship vs. ownership of land and farms</div>
+      <div class="a">Sponsoring farms outside Camden raises the same question as council-sponsored co-ops — how much control follows the money, and who decides.</div>
+    </div>
+    <div class="tension">
+      <div class="q">One big summit vs. distributed workshops</div>
+      <div class="a">Still unresolved from the workshop itself, and it shapes who's actually reached versus who's easiest to convene.</div>
+    </div>
+    <div class="tension">
+      <div class="q">Standards as inclusion vs. exclusion</div>
+      <div class="a">Charters, minimum standards and conditions on traders all raise the floor — but can lock out the smallest, least-resourced actors they're partly meant to help.</div>
+    </div>
+    <div class="tension">
+      <div class="q">Near-term pragmatism vs. systemic ambition</div>
+      <div class="a">Several participants warned against designing only for the next two years, given how fast the underlying economic conditions may move — the portfolio needs items that work now <em>and</em> as a Trojan horse toward the longer horizon.</div>
+    </div>
+  </div>
+</section>
+
+<section class="band-tint reveal">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">Already live</div>
+      <h2>The research this page stands on</h2>
+      <p>Every idea above sits on top of work that's already built and public. Worth opening before your next Partnership conversation.</p>
+    </div>
+    <div class="toolgrid">
+      <a class="tool" href="https://camden-horizon-navigator.vercel.app/" target="_blank">
+        <div class="tag">Negative Portfolio NP 2.0</div>
+        <h4>The Camden Horizon Navigator</h4>
+        <p>Food fragility treated as a demand-construction opportunity, not a supply deficit.</p>
+      </a>
+      <a class="tool" href="https://adam-darkmatterlabs.github.io/DML-Food-Systems/Portfolio.html#idea" target="_blank">
+        <div class="tag">Implementation pathway</div>
+        <h4>The Camden Plan, Plainly</h4>
+        <p>A plain-English walkthrough of the eight-shelf portfolio, idea to instrument.</p>
+      </a>
+      <a class="tool" href="https://food.darkmatterlabs.org/hubs-and-markets-working-group.html" target="_blank">
+        <div class="tag">Working group</div>
+        <h4>London Hubs &amp; Markets</h4>
+        <p>Where the Hub track gets tested against real boroughs, leases and funding gaps.</p>
+      </a>
+      <a class="tool" href="https://food.darkmatterlabs.org/nutrition-supply-map.html" target="_blank">
+        <div class="tag">Supply map</div>
+        <h4>Nutrition Supply Map</h4>
+        <p>Where Camden's food actually comes from, and the shocks that travel home with it.</p>
+      </a>
+      <a class="tool" href="https://camden-map.vercel.app/" target="_blank">
+        <div class="tag">Live map</div>
+        <h4>The Camden food system, mapped</h4>
+        <p>Hubs, retailers, growers and routes in one place — with an audio briefing.</p>
+      </a>
+      <a class="tool" href="https://food.darkmatterlabs.org/sovereign-food-system.html" target="_blank">
+        <div class="tag">Money &amp; policy</div>
+        <h4>A Sovereign Food System</h4>
+        <p>Economic and monetary instruments for food-system transformation, built for Sweden.</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <div style="font-family:'Fraunces',serif; font-size:16px; color:#F4F1E6; margin-bottom:8px;">Food as Infrastructure — Camden Food Partnership</div>
+      <div>A Dark Matter Labs research, coordination and funding-orchestration programme. Camden is a partner in this, not a commissioner of it.</div>
+    </div>
+    <div>
+      <a href="https://food.darkmatterlabs.org/" target="_blank">Full portfolio site ↗</a><br>
+      <a href="https://food.darkmatterlabs.org/hubs-and-markets-working-group.html" target="_blank">Hubs &amp; Markets Working Group ↗</a><br>
+      <a href="https://darkmatterlabs.org/contact" target="_blank">Contact Dark Matter Labs ↗</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const obs = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); obs.unobserve(e.target); } });
+  }, {threshold:0.08});
+  reveals.forEach(el=>obs.observe(el));
+</script>
+
+</body>
+</html>
