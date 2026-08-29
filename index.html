@@ -233,6 +233,23 @@
   .track.hub .node-title::before{content:"— "; color:var(--hub);}
   .track.demand .node-title::before{content:"— "; color:var(--demand);}
 
+  /* tracks <-> junction diagram linking */
+  .track-head{cursor:pointer; width:fit-content;}
+  .track-head:focus{outline:none;}
+  .track-head:focus-visible{outline:1px solid var(--paper-dim); outline-offset:6px;}
+  .track{transition:opacity .2s ease;}
+  .junction-branch{cursor:pointer;}
+  .junction-branch rect{transition:filter .2s ease;}
+  .junction-branch line{transition:stroke-width .2s ease;}
+  .junction-branch:focus{outline:none;}
+  .junction-branch:focus-visible rect{filter:brightness(1.3);}
+  #tracks[data-active-track] .track{opacity:0.45;}
+  #tracks[data-active-track] .track.is-active{opacity:1;}
+  #tracks[data-active-track] .junction-branch{opacity:0.4;}
+  #tracks[data-active-track] .junction-branch.is-active{opacity:1;}
+  #tracks[data-active-track] .junction-branch.is-active rect{filter:brightness(1.3);}
+  #tracks[data-active-track] .junction-branch.is-active line{stroke-width:3;}
+
   /* ===================== GOVERNANCE ===================== */
   .gov-wrap{display:grid; grid-template-columns:1fr 1fr; gap:56px;}
   @media (max-width:900px){ .gov-wrap{grid-template-columns:1fr;} }
@@ -534,21 +551,27 @@
       <svg class="junction" viewBox="0 0 420 380" xmlns="http://www.w3.org/2000/svg">
         <line x1="210" y1="10" x2="210" y2="370" stroke="var(--line-strong)" stroke-width="1"/>
         <line x1="20" y1="190" x2="400" y2="190" stroke="var(--line-strong)" stroke-width="1"/>
-        <line x1="210" y1="190" x2="210" y2="60" stroke="var(--demand)" stroke-width="2"/>
-        <line x1="210" y1="190" x2="90" y2="280" stroke="var(--supply)" stroke-width="2"/>
-        <line x1="210" y1="190" x2="330" y2="280" stroke="var(--hub)" stroke-width="2"/>
 
         <circle cx="210" cy="190" r="30" fill="var(--ink-2)" stroke="var(--line-strong)"/>
         <text x="210" y="194" text-anchor="middle" class="node-label" fill="var(--paper)" font-family="IBM Plex Mono" font-size="10">BOROUGH</text>
 
-        <rect x="176" y="30" width="68" height="30" fill="var(--demand)"/>
-        <text x="210" y="49" text-anchor="middle" class="node-label" font-weight="600">DEMAND</text>
+        <g class="junction-branch" data-track="demand" tabindex="0" role="img" aria-label="Demand track">
+          <line x1="210" y1="190" x2="210" y2="60" stroke="var(--demand)" stroke-width="2"/>
+          <rect x="176" y="30" width="68" height="30" fill="var(--demand)"/>
+          <text x="210" y="49" text-anchor="middle" class="node-label" font-weight="600">DEMAND</text>
+        </g>
 
-        <rect x="40" y="278" width="68" height="30" fill="var(--supply)"/>
-        <text x="74" y="297" text-anchor="middle" class="node-label" font-weight="600">SUPPLY</text>
+        <g class="junction-branch" data-track="supply" tabindex="0" role="img" aria-label="Supply track">
+          <line x1="210" y1="190" x2="90" y2="280" stroke="var(--supply)" stroke-width="2"/>
+          <rect x="40" y="278" width="68" height="30" fill="var(--supply)"/>
+          <text x="74" y="297" text-anchor="middle" class="node-label" font-weight="600">SUPPLY</text>
+        </g>
 
-        <rect x="296" y="278" width="68" height="30" fill="var(--hub)"/>
-        <text x="330" y="297" text-anchor="middle" class="node-label" font-weight="600">HUB</text>
+        <g class="junction-branch" data-track="hub" tabindex="0" role="img" aria-label="Hub track">
+          <line x1="210" y1="190" x2="330" y2="280" stroke="var(--hub)" stroke-width="2"/>
+          <rect x="296" y="278" width="68" height="30" fill="var(--hub)"/>
+          <text x="330" y="297" text-anchor="middle" class="node-label" font-weight="600">HUB</text>
+        </g>
 
         <text x="30" y="182" font-size="10" letter-spacing="1">LDN W</text>
         <text x="360" y="182" font-size="10" letter-spacing="1">LDN E</text>
@@ -558,7 +581,7 @@
   <div class="wrap" style="padding:0;">
     <div class="tracks reveal">
       <div class="track demand">
-        <div class="track-head"><span class="swatch"></span><h3>Demand</h3></div>
+        <div class="track-head" tabindex="0" role="img" aria-label="Demand track"><span class="swatch"></span><h3>Demand</h3></div>
         <div class="track-def">Constructing pull for a different kind of food — through money, protocol, and information.</div>
         <div class="node"><div class="node-title">Marketing Investment Fund</div><div class="node-desc">A cross-retailer fund investing in demand construction for healthy food and new food cultures, priced against the revenue uplift it creates.</div></div>
         <div class="node"><div class="node-title">Procurement Protocol</div><div class="node-desc">A shared standard that public and institutional buyers sign into, from the largest anchor institution to the smallest, without giving up their own local procurement.</div></div>
@@ -567,7 +590,7 @@
         <div class="node"><div class="node-title">Default-healthy public catering</div><div class="node-desc">Collapse the choice down to healthy options only, rather than removing choice altogether — the simplification that makes a genuinely robust supply chain possible behind it, in school kitchens and beyond.</div></div>
       </div>
       <div class="track hub">
-        <div class="track-head"><span class="swatch"></span><h3>Hub</h3></div>
+        <div class="track-head" tabindex="0" role="img" aria-label="Hub track"><span class="swatch"></span><h3>Hub</h3></div>
         <div class="track-def">The physical and civic nodes where supply and demand actually meet a person.</div>
         <div class="node"><div class="node-title">(Farmacy) Pharmacy as a neighbourhood performance-and-nutrition node</div><div class="node-desc">Pick up a prescription and walk out with a bag of seasonal veg, a free blood-pressure check, and a spot in Saturday’s community run. The corner pharmacy becomes the place you drop into even when you’re not ill — fresh food, real nutrition advice, and a reason to know your neighbours.</div></div>
         <div class="node"><div class="node-title">Public interest grocers</div><div class="node-desc">Next-generation, membership-model grocers with genuinely lower prices on a fixed cadence, not a voluntary top-up.</div></div>
@@ -575,7 +598,7 @@
         <div class="node"><div class="node-title">Collective buying engine</div><div class="node-desc">One B2B conversation standing behind dozens of community organisations — run like a business, governed like a non-profit.</div></div>
       </div>
       <div class="track supply">
-        <div class="track-head"><span class="swatch"></span><h3>Supply</h3></div>
+        <div class="track-head" tabindex="0" role="img" aria-label="Supply track"><span class="swatch"></span><h3>Supply</h3></div>
         <div class="track-def">The baseline production that has to survive the shock, not just look good before it.</div>
         <div class="node"><div class="node-title">Organic growth via collective buying</div><div class="node-desc">London boroughs and businesses pooling committed demand into contracts big enough to justify a farmer converting land — the buying power no single borough has alone. That same soil holds more water through drought and needs far less imported fertiliser — a resilience dividend, not just a health one.</div></div>
         <div class="node"><div class="node-title">Automated farm-to-farm coverage</div><div class="node-desc">A forecasting engine that predicts surplus and shortfall across a network of farms and routes supply between them before a contract breaks — one contract structure that scales unchanged from a single farm to a whole region, with regenerative practice verified and priced as natural capital on real acres.</div></div>
@@ -928,6 +951,43 @@
     setTimeout(function(){
       els.forEach(function(el){ el.classList.add('in'); });
     }, 2500);
+  });
+
+  document.addEventListener('DOMContentLoaded', function(){
+    var section = document.getElementById('tracks');
+    if(!section) return;
+
+    var tracks = section.querySelectorAll('.track');
+    var branches = section.querySelectorAll('.junction-branch');
+    var names = ['supply','hub','demand'];
+
+    function trackName(el){
+      return names.filter(function(n){ return el.classList.contains(n); })[0];
+    }
+
+    function setActive(name){
+      if(name){ section.setAttribute('data-active-track', name); }
+      else{ section.removeAttribute('data-active-track'); }
+      tracks.forEach(function(t){ t.classList.toggle('is-active', trackName(t) === name); });
+      branches.forEach(function(b){ b.classList.toggle('is-active', b.dataset.track === name); });
+    }
+
+    tracks.forEach(function(t){
+      var name = trackName(t);
+      var head = t.querySelector('.track-head');
+      head.addEventListener('mouseenter', function(){ setActive(name); });
+      head.addEventListener('focus', function(){ setActive(name); });
+      head.addEventListener('mouseleave', function(){ setActive(null); });
+      head.addEventListener('blur', function(){ setActive(null); });
+    });
+
+    branches.forEach(function(b){
+      var name = b.dataset.track;
+      b.addEventListener('mouseenter', function(){ setActive(name); });
+      b.addEventListener('focus', function(){ setActive(name); });
+      b.addEventListener('mouseleave', function(){ setActive(null); });
+      b.addEventListener('blur', function(){ setActive(null); });
+    });
   });
 </script>
 
