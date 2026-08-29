@@ -6,94 +6,109 @@ const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').match
 const root = document.getElementById('axoScrollTrack');
 const canvasWrap = document.getElementById('axoCanvasWrap');
 const canvas = document.getElementById('axoCanvas');
-const steps = Array.from(document.querySelectorAll('.axo-step'));
+const overlayN = document.getElementById('axoOverlayN');
+const overlayTitle = document.getElementById('axoOverlayTitle');
+const overlayBody = document.getElementById('axoOverlayBody');
 
 function bail() {
   document.body.classList.add('axo-3d-failed');
 }
 
-// ---- layer definitions -------------------------------------------------
-// Order = top to bottom of the exploded stack (business is closest to the
-// viewer / most zoomed-in, UK is the ground plane).
-const GAP = 108;
+// ---- layer definitions ---------------------------------------------------
+// Order = the sequence the particle cloud morphs through, and (top to
+// bottom) the order it reassembles into as solid, lit plates at the end.
+const GAP = 130; // clear vertical break between plates in the finale
+const TARGET_SIZE = 145;
+const PARTICLE_COUNT = 2600;
+const MORPH_PORTION = 0.72; // rest of the scroll is spent resolving into solid plates
+
+const PAPER_DIM = [0.639, 0.639, 0.612]; // --paper-dim
+const ORANGE = [1, 0.353, 0.122];        // --demand
+const TEAL = [0.180, 0.490, 0.420];      // --hub
+const NEUTRAL_SOLID = 0x2a2a26;          // --surface-ish, reads once lit
+
 const LAYERS = [
-  { key: 'business', label: 'Business', color: 0xff5a1f, y: GAP * 4 },
-  { key: 'civic',    label: 'Civic organising', color: 0x2e7d6b, y: GAP * 3 },
-  { key: 'camden',   label: 'Borough of Camden', color: 0xff5a1f, y: GAP * 2, svg: 'camden.svg', highlightId: null },
-  { key: 'london',   label: 'London boroughs', color: 0x2a2a26, y: GAP * 1, svg: 'london-boroughs.svg', highlightId: 'Camden', highlightColor: 0xff5a1f },
-  { key: 'uk',       label: 'United Kingdom', color: 0x2a2a26, y: 0, svg: 'uk.svg' }
+  { n: '01 — BUSINESS', title: 'Retailers, growers, food businesses',
+    body: 'The commercial layer that has to find this profitable, not just worthy.' },
+  { n: '02 — CIVIC ORGANISING', title: 'Residents, co-ops, community groups',
+    body: 'The layer that actually organises the work on the ground.' },
+  { n: '03 — MUNICIPAL', title: 'Borough of Camden',
+    body: 'One borough, moving first — the model this portfolio is built to replicate.' },
+  { n: '04 — REGIONAL', title: 'London boroughs',
+    body: 'A coalition of peers — shared standards that compound across London.' },
+  { n: '05 — NATIONAL', title: 'United Kingdom',
+    body: 'The policy layer above it all — where a local model becomes evidence.' }
 ];
 
-const TARGET_SIZE = 230; // world units a geo layer's longest side is normalised to
-const EXTRUDE_DEPTH = 9;
-
-// business / civic node networks, authored directly (not from geo data)
-const BUSINESS_NODES = [
-  [-70, -40], [-10, -70], [55, -55], [90, 0], [40, 45], [-30, 55], [-95, 10]
-];
+const BUSINESS_NODES = [[-58,-33],[-8,-58],[46,-46],[75,0],[33,37],[-25,46],[-79,8]];
 const BUSINESS_EDGES = [[0,1],[1,2],[2,3],[3,4],[4,5],[5,6],[6,0],[1,5]];
-
-const CIVIC_NODES = [
-  [-80, 20], [-30, -55], [35, -60], [85, -15], [70, 40], [10, 65], [-45, 55], [0, 0]
-];
+const CIVIC_NODES = [[-66,17],[-25,-46],[29,-50],[70,-13],[58,33],[8,54],[-37,46],[0,0]];
 const CIVIC_EDGES = [[0,1],[1,2],[2,3],[3,4],[4,5],[5,6],[6,0],[7,1],[7,4],[7,6]];
 
 async function init() {
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+  renderer.setClearColor(0x000000, 0); // fully transparent — no box, blends with the page
 
   const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(40, 1, 1, 4000);
 
-  const camera = new THREE.PerspectiveCamera(42, 1, 10, 4000);
-  const stackCenterY = GAP * 2;
-
-  scene.add(new THREE.AmbientLight(0xffffff, 0.65));
-  const key = new THREE.DirectionalLight(0xffffff, 1.1);
-  key.position.set(260, 420, 320);
+  scene.add(new THREE.AmbientLight(0xffffff, 0.55));
+  const key = new THREE.DirectionalLight(0xffffff, 1.3);
+  key.position.set(180, 260, 220);
   scene.add(key);
-  const fill = new THREE.DirectionalLight(0x88aaff, 0.35);
-  fill.position.set(-260, 120, -220);
-  scene.add(fill);
+  const rim = new THREE.DirectionalLight(0x9fb8ff, 0.5);
+  rim.position.set(-200, 80, -160);
+  scene.add(rim);
 
-  const stack = new THREE.Group();
-  scene.add(stack);
+  // ---- load the three real geo files once; used for both particles and solids ----
+  const camdenGeo = await loadGeoShapes('camden.svg');
+  const londonGeo = await loadGeoShapes('london-boroughs.svg');
+  const ukGeo = await loadGeoShapes('uk.svg');
 
-  // spine running through the centre of the whole stack
-  const spineGeo = new THREE.CylinderGeometry(2.4, 2.4, GAP * 4 + 40, 16);
-  const spineMat = new THREE.MeshBasicMaterial({ color: 0xf5f5f2, transparent: true, opacity: 0.18 });
+  const business = buildNetworkPoints(BUSINESS_NODES, BUSINESS_EDGES, ORANGE);
+  const civic = buildNetworkPoints(CIVIC_NODES, CIVIC_EDGES, TEAL);
+  const camden = pointsFromGeo(camdenGeo, null, ORANGE, ORANGE);
+  const london = pointsFromGeo(londonGeo, 'Camden', PAPER_DIM, ORANGE);
+  const uk = pointsFromGeo(ukGeo, null, PAPER_DIM, PAPER_DIM);
+  const sets = [business, civic, camden, london, uk];
+
+  // random per-particle jitter axis, used for a bit of swirl mid-transition
+  const jitter = new Float32Array(PARTICLE_COUNT * 3);
+  for (let i = 0; i < PARTICLE_COUNT * 3; i++) jitter[i] = (Math.random() - 0.5) * 2;
+
+  const geometry = new THREE.BufferGeometry();
+  const positionAttr = new THREE.Float32BufferAttribute(new Float32Array(PARTICLE_COUNT * 3), 3);
+  const colorAttr = new THREE.Float32BufferAttribute(new Float32Array(PARTICLE_COUNT * 3), 3);
+  geometry.setAttribute('position', positionAttr);
+  geometry.setAttribute('color', colorAttr);
+  const material = new THREE.PointsMaterial({
+    size: 2.4, sizeAttenuation: true, vertexColors: true,
+    transparent: true, opacity: 0.92, depthWrite: false
+  });
+  const points = new THREE.Points(geometry, material);
+  scene.add(points);
+
+  // ---- solid, lit plates — invisible during the morph, resolve in for the finale ----
+  const solidLayers = [
+    solidFromNetwork(BUSINESS_NODES, ORANGE),
+    solidFromNetwork(CIVIC_NODES, TEAL),
+    solidFromGeo(camdenGeo, null, ORANGE, ORANGE),
+    solidFromGeo(londonGeo, 'Camden', NEUTRAL_SOLID, ORANGE),
+    solidFromGeo(ukGeo, null, NEUTRAL_SOLID, NEUTRAL_SOLID)
+  ];
+  solidLayers.forEach((holder) => scene.add(holder));
+
+  const stackTopY = GAP * (LAYERS.length - 1);
+  const spineGeo = new THREE.CylinderGeometry(1.1, 1.1, stackTopY + 34, 12);
+  const spineMat = new THREE.MeshBasicMaterial({ color: 0xf5f5f2, transparent: true, opacity: 0 });
   const spine = new THREE.Mesh(spineGeo, spineMat);
-  spine.position.y = stackCenterY;
-  stack.add(spine);
+  spine.position.y = stackTopY / 2;
+  scene.add(spine);
 
-  const layerObjects = [];
-
-  for (const def of LAYERS) {
-    const holder = new THREE.Group();
-    holder.position.y = def.y;
-
-    if (def.svg) {
-      await buildGeoLayer(holder, def);
-    } else {
-      buildNetworkLayer(holder, def);
-    }
-
-    // thin base plate under each layer to sell it as a solid tray
-    const plateGeo = new THREE.CylinderGeometry(TARGET_SIZE * 0.66, TARGET_SIZE * 0.66, 2, 28);
-    const plateMat = new THREE.MeshStandardMaterial({ color: 0x141414, transparent: true, opacity: 0.4, roughness: 1 });
-    const plate = new THREE.Mesh(plateGeo, plateMat);
-    plate.position.y = -EXTRUDE_DEPTH / 2 - 1;
-    holder.add(plate);
-
-    stack.add(holder);
-    layerObjects.push({ def, holder });
-  }
-
-  fitCamera(camera, stack, stackCenterY);
   onResize();
   window.addEventListener('resize', onResize);
-  if (window.ResizeObserver) {
-    new ResizeObserver(onResize).observe(canvasWrap);
-  }
+  if (window.ResizeObserver) new ResizeObserver(onResize).observe(canvasWrap);
 
   document.body.classList.add('axo-3d-ready');
 
@@ -103,56 +118,119 @@ async function init() {
   onScroll();
   window.addEventListener('scroll', onScroll, { passive: true });
 
-  let raf;
   const clock = new THREE.Clock();
+  let orbit = 0;
+
   function tick() {
     const dt = clock.getDelta();
     progress += (targetProgress - progress) * Math.min(1, dt * 4);
+    if (!reduceMotion) orbit += dt * 0.045;
 
-    if (!reduceMotion) {
-      stack.rotation.y += dt * 0.06;
+    const finale = progress >= MORPH_PORTION;
+    const finaleT = finale ? smoothstep((progress - MORPH_PORTION) / (1 - MORPH_PORTION)) : 0;
+
+    updateParticles(progress, finaleT);
+    updateSolids(finaleT);
+    updateCamera(progress, finaleT, orbit);
+    updateOverlay(progress, finaleT);
+
+    onResize();
+    renderer.render(scene, camera);
+    requestAnimationFrame(tick);
+  }
+  tick();
+
+  function updateParticles(p, finaleT) {
+    const posArr = positionAttr.array;
+    const colArr = colorAttr.array;
+
+    if (p < MORPH_PORTION) {
+      const t = (p / MORPH_PORTION) * (sets.length - 1);
+      const seg = Math.min(sets.length - 2, Math.floor(t));
+      // double smoothstep: dwells clearly at each stage, transitions fast in the middle
+      const localT = smoothstep(smoothstep(t - seg));
+      const swirl = Math.sin(localT * Math.PI) * (reduceMotion ? 0 : 6);
+      const a = sets[seg], b = sets[seg + 1];
+      for (let i = 0; i < PARTICLE_COUNT; i++) {
+        const i3 = i * 3;
+        posArr[i3] = lerp(a.pos[i3], b.pos[i3], localT) + jitter[i3] * swirl;
+        posArr[i3 + 1] = lerp(a.pos[i3 + 1], b.pos[i3 + 1], localT) + jitter[i3 + 1] * swirl;
+        posArr[i3 + 2] = lerp(a.pos[i3 + 2], b.pos[i3 + 2], localT) + jitter[i3 + 2] * swirl;
+        colArr[i3] = lerp(a.col[i3], b.col[i3], localT);
+        colArr[i3 + 1] = lerp(a.col[i3 + 1], b.col[i3 + 1], localT);
+        colArr[i3 + 2] = lerp(a.col[i3 + 2], b.col[i3 + 2], localT);
+      }
+      material.opacity = 0.92;
+      spineMat.opacity = 0;
+    } else {
+      const from = sets[sets.length - 1]; // fully-formed UK cloud
+      for (let i = 0; i < PARTICLE_COUNT; i++) {
+        const home = i % sets.length;
+        const to = sets[home];
+        const i3 = i * 3;
+        posArr[i3] = lerp(from.pos[i3], to.pos[i3], finaleT);
+        posArr[i3 + 1] = lerp(0, GAP * (sets.length - 1 - home), finaleT);
+        posArr[i3 + 2] = lerp(from.pos[i3 + 2], to.pos[i3 + 2], finaleT);
+        colArr[i3] = lerp(from.col[i3], to.col[i3], finaleT);
+        colArr[i3 + 1] = lerp(from.col[i3 + 1], to.col[i3 + 1], finaleT);
+        colArr[i3 + 2] = lerp(from.col[i3 + 2], to.col[i3 + 2], finaleT);
+      }
+      // particles fade down as the solid, lit plates take over legibility
+      material.opacity = lerp(0.92, 0.35, finaleT);
+      spineMat.opacity = finaleT * 0.2;
     }
+    positionAttr.needsUpdate = true;
+    colorAttr.needsUpdate = true;
+  }
 
-    const activeFloat = progress * (LAYERS.length - 1);
-    const activeIndex = Math.round(activeFloat);
-
-    layerObjects.forEach((obj, i) => {
-      const dist = Math.abs(activeFloat - i);
-      const target = Math.max(0.22, 1 - dist * 0.85);
-      const s = THREE.MathUtils.lerp(obj.holder.scale.x || 1, 0.9 + target * 0.15, 0.12);
-      obj.holder.scale.setScalar(s);
-      obj.holder.traverse((child) => {
-        if (child.isMesh && child.material && 'opacity' in child.material) {
-          child.material.transparent = true;
-          child.material.opacity = THREE.MathUtils.lerp(child.material.opacity ?? 1, Math.max(0.28, target), 0.15);
+  function updateSolids(finaleT) {
+    // plates arrive first, light fading in a beat later — "light appearing"
+    const opacityT = smoothstep((finaleT - 0.25) / 0.75);
+    solidLayers.forEach((holder, i) => {
+      holder.position.y = lerp(0, GAP * (LAYERS.length - 1 - i), finaleT);
+      holder.traverse((child) => {
+        if (child.isMesh) {
+          child.material.opacity = opacityT * 0.95;
         }
       });
     });
-
-    // camera travels down the spine as the user scrolls
-    const topY = LAYERS[0].y + 60;
-    const bottomY = LAYERS[LAYERS.length - 1].y - 20;
-    const focusY = THREE.MathUtils.lerp(topY, bottomY, progress);
-    const radius = THREE.MathUtils.lerp(420, 300, progress);
-    const angle = Math.PI * 0.28;
-    camera.position.set(Math.cos(angle) * radius, focusY + 150, Math.sin(angle) * radius);
-    camera.lookAt(0, focusY, 0);
-
-    steps.forEach((el, i) => el.classList.toggle('is-active', i === activeIndex));
-
-    onResize(); // cheap no-op unless the container's size actually changed
-    renderer.render(scene, camera);
-    raf = requestAnimationFrame(tick);
   }
-  tick();
+
+  function updateCamera(p, finaleT, orbitAngle) {
+    if (p < MORPH_PORTION) {
+      const dist = 195;
+      camera.position.set(Math.cos(orbitAngle) * dist, 80, Math.sin(orbitAngle) * dist);
+      camera.lookAt(0, 0, 0);
+    } else {
+      const dist = lerp(195, GAP * 3.1, finaleT);
+      const midY = lerp(0, stackTopY / 2, finaleT);
+      const a = orbitAngle * 0.4;
+      camera.position.set(Math.cos(a) * dist, lerp(80, stackTopY * 0.62, finaleT), Math.sin(a) * dist);
+      camera.lookAt(0, midY, 0);
+    }
+  }
+
+  function updateOverlay(p, finaleT) {
+    if (p >= MORPH_PORTION && finaleT > 0.85) {
+      setOverlay('THE FULL SYSTEM', 'Five layers, one stack', 'Community, civic organising, borough, region and nation — held together at once.');
+      return;
+    }
+    const idx = Math.max(0, Math.min(LAYERS.length - 1, Math.round((Math.min(p, MORPH_PORTION) / MORPH_PORTION) * (LAYERS.length - 1))));
+    setOverlay(LAYERS[idx].n, LAYERS[idx].title, LAYERS[idx].body);
+  }
+
+  function setOverlay(n, title, body) {
+    if (overlayN.textContent !== n) overlayN.textContent = n;
+    if (overlayTitle.textContent !== title) overlayTitle.textContent = title;
+    if (overlayBody.textContent !== body) overlayBody.textContent = body;
+  }
 
   function onScroll() {
     if (!root) return;
     const rect = root.getBoundingClientRect();
     const total = rect.height - window.innerHeight;
     if (total <= 0) { targetProgress = 0; return; }
-    const scrolled = -rect.top;
-    targetProgress = THREE.MathUtils.clamp(scrolled / total, 0, 1);
+    targetProgress = clamp(-rect.top / total, 0, 1);
   }
 
   function onResize() {
@@ -166,79 +244,179 @@ async function init() {
   }
 }
 
-function buildNetworkLayer(holder, def) {
-  const nodes = def.key === 'business' ? BUSINESS_NODES : CIVIC_NODES;
-  const edges = def.key === 'business' ? BUSINESS_EDGES : CIVIC_EDGES;
+function lerp(a, b, t) { return a + (b - a) * t; }
+function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
+function smoothstep(t) { t = clamp(t, 0, 1); return t * t * (3 - 2 * t); }
 
-  const nodeGeo = new THREE.SphereGeometry(6.5, 16, 16);
-  const nodeMat = new THREE.MeshStandardMaterial({ color: def.color, roughness: 0.4, metalness: 0.1 });
-  nodes.forEach(([x, z]) => {
-    const m = new THREE.Mesh(nodeGeo, nodeMat.clone());
-    m.position.set(x, 0, z);
-    holder.add(m);
-  });
+// ---- particle sampling ----------------------------------------------------
 
-  const positions = [];
-  edges.forEach(([a, b]) => {
-    const [ax, az] = nodes[a];
-    const [bx, bz] = nodes[b];
-    positions.push(ax, 0, az, bx, 0, bz);
-  });
-  const edgeGeo = new THREE.BufferGeometry();
-  edgeGeo.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
-  const edgeMat = new THREE.LineBasicMaterial({ color: 0xa3a39c, transparent: true, opacity: 0.5 });
-  holder.add(new THREE.LineSegments(edgeGeo, edgeMat));
+function buildNetworkPoints(nodes, edges, color) {
+  const pos = new Float32Array(PARTICLE_COUNT * 3);
+  const col = new Float32Array(PARTICLE_COUNT * 3);
+  const nodeBudget = Math.floor(PARTICLE_COUNT * 0.4);
+  const edgeBudget = PARTICLE_COUNT - nodeBudget;
+  let i = 0;
+  for (let n = 0; n < nodeBudget; n++) {
+    const [nx, nz] = nodes[n % nodes.length];
+    const a = Math.random() * Math.PI * 2;
+    const r = Math.sqrt(Math.random()) * 7;
+    setPoint(pos, col, i++, nx + Math.cos(a) * r, 0, nz + Math.sin(a) * r, color);
+  }
+  for (let e = 0; e < edgeBudget; e++) {
+    const [ai, bi] = edges[e % edges.length];
+    const [ax, az] = nodes[ai];
+    const [bx, bz] = nodes[bi];
+    const t = Math.random();
+    const jx = (Math.random() - 0.5) * 3, jz = (Math.random() - 0.5) * 3;
+    setPoint(pos, col, i++, lerp(ax, bx, t) + jx, 0, lerp(az, bz, t) + jz, color);
+  }
+  while (i < PARTICLE_COUNT) { setPoint(pos, col, i, 0, 0, 0, color); i++; }
+  return { pos, col };
 }
 
-async function buildGeoLayer(holder, def) {
-  const res = await fetch(new URL(def.svg, import.meta.url));
+function pointsFromGeo(loaded, highlightId, baseColor, highlightColor) {
+  const pos = new Float32Array(PARTICLE_COUNT * 3);
+  const col = new Float32Array(PARTICLE_COUNT * 3);
+  let i = 0;
+  loaded.paths.forEach((p, idx) => {
+    const isLast = idx === loaded.paths.length - 1;
+    const budget = isLast ? PARTICLE_COUNT - i : Math.round((p.area / loaded.totalArea) * PARTICLE_COUNT);
+    const color = p.isHighlight(highlightId) ? highlightColor : baseColor;
+    for (let k = 0; k < budget && i < PARTICLE_COUNT; k++, i++) {
+      const [px, py] = randomPointInGeometry(p.geo);
+      const x = (px - loaded.center.x) * loaded.scale;
+      const z = -(py - loaded.center.y) * loaded.scale;
+      setPoint(pos, col, i, x, 0, z, color);
+    }
+  });
+  while (i < PARTICLE_COUNT) { setPoint(pos, col, i, 0, 0, 0, baseColor); i++; }
+  return { pos, col };
+}
+
+function setPoint(pos, col, i, x, y, z, color) {
+  const i3 = i * 3;
+  pos[i3] = x; pos[i3 + 1] = y; pos[i3 + 2] = z;
+  col[i3] = color[0]; col[i3 + 1] = color[1]; col[i3 + 2] = color[2];
+}
+
+// ---- solid, lit plates ------------------------------------------------------
+
+function solidFromNetwork(nodes, color) {
+  const holder = new THREE.Group();
+  const hull = convexHull(nodes);
+  const shape = new THREE.Shape();
+  hull.forEach(([x, z], i) => (i === 0 ? shape.moveTo(x, -z) : shape.lineTo(x, -z)));
+  shape.closePath();
+  const geo = new THREE.ExtrudeGeometry(shape, { depth: 6, bevelEnabled: false, curveSegments: 8 });
+  const mat = new THREE.MeshStandardMaterial({
+    color: colorToHex(color), roughness: 0.7, metalness: 0.05,
+    transparent: true, opacity: 0, side: THREE.DoubleSide
+  });
+  const mesh = new THREE.Mesh(geo, mat);
+  mesh.rotation.x = -Math.PI / 2;
+  holder.add(mesh);
+  return holder;
+}
+
+async function loadGeoShapes(svgFile) {
+  const res = await fetch(new URL(svgFile, import.meta.url));
   const text = await res.text();
-  const loader = new SVGLoader();
-  const data = loader.parse(text);
+  const data = new SVGLoader().parse(text);
 
-  const inner = new THREE.Group();
-  const meshes = [];
-
-  data.paths.forEach((path) => {
+  const paths = data.paths.map((path) => {
     const id = path.userData && path.userData.node ? path.userData.node.getAttribute('id') : null;
-    const isHighlight = def.highlightId && id === def.highlightId;
-    const color = isHighlight ? def.highlightColor : def.color;
     const shapes = SVGLoader.createShapes(path);
-    shapes.forEach((shape) => {
-      const geometry = new THREE.ExtrudeGeometry(shape, { depth: EXTRUDE_DEPTH, bevelEnabled: false, curveSegments: 6 });
-      const material = new THREE.MeshStandardMaterial({ color, roughness: 0.85, metalness: 0.02, side: THREE.DoubleSide });
-      const mesh = new THREE.Mesh(geometry, material);
-      inner.add(mesh);
-      meshes.push(mesh);
+    if (!shapes.length) return null;
+    const geo = new THREE.ShapeGeometry(shapes);
+    geo.computeBoundingBox();
+    return { shapes, geo, area: triangleArea(geo), isHighlight: (hid) => Boolean(hid) && id === hid };
+  }).filter(Boolean);
+
+  const totalArea = paths.reduce((s, p) => s + p.area, 0) || 1;
+  const overallBox = new THREE.Box3();
+  paths.forEach((p) => overallBox.union(p.geo.boundingBox));
+  const center = overallBox.getCenter(new THREE.Vector3());
+  const size = overallBox.getSize(new THREE.Vector3());
+  const scale = TARGET_SIZE / (Math.max(size.x, size.y) || 1);
+
+  return { paths, totalArea, center, scale };
+}
+
+function solidFromGeo(loaded, highlightId, baseColorHex, highlightColorHex) {
+  const holder = new THREE.Group();
+  const inner = new THREE.Group();
+  loaded.paths.forEach((p) => {
+    const color = p.isHighlight(highlightId) ? highlightColorHex : baseColorHex;
+    p.shapes.forEach((shape) => {
+      const geo = new THREE.ExtrudeGeometry(shape, { depth: 6, bevelEnabled: false, curveSegments: 6 });
+      const mat = new THREE.MeshStandardMaterial({
+        color, roughness: 0.75, metalness: 0.03,
+        transparent: true, opacity: 0, side: THREE.DoubleSide
+      });
+      inner.add(new THREE.Mesh(geo, mat));
     });
   });
-
-  if (!meshes.length) return;
-
-  const box = new THREE.Box3().setFromObject(inner);
-  const center = box.getCenter(new THREE.Vector3());
-  const size = box.getSize(new THREE.Vector3());
-  const maxDim = Math.max(size.x, size.y) || 1;
-  const scale = TARGET_SIZE / maxDim;
-
-  // Centre, then lay the plate flat using ONLY a rotation (never a
-  // single-axis negative scale) — a negative scale on one axis mirrors
-  // the shape (negative determinant), which would flip Camden/London/UK
-  // into a mirror image rather than just reorienting them.
-  inner.position.set(-center.x, -center.y, -center.z);
+  inner.position.set(-loaded.center.x, -loaded.center.y, 0);
   const flip = new THREE.Group();
   flip.add(inner);
-  flip.scale.setScalar(scale);
+  flip.scale.setScalar(loaded.scale); // uniform, positive — a single negative axis would mirror the shape
   flip.rotation.x = -Math.PI / 2;
   holder.add(flip);
+  return holder;
 }
 
-function fitCamera(camera, stack, centerY) {
-  camera.position.set(280, centerY + 260, 420);
-  camera.lookAt(0, centerY, 0);
+function triangleArea(geo) {
+  const p = geo.attributes.position;
+  const idx = geo.index;
+  const triCount = idx ? idx.count / 3 : p.count / 3;
+  const a = new THREE.Vector3(), b = new THREE.Vector3(), c = new THREE.Vector3();
+  let total = 0;
+  for (let t = 0; t < triCount; t++) {
+    const i0 = idx ? idx.getX(t * 3) : t * 3, i1 = idx ? idx.getX(t * 3 + 1) : t * 3 + 1, i2 = idx ? idx.getX(t * 3 + 2) : t * 3 + 2;
+    a.fromBufferAttribute(p, i0); b.fromBufferAttribute(p, i1); c.fromBufferAttribute(p, i2);
+    total += new THREE.Triangle(a, b, c).getArea();
+  }
+  return total || 0.001;
 }
 
-// ---- boot ---------------------------------------------------------------
+function randomPointInGeometry(geo) {
+  const p = geo.attributes.position;
+  const idx = geo.index;
+  const triCount = idx ? idx.count / 3 : p.count / 3;
+  const t = Math.floor(Math.random() * triCount);
+  const i0 = idx ? idx.getX(t * 3) : t * 3, i1 = idx ? idx.getX(t * 3 + 1) : t * 3 + 1, i2 = idx ? idx.getX(t * 3 + 2) : t * 3 + 2;
+  const ax = p.getX(i0), ay = p.getY(i0);
+  const bx = p.getX(i1), by = p.getY(i1);
+  const cx = p.getX(i2), cy = p.getY(i2);
+  let r1 = Math.random(), r2 = Math.random();
+  if (r1 + r2 > 1) { r1 = 1 - r1; r2 = 1 - r2; }
+  return [ax + r1 * (bx - ax) + r2 * (cx - ax), ay + r1 * (by - ay) + r2 * (cy - ay)];
+}
+
+function colorToHex([r, g, b]) {
+  return (Math.round(r * 255) << 16) | (Math.round(g * 255) << 8) | Math.round(b * 255);
+}
+
+// Andrew's monotone chain — small point sets, no need for a library.
+function convexHull(points) {
+  const pts = [...points].sort((a, b) => a[0] - b[0] || a[1] - b[1]);
+  const cross = (o, a, b) => (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0]);
+  const lower = [];
+  for (const p of pts) {
+    while (lower.length >= 2 && cross(lower[lower.length - 2], lower[lower.length - 1], p) <= 0) lower.pop();
+    lower.push(p);
+  }
+  const upper = [];
+  for (let i = pts.length - 1; i >= 0; i--) {
+    const p = pts[i];
+    while (upper.length >= 2 && cross(upper[upper.length - 2], upper[upper.length - 1], p) <= 0) upper.pop();
+    upper.push(p);
+  }
+  upper.pop(); lower.pop();
+  return lower.concat(upper);
+}
+
+// ---- boot -----------------------------------------------------------------
 if (!root || !canvas || !window.WebGLRenderingContext) {
   bail();
 } else {
