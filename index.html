@@ -156,17 +156,41 @@
   @media (max-width:900px){ .tracks-head-grid{grid-template-columns:1fr;} .tracks-head-grid .junction{max-width:320px;} }
 
   /* ===================== AUDIENCE ===================== */
-  .audience-split{display:grid; grid-template-columns:1fr 0.86fr; gap:56px; align-items:start;}
-  @media (max-width:900px){ .audience-split{grid-template-columns:1fr;} }
   .audience-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:20px;}
   @media (max-width:860px){ .audience-grid{grid-template-columns:1fr;} }
-  .audience-split .audience-grid{grid-template-columns:1fr; gap:14px;}
   .audience-card{border:1px solid var(--line); padding:24px 22px; background:var(--surface);}
   .a-tag{font-family:var(--mono); font-size:11px; letter-spacing:0.08em; color:var(--paper-dim); text-transform:uppercase; margin-bottom:14px;}
   .audience-card h3{font-size:18px; line-height:1.28; margin-bottom:10px;}
   .audience-card p{font-size:14.5px; color:var(--paper-dim); margin:0;}
 
-  /* ---- exploded axonometric (community -> borough -> region -> nation) ---- */
+  /* ---- exploded axonometric, 3D scroll-driven scene (business -> civic -> borough -> region -> nation) ---- */
+  .axo-wrap{margin-top:64px;}
+  .axo-scroll{display:none; position:relative;}
+  .axo-3d-ready .axo-scroll{display:grid; grid-template-columns:1.35fr 1fr; gap:40px; align-items:start;}
+  @media (max-width:760px){ .axo-3d-ready .axo-scroll{grid-template-columns:1fr;} }
+  .axo-canvas-wrap{
+    position:sticky; top:88px; height:82vh; min-height:480px;
+    border:1px solid var(--line); background:radial-gradient(ellipse at 50% 30%, rgba(255,255,255,0.05), transparent 70%);
+    overflow:hidden;
+  }
+  @media (max-width:760px){ .axo-canvas-wrap{position:relative; top:0; height:60vh;} }
+  #axoCanvas{display:block; width:100%; height:100%;}
+  .axo-canvas-caption{
+    position:absolute; left:16px; top:14px; z-index:2;
+    font-family:var(--mono); font-size:11px; letter-spacing:0.06em; text-transform:uppercase; color:var(--paper-dim);
+  }
+  .axo-steps{display:flex; flex-direction:column;}
+  .axo-step{min-height:62vh; display:flex; flex-direction:column; justify-content:center; padding:24px 0; opacity:0.35; transition:opacity .3s ease;}
+  .axo-step.is-active{opacity:1;}
+  .axo-step .n{font-family:var(--mono); font-size:12px; color:var(--paper-dim); letter-spacing:0.08em;}
+  .axo-step h4{font-size:22px; margin:10px 0 10px;}
+  .axo-step p{font-size:15px; color:var(--paper-dim); max-width:420px; margin:0;}
+  @media (max-width:760px){ .axo-step{min-height:auto;} }
+
+  .axo-fallback{display:none;}
+  .axo-3d-failed .axo-fallback{display:block;}
+
+  /* ---- fallback: static CSS-only exploded diagram (no WebGL) ---- */
   .axo-panel{display:flex; flex-direction:column; align-items:center; padding-top:6px;}
   .axo-caption{font-family:var(--mono); font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:var(--paper-dim); margin-bottom:6px; text-align:center;}
   .axo-stack{
@@ -398,6 +422,14 @@
   .reveal.pre{opacity:0; transform:translateY(14px);}
   .reveal.pre.in{opacity:1; transform:translateY(0); transition:opacity .6s ease, transform .6s ease;}
 </style>
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/"
+  }
+}
+</script>
 </head>
 <body>
 
@@ -451,25 +483,65 @@
       <h2>Three seats at the same table</h2>
       <p>Everyone reading this is being asked a version of the same question right now — what do we actually do. The foundations below are built to answer all three at once, not in sequence.</p>
     </div>
-    <div class="audience-split reveal">
-      <div class="audience-grid">
-        <div class="audience-card">
-          <div class="a-tag">COUNCIL LEADERS</div>
-          <h3>A shared standard, not another pilot</h3>
-          <p>A procurement protocol and buying coalition you can join without giving up your own local decisions — so the next borough doesn’t have to start from zero.</p>
+    <div class="audience-grid reveal">
+      <div class="audience-card">
+        <div class="a-tag">COUNCIL LEADERS</div>
+        <h3>A shared standard, not another pilot</h3>
+        <p>A procurement protocol and buying coalition you can join without giving up your own local decisions — so the next borough doesn’t have to start from zero.</p>
+      </div>
+      <div class="audience-card">
+        <div class="a-tag">NATIONAL GOVERNMENT</div>
+        <h3>Evidence a policy can be built on</h3>
+        <p>A working model, tested locally, of how public procurement and collective buying can grow organic and nutrient-dense supply — ready to be scaled through national policy, not just funded as a pilot.</p>
+      </div>
+      <div class="audience-card">
+        <div class="a-tag">PEOPLE ON THE GROUND</div>
+        <h3>Infrastructure behind the work you’re already doing</h3>
+        <p>The grocers, growers, dinners and workshops carrying this forward get a governance layer and a funding case behind them — not a new set of instructions from above.</p>
+      </div>
+    </div>
+    <div class="reveal" style="margin-top:36px;">
+      <p style="color:var(--paper-dim); font-size:15px; max-width:640px; margin:0 0 16px;">Whether you lead a council, sit in another London borough, work in national government, or you’re already doing this work on the ground — tell us where you fit, and how you’d want to be part of the next phase.</p>
+      <a class="btn solid" href="https://form.typeform.com/to/wh0nI0m0" target="_blank" rel="noopener">Tell us where you fit ↗</a>
+    </div>
+  </div>
+
+  <div class="wrap axo-wrap">
+      <div class="axo-scroll" id="axoScrollTrack">
+        <div class="axo-canvas-wrap" id="axoCanvasWrap">
+          <div class="axo-canvas-caption">Scroll — the view travels down through the stack</div>
+          <canvas id="axoCanvas"></canvas>
         </div>
-        <div class="audience-card">
-          <div class="a-tag">NATIONAL GOVERNMENT</div>
-          <h3>Evidence a policy can be built on</h3>
-          <p>A working model, tested locally, of how public procurement and collective buying can grow organic and nutrient-dense supply — ready to be scaled through national policy, not just funded as a pilot.</p>
-        </div>
-        <div class="audience-card">
-          <div class="a-tag">PEOPLE ON THE GROUND</div>
-          <h3>Infrastructure behind the work you’re already doing</h3>
-          <p>The grocers, growers, dinners and workshops carrying this forward get a governance layer and a funding case behind them — not a new set of instructions from above.</p>
+        <div class="axo-steps">
+          <div class="axo-step" data-layer="business">
+            <span class="n">01 — BUSINESS</span>
+            <h4>Retailers, growers, food businesses</h4>
+            <p>The commercial layer that has to find this profitable, not just worthy — grocers, growers and the wider trade this portfolio has to work for.</p>
+          </div>
+          <div class="axo-step" data-layer="civic">
+            <span class="n">02 — CIVIC ORGANISING</span>
+            <h4>Residents, co-ops, community groups</h4>
+            <p>The layer that actually organises the work on the ground — dinners, workshops and the people carrying this forward day to day.</p>
+          </div>
+          <div class="axo-step" data-layer="camden">
+            <span class="n">03 — MUNICIPAL</span>
+            <h4>Borough of Camden</h4>
+            <p>One borough, moving first — the independent Food Partnership this portfolio is built to be replicated from.</p>
+          </div>
+          <div class="axo-step" data-layer="london">
+            <span class="n">04 — REGIONAL</span>
+            <h4>London boroughs</h4>
+            <p>A coalition of peers — shared standards and collective buying that compounds across London, not just one town hall.</p>
+          </div>
+          <div class="axo-step" data-layer="uk">
+            <span class="n">05 — NATIONAL</span>
+            <h4>United Kingdom</h4>
+            <p>The policy layer above it all — where a working local model becomes the evidence a national strategy can be built on.</p>
+          </div>
         </div>
       </div>
 
+      <div class="axo-fallback">
       <div class="axo-panel">
         <div class="axo-caption">Four layers, one system</div>
         <div class="axo-stack" id="axoStack">
@@ -522,11 +594,7 @@
           </div>
         </div>
       </div>
-    </div>
-    <div class="reveal" style="margin-top:36px;">
-      <p style="color:var(--paper-dim); font-size:15px; max-width:640px; margin:0 0 16px;">Whether you lead a council, sit in another London borough, work in national government, or you’re already doing this work on the ground — tell us where you fit, and how you’d want to be part of the next phase.</p>
-      <a class="btn solid" href="https://form.typeform.com/to/wh0nI0m0" target="_blank" rel="noopener">Tell us where you fit ↗</a>
-    </div>
+      </div>
   </div>
 </section>
 
@@ -1105,6 +1173,7 @@
     });
   });
 </script>
+<script type="module" src="assets/axo/scene.js?v=7"></script>
 
 </body>
 </html>
