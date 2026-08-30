@@ -223,6 +223,27 @@
   .why-now-grid{display:grid; grid-template-columns:0.9fr 1.1fr; gap:48px; align-items:start;}
   @media (max-width:900px){ .why-now-grid{grid-template-columns:1fr;} }
 
+  /* ---- crisis chart + forward-projection annotations ---- */
+  .crisis-chart{display:grid; grid-template-columns:1.7fr 1fr; gap:44px; align-items:start; margin-top:56px;}
+  @media (max-width:900px){ .crisis-chart{grid-template-columns:1fr;} }
+  .crisis-caption{font-family:var(--display); font-size:15px; color:var(--paper); opacity:0.85; margin:0 0 14px; max-width:520px;}
+  .crisis-caption.after{margin:14px 0 0;}
+  .crisis-img-wrap{position:relative; line-height:0;}
+  .crisis-img-wrap img{
+    display:block; width:100%; height:auto;
+    filter:grayscale(0.6) saturate(0.7) brightness(0.72) contrast(1.05);
+  }
+  .crisis-band{position:absolute; top:0; bottom:0; background:rgba(255,214,64,0.16); border-left:1px solid rgba(255,214,64,0.3); border-right:1px solid rgba(255,214,64,0.3);}
+  .crisis-projection{padding-top:6px;}
+  .crisis-proj-eyebrow{font-family:var(--mono); font-size:11px; letter-spacing:0.1em; color:var(--paper-dim); text-transform:uppercase; margin-bottom:18px;}
+  .crisis-shock{border-top:1px solid var(--line); padding:20px 0;}
+  .crisis-shock:first-of-type{border-top:1px solid var(--line-strong);}
+  .crisis-shock-date{font-family:var(--mono); font-size:11.5px; letter-spacing:0.06em; color:#e8c34a; text-transform:uppercase; margin-bottom:8px;}
+  .crisis-shock-stat{font-family:var(--display); font-weight:700; font-size:clamp(24px,2.6vw,30px); line-height:1.1; margin-bottom:4px;}
+  .crisis-shock-label{font-size:13px; color:var(--paper-dim); margin-bottom:10px;}
+  .crisis-shock p{font-size:14px; color:var(--paper-dim); line-height:1.55; margin:0;}
+  .crisis-sources{font-size:12px; color:var(--paper-dim); opacity:0.7; margin-top:28px; max-width:900px; line-height:1.6;}
+
   /* ===================== EXPERT VOICES ===================== */
   .quotes-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:20px;}
   @media (max-width:860px){ .quotes-grid{grid-template-columns:1fr;} }
@@ -566,6 +587,36 @@
       <p style="margin:0 0 14px;">This isn’t the first attempt. The UK has passed roughly <strong>689 food and health policies and 14 national strategies over the past 30 years</strong>, with no measurable dent in obesity or health inequality to show for it.</p>
       <p style="margin:0;">That’s exactly the moment London’s 32 boroughs risk running 32 more uncoordinated pilots — each rediscovering the same procurement problem alone, the way national policy already has, repeatedly. The foundations below exist so that doesn’t happen again.</p>
     </div>
+
+    <div class="crisis-chart reveal">
+      <div>
+        <p class="crisis-caption">The 2022 spike has faded, but prices never fell.</p>
+        <div class="crisis-img-wrap">
+          <img src="assets/why-now/crisis-chart.png" alt="Energy, grain and fertiliser price movements, 2010–2026. Source: Bloomberg." loading="lazy">
+          <div class="crisis-band" style="left:14.0%; width:12.6%;"></div>
+          <div class="crisis-band" style="left:63.9%; width:9.9%;"></div>
+          <div class="crisis-band" style="left:85.3%; width:3.6%;"></div>
+        </div>
+        <p class="crisis-caption after">Food inflation was easing — until spring 2026. As recently as the autumn-2025 outlook, the year was expected to end near 3%; the official annual food measure had even fallen to 1.7% (year to June 2026). That was the calm before the compounding began.</p>
+      </div>
+
+      <div class="crisis-projection">
+        <div class="crisis-proj-eyebrow">Projected forward, from here</div>
+        <div class="crisis-shock">
+          <div class="crisis-shock-date">December 2026</div>
+          <div class="crisis-shock-stat">9–10%</div>
+          <div class="crisis-shock-label">Whole-basket food inflation, forecast</div>
+          <p><strong>Shock 1 — Energy, Strait of Hormuz.</strong> After the Strait was effectively closed by the Iran conflict, the FDF revised its year-end forecast from 3.2% to 9–10%, driven by energy, red diesel (+80%), tight fertiliser and freight feeding through manufacturing. The scenario assumed a reopening within 2–3 weeks that never came — so the pressure has had longer to build, not less, with a fertiliser tail into 2027.</p>
+        </div>
+        <div class="crisis-shock">
+          <div class="crisis-shock-date">Sept–Oct 2026</div>
+          <div class="crisis-shock-stat">+60% / +90% / +40%</div>
+          <div class="crisis-shock-label">Tomatoes / iceberg lettuce / potatoes, wholesale</div>
+          <p><strong>Shock 2 — Drought.</strong> On top of the energy shock, drought across half of England has sent wholesale prices of specific crops soaring and halved broccoli yields, with produce imported from Spain mid-UK-season and UK carrots at risk of running out early by spring.</p>
+        </div>
+      </div>
+    </div>
+    <p class="crisis-sources">Sources: Bloomberg · ONS, Consumer Price Inflation UK (June 2026, published July 2026) · Food Foundation, Food Prices Tracker (July 2026) · Food and Drink Federation forecast (1 April 2026) · IMF, Regional Economic Outlook Update: Middle East and Central Asia (8 July 2026) · The Guardian (1 August 2026) · Energy and Climate Intelligence Unit (7 July 2026).</p>
   </div>
 </section>
 
