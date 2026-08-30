@@ -322,6 +322,38 @@
   .rp-flow-bottom .code, .rp-flow-bottom h4{color:#4fb488;}
   .rp-flow-mid .code, .rp-flow-mid h4{color:#c9ced3;}
   .rp-flow-connect .code, .rp-flow-connect h4{color:#8fb0ff;}
+  /* the original diagram's 3-step flow per wave (Demand>Diets>Health,
+     Supply>Soils>Environmental) -- sits alongside the stage, not overlaid on it */
+  .rp-flow-outer{
+    display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:clamp(10px,2vw,30px);
+    max-width:1100px; margin:0 auto; padding:0 8px;
+  }
+  .rp-flow-outer-top{margin-bottom:20px;}
+  .rp-flow-outer-bottom{margin-top:20px;}
+  .rp-flow-outer .rp-step{text-align:center; position:relative;}
+  .rp-flow-outer .rp-ico{
+    margin:0 auto 10px; width:34px; height:34px; border-radius:50%;
+    display:grid; place-items:center; border:1px solid currentColor;
+  }
+  .rp-flow-outer .rp-ico svg{width:17px; height:17px;}
+  .rp-flow-outer h5{font-family:var(--display); font-weight:700; line-height:1.15; font-size:clamp(15px,1.6vw,20px); margin:0 0 4px;}
+  .rp-flow-outer p{font-family:var(--body); font-size:12.5px; line-height:1.35; color:var(--paper-dim); margin:0;}
+  .rp-flow-outer .rp-step+.rp-step::before{
+    content:''; position:absolute; top:16px; left:-14%; width:22%; height:1px;
+    background:linear-gradient(90deg, transparent, currentColor); opacity:0.5;
+  }
+  .rp-flow-outer .rp-step+.rp-step::after{
+    content:''; position:absolute; top:13px; left:8%;
+    border-left:5px solid currentColor; border-top:3.5px solid transparent; border-bottom:3.5px solid transparent; opacity:0.6;
+  }
+  .rp-flow-outer-top .rp-step{color:#e7964b;}
+  .rp-flow-outer-bottom .rp-step{color:#4fb488;}
+  @media (max-width:860px){
+    .rp-flow-outer{grid-template-columns:1fr; gap:14px; text-align:left;}
+    .rp-flow-outer .rp-step{text-align:left; display:flex; align-items:flex-start; gap:12px;}
+    .rp-flow-outer .rp-ico{margin:0; flex:none;}
+    .rp-flow-outer .rp-step+.rp-step::before, .rp-flow-outer .rp-step+.rp-step::after{display:none;}
+  }
   @media (max-width:860px){
     .rp-stage{height:auto;}
     .rp-canvas{position:relative; height:320px; margin-bottom:18px;}
@@ -743,6 +775,32 @@
         <p>We’re proposing three things: food that actually nourishes people, enough buying power from councils and businesses together to help more farms go organic, and local people and projects doing the everyday work of getting it onto plates.</p>
       </div>
     </div>
+    <div class="rp-flow-outer rp-flow-outer-top reveal">
+      <div class="rp-step"><span class="rp-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="13" r="7" />
+            <path d="M5 13h14" />
+          </svg></span>
+        <h5>Demand</h5>
+        <p>For sustainable and local products</p>
+      </div>
+      <div class="rp-step"><span class="rp-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 20c0-6 3-11 8-13-1 8-4 12-8 13z" />
+            <path d="M12 20c0-4-2-8-6-9 1 5 3 8 6 9z" />
+          </svg></span>
+        <h5>Diets</h5>
+        <p>Nutrient-rich, sustainable &amp; healthy</p>
+      </div>
+      <div class="rp-step"><span class="rp-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 20s-7-4.3-7-9a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 4.7-7 9-7 9z" />
+          </svg></span>
+        <h5>Health</h5>
+        <p>Outcomes</p>
+      </div>
+    </div>
+
     <div class="rp-stage reveal">
       <div class="rp-canvas" id="rpCanvas"></div>
 
@@ -778,6 +836,37 @@
         </div>
       </div>
     </div>
+
+    <div class="rp-flow-outer rp-flow-outer-bottom reveal">
+      <div class="rp-step"><span class="rp-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M4 15c3-2 6-2 9 0 2-1 4-1 7 0" />
+            <circle cx="12" cy="8" r="3" />
+            <path d="M12 6.6v2.8M10.8 7.2h2.4" />
+          </svg></span>
+        <h5>Supply</h5>
+        <p>De-risking farm transitions</p>
+      </div>
+      <div class="rp-step"><span class="rp-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M3 18h18" />
+            <path d="M8 18c0-4 1-6 3-7M8 18c-2 0-3-2-3-4 2 0 3 1 3 3" />
+            <path d="M15 18c0-3 1-5 3-6" />
+          </svg></span>
+        <h5>Soils</h5>
+        <p>Nutrient-rich, sustainable &amp; healthy</p>
+      </div>
+      <div class="rp-step"><span class="rp-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M3 18c3-4 5-6 8-6s5 2 8 6" />
+            <path d="M3 21h18" />
+            <circle cx="16" cy="7" r="2.4" />
+          </svg></span>
+        <h5>Environmental</h5>
+        <p>Outcomes</p>
+      </div>
+    </div>
+
     <div class="plain-summary reveal" style="margin-top:28px;">
       <span class="ps-label">Why foundation 02 is a resilience bet, not just a fairness one</span>
       <p>Rodale Institute’s 40-year side-by-side trial found organic corn yielding 31% more than conventional corn in drought years, with 15–20% more water moving through the soil and roughly 45% less fossil-fuel energy going in to grow it. That’s the difference between land that holds through a dry summer and land that doesn’t — and between a farm exposed to every fertiliser price spike out of a blocked strait and one that isn’t.</p>
