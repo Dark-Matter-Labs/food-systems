@@ -192,6 +192,9 @@
   .axo2-text .a-tag{margin-bottom:16px;}
   .axo2-text h3{font-size:clamp(21px,2.4vw,27px); line-height:1.22; margin:0 0 14px;}
   .axo2-text p{font-size:15.5px; color:var(--paper-dim); max-width:440px; margin:0;}
+  .axo2-text .actor-farmer{color:#d9a441;}
+  .axo2-text .actor-business{color:var(--demand);}
+  .axo2-text .actor-civic{color:var(--hub);}
   .axo2-graphic{display:flex; justify-content:center; perspective:1100px;}
   .axo2-plane-wrap{position:relative; width:100%; max-width:360px;}
   .axo2-plane{
@@ -212,6 +215,30 @@
   .axo2-dots .business{fill:var(--demand);}
   .axo2-dots .civic{fill:var(--hub);}
 
+  /* a live network, not scattered points: a pulsing mesh between nearby actors,
+     civic organisations acting as the connective hubs, plus a few travelling
+     signals along the longer links */
+  @keyframes meshPulse{ 0%,100%{opacity:0.14;} 50%{opacity:0.4;} }
+  @keyframes dotBreathe{ 0%,100%{opacity:0.85; r:9;} 50%{opacity:1; r:10.5;} }
+  .actor-mesh path{
+    fill:none; stroke:var(--paper-dim); stroke-width:1.2; opacity:0.14;
+    animation:meshPulse 4.5s ease-in-out infinite;
+  }
+  .actor-mesh path:nth-child(odd){animation-delay:1.1s;}
+  .actor-mesh path:nth-child(3n){animation-delay:2.2s;}
+  .axo2-dots .farmer, .axo2-dots .business, .axo2-dots .civic{
+    animation:dotBreathe 3.6s ease-in-out infinite;
+    transform-box:fill-box; transform-origin:center;
+  }
+  .axo2-dots circle:nth-of-type(3n+1){animation-delay:0.5s;}
+  .axo2-dots circle:nth-of-type(3n+2){animation-delay:1.3s;}
+  .mesh-signal{fill:#f2ead9; opacity:0.85;}
+  .mesh-signal[data-path="1"]{offset-path:url(#meshLine1); animation:meshTravel 3.2s linear infinite;}
+  .mesh-signal[data-path="2"]{offset-path:url(#meshLine2); animation:meshTravel 2.6s linear infinite; animation-delay:0.6s;}
+  .mesh-signal[data-path="3"]{offset-path:url(#meshLine3); animation:meshTravel 2.9s linear infinite; animation-delay:1.2s;}
+  .mesh-signal[data-path="4"]{offset-path:url(#meshLine4); animation:meshTravel 3.6s linear infinite; animation-delay:1.8s;}
+  @keyframes meshTravel{ from{offset-distance:0%;} to{offset-distance:100%;} }
+
   #planeCamden svg path{fill:var(--demand); stroke:var(--ink); stroke-width:1.6;}
 
   #planeLondonContext svg path{fill:var(--surface); stroke:var(--line-strong); stroke-width:0.8;}
@@ -223,12 +250,66 @@
   #planeLondonContext svg #Haringey,
   #planeLondonContext svg #Islington{fill:rgba(255,90,31,0.3);}
 
+  /* coordination spreading outward from Camden: neighbouring boroughs light up in
+     rings, staggered, the moment the row scrolls into view -- degrades safely to
+     "just visible" if JS never adds .pre (see the .reveal note above) */
+  @keyframes boroughLightUp{ from{fill-opacity:0;} to{fill-opacity:1;} }
+  .axo2-row.pre #planeLondonContext svg #City_of_Westminster,
+  .axo2-row.pre #planeLondonContext svg #Islington,
+  .axo2-row.pre #planeLondonContext svg #Brent,
+  .axo2-row.pre #planeLondonContext svg #Barnet,
+  .axo2-row.pre #planeLondonContext svg #Haringey,
+  .axo2-row.pre #planeLondonContext svg #Kensington_and_Chelsea{fill-opacity:0;}
+  .axo2-row.pre.in #planeLondonContext svg #City_of_Westminster,
+  .axo2-row.pre.in #planeLondonContext svg #Islington,
+  .axo2-row.pre.in #planeLondonContext svg #Brent,
+  .axo2-row.pre.in #planeLondonContext svg #Barnet,
+  .axo2-row.pre.in #planeLondonContext svg #Haringey,
+  .axo2-row.pre.in #planeLondonContext svg #Kensington_and_Chelsea{animation:boroughLightUp 0.55s ease forwards;}
+  .axo2-row.pre.in #planeLondonContext svg #City_of_Westminster,
+  .axo2-row.pre.in #planeLondonContext svg #Islington,
+  .axo2-row.pre.in #planeLondonContext svg #Brent,
+  .axo2-row.pre.in #planeLondonContext svg #Barnet,
+  .axo2-row.pre.in #planeLondonContext svg #Haringey{animation-delay:0.15s;}
+  .axo2-row.pre.in #planeLondonContext svg #Kensington_and_Chelsea{animation-delay:0.42s;}
+
+  /* farms/hinterland reaching in toward Camden -- a soft shade plus a few
+     roads/supply lines with small dots travelling inward */
+  .axo2-inflow{position:absolute; inset:0; width:100%; height:100%; transform:rotateX(52deg) rotateZ(-2deg); pointer-events:none;}
+  @keyframes inflowFadeIn{ to{opacity:1;} }
+  .axo2-row.pre .inflow-glow, .axo2-row.pre .inflow-line{opacity:0;}
+  .axo2-row.pre.in .inflow-glow{animation:inflowFadeIn 1.1s ease forwards; animation-delay:0.35s;}
+  .inflow-line{fill:none; stroke:rgba(255,148,94,0.4); stroke-width:2; stroke-dasharray:5 6;}
+  .axo2-row.pre.in .inflow-line{animation:inflowFadeIn 0.7s ease forwards;}
+  .axo2-row.pre.in #inflowLine1{animation-delay:0.5s;}
+  .axo2-row.pre.in #inflowLine2{animation-delay:0.58s;}
+  .axo2-row.pre.in #inflowLine3{animation-delay:0.66s;}
+  .axo2-row.pre.in #inflowLine4{animation-delay:0.74s;}
+  .axo2-row.pre.in #inflowLine5{animation-delay:0.82s;}
+  .axo2-row.pre.in #inflowLine6{animation-delay:0.9s;}
+  .inflow-dot{fill:#ffb27a;}
+  .axo2-row.pre .inflow-dot{opacity:0;}
+  .inflow-dot[data-path="1"]{offset-path:url(#inflowLine1);}
+  .inflow-dot[data-path="2"]{offset-path:url(#inflowLine2);}
+  .inflow-dot[data-path="3"]{offset-path:url(#inflowLine3);}
+  .inflow-dot[data-path="4"]{offset-path:url(#inflowLine4);}
+  .inflow-dot[data-path="5"]{offset-path:url(#inflowLine5);}
+  .inflow-dot[data-path="6"]{offset-path:url(#inflowLine6);}
+  .axo2-row.pre.in .inflow-dot{animation:inflowFadeIn 0.4s ease forwards, inflowTravel 3.6s linear infinite;}
+  .axo2-row.pre.in .inflow-dot[data-path="1"]{animation-delay:0.9s, 0.9s;}
+  .axo2-row.pre.in .inflow-dot[data-path="2"]{animation-delay:0.98s, 1.3s;}
+  .axo2-row.pre.in .inflow-dot[data-path="3"]{animation-delay:1.06s, 1.7s;}
+  .axo2-row.pre.in .inflow-dot[data-path="4"]{animation-delay:1.14s, 2.1s;}
+  .axo2-row.pre.in .inflow-dot[data-path="5"]{animation-delay:1.22s, 2.5s;}
+  .axo2-row.pre.in .inflow-dot[data-path="6"]{animation-delay:1.3s, 2.9s;}
+  @keyframes inflowTravel{ from{offset-distance:0%;} to{offset-distance:100%;} }
+
   #planeLondonGrey svg path{fill:#232320; stroke:var(--line); stroke-width:0.7;}
 
-  /* uk.svg's paths carry an inline style="fill:none" from the original
-     Illustrator export -- inline style beats any external rule, so this
-     needs !important or the shape stays invisible regardless of color */
-  #planeUk svg path{fill:#3a3a35 !important; stroke:var(--line-strong) !important; stroke-width:1 !important;}
+  /* uk-relief.svg wraps a real SRTM-derived hillshade (Wikimedia Commons,
+     CC BY-SA 3.0), cropped to Great Britain and re-toned for the dark theme --
+     see the credit line under the section for attribution */
+  #planeUk svg image{opacity:0.92;}
 
   /* ===================== WHY NOW ===================== */
   .why-now-grid{display:grid; grid-template-columns:0.9fr 1.1fr; gap:48px; align-items:start;}
@@ -664,6 +745,27 @@
       <div class="axo2-graphic">
         <div class="axo2-plane-wrap">
           <div class="axo2-plane" id="planeLondonContext"></div>
+          <svg class="axo2-inflow" viewBox="90.5 68.6 1280 982.5" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+            <defs>
+              <radialGradient id="camdenGlow" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#ff5a1f" stop-opacity="0.32"/>
+                <stop offset="100%" stop-color="#ff5a1f" stop-opacity="0"/>
+              </radialGradient>
+            </defs>
+            <circle class="inflow-glow" cx="622" cy="308" r="260" fill="url(#camdenGlow)"/>
+            <path id="inflowLine1" class="inflow-line" d="M150,150 Q400,220 622,308"/>
+            <path id="inflowLine2" class="inflow-line" d="M1250,150 Q900,220 622,308"/>
+            <path id="inflowLine3" class="inflow-line" d="M1300,500 Q950,400 622,308"/>
+            <path id="inflowLine4" class="inflow-line" d="M1100,950 Q850,650 622,308"/>
+            <path id="inflowLine5" class="inflow-line" d="M200,950 Q400,650 622,308"/>
+            <path id="inflowLine6" class="inflow-line" d="M150,550 Q380,420 622,308"/>
+            <circle class="inflow-dot" data-path="1" r="6"/>
+            <circle class="inflow-dot" data-path="2" r="6"/>
+            <circle class="inflow-dot" data-path="3" r="6"/>
+            <circle class="inflow-dot" data-path="4" r="6"/>
+            <circle class="inflow-dot" data-path="5" r="6"/>
+            <circle class="inflow-dot" data-path="6" r="6"/>
+          </svg>
         </div>
       </div>
     </div>
@@ -672,12 +774,26 @@
       <div class="axo2-text">
         <span class="a-tag">PRODUCERS, FOOD HUBS, CIVIC ORGANISATIONS</span>
         <h3>Scale and accelerate work already happening on the ground</h3>
-        <p>Growers, grocers, community kitchens, food partnerships — this maps the policy environment that could support your work and the economic circuits you could become part of. The governance and financing case is being built around what you’re already doing, not instead of it.</p>
+        <p><span class="actor-farmer">Growers</span>, <span class="actor-business">grocers</span>, <span class="actor-civic">community kitchens, food partnerships</span> — this maps the policy environment that could support your work and the economic circuits you could become part of. The governance and financing case is being built around what you’re already doing, not instead of it.</p>
       </div>
       <div class="axo2-graphic">
         <div class="axo2-plane-wrap">
           <div class="axo2-plane" id="planeLondonGrey"></div>
           <svg class="axo2-dots" viewBox="90.5 68.6 1280 982.5" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+            <g class="actor-mesh">
+              <path id="meshLine1" d="M600,380 L640,150"/>
+              <path id="meshLine2" d="M600,380 L520,480"/>
+              <path d="M470,330 L260,240"/>
+              <path d="M470,330 L380,600"/>
+              <path id="meshLine3" d="M780,420 L960,420"/>
+              <path d="M780,420 L820,560"/>
+              <path d="M780,420 L1180,320"/>
+              <path d="M560,680 L380,600"/>
+              <path d="M560,680 L700,720"/>
+              <path id="meshLine4" d="M560,680 L220,820"/>
+              <path d="M900,700 L820,560"/>
+              <path d="M900,700 L1040,880"/>
+            </g>
             <circle class="farmer" cx="260" cy="240" r="9"/>
             <circle class="farmer" cx="1180" cy="320" r="9"/>
             <circle class="farmer" cx="1040" cy="880" r="9"/>
@@ -693,6 +809,10 @@
             <circle class="civic" cx="780" cy="420" r="9"/>
             <circle class="civic" cx="560" cy="680" r="9"/>
             <circle class="civic" cx="900" cy="700" r="9"/>
+            <circle class="mesh-signal" data-path="1" r="5"/>
+            <circle class="mesh-signal" data-path="2" r="5"/>
+            <circle class="mesh-signal" data-path="3" r="5"/>
+            <circle class="mesh-signal" data-path="4" r="5"/>
           </svg>
         </div>
       </div>
@@ -716,6 +836,7 @@
     <div class="reveal" style="margin-top:12px;">
       <p style="color:var(--paper-dim); font-size:15px; max-width:640px; margin:0 0 16px;">Whether you lead a council, think about a cross-borough coalition, work in national government, you’re already doing this work on the ground, or want to help develop financing and economic infrastructure around it — tell us where you fit, and how you’d want to be part of the next phase.</p>
       <a class="btn solid" href="https://form.typeform.com/to/wh0nI0m0" target="_blank" rel="noopener">Tell us where you fit ↗</a>
+      <p class="crisis-sources" style="margin-top:18px;">National relief base: <a href="https://commons.wikimedia.org/wiki/File:United_Kingdom_relief_location_map.png" target="_blank" rel="noopener">Wikimedia Commons</a>, CC BY-SA 3.0.</p>
     </div>
   </div>
 </section>
@@ -1474,7 +1595,7 @@
       {id:'planeCamden', src:'assets/axo/camden.svg'},
       {id:'planeLondonContext', src:'assets/axo/london-boroughs.svg'},
       {id:'planeLondonGrey', src:'assets/axo/london-boroughs.svg'},
-      {id:'planeUk', src:'assets/axo/uk.svg'}
+      {id:'planeUk', src:'assets/axo/uk-relief.svg'}
     ];
     var cache = {};
     targets.forEach(function(t){
