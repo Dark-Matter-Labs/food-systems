@@ -323,6 +323,27 @@
   .rp-fnd-03 .code, .rp-fnd-03 h4{color:#4fb488;}
   .rp-fnd-04 .code, .rp-fnd-04 h4{color:#c9ced3;}
   .rp-fnd-02 .code, .rp-fnd-02 h4{color:#8fb0ff;}
+  .rp-info{
+    position:relative; display:inline-grid; place-items:center; vertical-align:middle;
+    width:16px; height:16px; margin-left:7px; margin-bottom:2px; padding:0;
+    border-radius:50%; border:1px solid currentColor; background:none; color:inherit;
+    font-family:var(--display); font-style:italic; font-weight:700; font-size:10px; line-height:1;
+    opacity:0.6; cursor:help;
+  }
+  .rp-info:hover, .rp-info:focus-visible{opacity:1;}
+  .rp-info:focus-visible{outline:1px dashed var(--line-strong); outline-offset:3px;}
+  .rp-info-pop{
+    position:absolute; left:0; top:calc(100% + 10px); z-index:6;
+    width:260px; max-width:min(70vw, 300px); text-align:left;
+    font-family:var(--body); font-style:normal; font-weight:400; font-size:12px; line-height:1.5;
+    color:var(--paper-dim); background:var(--surface); border:1px solid var(--line-strong); border-radius:8px;
+    padding:12px 14px; box-shadow:0 8px 24px rgba(0,0,0,0.35);
+    opacity:0; visibility:hidden; transform:translateY(4px); pointer-events:none;
+    transition:opacity 0.16s ease, transform 0.16s ease;
+  }
+  .rp-info:hover .rp-info-pop, .rp-info:focus-visible .rp-info-pop, .rp-info:focus .rp-info-pop{
+    opacity:1; visibility:visible; transform:translateY(0); pointer-events:auto;
+  }
   .rp-outcomes{position:absolute; top:0; right:0; bottom:0; width:19%; z-index:2; pointer-events:none;}
   .rp-outcome{position:absolute; left:0; width:100%; text-align:center; transform:translateY(-50%); color:var(--paper-dim);}
   .rp-outcome-01{top:19%;}
@@ -836,7 +857,7 @@
 
         <div class="rp-fnd rp-fnd-02" data-k="fin" tabindex="0">
           <div class="code">PATHWAY 02</div>
-          <h4>Coordinated, collective buying power of organic, resilient supply</h4>
+          <h4>Coordinated, collective buying power of organic, resilient supply<button type="button" class="rp-info" aria-label="Why this is a resilience bet, not just a fairness one"><span aria-hidden="true">i</span><span class="rp-info-pop" role="tooltip">Rodale Institute’s 40-year side-by-side trial found organic corn yielding 31% more than conventional corn in drought years, with 15–20% more water moving through the soil and roughly 45% less fossil-fuel energy going in to grow it. That’s the difference between land that holds through a dry summer and land that doesn’t — and between a farm exposed to every fertiliser price spike out of a blocked strait and one that isn’t.</span></button></h4>
           <p>No single borough’s contract is big enough to move a farmer’s decision. A buying coalition of London boroughs and businesses is — turning committed public and commercial demand into the confidence a grower needs to convert land.</p>
         </div>
 
@@ -848,7 +869,7 @@
 
         <div class="rp-fnd rp-fnd-03" data-k="region" tabindex="0">
           <div class="code">PATHWAY 04</div>
-          <h4>Nutrient density is the target, not calories</h4>
+          <h4>Nutrient density is the target, not calories<button type="button" class="rp-info" aria-label="Why this is a resilience bet, not just a fairness one"><span aria-hidden="true">i</span><span class="rp-info-pop" role="tooltip">Rodale Institute’s 40-year side-by-side trial found organic corn yielding 31% more than conventional corn in drought years, with 15–20% more water moving through the soil and roughly 45% less fossil-fuel energy going in to grow it. That’s the difference between land that holds through a dry summer and land that doesn’t — and between a farm exposed to every fertiliser price spike out of a blocked strait and one that isn’t.</span></button></h4>
           <p>The baseline shifts from “enough food” to genuinely nourishing food — because a system that only solves for calories quietly manufactures the next public-health crisis while claiming to have solved the last one.</p>
         </div>
       </div>
@@ -903,11 +924,6 @@
         <h5>Environmental</h5>
         <p>Outcomes</p>
       </div>
-    </div>
-
-    <div class="plain-summary reveal" style="margin-top:28px;">
-      <span class="ps-label">Why pathway 02 is a resilience bet, not just a fairness one</span>
-      <p>Rodale Institute’s 40-year side-by-side trial found organic corn yielding 31% more than conventional corn in drought years, with 15–20% more water moving through the soil and roughly 45% less fossil-fuel energy going in to grow it. That’s the difference between land that holds through a dry summer and land that doesn’t — and between a farm exposed to every fertiliser price spike out of a blocked strait and one that isn’t.</p>
     </div>
   </div>
 </section>
