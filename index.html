@@ -140,6 +140,10 @@
   section.tight{padding:64px 0;}
   .section-head{max-width:640px; margin-bottom:48px;}
   .section-head h2{font-size:clamp(28px,3.4vw,42px); margin-top:14px;}
+  #foundations .section-head h2 .h2-sub{
+    display:block; font-size:clamp(16px,1.8vw,22px); font-weight:400; letter-spacing:0;
+    color:var(--paper-dim); margin-top:6px;
+  }
   .section-head p{color:var(--paper-dim); font-size:16px; margin-top:14px;}
   .plain-summary{
     background: rgba(245,245,242,0.06); border-left:3px solid var(--paper-dim);
@@ -150,6 +154,12 @@
     color:var(--paper-dim); display:block; margin-bottom:8px;
   }
   .plain-summary p{font-size:15.5px; line-height:1.55; margin:0; color:var(--paper); opacity:0.95;}
+  .plain-summary p+ul{margin-top:10px;}
+  .plain-summary ul{margin:0; padding:0; list-style:none; font-size:15.5px; line-height:1.55; color:var(--paper); opacity:0.95;}
+  .plain-summary li{position:relative; padding-left:18px; margin-bottom:10px;}
+  .plain-summary li:last-child{margin-bottom:0;}
+  .plain-summary li::before{content:'—'; position:absolute; left:0; color:var(--paper-dim);}
+  .plain-summary .ps-tag{font-family:var(--mono); font-size:12px; color:var(--paper-dim); letter-spacing:0.02em;}
   .tracks-head-grid{
     display:grid; grid-template-columns:1.2fr 0.8fr; gap:40px; align-items:center; margin-bottom:48px;
   }
@@ -814,12 +824,8 @@
   <div class="wrap">
     <div class="section-head reveal">
       <div class="eyebrow">PATHWAYS</div>
-      <h2>Four pathways that build resilience and preparedness through connecting the demand and supply</h2>
+      <h2>Four pathways that build food system resilience and preparedness<span class="h2-sub">through connecting the demand and supply</span></h2>
       <p>There are multiple plausible ways to transform the food systems. The pathways below set direction, organise interventions, and actors around resilience, health, environmental, economic vitality, and equity &amp; fairness outcomes — each one makes the next possible, and skipping one is usually why a pilot doesn’t survive contact with scale.</p>
-      <div class="plain-summary">
-        <span class="ps-label">In plain terms</span>
-        <p>We’re proposing four things: food that actually nourishes people, enough buying power from councils and businesses together to help more farms go organic, new economic and financing instruments to make that possible, and local people and projects doing the everyday work of getting it onto plates.</p>
-      </div>
     </div>
     <div class="rp-flow-outer rp-flow-outer-top reveal">
       <div class="rp-step"><span class="rp-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -924,6 +930,17 @@
         <h5>Environmental</h5>
         <p>Outcomes</p>
       </div>
+    </div>
+
+    <div class="plain-summary reveal" style="margin-top:28px;">
+      <span class="ps-label">In plain terms</span>
+      <p>We’re proposing four things:</p>
+      <ul>
+        <li>food that actually nourishes people and regenerates soils and ecosystems <span class="ps-tag">(P04)</span></li>
+        <li>new economic and financing instruments to build food system resilience and sovereignty <span class="ps-tag">(P03)</span></li>
+        <li>enough buying power from councils and businesses together to help more farms build resilience and de-risk transition <span class="ps-tag">(P02)</span></li>
+        <li>and local people and projects doing the everyday work of getting it onto plates <span class="ps-tag">(P01)</span></li>
+      </ul>
     </div>
   </div>
 </section>
