@@ -1,11 +1,11 @@
 /* =========================================================================
-   THE FOUNDATIONS — three wave-string ribbons + a woven connector,
+   PATHWAYS — three wave-string ribbons + a woven connector,
    adapted from the Regional Food Resilience Platform diagram.
 
-   Top (amber)    = Foundation 01, Civic-led delivery
-   Bottom (green) = Foundation 03, Nutrient density
-   Middle (silver)= Foundation 04, New Food Economics
-   Weave          = Foundation 02, Collective buying power
+   Top (amber)    = Pathway 01, Civic-led delivery
+   Bottom (green) = Pathway 04, Nutrient density
+   Middle (silver)= Pathway 03, New Food Economics
+   Weave          = Pathway 02, Collective buying power
    ========================================================================= */
 import * as THREE from 'three';
 
@@ -103,7 +103,7 @@ if (host) {
     scene.add(new THREE.LineSegments(g, m));
   });
 
-  /* ---------- Foundation 02: coordinated buying power -- a gentle network of hub
+  /* ---------- Pathway 02: coordinated buying power -- a gentle network of hub
      nodes on the city (orange) wave, each reaching organic, branching supply
      roots down into the countryside (green) wave to draw resources up --
      a river-delta / root-system shape, not a fixed crossing grid ---------- */
@@ -326,7 +326,7 @@ if (host) {
     scene.add(new THREE.Points(pg, pm));
   })();
 
-  /* ---------- Foundation 04: New Food Economics -- a shimmering interference
+  /* ---------- Pathway 03: New Food Economics -- a shimmering interference
      field along the middle band (many overlapping instruments), not discrete pins ---------- */
   (function shimmer() {
     const LAYERS = 5;
@@ -368,7 +368,7 @@ if (host) {
     scene.add(new THREE.LineSegments(g, m));
   })();
 
-  /* ---------- Foundation 04 also bridges the two sides it sits between: closed,
+  /* ---------- Pathway 03 also bridges the two sides it sits between: closed,
      woven "cocoons" of silk-like strands encircle the space between a point on the
      city wave and a point on the countryside wave -- the instrument that lets
      demand and supply meet, not a discrete pin. Small gold glints (a local
@@ -469,7 +469,7 @@ if (host) {
     scene.add(new THREE.Points(gg, gm));
   })();
 
-  /* ---------- Foundation 03: nutrient density / soil regeneration -- messy clustered
+  /* ---------- Pathway 04: nutrient density / soil regeneration -- messy clustered
      shrub-and-canopy blobs in mixed grey/green tones (point-cloud canopy, lichen-on-bark
      reference), not tidy blades of grass ---------- */
   (function growth() {
@@ -541,7 +541,7 @@ if (host) {
     });
   })();
 
-  /* ---------- Foundation 01: civic-led delivery -- small hub markers (grocers,
+  /* ---------- Pathway 01: civic-led delivery -- small hub markers (grocers,
      dinners, workshops, community-run hubs) lighting up along the top wave ---------- */
   (function nodes() {
     const N = SMALL ? 10 : 16;
