@@ -178,18 +178,19 @@
     display:grid; grid-template-columns:0.9fr 1fr; gap:48px; align-items:center;
     padding:52px 0;
   }
-  .axo2-row--solo{grid-template-columns:1fr; justify-items:center; padding-top:8px; padding-bottom:0;}
   @media (max-width:860px){ .axo2-row{grid-template-columns:1fr; gap:20px; padding:36px 0;} }
   .axo2-text .a-tag{margin-bottom:16px;}
   .axo2-text h3{font-size:clamp(21px,2.4vw,27px); line-height:1.22; margin:0 0 14px;}
   .axo2-text p{font-size:15.5px; color:var(--paper-dim); max-width:440px; margin:0;}
   .axo2-graphic{display:flex; justify-content:center; perspective:1100px;}
-  .axo2-row--solo .axo2-graphic{opacity:0.65;}
   .axo2-plane-wrap{position:relative; width:100%; max-width:360px;}
   .axo2-plane{
     width:100%;
-    transform:rotateX(52deg) rotateZ(-2deg);
+    transform:rotateX(52deg) rotateZ(-2deg) scale(var(--axo-focus, 0.92));
     filter:drop-shadow(0 34px 28px rgba(0,0,0,0.5));
+    opacity:var(--axo-focus, 0.92);
+    transition:transform .25s ease-out, opacity .25s ease-out;
+    transform-origin:center;
   }
   .axo2-plane svg{display:block; width:100%; height:auto; overflow:visible;}
   .axo2-dots{
@@ -200,9 +201,6 @@
   .axo2-dots .farmer{fill:#d9a441;}
   .axo2-dots .business{fill:var(--demand);}
   .axo2-dots .civic{fill:var(--hub);}
-  .axo2-connector{position:relative; z-index:1; height:64px; max-width:1180px; margin:0 auto; padding:0 32px;}
-  .axo2-connector svg{width:100%; height:100%; display:block;}
-  .axo2-connector path{fill:none; stroke:var(--line-strong); stroke-width:1; stroke-dasharray:4 5;}
 
   #planeCamden svg path{fill:var(--demand); stroke:var(--ink); stroke-width:1.6;}
 
@@ -217,7 +215,10 @@
 
   #planeLondonGrey svg path{fill:#232320; stroke:var(--line); stroke-width:0.7;}
 
-  #planeUk svg path{fill:#201f1c; stroke:var(--line); stroke-width:0.9;}
+  /* uk.svg's paths carry an inline style="fill:none" from the original
+     Illustrator export -- inline style beats any external rule, so this
+     needs !important or the shape stays invisible regardless of color */
+  #planeUk svg path{fill:#3a3a35 !important; stroke:var(--line-strong) !important; stroke-width:1 !important;}
 
   /* ===================== WHY NOW ===================== */
   .why-now-grid{display:grid; grid-template-columns:0.9fr 1.1fr; gap:48px; align-items:start;}
@@ -531,12 +532,6 @@
       </div>
     </div>
 
-    <div class="axo2-connector" aria-hidden="true">
-      <svg viewBox="0 0 1116 64" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M700 0 L580 64 M840 0 L900 64"/>
-      </svg>
-    </div>
-
     <div class="wrap axo2-row reveal">
       <div class="axo2-text">
         <span class="a-tag">LONDON — REGIONAL LEVEL</span>
@@ -548,12 +543,6 @@
           <div class="axo2-plane" id="planeLondonContext"></div>
         </div>
       </div>
-    </div>
-
-    <div class="axo2-connector" aria-hidden="true">
-      <svg viewBox="0 0 1116 64" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M660 0 L560 64 M880 0 L960 64"/>
-      </svg>
     </div>
 
     <div class="wrap axo2-row reveal">
@@ -586,7 +575,12 @@
       </div>
     </div>
 
-    <div class="wrap axo2-row axo2-row--solo reveal">
+    <div class="wrap axo2-row reveal">
+      <div class="axo2-text">
+        <span class="a-tag">UNITED KINGDOM — NATIONAL POLICY</span>
+        <h3>The ceiling every seat below sits under</h3>
+        <p>National strategy decides what's even possible — procurement rules, food security duties, whatever the Civil Contingencies Act ends up requiring of every council. Camden, London and the boroughs' own food partnerships are building the working evidence a genuine national policy could stand on, instead of waiting for the next of fourteen strategies to arrive from above and land nowhere.</p>
+      </div>
       <div class="axo2-graphic">
         <div class="axo2-plane-wrap">
           <div class="axo2-plane" id="planeUk"></div>
@@ -1276,6 +1270,32 @@
       var load = cache[t.src] || (cache[t.src] = fetch(t.src).then(function(r){ return r.text(); }));
       load.then(function(svgText){ el.innerHTML = svgText; }).catch(function(){});
     });
+  });
+</script>
+<script>
+  document.addEventListener('DOMContentLoaded', function(){
+    var planes = Array.from(document.querySelectorAll('.axo2-plane'));
+    if(!planes.length) return;
+    var ticking = false;
+    function update(){
+      var vh = window.innerHeight;
+      var center = vh / 2;
+      planes.forEach(function(p){
+        var r = p.getBoundingClientRect();
+        var mid = r.top + r.height / 2;
+        var dist = Math.abs(mid - center);
+        var proximity = 1 - Math.min(1, dist / (vh * 0.65));
+        var focus = 0.85 + proximity * 0.15; // gentle emphasis, never illegible
+        p.style.setProperty('--axo-focus', focus.toFixed(3));
+      });
+      ticking = false;
+    }
+    function onScroll(){
+      if(!ticking){ ticking = true; requestAnimationFrame(update); }
+    }
+    window.addEventListener('scroll', onScroll, {passive:true});
+    window.addEventListener('resize', onScroll);
+    update();
   });
 </script>
 
