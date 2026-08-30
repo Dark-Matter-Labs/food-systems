@@ -308,6 +308,7 @@
   .rp-labels{
     position:absolute; top:0; right:0; bottom:0; width:40%; z-index:2; pointer-events:none;
     display:flex; flex-direction:column; justify-content:space-between; gap:clamp(18px,3vh,40px);
+    padding-left:clamp(28px,5vw,80px);
   }
   .rp-fnd{
     position:relative; width:100%; max-width:380px; text-align:left; margin-left:auto;
@@ -326,7 +327,7 @@
      Supply>Soils>Environmental) -- sits alongside the stage, not overlaid on it */
   .rp-flow-outer{
     display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:clamp(10px,2vw,30px);
-    max-width:1100px; margin:0 auto; padding:0 8px;
+    width:60%; margin:0; padding:0 8px;
   }
   .rp-flow-outer-top{margin-bottom:20px;}
   .rp-flow-outer-bottom{margin-top:20px;}
@@ -349,7 +350,7 @@
   .rp-flow-outer-top .rp-step{color:#e7964b;}
   .rp-flow-outer-bottom .rp-step{color:#4fb488;}
   @media (max-width:860px){
-    .rp-flow-outer{grid-template-columns:1fr; gap:14px; text-align:left;}
+    .rp-flow-outer{width:100%; grid-template-columns:1fr; gap:14px; text-align:left;}
     .rp-flow-outer .rp-step{text-align:left; display:flex; align-items:flex-start; gap:12px;}
     .rp-flow-outer .rp-ico{margin:0; flex:none;}
     .rp-flow-outer .rp-step+.rp-step::before, .rp-flow-outer .rp-step+.rp-step::after{display:none;}
@@ -357,7 +358,7 @@
   @media (max-width:860px){
     .rp-stage{height:auto; display:flex; flex-direction:column;}
     .rp-canvas{position:relative; width:100%; height:280px; margin-bottom:18px;}
-    .rp-labels{position:static; width:100%; display:flex; flex-direction:column; justify-content:flex-start; gap:22px;}
+    .rp-labels{position:static; width:100%; padding-left:0; display:flex; flex-direction:column; justify-content:flex-start; gap:22px;}
     .rp-fnd{position:static; max-width:none; width:100%; padding:0;}
   }
 
@@ -805,10 +806,10 @@
       <div class="rp-canvas" id="rpCanvas"></div>
 
       <div class="rp-labels">
-        <div class="rp-fnd rp-fnd-01">
+        <div class="rp-fnd rp-fnd-01" data-k="top" tabindex="0">
           <div class="code">FOUNDATION 01</div>
-          <h4>Nutrient density is the target, not calories</h4>
-          <p>The baseline shifts from “enough food” to genuinely nourishing food — because a system that only solves for calories quietly manufactures the next public-health crisis while claiming to have solved the last one.</p>
+          <h4>Civic-led delivery is what actually brings it to life</h4>
+          <p>Procurement protocols and buying coalitions don’t feed anyone on their own. Grocers, dinners, workshops and community-run hubs are the layer where the foundations above turn into food someone can actually buy or receive.</p>
         </div>
 
         <div class="rp-fnd rp-fnd-02" data-k="fin" tabindex="0">
@@ -825,8 +826,8 @@
 
         <div class="rp-fnd rp-fnd-03" data-k="region" tabindex="0">
           <div class="code">FOUNDATION 03</div>
-          <h4>Civic-led delivery is what actually brings it to life</h4>
-          <p>Procurement protocols and buying coalitions don’t feed anyone on their own. Grocers, dinners, workshops and community-run hubs are the layer where the foundations above turn into food someone can actually buy or receive.</p>
+          <h4>Nutrient density is the target, not calories</h4>
+          <p>The baseline shifts from “enough food” to genuinely nourishing food — because a system that only solves for calories quietly manufactures the next public-health crisis while claiming to have solved the last one.</p>
         </div>
       </div>
     </div>
@@ -1434,7 +1435,7 @@
     update();
   });
 </script>
-<script type="module" src="assets/foundations/wave.js?v=2"></script>
+<script type="module" src="assets/foundations/wave.js?v=3"></script>
 
 </body>
 </html>

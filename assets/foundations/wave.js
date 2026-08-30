@@ -2,8 +2,8 @@
    THE FOUNDATIONS — three wave-string ribbons + a woven connector,
    adapted from the Regional Food Resilience Platform diagram.
 
-   Top (amber)    = Foundation 01, Nutrient density
-   Bottom (green) = Foundation 03, Civic-led delivery
+   Top (amber)    = Foundation 01, Civic-led delivery
+   Bottom (green) = Foundation 03, Nutrient density
    Middle (silver)= Foundation 04, New Food Economics
    Weave          = Foundation 02, Collective buying power
    ========================================================================= */
@@ -197,55 +197,121 @@ if (host) {
     scene.add(new THREE.LineSegments(g, m));
   })();
 
-  /* ---------- Foundation 03: tiered, varied growth on the green wave --
-     canopy / shrub / ground-cover, reading as agroforestry, not a monocrop lawn ---------- */
+  /* ---------- Foundation 03: nutrient density / soil regeneration -- messy clustered
+     shrub-and-canopy blobs in mixed grey/green tones (point-cloud canopy, lichen-on-bark
+     reference), not tidy blades of grass ---------- */
   (function growth() {
-    const TIERS = [
-      { n: SMALL ? 7 : 12, strokes: 3, hgt: [0.09, 0.15], col: [0.30, 0.62, 0.34] },   // canopy trees
-      { n: SMALL ? 14 : 24, strokes: 2, hgt: [0.045, 0.085], col: [0.42, 0.80, 0.46] }, // shrub layer
-      { n: SMALL ? 22 : 40, strokes: 1, hgt: [0.012, 0.03], col: [0.62, 0.90, 0.50] }   // ground cover
+    const CLUSTERS = [
+      { n: SMALL ? 6 : 10, pts: SMALL ? 26 : 46, rx: [0.045, 0.078], ry: [0.05, 0.09], greyBias: 0.55 },  // canopy shrubs -- larger, greyer/lichen-toned
+      { n: SMALL ? 9 : 16, pts: SMALL ? 14 : 24, rx: [0.024, 0.044], ry: [0.03, 0.05], greyBias: 0.30 },  // mid shrubs
+      { n: SMALL ? 16 : 28, pts: SMALL ? 5 : 9, rx: [0.010, 0.018], ry: [0.012, 0.02], greyBias: 0.10 }  // low ground clumps -- mostly green
     ];
-    TIERS.forEach(tier => {
-      const pos = [], aCol = [], aT = [], aSeed = [], aH = [];
+    CLUSTERS.forEach(tier => {
+      const pos = [], aCol = [], aOffX = [], aOffY = [], aTone = [], aSize = [], aSeed = [];
       for (let i = 0; i < tier.n; i++) {
-        const c = 0.30 + n2rand(i, tier.n) * 0.66;
-        const seed = i / tier.n + Math.random() * 0.01;
-        const h = tier.hgt[0] + Math.random() * (tier.hgt[1] - tier.hgt[0]);
-        for (let k = 0; k < tier.strokes; k++) {
-          pos.push(0, 0, 0, 0, 0, 0);
-          aCol.push(c, c); aT.push(0, 1);
-          aSeed.push(seed + k * 0.21, seed + k * 0.21);
-          aH.push(h, h);
+        const c = 0.28 + n2rand(i, tier.n) * 0.68;
+        const rx = tier.rx[0] + Math.random() * (tier.rx[1] - tier.rx[0]);
+        const ry = tier.ry[0] + Math.random() * (tier.ry[1] - tier.ry[0]);
+        const seed = i / tier.n;
+        for (let p = 0; p < tier.pts; p++) {
+          /* uniform-disk-ish scatter, upper half only -- a dome/canopy blob sitting on the wave */
+          const rr = Math.sqrt(Math.random());
+          const ang = Math.random() * Math.PI;
+          pos.push(0, 0, 0);
+          aCol.push(c);
+          aOffX.push(Math.cos(ang) * rr * rx);
+          aOffY.push(Math.sin(ang) * rr * ry);
+          aTone.push(Math.random() < tier.greyBias ? (0.55 + Math.random() * 0.45) : (Math.random() * 0.35));
+          aSize.push(1.4 + Math.random() * 2.3);
+          aSeed.push(seed + p * 0.013);
         }
       }
       const g = new THREE.BufferGeometry();
       g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
       g.setAttribute('aCol', new THREE.Float32BufferAttribute(aCol, 1));
-      g.setAttribute('aT', new THREE.Float32BufferAttribute(aT, 1));
+      g.setAttribute('aOffX', new THREE.Float32BufferAttribute(aOffX, 1));
+      g.setAttribute('aOffY', new THREE.Float32BufferAttribute(aOffY, 1));
+      g.setAttribute('aTone', new THREE.Float32BufferAttribute(aTone, 1));
+      g.setAttribute('aSize', new THREE.Float32BufferAttribute(aSize, 1));
       g.setAttribute('aSeed', new THREE.Float32BufferAttribute(aSeed, 1));
-      g.setAttribute('aH', new THREE.Float32BufferAttribute(aH, 1));
       const m = new THREE.ShaderMaterial({
         transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, uniforms: U,
         vertexShader: NOISE + `
-          attribute float aCol; attribute float aT; attribute float aSeed; attribute float aH;
-          uniform float uTime, uAspect, uRegion;
-          varying float vA;
+          attribute float aCol; attribute float aOffX; attribute float aOffY; attribute float aTone; attribute float aSize; attribute float aSeed;
+          uniform float uTime, uAspect, uRegion, uDpr;
+          varying float vA; varying float vTone;
           void main(){
             float base = waveY(aCol, 0.62, uTime, 0.100, 0.055, ${BOT_BASE.toFixed(3)});
-            /* branch angle varies per-plant, so canopy strokes fan out rather than all lean one way */
-            float branch = (n2(vec2(aSeed * 17.0, 2.0)) - 0.5) * 0.55;
-            float sway = sin(uTime * 0.8 + aSeed * 14.0) * 0.005 * aT;
+            /* whole shrub blob reveals together as the sweep passes its column */
             float local = smoothstep(0.0, 0.55, uRegion * 1.35 - (aCol - 0.30) * 0.48);
-            float y = base + aH * aT * local;
-            float x = (aCol * 2.0 - 1.0) * uAspect * 0.96 + sway + branch * aT * local * aH * 4.0;
+            float sway = sin(uTime * 0.7 + aSeed * 20.0) * 0.004 * local;
+            float y = base + aOffY * local + sway;
+            float x = (aCol * 2.0 - 1.0) * uAspect * 0.96 + aOffX * local;
             gl_Position = projectionMatrix * modelViewMatrix * vec4(x, y, 0.0, 1.0);
-            vA = local * (0.22 + 0.5 * (1.0 - aT));
+            gl_PointSize = aSize * uDpr * (0.5 + local * 0.9);
+            vA = local * (0.35 + 0.4 * (1.0 - aOffY * 11.0));
+            vTone = aTone;
           }`,
-        fragmentShader: `varying float vA;
-          void main(){ gl_FragColor = vec4(${tier.col[0]}, ${tier.col[1]}, ${tier.col[2]}, vA); }`
+        fragmentShader: `
+          varying float vA; varying float vTone;
+          void main(){
+            vec2 uv = gl_PointCoord * 2.0 - 1.0;
+            float d = length(uv);
+            float shape = smoothstep(1.0, 0.2, d);
+            if (shape < 0.03) discard;
+            vec3 green = vec3(0.30, 0.62, 0.32);
+            vec3 grey  = vec3(0.52, 0.55, 0.50);
+            vec3 col = mix(green, grey, vTone);
+            gl_FragColor = vec4(col, shape * vA);
+          }`
       });
-      scene.add(new THREE.LineSegments(g, m));
+      scene.add(new THREE.Points(g, m));
     });
+  })();
+
+  /* ---------- Foundation 01: civic-led delivery -- small hub markers (grocers,
+     dinners, workshops, community-run hubs) lighting up along the top wave ---------- */
+  (function nodes() {
+    const N = SMALL ? 10 : 16;
+    const pos = new Float32Array(N * 3);
+    const aCol = new Float32Array(N);
+    const aSeed = new Float32Array(N);
+    for (let i = 0; i < N; i++) {
+      aCol[i] = 0.09 + n2rand(i, N) * 0.82;
+      aSeed[i] = i / N;
+    }
+    const g = new THREE.BufferGeometry();
+    g.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+    g.setAttribute('aCol', new THREE.BufferAttribute(aCol, 1));
+    g.setAttribute('aSeed', new THREE.BufferAttribute(aSeed, 1));
+    const m = new THREE.ShaderMaterial({
+      transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, uniforms: U,
+      vertexShader: NOISE + `
+        attribute float aCol; attribute float aSeed;
+        uniform float uTime, uAspect, uTop, uDpr;
+        varying float vA;
+        void main(){
+          float y = waveY(aCol, 0.5, uTime, 0.100, 0.050, ${TOP_BASE.toFixed(3)});
+          y += uTop * 0.010 * sin(aCol * 10.0 + uTime * 0.5);
+          float x = (aCol * 2.0 - 1.0) * uAspect * 0.96;
+          gl_Position = projectionMatrix * modelViewMatrix * vec4(x, y, 0.0, 1.0);
+          float pulse = 0.5 + 0.5 * sin(uTime * 1.7 + aSeed * 26.0);
+          gl_PointSize = (3.0 + uTop * 5.5 * pulse) * uDpr;
+          vA = uTop * (0.45 + pulse * 0.55);
+        }`,
+      fragmentShader: `
+        varying float vA;
+        void main(){
+          vec2 uv = gl_PointCoord * 2.0 - 1.0;
+          float d = length(uv);
+          float ring = smoothstep(1.0, 0.80, d) - smoothstep(0.55, 0.38, d);
+          float core = smoothstep(0.42, 0.0, d) * 0.55;
+          float shape = max(ring, core);
+          if (shape < 0.02) discard;
+          gl_FragColor = vec4(1.0, 0.82, 0.58, shape * vA);
+        }`
+    });
+    scene.add(new THREE.Points(g, m));
   })();
 
   function n2rand(i, n) {
