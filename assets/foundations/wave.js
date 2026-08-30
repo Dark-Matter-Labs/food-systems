@@ -368,6 +368,107 @@ if (host) {
     scene.add(new THREE.LineSegments(g, m));
   })();
 
+  /* ---------- Foundation 04 also bridges the two sides it sits between: closed,
+     woven "cocoons" of silk-like strands encircle the space between a point on the
+     city wave and a point on the countryside wave -- the instrument that lets
+     demand and supply meet, not a discrete pin. Small gold glints (a local
+     currency) circulate inside each cocoon rather than travelling one way. ---------- */
+  (function cocoon() {
+    const HUBS = SMALL ? 3 : 5;
+    const STRANDS = SMALL ? 3 : 5;
+    const CSTEPS = 48;
+    const hubCols = [];
+    for (let h = 0; h < HUBS; h++) hubCols.push(0.14 + ((h + 0.5) / HUBS) * 0.74);
+
+    const pos = [], aT = [], aSeed = [], aHubCol = [];
+    for (let h = 0; h < HUBS; h++) {
+      for (let s = 0; s < STRANDS; s++) {
+        const seed = h / HUBS + s * 0.093;
+        for (let i = 0; i < CSTEPS - 1; i++) {
+          pos.push(0, 0, 0, 0, 0, 0);
+          aT.push(i / (CSTEPS - 1), (i + 1) / (CSTEPS - 1));
+          aSeed.push(seed, seed);
+          aHubCol.push(hubCols[h], hubCols[h]);
+        }
+      }
+    }
+    const g = new THREE.BufferGeometry();
+    g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
+    g.setAttribute('aT', new THREE.Float32BufferAttribute(aT, 1));
+    g.setAttribute('aSeed', new THREE.Float32BufferAttribute(aSeed, 1));
+    g.setAttribute('aHubCol', new THREE.Float32BufferAttribute(aHubCol, 1));
+    const m = new THREE.ShaderMaterial({
+      transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, uniforms: U,
+      vertexShader: NOISE + `
+        attribute float aT; attribute float aSeed; attribute float aHubCol;
+        uniform float uTime, uAspect, uPort;
+        varying float vA;
+        void main(){
+          /* a closed loop: down one side of the lens, back up the other --
+             pinched at the city wave and the countryside wave, wide between */
+          float arcT = aT < 0.5 ? aT * 2.0 : (1.0 - aT) * 2.0;
+          float side = aT < 0.5 ? -1.0 : 1.0;
+          float yTop = waveY(aHubCol, 0.5, uTime, 0.100, 0.050, ${TOP_BASE.toFixed(3)});
+          float yBot = waveY(aHubCol, 0.5, uTime, 0.100, 0.055, ${BOT_BASE.toFixed(3)});
+          float y = mix(yTop, yBot, arcT);
+          float lens = sin(arcT * 3.14159265);
+          float amp = 0.050 + 0.022 * sin(aSeed * 19.0);
+          float weave = sin(arcT * 3.14159265 * 3.0 + aSeed * 22.0 + uTime * 0.5) * 0.009;
+          float x = (aHubCol * 2.0 - 1.0) * uAspect * 0.96 + side * lens * amp + weave;
+          gl_Position = projectionMatrix * modelViewMatrix * vec4(x, y, 0.0, 1.0);
+
+          float breathe = 0.5 + 0.5 * sin(uTime * 0.5 + aSeed * 7.0);
+          vA = uPort * (0.09 + 0.24 * breathe);
+        }`,
+      fragmentShader: `varying float vA;
+        void main(){ gl_FragColor = vec4(0.82, 0.85, 0.92, vA); }`
+    });
+    scene.add(new THREE.LineSegments(g, m));
+
+    /* gold glints circulating inside each cocoon -- currency in motion, not a transfer */
+    const GLINTS = SMALL ? 2 : 3;
+    const gpos = [], gHubCol = [], gSeed = [];
+    for (let h = 0; h < HUBS; h++) {
+      for (let i = 0; i < GLINTS; i++) {
+        gpos.push(0, 0, 0);
+        gHubCol.push(hubCols[h]);
+        gSeed.push(i / GLINTS + h * 0.27);
+      }
+    }
+    const gg = new THREE.BufferGeometry();
+    gg.setAttribute('position', new THREE.Float32BufferAttribute(gpos, 3));
+    gg.setAttribute('aHubCol', new THREE.Float32BufferAttribute(gHubCol, 1));
+    gg.setAttribute('aSeed', new THREE.Float32BufferAttribute(gSeed, 1));
+    const gm = new THREE.ShaderMaterial({
+      transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, uniforms: U,
+      vertexShader: NOISE + `
+        attribute float aHubCol; attribute float aSeed;
+        uniform float uTime, uAspect, uPort, uDpr;
+        varying float vA;
+        void main(){
+          float t = fract(uTime * 0.14 + aSeed);
+          float arcT = t < 0.5 ? t * 2.0 : (1.0 - t) * 2.0;
+          float side = t < 0.5 ? -1.0 : 1.0;
+          float yTop = waveY(aHubCol, 0.5, uTime, 0.100, 0.050, ${TOP_BASE.toFixed(3)});
+          float yBot = waveY(aHubCol, 0.5, uTime, 0.100, 0.055, ${BOT_BASE.toFixed(3)});
+          float y = mix(yTop, yBot, arcT);
+          float lens = sin(arcT * 3.14159265);
+          float x = (aHubCol * 2.0 - 1.0) * uAspect * 0.96 + side * lens * 0.058;
+          gl_Position = projectionMatrix * modelViewMatrix * vec4(x, y, 0.0, 1.0);
+          gl_PointSize = (2.2 + lens * 1.6) * uDpr * uPort;
+          vA = uPort * (0.5 + 0.5 * lens);
+        }`,
+      fragmentShader: `varying float vA;
+        void main(){
+          float d = length(gl_PointCoord * 2.0 - 1.0);
+          float shape = smoothstep(1.0, 0.2, d);
+          if (shape < 0.03) discard;
+          gl_FragColor = vec4(1.0, 0.85, 0.55, shape * vA);
+        }`
+    });
+    scene.add(new THREE.Points(gg, gm));
+  })();
+
   /* ---------- Foundation 03: nutrient density / soil regeneration -- messy clustered
      shrub-and-canopy blobs in mixed grey/green tones (point-cloud canopy, lichen-on-bark
      reference), not tidy blades of grass ---------- */
@@ -524,7 +625,10 @@ if (host) {
   renderer.setAnimationLoop(() => {
     if (!visible) return;
     U.uTime.value = REDUCED ? 0 : (performance.now() - t0) / 1000;
-    U.uFin.value += (want.fin - U.uFin.value) * 0.08;
+    /* New Food Economics is the instrument that lets the buying coalition work --
+       hovering it partially reveals those roots too, not just its own cocoons */
+    const finTarget = Math.max(want.fin, want.port * 0.45);
+    U.uFin.value += (finTarget - U.uFin.value) * 0.08;
     U.uPort.value += (want.port - U.uPort.value) * 0.08;
     U.uRegion.value += (want.region - U.uRegion.value) * 0.06;
     U.uTop.value += (want.top - U.uTop.value) * 0.08;
