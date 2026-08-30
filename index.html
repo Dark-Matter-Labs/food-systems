@@ -325,9 +325,11 @@
   .rp-fnd-02 .code, .rp-fnd-02 h4{color:#8fb0ff;}
   .rp-outcomes{position:absolute; top:0; right:0; bottom:0; width:19%; z-index:2; pointer-events:none;}
   .rp-outcome{position:absolute; left:0; width:100%; text-align:center; transform:translateY(-50%);}
-  .rp-outcome-01{top:19%;}
+  .rp-outcome-health{top:12%;}
+  .rp-outcome-01{top:27%;}
   .rp-outcome-02{top:50%;}
-  .rp-outcome-03{top:81%;}
+  .rp-outcome-03{top:73%;}
+  .rp-outcome-environmental{top:88%;}
   .rp-outcome-circle{
     display:block; margin:0 auto 12px; width:34px; height:34px; border-radius:50%;
     border:1px solid var(--paper-dim);
@@ -339,7 +341,7 @@
   /* the original diagram's 3-step flow per wave (Demand>Diets>Health,
      Supply>Soils>Environmental) -- sits alongside the stage, not overlaid on it */
   .rp-flow-outer{
-    display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:clamp(10px,2vw,30px);
+    display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:clamp(10px,2vw,30px);
     width:45%; margin:0 0 0 33%; padding:0 8px;
   }
   .rp-flow-outer-top{margin-bottom:20px;}
@@ -814,13 +816,6 @@
         <h5>Diets</h5>
         <p>Nutrient-rich, sustainable &amp; healthy</p>
       </div>
-      <div class="rp-step"><span class="rp-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M12 20s-7-4.3-7-9a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 4.7-7 9-7 9z" />
-          </svg></span>
-        <h5>Health</h5>
-        <p>Outcomes</p>
-      </div>
     </div>
 
     <div class="rp-stage reveal">
@@ -853,9 +848,11 @@
       <div class="rp-canvas" id="rpCanvas"></div>
 
       <div class="rp-outcomes">
+        <div class="rp-outcome rp-outcome-health"><span class="rp-outcome-circle"></span><div class="rp-outcome-label">Health</div></div>
         <div class="rp-outcome rp-outcome-01"><span class="rp-outcome-circle"></span><div class="rp-outcome-label">Equity &amp; Fairness</div></div>
         <div class="rp-outcome rp-outcome-02"><span class="rp-outcome-circle"></span><div class="rp-outcome-label">Economic Vitality</div></div>
         <div class="rp-outcome rp-outcome-03"><span class="rp-outcome-circle"></span><div class="rp-outcome-label">Resilience &amp; Preparedness</div></div>
+        <div class="rp-outcome rp-outcome-environmental"><span class="rp-outcome-circle"></span><div class="rp-outcome-label">Environmental</div></div>
       </div>
     </div>
 
@@ -877,15 +874,6 @@
           </svg></span>
         <h5>Soils</h5>
         <p>Nutrient-rich, sustainable &amp; healthy</p>
-      </div>
-      <div class="rp-step"><span class="rp-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M3 18c3-4 5-6 8-6s5 2 8 6" />
-            <path d="M3 21h18" />
-            <circle cx="16" cy="7" r="2.4" />
-          </svg></span>
-        <h5>Environmental</h5>
-        <p>Outcomes</p>
       </div>
     </div>
 
