@@ -103,24 +103,122 @@ if (host) {
     scene.add(new THREE.LineSegments(g, m));
   });
 
-  /* ---------- Foundation 02: a woven, crossing mesh between top and bottom,
-     not straight struts -- reads as coordination/alignment rather than a fixed grid ---------- */
-  (function weave() {
-    const THREADS = SMALL ? 12 : 18;
-    const WSTEPS = 40;
+  /* ---------- Foundation 02: coordinated buying power -- a gentle network of hub
+     nodes on the city (orange) wave, each reaching organic, branching supply
+     roots down into the countryside (green) wave to draw resources up --
+     a river-delta / root-system shape, not a fixed crossing grid ---------- */
+  (function network() {
+    const NODES = SMALL ? 8 : 12;
+    const cols = [];
+    for (let i = 0; i < NODES; i++) cols.push(0.10 + (i / (NODES - 1)) * 0.80);
+
+    /* gentle connecting lines between neighbouring hub nodes -- a loose graph,
+       not a rigid grid */
+    const LSTEPS = 16;
+    const pos = [], aT = [], aSeed = [], aColA = [], aColB = [];
+    for (let i = 0; i < NODES; i++) {
+      [1, 2].forEach(skip => {
+        const j = i + skip;
+        if (j >= NODES) return;
+        const seed = (i + skip * 0.5) / NODES;
+        for (let s = 0; s < LSTEPS - 1; s++) {
+          pos.push(0, 0, 0, 0, 0, 0);
+          aT.push(s / (LSTEPS - 1), (s + 1) / (LSTEPS - 1));
+          aSeed.push(seed, seed);
+          aColA.push(cols[i], cols[i]);
+          aColB.push(cols[j], cols[j]);
+        }
+      });
+    }
+    const g = new THREE.BufferGeometry();
+    g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
+    g.setAttribute('aT', new THREE.Float32BufferAttribute(aT, 1));
+    g.setAttribute('aSeed', new THREE.Float32BufferAttribute(aSeed, 1));
+    g.setAttribute('aColA', new THREE.Float32BufferAttribute(aColA, 1));
+    g.setAttribute('aColB', new THREE.Float32BufferAttribute(aColB, 1));
+    const m = new THREE.ShaderMaterial({
+      transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, uniforms: U,
+      vertexShader: NOISE + `
+        attribute float aT; attribute float aSeed; attribute float aColA; attribute float aColB;
+        uniform float uTime, uAspect, uFin;
+        varying float vA;
+        void main(){
+          float col = mix(aColA, aColB, aT);
+          float y = waveY(col, 0.5, uTime, 0.100, 0.050, ${TOP_BASE.toFixed(3)});
+          y += sin(aT * 3.14159265) * 0.012 * sin(uTime * 0.4 + aSeed * 10.0);
+          float x = (col * 2.0 - 1.0) * uAspect * 0.96;
+          gl_Position = projectionMatrix * modelViewMatrix * vec4(x, y, 0.0, 1.0);
+          float edge = smoothstep(0.0, 0.1, aT) * smoothstep(1.0, 0.9, aT);
+          vA = edge * (0.05 + uFin * 0.16);
+        }`,
+      fragmentShader: `varying float vA;
+        void main(){ gl_FragColor = vec4(1.0, 0.75, 0.52, vA); }`
+    });
+    scene.add(new THREE.LineSegments(g, m));
+
+    /* the hub nodes themselves -- small dots that brighten as the network activates */
+    const npos = new Float32Array(NODES * 3);
+    const ncol = new Float32Array(NODES);
+    for (let i = 0; i < NODES; i++) ncol[i] = cols[i];
+    const ng = new THREE.BufferGeometry();
+    ng.setAttribute('position', new THREE.BufferAttribute(npos, 3));
+    ng.setAttribute('aCol', new THREE.BufferAttribute(ncol, 1));
+    const nm = new THREE.ShaderMaterial({
+      transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, uniforms: U,
+      vertexShader: NOISE + `
+        attribute float aCol;
+        uniform float uTime, uAspect, uFin, uDpr;
+        varying float vA;
+        void main(){
+          float y = waveY(aCol, 0.5, uTime, 0.100, 0.050, ${TOP_BASE.toFixed(3)});
+          float x = (aCol * 2.0 - 1.0) * uAspect * 0.96;
+          gl_Position = projectionMatrix * modelViewMatrix * vec4(x, y, 0.0, 1.0);
+          gl_PointSize = (2.2 + uFin * 2.6) * uDpr;
+          vA = 0.30 + uFin * 0.55;
+        }`,
+      fragmentShader: `varying float vA;
+        void main(){
+          float d = length(gl_PointCoord * 2.0 - 1.0);
+          float shape = smoothstep(1.0, 0.2, d);
+          if (shape < 0.03) discard;
+          gl_FragColor = vec4(1.0, 0.78, 0.55, shape * vA);
+        }`
+    });
+    scene.add(new THREE.Points(ng, nm));
+  })();
+
+  /* branching supply roots: a handful of hub nodes send organic, river-delta
+     branches down to several points on the green wave, converging into one
+     coordinated pull rather than many separate straight lines -- and small
+     particles physically travel from the countryside up into the city,
+     an octopus-like reach-and-draw-in rather than a static link */
+  (function reach() {
+    const HUBS = SMALL ? 3 : 5;
+    const LEAVES = SMALL ? 4 : 6;
+    const SPLIT = 0.42;
+    const RSTEPS = 26;
+    const hubCols = [], leafCols = [];
+    for (let h = 0; h < HUBS; h++) {
+      const hubCol = 0.14 + ((h + 0.5) / HUBS) * 0.74;
+      hubCols.push(hubCol);
+      leafCols.push([]);
+      for (let l = 0; l < LEAVES; l++) {
+        const spread = (l / (LEAVES - 1) - 0.5) * 0.34;
+        leafCols[h].push(Math.min(0.94, Math.max(0.06, hubCol + spread)));
+      }
+    }
+
     const pos = [], aT = [], aSeed = [], aColTop = [], aColBot = [];
-    for (let i = 0; i < THREADS; i++) {
-      const seed = i / THREADS;
-      const colTop = 0.14 + (i / (THREADS - 1)) * 0.74;
-      // each thread lands on a DIFFERENT bottom column than its top column,
-      // so threads cross one another -- many buyers, one coordinated pool
-      const colBot = 0.14 + ((i * 0.61 + 0.3) % 1) * 0.74;
-      for (let s = 0; s < WSTEPS - 1; s++) {
-        pos.push(0, 0, 0, 0, 0, 0);
-        aT.push(s / (WSTEPS - 1), (s + 1) / (WSTEPS - 1));
-        aSeed.push(seed, seed);
-        aColTop.push(colTop, colTop);
-        aColBot.push(colBot, colBot);
+    for (let h = 0; h < HUBS; h++) {
+      for (let l = 0; l < LEAVES; l++) {
+        const seed = h / HUBS + l * 0.017;
+        for (let s = 0; s < RSTEPS - 1; s++) {
+          pos.push(0, 0, 0, 0, 0, 0);
+          aT.push(s / (RSTEPS - 1), (s + 1) / (RSTEPS - 1));
+          aSeed.push(seed, seed);
+          aColTop.push(hubCols[h], hubCols[h]);
+          aColBot.push(leafCols[h][l], leafCols[h][l]);
+        }
       }
     }
     const g = new THREE.BufferGeometry();
@@ -134,25 +232,98 @@ if (host) {
       vertexShader: NOISE + `
         attribute float aT; attribute float aSeed; attribute float aColTop; attribute float aColBot;
         uniform float uTime, uAspect, uFin;
-        varying float vA;
+        varying float vA; varying float vT;
         void main(){
-          float col = mix(aColTop, aColBot, aT);
+          /* a shared trunk near the hub, forking into separate roots past the split */
+          float fork = smoothstep(${SPLIT}, 1.0, aT);
+          float col = mix(aColTop, aColBot, fork);
           float yTop = waveY(aColTop, 0.5, uTime, 0.100, 0.050, ${TOP_BASE.toFixed(3)});
           float yBot = waveY(aColBot, 0.5, uTime, 0.100, 0.055, ${BOT_BASE.toFixed(3)});
           float y = mix(yTop, yBot, aT);
-          /* the sinuous, slightly messy sway -- alignment, not a rigid strut */
-          float sway = sin(aT * 3.14159265) * (0.05 + 0.035 * sin(uTime * 0.35 + aSeed * 9.0));
-          sway += sin(aT * 3.14159265 * 2.0 + aSeed * 14.0 + uTime * 0.5) * 0.018 * sin(aT * 3.14159265);
+          /* an organic bow along the whole reach -- root or tentacle, not a plumb line --
+             plus a finer wobble; both taper to zero exactly at the hub and the leaf */
+          float taper = sin(aT * 3.14159265);
+          float bow = taper * (0.065 + 0.028 * sin(aSeed * 24.0));
+          float wobble = sin(aT * 3.14159265 * 2.6 + aSeed * 18.0 + uTime * 0.35) * 0.026 * taper;
+          float sway = bow + wobble;
           float x = (col * 2.0 - 1.0) * uAspect * 0.96 + sway;
           gl_Position = projectionMatrix * modelViewMatrix * vec4(x, y, 0.0, 1.0);
-          float pulse = exp(-pow((aT - fract(uTime * 0.2 + aSeed)) * 4.5, 2.0));
-          float edge = smoothstep(0.0, 0.08, aT) * smoothstep(1.0, 0.92, aT);
-          vA = edge * (0.12 + uFin * (0.30 + pulse * 0.7));
+
+          /* roots grow outward from the hub as buying power activates, with a
+             gentle breathing reach rather than snapping fully open at once */
+          float breathe = 0.5 + 0.5 * sin(uTime * 0.55 + aSeed * 8.0);
+          float grownTo = 0.05 + uFin * (0.97 + 0.05 * breathe);
+          float drawn = smoothstep(grownTo + 0.05, grownTo - 0.10, aT);
+
+          /* resource pulled up from the countryside toward the city */
+          float pull = exp(-pow((aT - fract(1.0 - uTime * 0.22 - aSeed)) * 5.0, 2.0));
+          float edge = smoothstep(0.0, 0.03, aT) * smoothstep(1.0, 0.95, aT);
+          vA = edge * drawn * (0.08 + uFin * 0.20 + pull * uFin * 0.65);
+          vT = aT;
         }`,
-      fragmentShader: `varying float vA;
-        void main(){ gl_FragColor = vec4(0.72, 0.80, 0.98, vA); }`
+      fragmentShader: `varying float vA; varying float vT;
+        void main(){
+          vec3 city = vec3(1.0, 0.70, 0.45);
+          vec3 country = vec3(0.55, 0.85, 0.55);
+          vec3 col = mix(city, country, vT);
+          gl_FragColor = vec4(col, vA);
+        }`
     });
     scene.add(new THREE.LineSegments(g, m));
+
+    const PPR = SMALL ? 2 : 3;
+    const ppos = [], pColTop = [], pColBot = [], pSeed = [], pBranchSeed = [];
+    for (let h = 0; h < HUBS; h++) {
+      for (let l = 0; l < LEAVES; l++) {
+        const branchSeed = h / HUBS + l * 0.017;
+        for (let p = 0; p < PPR; p++) {
+          ppos.push(0, 0, 0);
+          pColTop.push(hubCols[h]); pColBot.push(leafCols[h][l]);
+          pSeed.push((h * LEAVES + l) / (HUBS * LEAVES) + p * 0.31);
+          pBranchSeed.push(branchSeed);
+        }
+      }
+    }
+    const pg = new THREE.BufferGeometry();
+    pg.setAttribute('position', new THREE.Float32BufferAttribute(ppos, 3));
+    pg.setAttribute('aColTop', new THREE.Float32BufferAttribute(pColTop, 1));
+    pg.setAttribute('aColBot', new THREE.Float32BufferAttribute(pColBot, 1));
+    pg.setAttribute('aSeed', new THREE.Float32BufferAttribute(pSeed, 1));
+    pg.setAttribute('aBranchSeed', new THREE.Float32BufferAttribute(pBranchSeed, 1));
+    const pm = new THREE.ShaderMaterial({
+      transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, uniforms: U,
+      vertexShader: NOISE + `
+        attribute float aColTop; attribute float aColBot; attribute float aSeed; attribute float aBranchSeed;
+        uniform float uTime, uAspect, uFin, uDpr;
+        varying float vA; varying float vT;
+        void main(){
+          float t = fract(1.0 - uTime * 0.22 - aSeed);
+          float fork = smoothstep(${SPLIT}, 1.0, t);
+          float col = mix(aColTop, aColBot, fork);
+          float yTop = waveY(aColTop, 0.5, uTime, 0.100, 0.050, ${TOP_BASE.toFixed(3)});
+          float yBot = waveY(aColBot, 0.5, uTime, 0.100, 0.055, ${BOT_BASE.toFixed(3)});
+          float y = mix(yTop, yBot, t);
+          float taper = sin(t * 3.14159265);
+          float bow = taper * (0.065 + 0.028 * sin(aBranchSeed * 24.0));
+          float wobble = sin(t * 3.14159265 * 2.6 + aBranchSeed * 18.0 + uTime * 0.35) * 0.026 * taper;
+          float x = (col * 2.0 - 1.0) * uAspect * 0.96 + bow + wobble;
+          gl_Position = projectionMatrix * modelViewMatrix * vec4(x, y, 0.0, 1.0);
+          gl_PointSize = (2.0 + (1.0 - t) * 2.4) * uDpr * uFin;
+          vA = uFin * (0.35 + 0.5 * smoothstep(0.0, 0.3, 1.0 - t));
+          vT = t;
+        }`,
+      fragmentShader: `varying float vA; varying float vT;
+        void main(){
+          float d = length(gl_PointCoord * 2.0 - 1.0);
+          float shape = smoothstep(1.0, 0.2, d);
+          if (shape < 0.03) discard;
+          vec3 city = vec3(1.0, 0.72, 0.40);
+          vec3 country = vec3(0.55, 0.90, 0.55);
+          vec3 col = mix(city, country, vT);
+          gl_FragColor = vec4(col, shape * vA);
+        }`
+    });
+    scene.add(new THREE.Points(pg, pm));
   })();
 
   /* ---------- Foundation 04: New Food Economics -- a shimmering interference
