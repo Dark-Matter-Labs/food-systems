@@ -301,6 +301,34 @@
   .plaque h3{font-size:19px; margin:12px 0 12px; line-height:1.25;}
   .plaque p{font-size:15px; color:var(--paper-dim); margin:0;}
 
+  /* ---- foundations wave diagram (adapted from the Resilience Platform piece) ---- */
+  .rp-stage{position:relative; margin-top:8px; height:min(640px, 74vh);}
+  .rp-canvas{position:absolute; inset:0; z-index:1;}
+  .rp-canvas canvas{display:block;}
+  .rp-flow{position:absolute; left:0; right:0; z-index:2; padding:0 8px; pointer-events:none;}
+  .rp-flow-top{top:4%;}
+  .rp-flow-bottom{bottom:4%;}
+  .rp-flow-mid{top:50%; left:4%; right:auto; width:38%; transform:translateY(-50%);}
+  .rp-flow-connect{top:50%; right:4%; left:auto; width:34%; transform:translateY(-50%); text-align:right;}
+  .rp-fnd{max-width:420px; margin:0 auto; text-align:center; pointer-events:auto; cursor:default; border-radius:10px; padding:6px;}
+  .rp-flow-mid .rp-fnd{margin:0; text-align:left;}
+  .rp-flow-connect .rp-fnd{margin:0 0 0 auto; text-align:right;}
+  .rp-fnd:focus{outline:none;}
+  .rp-fnd:focus-visible{outline:1px dashed var(--line-strong); outline-offset:4px;}
+  .rp-fnd .code{font-family:var(--mono); font-size:11px; letter-spacing:0.08em; text-transform:uppercase; margin-bottom:8px;}
+  .rp-fnd h4{font-family:var(--display); font-weight:700; font-size:clamp(16px,1.7vw,21px); line-height:1.2; margin:0 0 6px;}
+  .rp-fnd p{font-size:13px; line-height:1.44; color:var(--paper-dim); margin:0;}
+  .rp-flow-top .code, .rp-flow-top h4{color:#e7964b;}
+  .rp-flow-bottom .code, .rp-flow-bottom h4{color:#4fb488;}
+  .rp-flow-mid .code, .rp-flow-mid h4{color:#c9ced3;}
+  .rp-flow-connect .code, .rp-flow-connect h4{color:#8fb0ff;}
+  @media (max-width:860px){
+    .rp-stage{height:auto;}
+    .rp-canvas{position:relative; height:320px; margin-bottom:18px;}
+    .rp-flow{position:static; width:100%; transform:none !important; padding:14px 0; text-align:left !important;}
+    .rp-flow .rp-fnd{margin:0 !important; max-width:none; text-align:left !important;}
+  }
+
   /* ===================== REFRAME ===================== */
   .reframe{
     display:grid; grid-template-columns:0.9fr 1.1fr; gap:56px; align-items:start;
@@ -461,6 +489,13 @@
   .reveal.pre{opacity:0; transform:translateY(14px);}
   .reveal.pre.in{opacity:1; transform:translateY(0); transition:opacity .6s ease, transform .6s ease;}
 </style>
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js"
+  }
+}
+</script>
 </head>
 <body>
 
@@ -708,21 +743,39 @@
         <p>We’re proposing three things: food that actually nourishes people, enough buying power from councils and businesses together to help more farms go organic, and local people and projects doing the everyday work of getting it onto plates.</p>
       </div>
     </div>
-    <div class="plaques">
-      <div class="plaque reveal">
-        <div class="code">FOUNDATION 01</div>
-        <h3>Nutrient density is the target, not calories</h3>
-        <p>The baseline shifts from “enough food” to genuinely nourishing food — because a system that only solves for calories quietly manufactures the next public-health crisis while claiming to have solved the last one.</p>
+    <div class="rp-stage reveal">
+      <div class="rp-canvas" id="rpCanvas"></div>
+
+      <div class="rp-flow rp-flow-top">
+        <div class="rp-fnd">
+          <div class="code">FOUNDATION 01</div>
+          <h4>Nutrient density is the target, not calories</h4>
+          <p>The baseline shifts from “enough food” to genuinely nourishing food — because a system that only solves for calories quietly manufactures the next public-health crisis while claiming to have solved the last one.</p>
+        </div>
       </div>
-      <div class="plaque reveal">
-        <div class="code">FOUNDATION 02</div>
-        <h3>Organic supply grows through collective buying power</h3>
-        <p>No single borough’s contract is big enough to move a farmer’s decision. A buying coalition of London boroughs and businesses is — turning committed public and commercial demand into the confidence a grower needs to convert land.</p>
+
+      <div class="rp-flow rp-flow-mid">
+        <div class="rp-fnd" data-k="port" tabindex="0">
+          <div class="code">FOUNDATION 04</div>
+          <h4>New Food Economics</h4>
+          <p>New economics of food through policy, economic, accounting, financing, and monetary instruments. Sounds complex — plenty of best practice to learn from.</p>
+        </div>
       </div>
-      <div class="plaque reveal">
-        <div class="code">FOUNDATION 03</div>
-        <h3>Civic-led delivery is what actually brings it to life</h3>
-        <p>Procurement protocols and buying coalitions don’t feed anyone on their own. Grocers, dinners, workshops and community-run hubs are the layer where the foundations above turn into food someone can actually buy or receive.</p>
+
+      <div class="rp-flow rp-flow-connect">
+        <div class="rp-fnd" data-k="fin" tabindex="0">
+          <div class="code">FOUNDATION 02</div>
+          <h4>Coordinated, collective buying power of organic, resilient supply</h4>
+          <p>No single borough’s contract is big enough to move a farmer’s decision. A buying coalition of London boroughs and businesses is — turning committed public and commercial demand into the confidence a grower needs to convert land.</p>
+        </div>
+      </div>
+
+      <div class="rp-flow rp-flow-bottom">
+        <div class="rp-fnd" data-k="region" tabindex="0">
+          <div class="code">FOUNDATION 03</div>
+          <h4>Civic-led delivery is what actually brings it to life</h4>
+          <p>Procurement protocols and buying coalitions don’t feed anyone on their own. Grocers, dinners, workshops and community-run hubs are the layer where the foundations above turn into food someone can actually buy or receive.</p>
+        </div>
       </div>
     </div>
     <div class="plain-summary reveal" style="margin-top:28px;">
@@ -1298,6 +1351,7 @@
     update();
   });
 </script>
+<script type="module" src="assets/foundations/wave.js"></script>
 
 </body>
 </html>
