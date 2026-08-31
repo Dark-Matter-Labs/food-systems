@@ -381,14 +381,23 @@
   .crisis-shock-label{font-size:13px; color:var(--paper-dim); margin-bottom:0;}
   .crisis-shock p{font-size:14px; color:var(--paper-dim); line-height:1.55; margin:12px 0 0;}
   .crisis-shock:not([open]) p{display:none;}
-  .crisis-sources{font-size:12px; color:var(--paper-dim); opacity:0.7; margin-top:28px; max-width:900px; line-height:1.6;}
+  .crisis-sources{grid-column:1 / -1; font-size:12px; color:var(--paper-dim); opacity:0.7; margin-top:28px; max-width:900px; line-height:1.6;}
 
-  /* ===================== EXPERT VOICES ===================== */
-  .quotes-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:20px;}
-  @media (max-width:860px){ .quotes-grid{grid-template-columns:1fr;} }
-  .quote-card{border-top:2px solid var(--paper-dim); padding-top:18px;}
-  .quote-text{font-family:var(--display); font-size:16.5px; line-height:1.4; color:var(--paper); margin:0 0 14px;}
-  .quote-attr{font-family:var(--mono); font-size:12px; color:var(--paper-dim); letter-spacing:0.03em;}
+  /* ---- voices, sitting under the crisis chart ---- */
+  .crisis-voices{grid-column:1 / -1; margin-top:44px; padding-top:32px; border-top:1px solid var(--line-strong);}
+  .crisis-voices-eyebrow{font-family:var(--mono); font-size:11px; letter-spacing:0.1em; color:var(--paper-dim); text-transform:uppercase; margin-bottom:26px;}
+  .quotes-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:34px;}
+  @media (max-width:860px){ .quotes-grid{grid-template-columns:1fr; gap:30px;} }
+  /* uniform padding-top keeps the mark clear of the text and the three cards
+     top-aligned regardless of how many lines each quote runs to */
+  .quote-card{position:relative; padding-top:44px;}
+  .quote-card::before{
+    content:'\201C'; position:absolute; left:-3px; top:0;
+    font-family:var(--display); font-size:72px; line-height:1;
+    color:var(--paper); opacity:0.34; pointer-events:none;
+  }
+  .quote-text{font-family:var(--display); font-size:16.5px; line-height:1.45; color:var(--paper); margin:0 0 14px;}
+  .quote-attr{font-family:var(--mono); font-size:12px; color:var(--paper-dim); letter-spacing:0.03em; line-height:1.5;}
 
   /* ===================== PLAQUES (assumptions) ===================== */
   .plaques{display:grid; grid-template-columns:repeat(3,1fr); gap:22px;}
@@ -971,6 +980,24 @@
       </div>
     </div>
     <p class="crisis-sources">Sources: Bloomberg · ONS, Consumer Price Inflation UK (June 2026, published July 2026) · Food Foundation, Food Prices Tracker (July 2026) · Food and Drink Federation forecast (1 April 2026) · IMF, Regional Economic Outlook Update: Middle East and Central Asia (8 July 2026) · The Guardian (1 August 2026) · Energy and Climate Intelligence Unit (7 July 2026).</p>
+
+    <div class="crisis-voices reveal">
+      <div class="crisis-voices-eyebrow">The case, in their words</div>
+      <div class="quotes-grid">
+        <div class="quote-card">
+          <p class="quote-text">We need to be preparing a system that will have a lot less surplus and waste in it.</p>
+          <div class="quote-attr">Carl Saxton-Pizzie — CEO, Wholegood</div>
+        </div>
+        <div class="quote-card">
+          <p class="quote-text">Rather than “chasing cut-price deals around the world,” public buying power should back domestic, resilient supply.</p>
+          <div class="quote-attr">Andy Burnham — Mayor of Greater Manchester</div>
+        </div>
+        <div class="quote-card">
+          <p class="quote-text">In Bury, embedding health and climate value into catering contracts pushed school-meal menus to <strong>up to 25% organic</strong> ingredients — proof collective procurement can move real farmland, not just budgets.</p>
+          <div class="quote-attr">Soil Association, on Bury’s local food system transformation</div>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -1096,30 +1123,6 @@
         <li>enough buying power from councils and businesses together to help more farms build resilience and de-risk transition <span class="ps-tag">(P02)</span></li>
         <li>and local people and projects doing the everyday work of getting it onto plates <span class="ps-tag">(P01)</span></li>
       </ul>
-    </div>
-  </div>
-</section>
-
-<!-- ===================== EXPERT VOICES ===================== -->
-<section class="tight" style="background:var(--surface); border-top:1px solid var(--line); border-bottom:1px solid var(--line);">
-  <div class="wrap">
-    <div class="section-head reveal">
-      <div class="eyebrow">THE CASE, IN THEIR WORDS</div>
-      <h2>Coordinated across London’s boroughs — voiced well beyond any one of us</h2>
-    </div>
-    <div class="quotes-grid reveal">
-      <div class="quote-card">
-        <p class="quote-text">“We need to be preparing a system that will have a lot less surplus and waste in it.”</p>
-        <div class="quote-attr">Carl Saxton-Pizzie — CEO, Wholegood</div>
-      </div>
-      <div class="quote-card">
-        <p class="quote-text">Rather than “chasing cut-price deals around the world,” public buying power should back domestic, resilient supply.</p>
-        <div class="quote-attr">Andy Burnham — Mayor of Greater Manchester</div>
-      </div>
-      <div class="quote-card">
-        <p class="quote-text">In Bury, embedding health and climate value into catering contracts pushed school-meal menus to <strong>up to 25% organic</strong> ingredients — proof collective procurement can move real farmland, not just budgets.</p>
-        <div class="quote-attr">Soil Association, on Bury’s local food system transformation</div>
-      </div>
     </div>
   </div>
 </section>
@@ -1685,6 +1688,25 @@
     });
     // keep the chart's aria-expanded in sync if someone opens/closes the
     // <details> panel directly instead of via the chart dot
+    // a source tooltip anchors to its (i), which can land anywhere on a line —
+    // nudge it back inside the viewport instead of letting it scroll the page
+    document.querySelectorAll('.rp-info').forEach(function(btn){
+      var pop = btn.querySelector('.rp-info-pop');
+      if(!pop) return;
+      btn.addEventListener('pointerenter', place);
+      btn.addEventListener('focus', place);
+      window.addEventListener('resize', place);
+      window.addEventListener('load', place);
+      place();
+      function place(){
+        pop.style.marginLeft = '0px';
+        var r = pop.getBoundingClientRect(), vw = document.documentElement.clientWidth, pad = 14, shift = 0;
+        if(r.right > vw - pad) shift = (vw - pad) - r.right;
+        if(r.left + shift < pad) shift = pad - r.left;
+        if(shift) pop.style.marginLeft = Math.round(shift) + 'px';
+      }
+    });
+
     document.querySelectorAll('.crisis-shock').forEach(function(details){
       details.addEventListener('toggle', function(){
         var dot = document.querySelector('.cg-shock[data-target="' + details.id + '"]');
