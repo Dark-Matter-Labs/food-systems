@@ -229,6 +229,11 @@
     transform:rotateX(52deg) rotateZ(-2deg);
   }
   .axo2-dots circle{opacity:0.85;}
+  /* actors lifted off the plane: a shadow where they stand, a stem, and the dot
+     raised along the plane's own axis so the tilt reads as height */
+  .actor-shadow{fill:rgba(0,0,0,0.5); opacity:0.75;}
+  .actor-stem{fill:none; stroke:rgba(245,245,242,0.2); stroke-width:1.2;}
+  .axo2-dots .aloft{filter:drop-shadow(0 0 7px rgba(0,0,0,0.55));}
   .axo2-dots .farmer{fill:#d9a441;}
   .axo2-dots .business{fill:var(--demand);}
   .axo2-dots .civic{fill:var(--hub);}
@@ -259,37 +264,19 @@
 
   #planeCamden svg path{fill:var(--demand); stroke:var(--ink); stroke-width:1.6;}
 
-  #planeLondonContext svg path{fill:var(--surface); stroke:var(--line-strong); stroke-width:0.8;}
-  #planeLondonContext svg #Camden{fill:var(--demand);}
-  #planeLondonContext svg #City_of_Westminster,
-  #planeLondonContext svg #Kensington_and_Chelsea,
-  #planeLondonContext svg #Brent,
-  #planeLondonContext svg #Barnet,
-  #planeLondonContext svg #Haringey,
-  #planeLondonContext svg #Islington{fill:rgba(255,90,31,0.3);}
-
-  /* coordination spreading outward from Camden: neighbouring boroughs light up in
-     rings, staggered, the moment the row scrolls into view -- degrades safely to
-     "just visible" if JS never adds .pre (see the .reveal note above) */
-  @keyframes boroughLightUp{ from{fill-opacity:0;} to{fill-opacity:1;} }
-  .axo2-row.pre #planeLondonContext svg #City_of_Westminster,
-  .axo2-row.pre #planeLondonContext svg #Islington,
-  .axo2-row.pre #planeLondonContext svg #Brent,
-  .axo2-row.pre #planeLondonContext svg #Barnet,
-  .axo2-row.pre #planeLondonContext svg #Haringey,
-  .axo2-row.pre #planeLondonContext svg #Kensington_and_Chelsea{fill-opacity:0;}
-  .axo2-row.pre.in #planeLondonContext svg #City_of_Westminster,
-  .axo2-row.pre.in #planeLondonContext svg #Islington,
-  .axo2-row.pre.in #planeLondonContext svg #Brent,
-  .axo2-row.pre.in #planeLondonContext svg #Barnet,
-  .axo2-row.pre.in #planeLondonContext svg #Haringey,
-  .axo2-row.pre.in #planeLondonContext svg #Kensington_and_Chelsea{animation:boroughLightUp 0.55s ease forwards;}
-  .axo2-row.pre.in #planeLondonContext svg #City_of_Westminster,
-  .axo2-row.pre.in #planeLondonContext svg #Islington,
-  .axo2-row.pre.in #planeLondonContext svg #Brent,
-  .axo2-row.pre.in #planeLondonContext svg #Barnet,
-  .axo2-row.pre.in #planeLondonContext svg #Haringey{animation-delay:0.15s;}
-  .axo2-row.pre.in #planeLondonContext svg #Kensington_and_Chelsea{animation-delay:0.42s;}
+  /* Every borough is shaded, warmest at Camden and cooling outward, and breathes
+     on its own phase. The per-borough colour and --d come from the real geometry
+     in the loader, so this holds if the map is replaced. */
+  #planeLondonContext svg path{
+    fill:var(--surface); stroke:var(--line-strong); stroke-width:0.8;
+    animation:boroughBreathe 8s ease-in-out infinite;
+    animation-delay:calc(var(--d, 0) * -3.4s);
+  }
+  @keyframes boroughBreathe{ 0%,100%{fill-opacity:0.72;} 50%{fill-opacity:1;} }
+  #planeLondonContext svg #Camden{fill:var(--demand); animation-duration:5.5s;}
+  @media (prefers-reduced-motion:reduce){
+    #planeLondonContext svg path{animation:none; fill-opacity:0.9;}
+  }
 
   /* farms/hinterland reaching in toward Camden -- a soft shade plus a few
      roads/supply lines with small dots travelling inward */
@@ -297,29 +284,17 @@
   @keyframes inflowFadeIn{ to{opacity:1;} }
   .axo2-row.pre .inflow-glow, .axo2-row.pre .inflow-line{opacity:0;}
   .axo2-row.pre.in .inflow-glow{animation:inflowFadeIn 1.1s ease forwards; animation-delay:0.35s;}
-  .inflow-line{fill:none; stroke:rgba(255,148,94,0.4); stroke-width:2; stroke-dasharray:5 6;}
-  .axo2-row.pre.in .inflow-line{animation:inflowFadeIn 0.7s ease forwards;}
-  .axo2-row.pre.in #inflowLine1{animation-delay:0.5s;}
-  .axo2-row.pre.in #inflowLine2{animation-delay:0.58s;}
-  .axo2-row.pre.in #inflowLine3{animation-delay:0.66s;}
-  .axo2-row.pre.in #inflowLine4{animation-delay:0.74s;}
-  .axo2-row.pre.in #inflowLine5{animation-delay:0.82s;}
-  .axo2-row.pre.in #inflowLine6{animation-delay:0.9s;}
-  .inflow-dot{fill:#ffb27a;}
-  .axo2-row.pre .inflow-dot{opacity:0;}
-  .inflow-dot[data-path="1"]{offset-path:url(#inflowLine1);}
-  .inflow-dot[data-path="2"]{offset-path:url(#inflowLine2);}
-  .inflow-dot[data-path="3"]{offset-path:url(#inflowLine3);}
-  .inflow-dot[data-path="4"]{offset-path:url(#inflowLine4);}
-  .inflow-dot[data-path="5"]{offset-path:url(#inflowLine5);}
-  .inflow-dot[data-path="6"]{offset-path:url(#inflowLine6);}
-  .axo2-row.pre.in .inflow-dot{animation:inflowFadeIn 0.4s ease forwards, inflowTravel 3.6s linear infinite;}
-  .axo2-row.pre.in .inflow-dot[data-path="1"]{animation-delay:0.9s, 0.9s;}
-  .axo2-row.pre.in .inflow-dot[data-path="2"]{animation-delay:0.98s, 1.3s;}
-  .axo2-row.pre.in .inflow-dot[data-path="3"]{animation-delay:1.06s, 1.7s;}
-  .axo2-row.pre.in .inflow-dot[data-path="4"]{animation-delay:1.14s, 2.1s;}
-  .axo2-row.pre.in .inflow-dot[data-path="5"]{animation-delay:1.22s, 2.5s;}
-  .axo2-row.pre.in .inflow-dot[data-path="6"]{animation-delay:1.3s, 2.9s;}
+  /* the roads and their traffic are generated in the loader -- there are too many
+     to keep by hand, and each dot's offset-path is set inline from its own road */
+  .inflow-line{
+    fill:none; stroke:rgba(255,148,94,0.34); stroke-width:1.8; stroke-dasharray:6 7;
+    stroke-linejoin:round; opacity:0;
+  }
+  .axo2-row.pre.in .inflow-line, .axo2-row.in .inflow-line{animation:inflowFadeIn 0.7s ease forwards;}
+  .inflow-dot{fill:#ffb27a; opacity:0;}
+  .axo2-row.pre.in .inflow-dot, .axo2-row.in .inflow-dot{
+    animation:inflowFadeIn 0.4s ease forwards, inflowTravel 5.4s linear infinite;
+  }
   @keyframes inflowTravel{ from{offset-distance:0%;} to{offset-distance:100%;} }
 
   #planeLondonGrey svg path{fill:#232320; stroke:var(--line); stroke-width:0.7;}
@@ -1004,18 +979,8 @@
               </radialGradient>
             </defs>
             <circle class="inflow-glow" cx="622" cy="308" r="260" fill="url(#camdenGlow)"/>
-            <path id="inflowLine1" class="inflow-line" d="M150,150 Q400,220 622,308"/>
-            <path id="inflowLine2" class="inflow-line" d="M1250,150 Q900,220 622,308"/>
-            <path id="inflowLine3" class="inflow-line" d="M1300,500 Q950,400 622,308"/>
-            <path id="inflowLine4" class="inflow-line" d="M1100,950 Q850,650 622,308"/>
-            <path id="inflowLine5" class="inflow-line" d="M200,950 Q400,650 622,308"/>
-            <path id="inflowLine6" class="inflow-line" d="M150,550 Q380,420 622,308"/>
-            <circle class="inflow-dot" data-path="1" r="6"/>
-            <circle class="inflow-dot" data-path="2" r="6"/>
-            <circle class="inflow-dot" data-path="3" r="6"/>
-            <circle class="inflow-dot" data-path="4" r="6"/>
-            <circle class="inflow-dot" data-path="5" r="6"/>
-            <circle class="inflow-dot" data-path="6" r="6"/>
+            <!-- roads and traffic are generated: fourteen of them, starting
+                 outside London, so they aren't kept by hand here -->
           </svg>
         </div>
       </div>
@@ -1041,14 +1006,26 @@
               <path d="M780,420 L1180,320"/>
               <path d="M560,680 L380,600"/>
               <path d="M560,680 L700,720"/>
-              <path id="meshLine4" d="M560,680 L220,820"/>
+              <path id="meshLine4" d="M560,680 L220,742"/>
               <path d="M900,700 L820,560"/>
-              <path d="M900,700 L1040,880"/>
+              <path d="M900,700 L1040,755"/>
+              <!-- out to the fringe and beyond it -->
+              <path d="M470,330 L140,300"/>
+              <path d="M140,300 L45,470"/>
+              <path d="M780,420 L1320,620"/>
+              <path d="M1320,620 L1415,395"/>
+              <path d="M560,680 L700,735"/>
+              <path d="M700,735 L1185,762"/>
+              <path d="M560,680 L300,772"/>
+              <path d="M640,150 L770,108"/>
+              <path d="M960,420 L1055,205"/>
+              <path d="M360,430 L470,330"/>
+              <path d="M360,430 L380,600"/>
             </g>
             <circle class="farmer" cx="260" cy="240" r="9"/>
             <circle class="farmer" cx="1180" cy="320" r="9"/>
-            <circle class="farmer" cx="1040" cy="880" r="9"/>
-            <circle class="farmer" cx="220" cy="820" r="9"/>
+            <circle class="farmer" cx="1040" cy="755" r="9"/>
+            <circle class="farmer" cx="220" cy="742" r="9"/>
             <circle class="farmer" cx="640" cy="150" r="9"/>
             <circle class="business" cx="520" cy="480" r="9"/>
             <circle class="business" cx="820" cy="560" r="9"/>
@@ -1060,6 +1037,47 @@
             <circle class="civic" cx="780" cy="420" r="9"/>
             <circle class="civic" cx="560" cy="680" r="9"/>
             <circle class="civic" cx="900" cy="700" r="9"/>
+
+            <!-- peri-urban growers: on the fringe and past it, reaching the
+                 market gardens and farms the city actually eats from -->
+            <circle class="farmer" cx="140" cy="300" r="8"/>
+            <circle class="farmer" cx="1320" cy="620" r="8"/>
+            <circle class="farmer" cx="700" cy="735" r="8"/>
+            <circle class="farmer" cx="770" cy="108" r="8"/>
+            <circle class="farmer" cx="45" cy="470" r="7.5"/>
+            <circle class="farmer" cx="1415" cy="395" r="7.5"/>
+            <circle class="farmer" cx="1185" cy="762" r="7.5"/>
+            <circle class="farmer" cx="300" cy="772" r="7.5"/>
+            <circle class="business" cx="1055" cy="205" r="8"/>
+            <circle class="civic" cx="360" cy="430" r="8"/>
+
+            <!-- and some sitting above the surface: a shadow on the ground, a
+                 stem, and the actor lifted clear of the plane -->
+            <g class="actor-air">
+              <ellipse class="actor-shadow" cx="430" cy="250" rx="11" ry="4"/>
+              <path class="actor-stem" d="M430,250 L430,188"/>
+              <circle class="civic aloft" cx="430" cy="188" r="8"/>
+
+              <ellipse class="actor-shadow" cx="980" cy="300" rx="11" ry="4"/>
+              <path class="actor-stem" d="M980,300 L980,246"/>
+              <circle class="business aloft" cx="980" cy="246" r="8"/>
+
+              <ellipse class="actor-shadow" cx="620" cy="560" rx="12" ry="4.5"/>
+              <path class="actor-stem" d="M620,560 L620,492"/>
+              <circle class="civic aloft" cx="620" cy="492" r="8.5"/>
+
+              <ellipse class="actor-shadow" cx="300" cy="690" rx="11" ry="4"/>
+              <path class="actor-stem" d="M300,690 L300,640"/>
+              <circle class="farmer aloft" cx="300" cy="640" r="8"/>
+
+              <ellipse class="actor-shadow" cx="1110" cy="668" rx="11" ry="4"/>
+              <path class="actor-stem" d="M1110,668 L1110,610"/>
+              <circle class="business aloft" cx="1110" cy="610" r="8"/>
+
+              <ellipse class="actor-shadow" cx="835" cy="185" rx="10" ry="3.5"/>
+              <path class="actor-stem" d="M835,185 L835,139"/>
+              <circle class="farmer aloft" cx="835" cy="139" r="7.5"/>
+            </g>
             <circle class="mesh-signal" data-path="1" r="5"/>
             <circle class="mesh-signal" data-path="2" r="5"/>
             <circle class="mesh-signal" data-path="3" r="5"/>
@@ -1843,8 +1861,102 @@
       var el = document.getElementById(t.id);
       if(!el) return;
       var load = cache[t.src] || (cache[t.src] = fetch(t.src).then(function(r){ return r.text(); }));
-      load.then(function(svgText){ el.innerHTML = svgText; }).catch(function(){});
+      load.then(function(svgText){
+        el.innerHTML = svgText;
+        if(t.id === 'planeLondonContext') shadeBoroughs(el);
+      }).catch(function(){});
     });
+
+    /* Every borough carries a shade that falls off with distance from Camden,
+       and breathes on its own phase. Measured from the real borough geometry --
+       each path's own bbox centre -- rather than a hand-kept list, so it stays
+       right if the map is ever replaced. */
+    function shadeBoroughs(host){
+      var paths = host.querySelectorAll('svg path[id]');
+      if(!paths.length) return;
+      var centres = [], camden = null;
+      paths.forEach(function(p){
+        var b = p.getBBox();
+        var c = {el:p, x:b.x + b.width/2, y:b.y + b.height/2};
+        centres.push(c);
+        if(p.id === 'Camden') camden = c;
+      });
+      if(!camden) camden = centres[0];
+      var max = 0;
+      centres.forEach(function(c){
+        c.d = Math.hypot(c.x - camden.x, c.y - camden.y);
+        if(c.d > max) max = c.d;
+      });
+      var BASE = [26,26,26], ACCENT = [255,90,31];
+      centres.forEach(function(c, i){
+        var d = max ? c.d / max : 0;
+        var warm = Math.pow(1 - d, 1.7) * 0.62;      // 1 at Camden, easing off
+        var rgb = BASE.map(function(v, k){ return Math.round(v + (ACCENT[k] - v) * warm); });
+        c.el.style.setProperty('--d', d.toFixed(3));
+        if(c.el.id !== 'Camden') c.el.style.fill = 'rgb(' + rgb.join(',') + ')';
+      });
+    }
+  });
+</script>
+<script>
+  /* The hinterland reaching in: roads that kink like roads rather than arcing,
+     starting outside London and converging on Camden, with produce travelling
+     down them. Built here rather than in markup because there are a lot of them
+     and each dot needs its own offset-path. */
+  document.addEventListener('DOMContentLoaded', function(){
+    var svg = document.querySelector('.axo2-inflow');
+    if(!svg) return;
+    var NS = 'http://www.w3.org/2000/svg';
+    var CAMDEN = {x:622, y:308};
+    var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // start well outside the London outline, all the way round the compass
+    var origins = [
+      {x:-210, y:-140}, {x:250, y:-260}, {x:700, y:-300}, {x:1150, y:-230},
+      {x:1560, y:-60}, {x:1660, y:340}, {x:1580, y:760}, {x:1180, y:1180},
+      {x:700, y:1290}, {x:230, y:1220}, {x:-190, y:900}, {x:-260, y:430},
+      {x:-120, y:-380}, {x:1420, y:1080}
+    ];
+
+    function road(from){
+      // three kinked legs, each bending off the straight line by a little --
+      // arterial roads bend, they don't arc
+      var pts = [from];
+      var legs = 3;
+      for(var i = 1; i <= legs; i++){
+        var t = i / (legs + 1);
+        var x = from.x + (CAMDEN.x - from.x) * t;
+        var y = from.y + (CAMDEN.y - from.y) * t;
+        var nx = -(CAMDEN.y - from.y), ny = (CAMDEN.x - from.x);
+        var len = Math.hypot(nx, ny) || 1;
+        // alternate the kink side, easing to nothing as it nears Camden
+        var swing = (i % 2 ? 1 : -1) * (1 - t) * (60 + (i * 37) % 54);
+        pts.push({x: x + nx / len * swing, y: y + ny / len * swing});
+      }
+      pts.push(CAMDEN);
+      return 'M' + pts.map(function(p){ return p.x.toFixed(0) + ',' + p.y.toFixed(0); }).join(' L');
+    }
+
+    var frag = document.createDocumentFragment();
+    var dots = document.createDocumentFragment();
+    origins.forEach(function(o, i){
+      var d = road(o);
+      var p = document.createElementNS(NS, 'path');
+      p.setAttribute('class', 'inflow-line');
+      p.setAttribute('d', d);
+      p.style.animationDelay = (0.45 + i * 0.06).toFixed(2) + 's';
+      frag.appendChild(p);
+
+      if(reduced) return;
+      var c = document.createElementNS(NS, 'circle');
+      c.setAttribute('class', 'inflow-dot');
+      c.setAttribute('r', '5.5');
+      c.style.offsetPath = 'path("' + d + '")';
+      c.style.animationDelay = (0.9 + i * 0.07).toFixed(2) + 's, ' + (i * 0.42).toFixed(2) + 's';
+      dots.appendChild(c);
+    });
+    svg.appendChild(frag);
+    svg.appendChild(dots);
   });
 </script>
 <script>
