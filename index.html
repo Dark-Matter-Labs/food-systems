@@ -444,20 +444,18 @@
 
   /* ---- foundations wave diagram (adapted from the Resilience Platform piece) ---- */
   .rp-stage{
-    position:relative; margin-top:8px; height:min(760px, 80vh);
-    transition:height .5s ease;
+    /* one height for both stages. animating it resized the WebGL buffer every
+       frame of the transition, and shifting the page mid-scroll moved the very
+       element the stage switch was keyed off -- both showed up as flicker */
+    position:relative; margin-top:8px; height:clamp(430px, 70vh, 660px);
   }
-  /* second stage: the long annotations give way so the four waves can take the
-     full width, and the interventions come up on them as pills */
-  [data-pfstage="portfolio"] .rp-stage{height:clamp(420px, 58vh, 560px);}
-  /* and the waves hold their place while the pills are up. only while the table
-     is closed -- once it's open it is the thing being read, and a pinned stage
+  /* the waves hold their place while the pills are up. only while the table is
+     closed -- once it's open it is the thing being read, and a pinned stage
      would swallow the rows as they came past */
   [data-pfstage="portfolio"][data-table="closed"] .rp-stage{
     position:sticky; top:64px; z-index:3; background:var(--ink);
   }
   .rp-labels, .rp-outcomes{transition:opacity .4s ease;}
-  .rp-canvas{transition:left .5s ease, width .5s ease;}
   [data-pfstage="portfolio"] .rp-labels,
   [data-pfstage="portfolio"] .rp-outcomes{opacity:0; pointer-events:none;}
   [data-pfstage="portfolio"] .rp-canvas{left:3%; width:94%;}
@@ -1961,22 +1959,39 @@
       window.addEventListener('resize', function(){ layout(clock()); });
       if(window.ResizeObserver) new ResizeObserver(function(){ layout(clock()); }).observe(canvas);
 
+      /* The switch is keyed off the section heading, which sits above the stage
+         and so cannot be moved by the switch itself. Watching the portfolio
+         instead meant the stage change shifted the element being watched, which
+         flipped it back -- the flicker on the transform. The two thresholds are
+         deliberately apart so a scroll resting on the boundary can't oscillate. */
+      var head = section.querySelector('.section-head');
       var live = false;
+      function setStage(on){
+        if(on === live) return;
+        live = on;
+        section.setAttribute('data-pfstage', on ? 'portfolio' : 'pathways');
+        if(on) layout(clock());
+      }
+      function check(){
+        if(!head) return;
+        var b = head.getBoundingClientRect().bottom, vh = window.innerHeight;
+        if(!live && b < vh * 0.16) setStage(true);
+        else if(live && b > vh * 0.34) setStage(false);
+      }
+
+      /* and the pills only need positioning while the stage is actually on
+         screen -- left running, it wrote inline styles to every pill on every
+         frame for the rest of the page */
+      var onScreen = false;
+      new IntersectionObserver(function(entries){
+        entries.forEach(function(e){ onScreen = e.isIntersecting; });
+      }, {rootMargin: '120px 0px'}).observe(stage);
+
       (function tick(){
-        if(live) layout(clock());
+        check();
+        if(live && onScreen) layout(clock());
         requestAnimationFrame(tick);
       })();
-
-      // stage two begins once the portfolio heading reaches the lower viewport,
-      // and holds while it stays above it
-      new IntersectionObserver(function(entries){
-        entries.forEach(function(e){
-          var on = e.isIntersecting || e.boundingClientRect.top < 0;
-          section.setAttribute('data-pfstage', on ? 'portfolio' : 'pathways');
-          live = on;
-          if(on) layout(clock());
-        });
-      }, {rootMargin: '-40% 0px 0px 0px'}).observe(pf);
 
       if(toggle && table){
         section.setAttribute('data-table', table.hidden ? 'closed' : 'open');
