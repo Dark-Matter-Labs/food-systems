@@ -341,12 +341,17 @@
     grid-column:1 / -1; font-size:clamp(26px,3vw,36px); line-height:1.18;
     margin:52px 0 0; max-width:620px;
   }
-  .crisis-proj-eyebrow{font-family:var(--mono); font-size:11px; letter-spacing:0.1em; color:var(--paper-dim); text-transform:uppercase; margin:36px 0 16px; padding-top:24px; border-top:1px solid var(--line-strong);}
-  .crisis-shocks-row{display:grid; grid-template-columns:1fr 1fr; gap:40px;}
-  @media (max-width:760px){ .crisis-shocks-row{grid-template-columns:1fr; gap:28px;} }
   .crisis-caption{font-family:var(--display); font-size:15px; color:var(--paper); opacity:0.85; margin:0 0 14px; max-width:520px;}
-  .crisis-caption.after{margin:14px 0 0;}
   .crisis-img-wrap{position:relative;}
+  /* Sits at the top of the plot, over the gap between the Covid/Ukraine band
+     and the Iran one. The compound selector is deliberate: .rp-info sets
+     position:relative further down the sheet at equal specificity, and would
+     otherwise win and drop this back into the flow. */
+  .crisis-img-wrap .crisis-chart-note{
+    position:absolute; left:88.2%; top:2px; opacity:0.7; z-index:2;
+  }
+  .crisis-img-wrap .crisis-chart-note:hover,
+  .crisis-img-wrap .crisis-chart-note:focus-visible{opacity:1;}
   .crisis-svg{display:block; width:100%; height:auto; overflow:visible;}
   /* the shock figures sit at the end of the chart, big enough to read as the
      headline they are. they are separate events, not where these lines lead */
@@ -358,12 +363,28 @@
   .crisis-endstats{display:flex; flex-direction:column; gap:clamp(24px,3vw,44px);}
   @media (max-width:520px){ .crisis-endstats{gap:22px;} }
   .crisis-endstat{
+    position:relative;
     display:block; width:100%; text-align:left; background:none; padding:0 0 0 15px;
-    border:none; border-left:2px solid rgba(232,195,74,0.45); cursor:pointer;
+    border:none; border-left:2px solid rgba(232,195,74,0.45); cursor:help;
   }
   .crisis-endstat:hover, .crisis-endstat:focus-visible{border-left-color:#e8c34a;}
   .crisis-endstat:focus{outline:none;}
   .crisis-endstat:focus-visible{outline:1px dashed var(--line-strong); outline-offset:4px;}
+  /* the shock that produced the figure, on the figure itself -- it used to be a
+     pair of cards below the chart that restated these same numbers */
+  .crisis-endstat .ces-pop{
+    width:330px; max-width:min(84vw,360px); white-space:normal;
+    left:-2px; top:calc(100% + 12px);
+  }
+  .crisis-endstat:hover .ces-pop,
+  .crisis-endstat:focus .ces-pop,
+  .crisis-endstat:focus-visible .ces-pop{
+    opacity:1; visibility:visible; transform:translateY(0); pointer-events:auto;
+  }
+  .ces-src{
+    display:block; margin-top:9px; padding-top:8px; border-top:1px solid var(--line);
+    font-family:var(--mono); font-size:10.5px; line-height:1.5; opacity:0.75;
+  }
   .ces-dot{
     display:block; width:11px; height:11px; border-radius:50%; background:#e8c34a;
     box-shadow:0 0 0 6px rgba(232,195,74,0.15); margin-bottom:14px;
@@ -389,22 +410,9 @@
   .crisis-legend span{display:inline-flex; align-items:center; gap:7px; font-family:var(--mono); font-size:11.5px; letter-spacing:0.03em; color:var(--paper-dim);}
   .crisis-legend i{width:14px; height:2.2px; display:inline-block; border-radius:2px;}
   .cg-band-labels text{font-family:var(--mono); font-size:10.5px; fill:#e8c34a;}
-  .crisis-shock{padding:0; border:none;}
-  .crisis-shock summary{list-style:none; cursor:pointer; display:flex; align-items:flex-start; justify-content:space-between; gap:14px;}
-  .crisis-shock summary::-webkit-details-marker{display:none;}
-  .crisis-shock-toggle{
-    flex:none; width:22px; height:22px; border-radius:50%; border:1px solid var(--line-strong);
-    display:grid; place-items:center; font-family:var(--mono); font-size:15px; color:var(--paper-dim); margin-top:2px;
-  }
-  .crisis-shock-toggle::before{content:'+';}
-  .crisis-shock[open] .crisis-shock-toggle::before{content:'\2013';}
-  .crisis-shock[open] .crisis-shock-toggle{color:var(--paper); border-color:var(--paper-dim);}
-  .crisis-shock-date{font-family:var(--mono); font-size:11.5px; letter-spacing:0.06em; color:#e8c34a; text-transform:uppercase; margin-bottom:8px;}
-  .crisis-shock-stat{font-family:var(--display); font-weight:700; font-size:clamp(24px,2.6vw,30px); line-height:1.1; margin-bottom:4px;}
-  .crisis-shock-label{font-size:13px; color:var(--paper-dim); margin-bottom:0;}
-  .crisis-shock p{font-size:14px; color:var(--paper-dim); line-height:1.55; margin:12px 0 0;}
-  .crisis-shock:not([open]) p{display:none;}
   .crisis-sources{grid-column:1 / -1; font-size:12px; color:var(--paper-dim); opacity:0.7; margin-top:28px; max-width:900px; line-height:1.6;}
+  /* the section's sources, behind a pill rather than a paragraph of citations */
+  .crisis-sources-row{grid-column:1 / -1; margin-top:30px;}
 
   /* ---- voices, sitting under the crisis chart ---- */
   .crisis-voices{grid-column:1 / -1; margin-top:44px; padding-top:32px; border-top:1px solid var(--line-strong);}
@@ -1101,49 +1109,27 @@
               <polyline class="cg-line cg-maize" points="0.0,308.9 4.1,308.9 8.2,308.9 12.3,308.9 16.4,308.9 20.5,308.9 24.5,308.9 28.6,308.9 32.7,311.0 36.8,314.9 40.9,314.0 45.0,315.9 49.1,317.4 53.2,317.7 57.3,317.7 61.4,321.9 65.5,324.1 69.5,325.6 73.6,325.0 77.7,321.9 81.8,319.5 85.9,318.6 90.0,318.9 94.1,317.1 98.2,317.7 102.3,318.3 106.4,317.4 110.5,315.9 114.5,316.5 118.6,313.1 122.7,308.9 126.8,302.5 130.9,294.6 135.0,287.6 139.1,283.0 143.2,277.2 147.3,269.3 151.4,266.9 155.5,266.6 159.5,265.7 163.6,266.9 167.7,273.6 171.8,275.1 175.9,276.9 180.0,280.0 184.1,280.9 188.2,278.5 192.3,271.2 196.4,270.9 200.5,263.9 204.5,262.0 208.6,259.9 212.7,264.2 216.8,259.0 220.9,261.1 225.0,261.4 229.1,263.3 233.2,264.8 237.3,266.9 241.4,266.9 245.5,268.4 249.5,270.6 253.6,274.8 257.7,281.8 261.8,289.4 265.9,295.2 270.0,300.4 274.1,306.1 278.2,308.0 282.3,307.0 286.4,304.9 290.5,302.8 294.5,298.2 298.6,294.9 302.7,298.5 306.8,302.2 310.9,306.7 315.0,311.3 319.1,313.4 323.2,312.2 327.3,311.0 331.4,308.6 335.5,308.6 339.5,310.7 343.6,311.6 347.7,315.6 351.8,317.1 355.9,319.2 360.0,320.4 364.1,321.6 368.2,321.3 372.3,324.7 376.4,323.8 380.5,323.8 384.5,324.7 388.6,324.7 392.7,322.8 396.8,323.5 400.9,322.8 405.0,316.5 409.1,317.1 413.2,318.3 417.3,318.0 421.4,318.9 425.5,325.0 429.5,323.5 433.6,322.8 437.7,322.8 441.8,322.8 445.9,322.2 450.0,323.2 454.1,322.5 458.2,322.8 462.3,322.8 466.4,322.2 470.5,321.6 474.5,322.8 478.6,323.5 482.7,322.2 486.8,321.0 490.9,320.4 495.0,318.9 499.1,318.0 503.2,318.3 507.3,321.0 511.4,322.8 515.5,321.9 519.5,320.7 523.6,321.0 527.7,319.8 531.8,318.3 535.9,318.9 540.0,321.0 544.1,320.1 548.2,319.2 552.3,318.3 556.4,318.3 560.5,317.4 564.5,317.1 568.6,317.7 572.7,317.7 576.8,317.1 580.9,316.5 585.0,322.8 589.1,324.7 593.2,328.3 597.3,327.4 601.4,328.0 605.5,323.8 609.5,318.0 613.6,315.2 617.7,315.6 621.8,314.9 625.9,311.6 630.0,311.3 634.1,306.1 638.2,302.5 642.3,291.8 646.4,284.5 650.5,280.6 654.5,281.8 658.6,283.6 662.7,289.7 666.8,291.2 670.9,293.4 675.0,283.3 679.1,279.4 683.2,270.6 687.3,267.8 691.4,261.4 695.5,262.7 699.5,259.0 703.6,264.5 707.7,266.3 711.8,266.9 715.9,269.6 720.0,265.4 724.1,265.4 728.2,247.8 732.3,239.9 736.4,236.8 740.5,245.9 744.5,245.3 748.6,267.2 752.7,283.0 756.8,292.4 760.9,292.8 765.0,297.3 769.1,299.4 773.2,301.3 777.3,303.1 781.4,308.3 785.5,305.2 789.5,307.0 793.6,306.4 797.7,305.5 801.8,303.1 805.9,310.1 810.0,310.4 814.1,310.4 818.2,311.6 822.3,312.8 826.4,305.5 830.5,304.0 834.5,304.3 838.6,303.7 842.7,300.7 846.8,304.3 850.9,305.8 855.0,308.6 859.1,290.9 863.2,292.4 867.3,288.5 871.4,282.4 875.5,281.5 879.5,293.4 883.6,295.2 887.7,296.1 891.8,299.7 895.9,295.8 900.0,300.4"/>
             </g>
           </svg>
+          <!-- the easing-then-compounding note, parked on the gap between the
+               Covid/Ukraine band and the Iran one rather than under the chart -->
+          <button type="button" class="rp-info crisis-chart-note" aria-label="What happened between these two shocks"><span aria-hidden="true">i</span><span class="rp-info-pop" role="tooltip">Food inflation was easing — until spring 2026. As recently as the autumn-2025 outlook, the year was expected to end near 3%; the official annual food measure had even fallen to 1.7% (year to June 2026). That was the calm before the compounding began. The two figures at the end are separate shocks, not where these price lines lead.</span></button>
         </div>
           <div class="crisis-endstats">
-            <button type="button" class="crisis-endstat" data-target="shockHormuz" aria-expanded="false">
+            <button type="button" class="crisis-endstat" aria-label="December 2026: 9 to 10 per cent whole-basket food inflation — what drove it">
               <span class="ces-dot" aria-hidden="true"></span>
               <span class="ces-num">9–10%</span>
               <span class="ces-cap">Whole-basket food inflation, forecast</span>
               <span class="ces-date">Dec 2026</span>
+              <span class="rp-info-pop ces-pop" role="tooltip"><span class="rp-pop-lead">Shock 1 — Energy, Strait of Hormuz</span>After the Strait was effectively closed by the Iran conflict, the FDF revised its year-end forecast from 3.2% to 9–10%, driven by energy, red diesel (+80%), tight fertiliser and freight feeding through manufacturing. The scenario assumed a reopening within 2–3 weeks that never came — so the pressure has had longer to build, not less, with a fertiliser tail into 2027.<span class="ces-src">Food and Drink Federation, scenario forecast (1 April 2026); IMF, Regional Economic Outlook Update (8 July 2026).</span></span>
             </button>
-            <button type="button" class="crisis-endstat" data-target="shockDrought" aria-expanded="false">
+            <button type="button" class="crisis-endstat" aria-label="September to October 2026: wholesale crop prices — what drove it">
               <span class="ces-dot" aria-hidden="true"></span>
               <span class="ces-num">+90%</span>
               <span class="ces-cap">Iceberg lettuce, wholesale — with tomatoes +60% and potatoes +40%</span>
               <span class="ces-date">Sept–Oct 2026</span>
+              <span class="rp-info-pop ces-pop" role="tooltip"><span class="rp-pop-lead">Shock 2 — Drought</span>On top of the energy shock, drought across half of England has sent wholesale prices of specific crops soaring and halved broccoli yields, with produce imported from Spain mid-UK-season and UK carrots at risk of running out early by spring.<span class="ces-src">The Guardian, “UK Importing Vegetables as Drought and Heat Hit British Crops, Pushing Up Prices,” 1 August 2026.</span></span>
             </button>
           </div>
         </div>
-        <p class="crisis-caption after">Food inflation was easing — until spring 2026. As recently as the autumn-2025 outlook, the year was expected to end near 3%; the official annual food measure had even fallen to 1.7% (year to June 2026). That was the calm before the compounding began. The two figures beside the chart are separate shocks, not where these price lines lead — click either for what changed.</p>
-      </div>
-
-      <div class="crisis-proj-eyebrow">The two shocks behind the forecast rise</div>
-      <div class="crisis-shocks-row">
-        <details class="crisis-shock" id="shockHormuz">
-          <summary>
-            <div>
-              <div class="crisis-shock-date">December 2026</div>
-              <div class="crisis-shock-stat">9–10%</div>
-              <div class="crisis-shock-label">Whole-basket food inflation, forecast<button type="button" class="rp-info" aria-label="Source" onclick="event.preventDefault()"><span aria-hidden="true">i</span><span class="rp-info-pop" role="tooltip">Food and Drink Federation, scenario forecast (1 April 2026); International Monetary Fund, Regional Economic Outlook Update: Middle East and Central Asia (8 July 2026).</span></button></div>
-            </div>
-            <span class="crisis-shock-toggle" aria-hidden="true"></span>
-          </summary>
-          <p><strong>Shock 1 — Energy, Strait of Hormuz.</strong> After the Strait was effectively closed by the Iran conflict, the FDF revised its year-end forecast from 3.2% to 9–10%, driven by energy, red diesel (+80%), tight fertiliser and freight feeding through manufacturing. The scenario assumed a reopening within 2–3 weeks that never came — so the pressure has had longer to build, not less, with a fertiliser tail into 2027.</p>
-        </details>
-        <details class="crisis-shock" id="shockDrought">
-          <summary>
-            <div>
-              <div class="crisis-shock-date">Sept–Oct 2026</div>
-              <div class="crisis-shock-stat">+60% / +90% / +40%</div>
-              <div class="crisis-shock-label">Tomatoes / iceberg lettuce / potatoes, wholesale<button type="button" class="rp-info" aria-label="Source" onclick="event.preventDefault()"><span aria-hidden="true">i</span><span class="rp-info-pop" role="tooltip">The Guardian, “UK Importing Vegetables as Drought and Heat Hit British Crops, Pushing Up Prices,” 1 August 2026.</span></button></div>
-            </div>
-            <span class="crisis-shock-toggle" aria-hidden="true"></span>
-          </summary>
-          <p><strong>Shock 2 — Drought.</strong> On top of the energy shock, drought across half of England has sent wholesale prices of specific crops soaring and halved broccoli yields, with produce imported from Spain mid-UK-season and UK carrots at risk of running out early by spring.</p>
-        </details>
       </div>
     </div>
 
@@ -1167,7 +1153,9 @@
       </div>
     </div>
 
-    <p class="crisis-sources">Sources: Bloomberg · ONS, Consumer Price Inflation UK (June 2026, published July 2026) · Food Foundation, Food Prices Tracker (July 2026) · Food and Drink Federation forecast (1 April 2026) · IMF, Regional Economic Outlook Update: Middle East and Central Asia (8 July 2026) · The Guardian (1 August 2026) · Energy and Climate Intelligence Unit (7 July 2026).</p>
+    <div class="crisis-sources-row">
+      <button type="button" class="rp-note" aria-label="Sources for this section">Sources<span class="rp-info-pop rp-info-pop-wide" role="tooltip"><span class="rp-pop-item">Bloomberg</span><span class="rp-pop-item">ONS, Consumer Price Inflation UK (June 2026, published July 2026)</span><span class="rp-pop-item">Food Foundation, Food Prices Tracker (July 2026)</span><span class="rp-pop-item">Food and Drink Federation forecast (1 April 2026)</span><span class="rp-pop-item">IMF, Regional Economic Outlook Update: Middle East and Central Asia (8 July 2026)</span><span class="rp-pop-item">The Guardian (1 August 2026)</span><span class="rp-pop-item">Energy and Climate Intelligence Unit (7 July 2026)</span></span></button>
+    </div>
 
   </div>
 </section>
@@ -1822,23 +1810,9 @@
 </script>
 <script>
   document.addEventListener('DOMContentLoaded', function(){
-    // the two big figures beside the chart open their own shock card
-    var shocks = document.querySelectorAll('.crisis-endstat');
-    function toggle(el){
-      var details = document.getElementById(el.dataset.target);
-      if(!details) return;
-      details.open = !details.open;
-      el.setAttribute('aria-expanded', String(details.open));
-      if(details.open) details.scrollIntoView({block:'nearest', behavior:'smooth'});
-    }
-    shocks.forEach(function(el){
-      el.addEventListener('click', function(){ toggle(el); });
-    });
-    // keep the figure's aria-expanded in sync if someone opens or closes the
-    // <details> panel directly instead of via the figure
-    // a source tooltip anchors to its (i), which can land anywhere on a line —
-    // nudge it back inside the viewport instead of letting it scroll the page
-    document.querySelectorAll('.rp-info, .rp-note').forEach(function(btn){
+    // a tooltip anchors to whatever opened it, which can land anywhere on a
+    // line — nudge it back inside the viewport instead of scrolling the page
+    document.querySelectorAll('.rp-info, .rp-note, .crisis-endstat').forEach(function(btn){
       var pop = btn.querySelector('.rp-info-pop');
       if(!pop) return;
       btn.addEventListener('pointerenter', place);
@@ -2007,12 +1981,6 @@
       }
     })();
 
-    document.querySelectorAll('.crisis-shock').forEach(function(details){
-      details.addEventListener('toggle', function(){
-        var dot = document.querySelector('.crisis-endstat[data-target="' + details.id + '"]');
-        if(dot) dot.setAttribute('aria-expanded', String(details.open));
-      });
-    });
   });
 </script>
 <script type="module" src="assets/foundations/wave.js?v=18"></script>
