@@ -7,7 +7,7 @@
    its own layer:
 
    Pathway 01, Civic-led delivery          amber   +SPAN
-   Pathway 02, Collective buying power     blue    +SPAN/3
+   Pathway 02, Collective buying power     violet  +SPAN/3
    Pathway 03, New Food Economics          silver  -SPAN/3
    Pathway 04, Nutrient density            green   -SPAN
 
@@ -28,9 +28,9 @@ if (host) {
   const INNER = SPAN / 3; // the two inner pathways, evenly spaced against the outer pair
   const BANDS = [
     { y: SPAN, colour: new THREE.Color('#e7964b'), spread: 0.050, amp: 0.100, key: 'top' },
-    { y: INNER, colour: new THREE.Color('#8fb0ff'), spread: 0.052, amp: 0.088, key: 'buy' },
+    { y: INNER, colour: new THREE.Color('#a98cf5'), spread: 0.052, amp: 0.088, key: 'buy' },
     { y: -INNER, colour: new THREE.Color('#c9ced3'), spread: 0.065, amp: 0.085, key: 'mid' },
-    { y: -SPAN, colour: new THREE.Color('#2f9c66'), spread: 0.055, amp: 0.100, key: 'bot' }
+    { y: -SPAN, colour: new THREE.Color('#4fb488'), spread: 0.055, amp: 0.100, key: 'bot' }
   ];
 
   const scene = new THREE.Scene();
@@ -546,11 +546,72 @@ if (host) {
             vec3 green = vec3(0.30, 0.62, 0.32);
             vec3 grey  = vec3(0.52, 0.55, 0.50);
             vec3 col = mix(green, grey, vTone);
-            gl_FragColor = vec4(col, shape * vA);
+            /* held back to a base texture: the nutrient stream below is the
+               thing this pathway is now saying */
+            gl_FragColor = vec4(col, shape * vA * 0.42);
           }`
       });
       scene.add(new THREE.Points(g, m));
     });
+  })();
+
+  /* ---------- Pathway 04, the point of it: a dense stream of particles
+     leaving the land wave and travelling the whole stack to the demand wave,
+     going from soil-green to plate-amber on the way. Nutrient density is only
+     a claim if what comes out of the ground is what arrives on the plate, so
+     the particle has to cross every layer in between. ---------- */
+  (function nutrients() {
+    const N = SMALL ? 460 : 1500;
+    const pos = new Float32Array(N * 3);
+    const aCol = new Float32Array(N), aSeed = new Float32Array(N);
+    const aSize = new Float32Array(N), aLane = new Float32Array(N);
+    for (let i = 0; i < N; i++) {
+      aCol[i] = 0.04 + n2rand(i, N) * 0.92;
+      aSeed[i] = (i * 0.6180339887) % 1;
+      aSize[i] = 1.0 + ((i * 4.3271) % 1) * 1.8;
+      aLane[i] = (((i * 0.7548776662) % 1) - 0.5) * 0.075;
+    }
+    const g = new THREE.BufferGeometry();
+    g.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+    g.setAttribute('aCol', new THREE.BufferAttribute(aCol, 1));
+    g.setAttribute('aSeed', new THREE.BufferAttribute(aSeed, 1));
+    g.setAttribute('aSize', new THREE.BufferAttribute(aSize, 1));
+    g.setAttribute('aLane', new THREE.BufferAttribute(aLane, 1));
+    const m = new THREE.ShaderMaterial({
+      transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, uniforms: U,
+      vertexShader: NOISE + `
+        attribute float aCol; attribute float aSeed; attribute float aSize; attribute float aLane;
+        uniform float uTime, uAspect, uRegion, uDpr;
+        varying float vA; varying float vP;
+        void main(){
+          float yBot = waveY(aCol, 0.5, uTime, 0.100, 0.055, ${BOT_BASE.toFixed(3)});
+          float yTop = waveY(aCol, 0.5, uTime, 0.100, 0.050, ${TOP_BASE.toFixed(3)});
+          /* every particle keeps its own pace, so the stream never pulses as
+             one block */
+          float sp = 0.085 + fract(aSeed * 7.3) * 0.075;
+          float p = fract(uTime * sp + aSeed);
+          float arc = sin(p * 3.14159);
+          float y = mix(yBot, yTop, p) + aLane * arc;
+          float x = (aCol * 2.0 - 1.0) * uAspect * 0.96;
+          x += sin(uTime * 0.6 + aSeed * 31.0) * 0.030 * arc;
+          gl_Position = projectionMatrix * modelViewMatrix * vec4(x, y, 0.0, 1.0);
+          gl_PointSize = aSize * uDpr * (0.75 + 0.55 * p);
+          vA = uRegion * smoothstep(0.0, 0.09, p) * (1.0 - smoothstep(0.87, 1.0, p));
+          vP = p;
+        }`,
+      fragmentShader: `
+        varying float vA; varying float vP;
+        void main(){
+          vec2 uv = gl_PointCoord * 2.0 - 1.0;
+          float d = length(uv);
+          float shape = smoothstep(1.0, 0.15, d);
+          if (shape < 0.03) discard;
+          vec3 soil  = vec3(0.30, 0.66, 0.40);
+          vec3 plate = vec3(0.96, 0.66, 0.31);
+          gl_FragColor = vec4(mix(soil, plate, smoothstep(0.08, 0.92, vP)), shape * vA * 0.9);
+        }`
+    });
+    scene.add(new THREE.Points(g, m));
   })();
 
   /* ---------- Pathway 01: civic-led delivery -- small hub markers (grocers,

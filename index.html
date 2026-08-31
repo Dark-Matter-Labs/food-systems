@@ -21,7 +21,8 @@
 
     --supply:#c98a3b;   /* ochre — Supply track  */
     --hub:#2e7d6b;      /* teal  — Hub track     */
-    --demand:#ff5a1f;   /* signal orange — Demand track */
+    --demand:#ff5a1f;   /* signal orange — Camden, the subject */
+    --alert:#ef4a34;    /* red — crisis, and only crisis */
 
     --supply-dim: rgba(201,138,59,0.14);
     --hub-dim: rgba(46,125,107,0.16);
@@ -326,8 +327,8 @@
   .crisis-caption{font-family:var(--display); font-size:15px; color:var(--paper); opacity:0.85; margin:0 0 14px; max-width:520px;}
   .crisis-chart-title{font-family:var(--display); font-weight:700; font-size:17px; color:var(--paper); margin:0 0 12px;}
   /* the 2022 note, sitting on the band it describes */
-  .cg-annot text{font-family:var(--display); font-size:12.5px; fill:#e8c34a;}
-  .cg-annot-tick{fill:none; stroke:#e8c34a; stroke-width:1; opacity:0.5;}
+  .cg-annot text{font-family:var(--display); font-size:12.5px; fill:var(--alert);}
+  .cg-annot-tick{fill:none; stroke:var(--alert); stroke-width:1; opacity:0.5;}
   /* the dotted continuation past 2026. it runs out beyond the chart to sit
      behind the big figures, so it only makes sense while they are beside the
      chart -- once they stack underneath it would just spill off the screen */
@@ -386,7 +387,7 @@
     display:block; width:100%; text-align:left; background:none; padding:0 0 0 15px;
     border:none; border-left:2px solid rgba(232,195,74,0.45); cursor:help;
   }
-  .crisis-endstat:hover, .crisis-endstat:focus-visible{border-left-color:#e8c34a;}
+  .crisis-endstat:hover, .crisis-endstat:focus-visible{border-left-color:var(--alert);}
   .crisis-endstat:focus{outline:none;}
   .crisis-endstat:focus-visible{outline:1px dashed var(--line-strong); outline-offset:4px;}
   /* the shock that produced the figure, on the figure itself -- it used to be a
@@ -405,21 +406,21 @@
     font-family:var(--mono); font-size:10.5px; line-height:1.5; opacity:0.75;
   }
   .ces-dot{
-    display:block; width:11px; height:11px; border-radius:50%; background:#e8c34a;
+    display:block; width:11px; height:11px; border-radius:50%; background:var(--alert);
     box-shadow:0 0 0 6px rgba(232,195,74,0.15); margin-bottom:14px;
   }
   .ces-num{
-    display:block; font-family:var(--display); font-weight:700; color:#e8c34a;
+    display:block; font-family:var(--display); font-weight:700; color:var(--alert);
     font-size:clamp(38px,5vw,68px); line-height:0.95; letter-spacing:-0.02em;
   }
   .ces-cap{display:block; font-size:13px; line-height:1.45; color:var(--paper-dim); margin-top:10px;}
   .ces-date{
     display:block; font-family:var(--mono); font-size:11px; letter-spacing:0.06em;
-    text-transform:uppercase; color:#e8c34a; opacity:0.75; margin-top:7px;
+    text-transform:uppercase; color:var(--alert); opacity:0.75; margin-top:7px;
   }
   .cg-grid line{stroke:var(--line); stroke-width:1;}
   .cg-grid text{font-family:var(--mono); font-size:11px; fill:var(--paper-dim);}
-  .cg-bands rect{fill:rgba(255,214,64,0.13); stroke:rgba(255,214,64,0.3); stroke-width:1;}
+  .cg-bands rect{fill:rgba(239,74,52,0.14); stroke:rgba(239,74,52,0.34); stroke-width:1;}
   .cg-xaxis text{font-family:var(--mono); font-size:11px; fill:var(--paper-dim);}
   .cg-line{fill:none; stroke-width:2.2; stroke-linejoin:round; stroke-linecap:round;}
   .cg-fertiliser{stroke:#8f8fe8;}
@@ -428,7 +429,7 @@
   .crisis-legend{display:flex; gap:22px; flex-wrap:wrap; margin:14px 0 4px;}
   .crisis-legend span{display:inline-flex; align-items:center; gap:7px; font-family:var(--mono); font-size:11.5px; letter-spacing:0.03em; color:var(--paper-dim);}
   .crisis-legend i{width:14px; height:2.2px; display:inline-block; border-radius:2px;}
-  .cg-band-labels text{font-family:var(--mono); font-size:10.5px; fill:#e8c34a;}
+  .cg-band-labels text{font-family:var(--mono); font-size:10.5px; fill:var(--alert);}
   .crisis-sources{grid-column:1 / -1; font-size:12px; color:var(--paper-dim); opacity:0.7; margin-top:28px; max-width:900px; line-height:1.6;}
   /* the sources belong to the chart and the figures beside it, so the pill sits
      with them rather than at the foot of the section */
@@ -533,6 +534,19 @@
     }
   }
   .rp-canvas{position:absolute; top:0; left:37.5%; bottom:0; width:42%; z-index:1;}
+  /* the layers are as good a target as the text beside them: four invisible
+     zones over the canvas, split at the midpoints between band centres, so
+     every pointer position belongs to the nearest wave */
+  .rp-hit{position:absolute; top:0; left:37.5%; bottom:0; width:42%; z-index:2;}
+  .rp-hit span{position:absolute; left:0; width:100%; display:block;}
+  .rp-hit span:nth-child(1){top:0; height:29.33%;}
+  .rp-hit span:nth-child(2){top:29.33%; height:20.67%;}
+  .rp-hit span:nth-child(3){top:50%; height:20.67%;}
+  .rp-hit span:nth-child(4){top:70.67%; bottom:0;}
+  @media (max-width:860px){ .rp-hit{display:none;} }
+  /* hovering either side of the pairing lights the other, so it is legible
+     which text belongs to which wave */
+  .rp-fnd:hover, .rp-fnd.is-hot{background:rgba(245,245,242,0.045);}
   .rp-canvas canvas{display:block;}
   /* the per-pathway waves are a narrow-screen thing only: on a wide screen
      the four bands are read together in the one canvas */
@@ -593,7 +607,7 @@
   .rp-fnd-01 .code, .rp-fnd-01 h4{color:#e7964b;}
   .rp-fnd-03 .code, .rp-fnd-03 h4{color:#4fb488;}
   .rp-fnd-04 .code, .rp-fnd-04 h4{color:#c9ced3;}
-  .rp-fnd-02 .code, .rp-fnd-02 h4{color:#8fb0ff;}
+  .rp-fnd-02 .code, .rp-fnd-02 h4{color:#a98cf5;}
   .rp-info{
     position:relative; display:inline-grid; place-items:center; vertical-align:middle;
     width:16px; height:16px; margin-left:7px; margin-bottom:2px; padding:0;
@@ -637,22 +651,19 @@
   /* a pop carrying a short list rather than a single sentence. a <button> only
      takes phrasing content, so the items are spans with their own dash */
   .rp-note .rp-info-pop-wide{width:390px; max-width:min(82vw,400px);}
-  .note-drop{position:relative; display:inline-block;}
-  .note-drop .note-pop{
-    width:min(520px,86vw); max-width:min(520px,86vw);
-    font-size:13.5px; line-height:1.62; padding:16px 18px;
+  .note-head{display:flex; flex-wrap:wrap; align-items:center; gap:14px 18px;}
+  .note-lead{font-size:14px; color:var(--paper-dim); margin:0; max-width:520px;}
+  .note-body{
+    max-height:0; overflow:hidden; opacity:0; max-width:760px;
+    transition:max-height .42s ease, opacity .3s ease, margin-top .42s ease;
+    margin-top:0;
   }
-  .note-drop:hover .note-pop, .note-drop:focus-within .note-pop,
-  .note-drop[data-open="true"] .note-pop{
-    opacity:1; visibility:visible; transform:translateY(0); pointer-events:auto;
-  }
-  .note-drop[data-open="true"] .rp-note::after{content:"–";}
-  .note-pop p{margin:0 0 11px;}
-  .note-pop p:last-child{margin-bottom:0;}
-  .note-pop a{color:var(--paper); text-decoration:underline; text-decoration-color:var(--supply);}
-  .note-pop a:hover{color:var(--supply);}
-  .note-row{display:flex; flex-wrap:wrap; align-items:center; gap:14px 18px;}
-  .note-row-lead{font-size:14px; color:var(--paper-dim); margin:0; max-width:520px;}
+  .note-block[data-open="true"] .note-body{opacity:1; margin-top:16px;}
+  .note-block[data-open="true"] .rp-note::after{content:"–";}
+  .note-body p{font-size:15px; line-height:1.62; color:var(--paper-dim); margin:0 0 12px;}
+  .note-body p:last-child{margin-bottom:0;}
+  .note-body a{color:var(--paper); text-decoration:underline; text-decoration-color:var(--supply);}
+  .note-body a:hover{color:var(--supply);}
   .rp-pop-lead{display:block; color:var(--paper); margin-bottom:9px;}
   .rp-pop-item{display:block; position:relative; padding-left:17px; margin-bottom:7px;}
   .rp-pop-item:last-child{margin-bottom:0;}
@@ -849,7 +860,7 @@
   @media (max-width:700px){ .tracks{grid-template-columns:1fr;} }
   /* each track takes the colour of the wave its items ride */
   .track.pw-01{--tk:#e7964b;}
-  .track.pw-02{--tk:#8fb0ff;}
+  .track.pw-02{--tk:#a98cf5;}
   .track.pw-03{--tk:#c9ced3;}
   .track.pw-04{--tk:#4fb488;}
   .track .swatch{background:var(--tk);}
@@ -936,6 +947,13 @@
     /* scaled to a phone the labels come out around 5px, so the diagram keeps a
        readable width and scrolls inside its own box instead */
     .gov-lock-svg{min-width:760px;}
+  }
+  /* outranks .section-head p, which sets the grey body size */
+  .section-head .gov-question{
+    font-family:var(--display); font-weight:700; color:var(--paper);
+    font-size:clamp(17px,1.9vw,22px); line-height:1.35;
+    max-width:720px; margin:18px 0 0; padding-left:18px;
+    border-left:2px solid rgba(143,176,255,0.75);
   }
   .gov-wrap{display:grid; grid-template-columns:1fr; gap:26px;}
   .ladder{display:grid; grid-template-columns:repeat(3, 1fr); gap:0;}
@@ -1700,11 +1718,8 @@
     <div class="section-head reveal">
       <div class="eyebrow">WHO HOLDS THE LINE</div>
       <h2>Governance that can’t be voted back onto the market</h2>
-      <div class="plain-summary">
-        <span class="ps-label">In plain terms</span>
-        <p>We need rules that stop this work being sold off or quietly undone later — similar to how some housing co-ops are set up so no single vote can ever put the building back on the open market.</p>
-      </div>
-      <p>For a council leader, this is the answer to “who else is doing this and how do we join.” For national government, it’s the delivery chain a policy actually runs through. In Germany’s <em>Mietshäuser Syndikat</em>, a tenants’ association and a wider syndicate each hold 50% of a building — so no single vote, however popular, can ever put it back on the speculative market. The question underneath this portfolio is whether food infrastructure can be governed the same way.</p>
+      <p>We need rules that stop this work being sold off or quietly undone later — similar to how some housing co-ops are set up so no single vote can ever put the building back on the speculative market (<em>Mietshäuser Syndikat</em>). The question is then:</p>
+      <p class="gov-question">Can food infrastructure be governed in a way that stays “with the people” and scales at the same time?</p>
     </div>
     <figure class="gov-lock reveal">
       <div class="gov-lock-scroll">
@@ -1853,27 +1868,27 @@
           </figure>
         </div>
       </div>
-      <div class="note-row reveal">
-        <div class="note-drop">
+      <div class="note-block reveal">
+        <div class="note-head">
           <button type="button" class="rp-note" aria-expanded="false" aria-controls="accountNote">Accountability layer</button>
-          <div class="rp-info-pop note-pop" id="accountNote" role="region" aria-label="The accountability layer">
-            <p>A charter sits above individual projects: minimum requirements to count as a genuine partner, and visibility between members so nobody drifts from the same goal. A food bank can be a member — but only if it’s providing real wraparound support, not a parcel and a goodbye.</p>
-            <p>The same logic extends to a borough market’s trader waiting list, hotel-development leases, and any contract long enough to lock in a supplier’s behaviour rather than just their price.</p>
-            <p>In practice, that means people nominate themselves for a workstream and declare, in front of the group, where they want to be in six months — soft accountability that turns “come and collaborate” into something with an actual deadline.</p>
-          </div>
+          <p class="note-lead">A charter sits across all three tiers: what it takes to count as a genuine partner, and visibility between members so nobody drifts.</p>
         </div>
-        <p class="note-row-lead">A charter sits across all three tiers: what it takes to count as a genuine partner, and visibility between members so nobody drifts.</p>
+        <div class="note-body" id="accountNote" role="region" aria-label="The accountability layer">
+          <p>A charter sits above individual projects: minimum requirements to count as a genuine partner, and visibility between members so nobody drifts from the same goal. A food bank can be a member — but only if it’s providing real wraparound support, not a parcel and a goodbye.</p>
+          <p>The same logic extends to a borough market’s trader waiting list, hotel-development leases, and any contract long enough to lock in a supplier’s behaviour rather than just their price.</p>
+          <p>In practice, that means people nominate themselves for a workstream and declare, in front of the group, where they want to be in six months — soft accountability that turns “come and collaborate” into something with an actual deadline.</p>
+        </div>
       </div>
     </div>
-    <div class="note-row precedent-row reveal">
-      <div class="note-drop">
+    <div class="note-block precedent-row reveal">
+      <div class="note-head">
         <button type="button" class="rp-note" aria-expanded="false" aria-controls="precedentNote" style="color:var(--supply);">Precedent &amp; our role</button>
-        <div class="rp-info-pop note-pop" id="precedentNote" role="region" aria-label="Precedent and our role">
-          <p>This isn’t the first time the “as infrastructure” reframe has done real work inside Dark Matter Labs. <a href="https://darkmatterlabs.org/initiatives/treesai" target="_blank" rel="noopener">Trees as Infrastructure (TreesAI)</a> made the same move for urban canopy — building the funding infrastructure for something previously treated as decoration. Food follows the same logic, one step down the same road.</p>
-          <p>Dark Matter Labs’ role here is researcher, coordinator, and orchestrator of the work and the funding behind it. Camden is one of several London boroughs genuinely moving the needle on this — a partner, not a commissioner — each testing a local answer to what is, underneath, a global pattern. Cities everywhere are hitting the same wall: food fragility that no single council, or country, can price its way out of alone.</p>
-        </div>
+        <p class="note-lead">The “as infrastructure” move has done this work before — for urban canopy, through TreesAI.</p>
       </div>
-      <p class="note-row-lead">The “as infrastructure” move has done this work before — for urban canopy, through TreesAI.</p>
+      <div class="note-body" id="precedentNote" role="region" aria-label="Precedent and our role">
+        <p>This isn’t the first time the “as infrastructure” reframe has done real work inside Dark Matter Labs. <a href="https://darkmatterlabs.org/initiatives/treesai" target="_blank" rel="noopener">Trees as Infrastructure (TreesAI)</a> made the same move for urban canopy — building the funding infrastructure for something previously treated as decoration. Food follows the same logic, one step down the same road.</p>
+        <p>Dark Matter Labs’ role here is researcher, coordinator, and orchestrator of the work and the funding behind it. Camden is one of several London boroughs genuinely moving the needle on this — a partner, not a commissioner — each testing a local answer to what is, underneath, a global pattern. Cities everywhere are hitting the same wall: food fragility that no single council, or country, can price its way out of alone.</p>
+      </div>
     </div>
   </div>
 </section>
@@ -2254,7 +2269,7 @@
         c.d = Math.hypot(c.x - camden.x, c.y - camden.y);
         if(c.d > max) max = c.d;
       });
-      var BASE = [26,26,26], ACCENT = [255,90,31];
+      var BASE = [26,26,26], ACCENT = [74,132,208];
       centres.forEach(function(c, i){
         var d = max ? c.d / max : 0;
         var warm = Math.pow(1 - d, 1.7) * 0.62;      // 1 at Camden, easing off
@@ -2356,7 +2371,7 @@
   document.addEventListener('DOMContentLoaded', function(){
     // a tooltip anchors to whatever opened it, which can land anywhere on a
     // line — nudge it back inside the viewport instead of scrolling the page
-    document.querySelectorAll('.rp-info, .rp-note, .crisis-endstat, .note-drop').forEach(function(btn){
+    document.querySelectorAll('.rp-info, .rp-note, .crisis-endstat').forEach(function(btn){
       var pop = btn.querySelector('.rp-info-pop');
       if(!pop) return;
       btn.addEventListener('pointerenter', place);
@@ -2374,20 +2389,32 @@
       }
     });
 
-    /* the two long-form notes hold open on click as well as hover, so they can
-       be read on a touch screen and the link inside one can be followed */
-    document.querySelectorAll('.note-drop').forEach(function(drop){
-      var btn = drop.querySelector('.rp-note');
-      if(!btn) return;
+    /* the two long notes expand in place. A floating pop you have to keep the
+       pointer inside is the wrong shape for several paragraphs, so these open
+       downwards and stay open -- measured rather than given a fixed cap, so
+       the reveal lasts as long as the text is tall. */
+    document.querySelectorAll('.note-block').forEach(function(block){
+      var btn = block.querySelector('.rp-note');
+      var body = block.querySelector('.note-body');
+      if(!btn || !body) return;
       function set(open){
-        drop.setAttribute('data-open', String(open));
+        block.setAttribute('data-open', String(open));
         btn.setAttribute('aria-expanded', String(open));
+        body.style.maxHeight = open ? body.scrollHeight + 'px' : '0px';
       }
-      btn.addEventListener('click', function(){ set(drop.getAttribute('data-open') !== 'true'); });
-      drop.addEventListener('keydown', function(e){
+      set(false);
+      btn.addEventListener('click', function(){ set(block.getAttribute('data-open') !== 'true'); });
+      block.addEventListener('keydown', function(e){
         if(e.key === 'Escape' || e.key === 'Esc'){ set(false); btn.focus(); }
       });
-      document.addEventListener('click', function(e){ if(!drop.contains(e.target)) set(false); });
+      // a reflow changes how tall the open text is
+      window.addEventListener('resize', function(){
+        if(block.getAttribute('data-open') === 'true'){
+          body.style.maxHeight = 'none';
+          var h = body.scrollHeight;
+          body.style.maxHeight = h + 'px';
+        }
+      });
     });
 
     /* ---- the crisis chart draws itself when it comes into view ---- */
@@ -2427,6 +2454,38 @@
        from the table, so the items are written in one place only. The wave is
        GPU noise we can't reproduce exactly in JS, so a pill tracks the centre
        of its band and glides within it rather than chasing one strand. */
+    /* The wave itself answers to the pointer, not only the text beside it.
+       The canvas is WebGL, so there is nothing in it to hover -- four
+       invisible zones stand in for the bands, split at the midpoints between
+       band centres, and each drives the state its own text block drives by
+       dispatching to that block rather than keeping a second copy of the
+       mapping. */
+    (function bandHover(){
+      var stage = document.querySelector('#foundations .rp-stage');
+      if(!stage) return;
+      var rungs = ['top', 'buy', 'mid', 'bot'].map(function(key){
+        var band = document.querySelector('#foundations .rp-band[data-band="' + key + '"]');
+        return band && band.closest('.rp-fnd');
+      });
+      if(rungs.some(function(r){ return !r; })) return;
+      var hit = document.createElement('div');
+      hit.className = 'rp-hit';
+      hit.setAttribute('aria-hidden', 'true');
+      rungs.forEach(function(fnd){
+        var zone = document.createElement('span');
+        zone.addEventListener('mouseenter', function(){
+          fnd.classList.add('is-hot');
+          fnd.dispatchEvent(new MouseEvent('mouseenter'));
+        });
+        zone.addEventListener('mouseleave', function(){
+          fnd.classList.remove('is-hot');
+          fnd.dispatchEvent(new MouseEvent('mouseleave'));
+        });
+        hit.appendChild(zone);
+      });
+      stage.appendChild(hit);
+    })();
+
     (function portfolio(){
       var section = document.getElementById('foundations');
       var pf = document.getElementById('tracks');
@@ -2440,7 +2499,7 @@
       var SPAN = 0.62, INNER = SPAN / 3;
       var BANDS = [
         {sel:'.track.pw-01', key:'top', y: SPAN,  tk:'#e7964b'},
-        {sel:'.track.pw-02', key:'buy', y: INNER, tk:'#8fb0ff'},
+        {sel:'.track.pw-02', key:'buy', y: INNER, tk:'#a98cf5'},
         {sel:'.track.pw-03', key:'mid', y:-INNER, tk:'#c9ced3'},
         {sel:'.track.pw-04', key:'bot', y:-SPAN,  tk:'#4fb488'}
       ];
@@ -2688,7 +2747,7 @@
 
   });
 </script>
-<script type="module" src="assets/foundations/wave.js?v=19"></script>
+<script type="module" src="assets/foundations/wave.js?v=20"></script>
 
 </body>
 </html>
