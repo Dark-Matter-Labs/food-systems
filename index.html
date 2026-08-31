@@ -319,6 +319,78 @@
     filter:sepia(1) saturate(3) hue-rotate(174deg) brightness(0.96);
   }
 
+  /* ---- The ask, after the stack: its own held screen, and the same ball in
+     the same water as the conditions figure. At rest it floats and bobs; reach
+     for it and it dives, which is the one bit of motion on the page that is
+     asking for something. ---- */
+  .cta-dive{
+    min-height:60vh; display:flex; flex-direction:column; align-items:center;
+    justify-content:center; text-align:center; gap:26px; padding:40px 0 20px;
+  }
+  .cta-dive-lead{
+    color:var(--paper-dim); font-size:16px; line-height:1.62;
+    max-width:640px; margin:0;
+  }
+  .cta-ball{
+    position:relative; display:block; width:clamp(210px,24vw,260px);
+    aspect-ratio:1; text-decoration:none; border-radius:50%;
+  }
+  .cta-ball-svg{display:block; width:100%; height:100%; overflow:visible;}
+  .cta-ball-label{
+    position:absolute; left:50%; top:39%; transform:translate(-50%,-50%);
+    width:74%; font-family:var(--display); font-weight:700;
+    font-size:clamp(14px,1.5vw,17px); line-height:1.28; color:var(--ink);
+    transition:transform .5s cubic-bezier(.2,.75,.2,1), color .35s ease;
+  }
+  .cta-ball-arrow{display:inline-block; transition:transform .45s ease;}
+  .cta-top{fill:#c9ced3; fill-opacity:0.9;}
+  .cta-sub{fill:#c9ced3; fill-opacity:0.42;}
+  .cta-surface{fill:none; stroke:var(--paper); stroke-width:1.1;}
+  .cta-surface-front{opacity:0.5;}
+  .cta-surface-back{opacity:0.2;}
+  /* it floats: a small idle bob, so the ask has a pulse to it */
+  @keyframes ctaFloat{
+    0%,100%{transform:translateY(0) rotate(0deg);}
+    35%{transform:translateY(5px) rotate(0.9deg);}
+    70%{transform:translateY(-3px) rotate(-0.8deg);}
+  }
+  @keyframes ctaDrift{from{transform:translateX(0);} to{transform:translateX(-65px);}}
+  @keyframes ctaRing{
+    0%{transform:scale(0.55); opacity:0;}
+    18%{opacity:0.28;}
+    100%{transform:scale(1.3); opacity:0;}
+  }
+  .cta-dip{
+    transform-box:fill-box; transform-origin:center;
+    animation:ctaFloat 6s ease-in-out infinite;
+    transition:transform .6s cubic-bezier(.2,.75,.2,1);
+  }
+  .cta-surface-front{animation:ctaDrift 7s linear infinite;}
+  .cta-surface-back{animation:ctaDrift 11s linear infinite reverse;}
+  /* the rings only run while it is diving */
+  .cta-ripple{
+    fill:none; stroke:var(--paper); stroke-width:1; opacity:0;
+    transform-box:fill-box; transform-origin:center;
+  }
+  .cta-ball:hover .cta-ripple, .cta-ball:focus-visible .cta-ripple{animation:ctaRing 1.6s ease-out infinite;}
+  .cta-ripple-2{animation-delay:.55s;}
+  /* the dive itself: the waterline stays put, so sinking the ball is all it takes */
+  .cta-ball:hover .cta-dip, .cta-ball:focus-visible .cta-dip{
+    animation:none; transform:translateY(50px);
+  }
+  .cta-ball:hover .cta-dip-deep, .cta-ball:focus-visible .cta-dip-deep{transform:translateY(55px);}
+  .cta-ball:hover .cta-ball-label, .cta-ball:focus-visible .cta-ball-label{
+    transform:translate(-50%,-50%) translateY(15px);
+  }
+  .cta-ball:hover .cta-ball-arrow, .cta-ball:focus-visible .cta-ball-arrow{transform:translate(2px,-2px);}
+  .cta-ball:focus{outline:none;}
+  .cta-ball:focus-visible{outline:1px dashed var(--line-strong); outline-offset:8px;}
+  @media (prefers-reduced-motion: reduce){
+    .cta-dip, .cta-surface-front, .cta-surface-back{animation:none;}
+    .cta-ball:hover .cta-ripple, .cta-ball:focus-visible .cta-ripple{animation:none; opacity:0.18;}
+  }
+  @media (max-width:600px){ .cta-dive{min-height:0; padding:24px 0 8px; gap:20px;} }
+
   /* ===================== WHY NOW ===================== */
   .why-now-grid{display:grid; grid-template-columns:0.9fr 1.1fr; gap:48px; align-items:start;}
   @media (max-width:900px){ .why-now-grid{grid-template-columns:1fr;} }
@@ -1109,6 +1181,10 @@
   .foot-col a{display:block; font-size:14px; margin-bottom:8px; text-decoration:none; color:var(--paper); opacity:0.85;}
   .foot-col a:hover{color:var(--paper); opacity:1;}
   .foot-bottom{margin-top:44px; padding-top:20px; border-top:1px solid var(--line); font-family:var(--mono); font-size:11.5px; color:var(--paper-dim); display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;}
+  /* the hillshade is CC BY-SA, so the credit has to live somewhere -- it just
+     does not have to live next to the ask */
+  .foot-credit{opacity:0.62; flex-basis:100%;}
+  .foot-credit a{color:inherit; text-decoration:underline;}
 
   /* reveal on scroll — visible by default; JS opts elements into the fade-in.
      If JS fails for any reason, content stays visible, never hidden. */
@@ -1334,10 +1410,56 @@
   </div>
 
   <div class="wrap">
-    <div class="reveal" style="margin-top:12px;">
-      <p style="color:var(--paper-dim); font-size:15px; max-width:640px; margin:0 0 16px;">Whether you lead a council, think about a cross-borough coalition, work in national government, you’re already doing this work on the ground, or want to help develop financing and economic infrastructure around it — tell us where you fit, and how you’d want to be part of the next phase.</p>
-      <a class="btn solid" href="https://form.typeform.com/to/wh0nI0m0" target="_blank" rel="noopener">Tell us where you fit ↗</a>
-      <p class="crisis-sources" style="margin-top:18px;">National relief base: <a href="https://commons.wikimedia.org/wiki/File:United_Kingdom_relief_location_map.png" target="_blank" rel="noopener">Wikimedia Commons</a>, CC BY-SA 3.0.</p>
+    <div class="cta-dive reveal">
+      <p class="cta-dive-lead">Whether you lead a council, think about a cross-borough coalition, work in national government, you’re already doing this work on the ground, or want to help develop financing and economic infrastructure around it — tell us where you fit, and how you’d want to be part of the next phase.</p>
+      <!-- the same ball, the same water: at rest it floats and bobs, and it
+           dives when you reach for it -->
+      <a class="cta-ball" href="https://form.typeform.com/to/wh0nI0m0" target="_blank" rel="noopener" aria-label="Tell us where you fit — opens a short form">
+        <svg class="cta-ball-svg" viewBox="0 0 260 260" aria-hidden="true">
+          <defs>
+            <filter id="ctaBlur" x="-40%" y="-40%" width="180%" height="180%">
+              <feGaussianBlur stdDeviation="6"/>
+            </filter>
+            <path id="ctaWave" d="M-130,176 q16.25,-3.5 32.5,0 q16.25,3.5 32.5,0 q16.25,-3.5 32.5,0 q16.25,3.5 32.5,0 q16.25,-3.5 32.5,0 q16.25,3.5 32.5,0 q16.25,-3.5 32.5,0 q16.25,3.5 32.5,0 q16.25,-3.5 32.5,0 q16.25,3.5 32.5,0 q16.25,-3.5 32.5,0 q16.25,3.5 32.5,0 q16.25,-3.5 32.5,0 q16.25,3.5 32.5,0 q16.25,-3.5 32.5,0 q16.25,3.5 32.5,0"/>
+            <clipPath id="ctaAbove"><path d="M-130,176 q16.25,-3.5 32.5,0 q16.25,3.5 32.5,0 q16.25,-3.5 32.5,0 q16.25,3.5 32.5,0 q16.25,-3.5 32.5,0 q16.25,3.5 32.5,0 q16.25,-3.5 32.5,0 q16.25,3.5 32.5,0 q16.25,-3.5 32.5,0 q16.25,3.5 32.5,0 q16.25,-3.5 32.5,0 q16.25,3.5 32.5,0 q16.25,-3.5 32.5,0 q16.25,3.5 32.5,0 q16.25,-3.5 32.5,0 q16.25,3.5 32.5,0 L390,-80 L-130,-80 Z"/></clipPath>
+            <clipPath id="ctaBelow"><path d="M-130,176 q16.25,-3.5 32.5,0 q16.25,3.5 32.5,0 q16.25,-3.5 32.5,0 q16.25,3.5 32.5,0 q16.25,-3.5 32.5,0 q16.25,3.5 32.5,0 q16.25,-3.5 32.5,0 q16.25,3.5 32.5,0 q16.25,-3.5 32.5,0 q16.25,3.5 32.5,0 q16.25,-3.5 32.5,0 q16.25,3.5 32.5,0 q16.25,-3.5 32.5,0 q16.25,3.5 32.5,0 q16.25,-3.5 32.5,0 q16.25,3.5 32.5,0 L390,360 L-130,360 Z"/></clipPath>
+            <clipPath id="ctaFrame"><rect x="0" y="0" width="260" height="260"/></clipPath>
+            <radialGradient id="ctaSheen" cx="38%" cy="26%" r="80%">
+              <stop offset="0" stop-color="#ffffff" stop-opacity="0.16"/>
+              <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+            </radialGradient>
+            <linearGradient id="ctaWater" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#f5f5f2" stop-opacity="0.1"/>
+              <stop offset="0.4" stop-color="#f5f5f2" stop-opacity="0.04"/>
+              <stop offset="1" stop-color="#f5f5f2" stop-opacity="0.008"/>
+            </linearGradient>
+          </defs>
+          <g clip-path="url(#ctaFrame)">
+            <g clip-path="url(#ctaBelow)">
+              <rect x="-20" y="150" width="300" height="200" fill="url(#ctaWater)"/>
+            </g>
+            <!-- the submerged part: the waterline holds still, the ball moves -->
+            <g clip-path="url(#ctaBelow)" filter="url(#ctaBlur)">
+              <g class="cta-dip cta-dip-deep">
+                <circle class="cta-sub" cx="130" cy="112" r="78"/>
+              </g>
+            </g>
+            <g clip-path="url(#ctaBelow)">
+              <use class="cta-surface cta-surface-back" href="#ctaWave"/>
+            </g>
+            <g clip-path="url(#ctaAbove)">
+              <g class="cta-dip">
+                <circle class="cta-top" cx="130" cy="112" r="78"/>
+                <circle class="cta-sheen" cx="130" cy="112" r="78" fill="url(#ctaSheen)"/>
+              </g>
+            </g>
+            <ellipse class="cta-ripple" cx="130" cy="177" rx="62" ry="9"/>
+            <ellipse class="cta-ripple cta-ripple-2" cx="130" cy="177" rx="62" ry="9"/>
+            <use class="cta-surface cta-surface-front" href="#ctaWave"/>
+          </g>
+        </svg>
+        <span class="cta-ball-label">Tell us<br>where you fit <span class="cta-ball-arrow">↗</span></span>
+      </a>
     </div>
   </div>
 </section>
@@ -2151,6 +2273,7 @@
     <div class="foot-bottom">
       <span>A LONDON-WIDE PORTFOLIO, 2026</span>
       <span>FOOD AS INFRASTRUCTURE — WORKING DRAFT · DARK MATTER LABS</span>
+      <span class="foot-credit">National relief base: <a href="https://commons.wikimedia.org/wiki/File:United_Kingdom_relief_location_map.png" target="_blank" rel="noopener">Wikimedia Commons</a>, CC BY-SA 3.0</span>
     </div>
   </div>
 </footer>
