@@ -330,65 +330,18 @@
     color:var(--paper-dim); font-size:16px; line-height:1.62;
     max-width:640px; margin:0;
   }
-  /* ---- The gathered pile: the four planes settle into one close stack, each
-     keeping the pill that names its scale, and the ball lands on top of it as
-     the layer you add by answering. The stage is only as wide as the planes so
-     the pills can sit just off their own edge. ---- */
-  .gather{position:relative; width:100%; max-width:260px; height:480px; margin:0 auto;}
-  .gather-layer{position:absolute; left:0; right:0; transition:transform 1.05s cubic-bezier(.2,.75,.2,1);}
-  .gather-plane{
-    margin:0 auto; transform:rotateX(52deg) rotateZ(-2deg);
-    filter:drop-shadow(0 16px 15px rgba(0,0,0,0.5));
-  }
-  .gather-plane svg{display:block; width:100%; height:auto; overflow:visible;}
-  #gatherCamden, #gatherLondon, #gatherActors{width:250px;}
-  #gatherUk{width:150px;}
-  #gatherCamden svg path{fill:rgba(74,132,208,0.9); stroke:var(--ink); stroke-width:1.6;}
-  #gatherLondon svg path{fill:rgba(245,245,242,0.1); stroke:rgba(245,245,242,0.22); stroke-width:0.7;}
-  #gatherActors svg path{fill:#1c222b; stroke:var(--line); stroke-width:0.7;}
-  #gatherUk svg image{opacity:0.92; filter:sepia(1) saturate(3) hue-rotate(174deg) brightness(0.96);}
-  /* slot centres, close together -- and each layer starts spread out above its
-     slot, so arriving here is the stack closing up */
-  .gather-l-camden{top:252px; transform:translateY(calc(-50% - 144px));}
-  .gather-l-london{top:288px; transform:translateY(calc(-50% - 96px));}
-  .gather-l-actors{top:324px; transform:translateY(calc(-50% - 48px));}
-  .gather-l-uk{top:360px; transform:translateY(-50%);}
-  .cta-dive.in .gather-layer{transform:translateY(-50%);}
-  .cta-dive.in .gather-l-actors{transition-delay:.15s;}
-  .cta-dive.in .gather-l-london{transition-delay:.3s;}
-  .cta-dive.in .gather-l-camden{transition-delay:.45s;}
-  .gather-tag{
-    position:absolute; transform:translateY(-50%);
-    font-family:var(--mono); font-size:11px; letter-spacing:0.08em; text-transform:uppercase;
-    color:var(--paper-dim); white-space:nowrap;
-    opacity:0; transition:opacity .6s ease .55s;
-  }
-  .cta-dive.in .gather-tag{opacity:1;}
-  .gather-tag::after{content:''; position:absolute; top:50%; width:15px; height:1px; background:var(--line-strong);}
-  .gather-tag-camden, .gather-tag-actors{right:calc(100% + 26px); text-align:right;}
-  .gather-tag-camden::after, .gather-tag-actors::after{left:calc(100% + 6px);}
-  .gather-tag-london, .gather-tag-uk{left:calc(100% + 26px);}
-  .gather-tag-london::after, .gather-tag-uk::after{right:calc(100% + 6px);}
-  .gather-tag-camden{top:252px;}
-  .gather-tag-london{top:288px;}
-  .gather-tag-actors{top:324px;}
-  .gather-tag-uk{top:360px;}
-  /* the ball rests on the top of the pile */
   .cta-ball{
-    position:absolute; left:50%; top:4px; transform:translateX(-50%); z-index:3;
-    display:block; width:240px; aspect-ratio:1; text-decoration:none; border-radius:50%;
-  }
-  @media (max-width:860px){
-    .gather{max-width:none; height:auto; display:flex; justify-content:center;}
-    .gather-layer, .gather-tag{display:none;}
-    .cta-ball{position:relative; left:auto; top:auto; transform:none; width:clamp(200px,62vw,240px);}
+    position:relative; display:block; width:clamp(210px,24vw,260px);
+    aspect-ratio:1; text-decoration:none; border-radius:50%;
   }
   .cta-ball-svg{display:block; width:100%; height:100%; overflow:visible;}
-  /* locked to the middle of the ball, bob and dive included -- so it rides
-     with it rather than drifting across it */
+  /* Locked to the middle of the ball, bob and dive included. Not the middle of
+     the box: the ball's centre sits at y 112 of the 260 viewBox, because it
+     floats above the waterline rather than sitting in the middle of its own
+     frame -- so 43.08%, not 50%. */
   .cta-ball-label{
-    position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
-    width:74%; font-family:var(--display); font-weight:700;
+    position:absolute; left:50%; top:43.08%; transform:translate(-50%,-50%);
+    max-width:62%; font-family:var(--display); font-weight:700;
     font-size:clamp(14px,1.5vw,17px); line-height:1.28; color:var(--ink);
     animation:ctaLabelFloat 6s ease-in-out infinite;
     transition:transform .6s cubic-bezier(.2,.75,.2,1), color .35s ease;
@@ -443,7 +396,6 @@
   .cta-ball:focus-visible{outline:1px dashed var(--line-strong); outline-offset:8px;}
   @media (prefers-reduced-motion: reduce){
     .cta-dip, .cta-surface-front, .cta-surface-back, .cta-ball-label{animation:none;}
-    .gather-layer{transition:none;}
     .cta-ball:hover .cta-ripple, .cta-ball:focus-visible .cta-ripple{animation:none; opacity:0.18;}
   }
   @media (max-width:600px){ .cta-dive{min-height:0; padding:24px 0 8px; gap:20px;} }
@@ -1492,18 +1444,6 @@
   <div class="wrap">
     <div class="cta-dive reveal">
       <p class="cta-dive-lead">Whether you lead a council, think about a cross-borough coalition, work in national government, you’re already doing this work on the ground, or want to help develop financing and economic infrastructure around it — tell us where you fit, and how you’d want to be part of the next phase.</p>
-      <!-- The stack, gathered: after four screens of layers spread apart, they
-           settle into one close pile and keep the pill that names each scale.
-           The ball is the layer that lands on top of it. -->
-      <div class="gather">
-        <div class="gather-layer gather-l-uk"><div class="gather-plane" id="gatherUk" aria-hidden="true"></div></div>
-        <div class="gather-layer gather-l-actors"><div class="gather-plane" id="gatherActors" aria-hidden="true"></div></div>
-        <div class="gather-layer gather-l-london"><div class="gather-plane" id="gatherLondon" aria-hidden="true"></div></div>
-        <div class="gather-layer gather-l-camden"><div class="gather-plane" id="gatherCamden" aria-hidden="true"></div></div>
-        <span class="gather-tag gather-tag-camden">Council leaders</span>
-        <span class="gather-tag gather-tag-london">London — regional level</span>
-        <span class="gather-tag gather-tag-actors">Producers, food hubs, civic organisations</span>
-        <span class="gather-tag gather-tag-uk">National government</span>
       <!-- the same ball, the same water: at rest it floats and bobs, and it
            dives when you reach for it -->
       <a class="cta-ball" href="https://form.typeform.com/to/wh0nI0m0" target="_blank" rel="noopener" aria-label="Tell us where you fit — opens a short form">
@@ -1520,8 +1460,8 @@
               <stop offset="0" stop-color="#ffffff" stop-opacity="0.16"/>
               <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
             </radialGradient>
-            <!-- radial, not a vertical band: over the gathered planes a
-                 rectangle of water read as a slab laid across them -->
+            <!-- radial rather than a vertical band: a rectangle of water
+                 shows its own corners against anything but flat black -->
             <radialGradient id="ctaWater" cx="50%" cy="6%" r="96%">
               <stop offset="0" stop-color="#f5f5f2" stop-opacity="0.14"/>
               <stop offset="0.45" stop-color="#f5f5f2" stop-opacity="0.05"/>
@@ -1564,7 +1504,7 @@
         </svg>
         <span class="cta-ball-label">Tell us<br>where you fit <span class="cta-ball-arrow">↗</span></span>
       </a>
-      </div>
+    </div>
   </div>
 </section>
 
@@ -2473,12 +2413,6 @@
       {id:'planeLondonContext', src:'assets/axo/london-boroughs.svg'},
       {id:'planeLondonGrey', src:'assets/axo/london-boroughs.svg'},
       {id:'planeUk', src:'assets/axo/uk-relief.svg?v=5'},
-      /* the gathered pile at the foot of the stack: the same four faces again,
-         small and close together */
-      {id:'gatherCamden', src:'assets/axo/camden.svg'},
-      {id:'gatherLondon', src:'assets/axo/london-boroughs.svg'},
-      {id:'gatherActors', src:'assets/axo/london-boroughs.svg'},
-      {id:'gatherUk', src:'assets/axo/uk-relief.svg?v=5'},
       /* the governance section is the same stack again, so it loads the same
          four faces rather than a second set of drawings */
       {id:'govPlaneBorough', src:'assets/axo/camden.svg'},
