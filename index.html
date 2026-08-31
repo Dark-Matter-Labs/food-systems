@@ -449,7 +449,13 @@
   }
   /* second stage: the long annotations give way so the four waves can take the
      full width, and the interventions come up on them as pills */
-  [data-pfstage="portfolio"] .rp-stage{height:min(700px, 74vh);}
+  [data-pfstage="portfolio"] .rp-stage{height:clamp(420px, 58vh, 560px);}
+  /* and the waves hold their place while the pills are up. only while the table
+     is closed -- once it's open it is the thing being read, and a pinned stage
+     would swallow the rows as they came past */
+  [data-pfstage="portfolio"][data-table="closed"] .rp-stage{
+    position:sticky; top:64px; z-index:3; background:var(--ink);
+  }
   .rp-labels, .rp-outcomes{transition:opacity .4s ease;}
   .rp-canvas{transition:left .5s ease, width .5s ease;}
   [data-pfstage="portfolio"] .rp-labels,
@@ -685,6 +691,9 @@
   .compare .col p{font-size:14.5px; margin:0; color:var(--paper-dim);}
   /* ===================== TRACKS ===================== */
   .tracks{display:grid; grid-template-columns:repeat(4,1fr); gap:2px; background:var(--line);}
+  /* display:grid above would otherwise beat the UA's [hidden] rule, so the
+     collapsed table has to be told to stay down */
+  .tracks[hidden]{display:none;}
   @media (max-width:1180px){ .tracks{grid-template-columns:repeat(2,1fr);} }
   @media (max-width:700px){ .tracks{grid-template-columns:1fr;} }
   /* each track takes the colour of the wave its items ride */
@@ -1907,7 +1916,7 @@
             col: nodes.length === 1 ? 0.5 : 0.10 + (i / (nodes.length - 1)) * 0.80,
             /* neighbours alternate above and below the band centre so long
                labels don't collide along a busy wave */
-            stagger: ((i % 3) - 1) * 26,
+            level: (i % 3) - 1,
             phase: i * 1.3 + bi * 0.7
           });
 
@@ -1929,6 +1938,9 @@
         var ox = c.left - s.left, oy = c.top - s.top;
         function toY(w){ return oy + (1 - w) / 2 * c.height; }
         function toX(col){ return ox + (((col * 2 - 1) * 0.96 + 1) / 2) * c.width; }
+        /* the bands close up as the stage shortens, so the stagger has to shrink
+           with them or neighbouring waves collide */
+        var step = Math.min(26, c.height * 0.05);
 
         BANDS.forEach(function(b){
           if(!b.el) return;
@@ -1937,7 +1949,7 @@
         });
         items.forEach(function(it){
           var drift = Math.sin(t * 0.45 + it.phase) * 0.035;
-          var x = toX(it.col), y = toY(it.band.y + drift) + it.stagger;
+          var x = toX(it.col), y = toY(it.band.y + drift) + it.level * step;
           it.pill.style.left = Math.round(x) + 'px';
           it.pill.style.top = Math.round(y) + 'px';
           it.pop.style.left = Math.round(x) + 'px';
@@ -1967,18 +1979,15 @@
       }, {rootMargin: '-40% 0px 0px 0px'}).observe(pf);
 
       if(toggle && table){
-        // the pills are off at narrow widths, so the table can't also start
-        // closed there -- it would put the whole portfolio behind a button
-        if(window.matchMedia('(max-width:900px)').matches){
-          table.hidden = false;
-          toggle.setAttribute('aria-expanded', 'true');
-          toggle.textContent = 'Hide the table';
-        }
+        section.setAttribute('data-table', table.hidden ? 'closed' : 'open');
         toggle.addEventListener('click', function(){
           var open = toggle.getAttribute('aria-expanded') === 'true';
           toggle.setAttribute('aria-expanded', String(!open));
           table.hidden = open;
           toggle.textContent = open ? 'Show the full table' : 'Hide the table';
+          // opening the table releases the pinned stage
+          section.setAttribute('data-table', open ? 'closed' : 'open');
+          layout(clock());
         });
       }
     })();
