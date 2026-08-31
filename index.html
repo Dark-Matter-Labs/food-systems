@@ -443,31 +443,77 @@
   .plaque p{font-size:15px; color:var(--paper-dim); margin:0;}
 
   /* ---- foundations wave diagram (adapted from the Resilience Platform piece) ---- */
-  /* the wave stage pins itself once the portfolio scrolls up, so the four
-     layers stay on screen while the items that ride them go past underneath */
   .rp-stage{
-    position:sticky; top:68px; z-index:3; background:var(--ink);
-    margin-top:8px; height:min(760px, 80vh);
+    position:relative; margin-top:8px; height:min(760px, 80vh);
     transition:height .5s ease;
   }
-  /* second stage: the descriptions give way, the layers stay, and the item
-     dots come up on the waves */
-  [data-pfstage="portfolio"] .rp-stage{height:min(430px, 46vh);}
+  /* second stage: the long annotations give way so the four waves can take the
+     full width, and the interventions come up on them as pills */
+  [data-pfstage="portfolio"] .rp-stage{height:min(700px, 74vh);}
+  .rp-labels, .rp-outcomes{transition:opacity .4s ease;}
+  .rp-canvas{transition:left .5s ease, width .5s ease;}
+  [data-pfstage="portfolio"] .rp-labels,
+  [data-pfstage="portfolio"] .rp-outcomes{opacity:0; pointer-events:none;}
+  [data-pfstage="portfolio"] .rp-canvas{left:3%; width:94%;}
   .rp-fnd p{
     max-height:260px; overflow:hidden;
     transition:opacity .3s ease, max-height .5s ease, margin .5s ease;
   }
   [data-pfstage="portfolio"] .rp-fnd p{opacity:0; max-height:0;}
-  [data-pfstage="portfolio"] .rp-fnd h4{font-size:clamp(14px,1.35vw,17px);}
   [data-pfstage="portfolio"] .rp-flow-outer{opacity:0.35; transition:opacity .4s ease;}
   @media (max-width:900px){
-    /* no pinning where the stage stacks vertically and outgrows the viewport */
+    /* the stage stacks vertically here, so the stage-two rearrangement and the
+       pills on the waves are both off -- the table carries the portfolio */
     .rp-stage{position:relative; top:auto; height:auto;}
     [data-pfstage="portfolio"] .rp-stage{height:auto;}
     .rp-fnd p, [data-pfstage="portfolio"] .rp-fnd p{max-height:none; opacity:1;}
+    [data-pfstage="portfolio"] .rp-labels,
+    [data-pfstage="portfolio"] .rp-outcomes{opacity:1; pointer-events:auto;}
+    [data-pfstage="portfolio"] .rp-canvas{left:auto; width:100%;}
+    .pf-overlay{display:none;}
   }
   .rp-canvas{position:absolute; top:0; left:33%; bottom:0; width:45%; z-index:1;}
   .rp-canvas canvas{display:block;}
+
+  /* ---- the interventions, riding their pathway's wave ---- */
+  .pf-overlay{
+    position:absolute; inset:0; z-index:4; pointer-events:none;
+    opacity:0; transition:opacity .45s ease;
+  }
+  [data-pfstage="portfolio"] .pf-overlay{opacity:1;}
+  .pf-band{
+    position:absolute; transform:translateY(-50%); white-space:nowrap;
+    font-family:var(--mono); font-size:10.5px; letter-spacing:0.1em;
+    color:var(--tk); opacity:0.9;
+  }
+  .pf-pill{
+    position:absolute; transform:translate(-50%,-50%); pointer-events:auto;
+    font-family:var(--mono); font-size:10.5px; letter-spacing:0.03em; line-height:1.15;
+    color:var(--tk); background:rgba(20,18,15,0.82); border:1px solid var(--tk);
+    border-radius:999px; padding:5px 11px; white-space:nowrap; cursor:default;
+    transition:background .15s ease, color .15s ease;
+  }
+  /* the canvas narrows faster than the labels do, so the pills give a little
+     ground between the widest layout and the width where they switch off */
+  @media (max-width:1200px){
+    .pf-pill{font-size:9.5px; letter-spacing:0; padding:4px 9px;}
+  }
+  .pf-pill:hover, .pf-pill.is-open{background:var(--tk); color:#14120f; z-index:6;}
+  .pf-pill:focus{outline:none;}
+  .pf-pill:focus-visible{outline:1px dashed var(--tk); outline-offset:3px;}
+  .pf-pop{
+    position:absolute; transform:translate(-50%,0); pointer-events:none; z-index:7;
+    width:250px; padding:12px 14px; margin-top:10px;
+    background:var(--surface); border:1px solid var(--line-strong); border-radius:8px;
+    font-size:12px; line-height:1.5; color:var(--paper-dim);
+    box-shadow:0 10px 26px rgba(0,0,0,0.45);
+    opacity:0; visibility:hidden; transition:opacity .16s ease;
+  }
+  .pf-pop.is-open{opacity:1; visibility:visible;}
+  .pf-pop strong{
+    display:block; font-family:var(--display); font-size:13px; color:var(--paper);
+    margin-bottom:6px; white-space:normal;
+  }
   .rp-labels{
     position:absolute; top:0; left:0; bottom:0; width:31%; z-index:2; pointer-events:none;
     display:flex; flex-direction:column; justify-content:space-between; gap:clamp(18px,3vh,40px);
@@ -1182,6 +1228,9 @@
 
       <div class="rp-canvas" id="rpCanvas"></div>
 
+      <!-- built from the table below, so the items live in one place only -->
+      <div class="pf-overlay" id="pfOverlay" aria-hidden="true"></div>
+
       <div class="rp-outcomes">
         <div class="rp-outcome rp-outcome-01"><span class="rp-outcome-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
                 stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -1245,44 +1294,44 @@
         <h3 class="pf-portfolio-title">What rides on each pathway</h3>
         <p class="pf-portfolio-lede">Every item below sits on one of the four waves above — hover a row to find its point on the wave. <strong>Demand</strong> makes healthy food easier to choose. <strong>Hub</strong> is the shops, pharmacies and services people actually walk into. <strong>New Food Economics</strong> is the instruments that make the other three payable. <strong>Supply</strong> makes sure enough good food is being grown in the first place.</p>
       </div>
-      <button type="button" class="pf-toggle" aria-expanded="true" aria-controls="pfTracks">Hide the table</button>
+      <button type="button" class="pf-toggle" aria-expanded="false" aria-controls="pfTracks">Show the full table</button>
     </div>
 
-    <div class="tracks reveal" id="pfTracks">
+    <div class="tracks reveal" id="pfTracks" hidden>
       <div class="track demand pw-01">
         <div class="track-head" tabindex="0" role="img" aria-label="Demand track, pathway 01"><span class="swatch"></span><h3>Demand</h3><span class="track-pw">P01</span></div>
         <div class="track-def">Constructing pull for a different kind of food — through money, protocol, and information.</div>
-        <div class="node" data-dot="0"><div class="node-title">Marketing Investment Fund</div><div class="node-desc">A cross-retailer fund investing in demand construction for healthy food and new food cultures, priced against the revenue uplift it creates.</div></div>
-        <div class="node" data-dot="1"><div class="node-title">Procurement Protocol</div><div class="node-desc">A shared standard that public and institutional buyers sign into, from the largest anchor institution to the smallest, without giving up their own local procurement.</div></div>
-        <div class="node" data-dot="2"><div class="node-title">Consumption Transparency</div><div class="node-desc">An annual receipt totalling spend, salt, and sugar against delivery-app orders — no verdict attached, just the number, the way cigarette packaging works.</div></div>
-        <div class="node" data-dot="3"><div class="node-title">Street Food Licensing</div><div class="node-desc">A formal micro-economy built around the most carbon- and infrastructure-efficient food format there is.</div></div>
-        <div class="node" data-dot="4"><div class="node-title">Default-healthy public catering</div><div class="node-desc">Collapse the choice down to healthy options only, rather than removing choice altogether — the simplification that makes a genuinely robust supply chain possible behind it, in school kitchens and beyond.</div></div>
+        <div class="node" data-dot="0" data-short="Marketing Fund"><div class="node-title">Marketing Investment Fund</div><div class="node-desc">A cross-retailer fund investing in demand construction for healthy food and new food cultures, priced against the revenue uplift it creates.</div></div>
+        <div class="node" data-dot="1" data-short="Procurement Protocol"><div class="node-title">Procurement Protocol</div><div class="node-desc">A shared standard that public and institutional buyers sign into, from the largest anchor institution to the smallest, without giving up their own local procurement.</div></div>
+        <div class="node" data-dot="2" data-short="Consumption receipt"><div class="node-title">Consumption Transparency</div><div class="node-desc">An annual receipt totalling spend, salt, and sugar against delivery-app orders — no verdict attached, just the number, the way cigarette packaging works.</div></div>
+        <div class="node" data-dot="3" data-short="Street Food Licensing"><div class="node-title">Street Food Licensing</div><div class="node-desc">A formal micro-economy built around the most carbon- and infrastructure-efficient food format there is.</div></div>
+        <div class="node" data-dot="4" data-short="Default-healthy"><div class="node-title">Default-healthy public catering</div><div class="node-desc">Collapse the choice down to healthy options only, rather than removing choice altogether — the simplification that makes a genuinely robust supply chain possible behind it, in school kitchens and beyond.</div></div>
       </div>
       <div class="track hub pw-02">
         <div class="track-head" tabindex="0" role="img" aria-label="Hub track, pathway 02"><span class="swatch"></span><h3>Hub</h3><span class="track-pw">P02</span></div>
         <div class="track-def">The physical and civic nodes where supply and demand actually meet a person.</div>
-        <div class="node" data-dot="5"><div class="node-title">(Farmacy) Pharmacy as a neighbourhood performance-and-nutrition node</div><div class="node-desc">Pick up a prescription and walk out with a bag of seasonal veg, a free blood-pressure check, and a spot in Saturday’s community run. The corner pharmacy becomes the place you drop into even when you’re not ill — fresh food, real nutrition advice, and a reason to know your neighbours.</div></div>
-        <div class="node" data-dot="6"><div class="node-title">Public interest grocers</div><div class="node-desc">Next-generation, membership-model grocers with genuinely lower prices on a fixed cadence, not a voluntary top-up.</div></div>
-        <div class="node" data-dot="7"><div class="node-title">Multi-ledger ownership</div><div class="node-desc">Part-volunteer, part-paid, part-commercial contribution structures — a people’s supermarket that several kinds of stake can hold at once.</div></div>
-        <div class="node" data-dot="8"><div class="node-title">Collective buying engine</div><div class="node-desc">One B2B conversation standing behind dozens of community organisations — run like a business, governed like a non-profit.</div></div>
+        <div class="node" data-dot="5" data-short="Farmacy"><div class="node-title">(Farmacy) Pharmacy as a neighbourhood performance-and-nutrition node</div><div class="node-desc">Pick up a prescription and walk out with a bag of seasonal veg, a free blood-pressure check, and a spot in Saturday’s community run. The corner pharmacy becomes the place you drop into even when you’re not ill — fresh food, real nutrition advice, and a reason to know your neighbours.</div></div>
+        <div class="node" data-dot="6" data-short="Public-interest grocers"><div class="node-title">Public interest grocers</div><div class="node-desc">Next-generation, membership-model grocers with genuinely lower prices on a fixed cadence, not a voluntary top-up.</div></div>
+        <div class="node" data-dot="7" data-short="Multi-ledger ownership"><div class="node-title">Multi-ledger ownership</div><div class="node-desc">Part-volunteer, part-paid, part-commercial contribution structures — a people’s supermarket that several kinds of stake can hold at once.</div></div>
+        <div class="node" data-dot="8" data-short="Collective buying engine"><div class="node-title">Collective buying engine</div><div class="node-desc">One B2B conversation standing behind dozens of community organisations — run like a business, governed like a non-profit.</div></div>
       </div>
       <div class="track economics pw-03">
         <div class="track-head" tabindex="0" role="img" aria-label="New Food Economics track, pathway 03"><span class="swatch"></span><h3>New Food Economics</h3><span class="track-pw">P03</span></div>
         <div class="track-def">The policy, accounting, financing and monetary instruments that make the other three payable.</div>
-        <div class="node is-placeholder" data-dot="9"><div class="node-title">Placeholder — instrument 01</div><div class="node-desc">To be written. This track's items are yet to come from the team.</div></div>
-        <div class="node is-placeholder" data-dot="10"><div class="node-title">Placeholder — instrument 02</div><div class="node-desc">To be written.</div></div>
-        <div class="node is-placeholder" data-dot="11"><div class="node-title">Placeholder — instrument 03</div><div class="node-desc">To be written.</div></div>
-        <div class="node is-placeholder" data-dot="12"><div class="node-title">Placeholder — instrument 04</div><div class="node-desc">To be written.</div></div>
+        <div class="node is-placeholder" data-dot="9" data-short="Instrument 01"><div class="node-title">Placeholder — instrument 01</div><div class="node-desc">To be written. This track's items are yet to come from the team.</div></div>
+        <div class="node is-placeholder" data-dot="10" data-short="Instrument 02"><div class="node-title">Placeholder — instrument 02</div><div class="node-desc">To be written.</div></div>
+        <div class="node is-placeholder" data-dot="11" data-short="Instrument 03"><div class="node-title">Placeholder — instrument 03</div><div class="node-desc">To be written.</div></div>
+        <div class="node is-placeholder" data-dot="12" data-short="Instrument 04"><div class="node-title">Placeholder — instrument 04</div><div class="node-desc">To be written.</div></div>
       </div>
       <div class="track supply pw-04">
         <div class="track-head" tabindex="0" role="img" aria-label="Supply track, pathway 04"><span class="swatch"></span><h3>Supply</h3><span class="track-pw">P04</span></div>
         <div class="track-def">The baseline production that has to survive the shock, not just look good before it.</div>
-        <div class="node" data-dot="13"><div class="node-title">Organic growth via collective buying</div><div class="node-desc">London boroughs and businesses pooling committed demand into contracts big enough to justify a farmer converting land — the buying power no single borough has alone. That same soil holds more water through drought and needs far less imported fertiliser — a resilience dividend, not just a health one.</div></div>
-        <div class="node" data-dot="14"><div class="node-title">Automated farm-to-farm coverage</div><div class="node-desc">A forecasting engine that predicts surplus and shortfall across a network of farms and routes supply between them before a contract breaks — one contract structure that scales unchanged from a single farm to a whole region, with regenerative practice verified and priced as natural capital on real acres.</div></div>
-        <div class="node" data-dot="15"><div class="node-title">Nutrient density as the baseline</div><div class="node-desc">A network of community aquaponics and hydroponics infrastructure, autonomous and self-managing, framed as nutritional security infrastructure rather than lifestyle.</div></div>
-        <div class="node" data-dot="16"><div class="node-title">Climate-controlled growing</div><div class="node-desc">Indoor and peri-urban production built for genuine winter resilience — not a romanticised return to 1970s self-sufficiency that two heatwaves would end.</div></div>
-        <div class="node" data-dot="17"><div class="node-title">Undervalued labour &amp; assets</div><div class="node-desc">Recognising food’s essential workforce and community-value assets — from warehousing to leases that specify supplier standards as planning conditions.</div></div>
-        <div class="node" data-dot="18"><div class="node-title">Baseline food stack</div><div class="node-desc">Background food supply designed to hold when the “closed-loop” techno-dream can’t — the stack that deals with volatility, not just ambition.</div></div>
+        <div class="node" data-dot="13" data-short="Organic conversion"><div class="node-title">Organic growth via collective buying</div><div class="node-desc">London boroughs and businesses pooling committed demand into contracts big enough to justify a farmer converting land — the buying power no single borough has alone. That same soil holds more water through drought and needs far less imported fertiliser — a resilience dividend, not just a health one.</div></div>
+        <div class="node" data-dot="14" data-short="Farm-to-farm coverage"><div class="node-title">Automated farm-to-farm coverage</div><div class="node-desc">A forecasting engine that predicts surplus and shortfall across a network of farms and routes supply between them before a contract breaks — one contract structure that scales unchanged from a single farm to a whole region, with regenerative practice verified and priced as natural capital on real acres.</div></div>
+        <div class="node" data-dot="15" data-short="Nutrient density"><div class="node-title">Nutrient density as the baseline</div><div class="node-desc">A network of community aquaponics and hydroponics infrastructure, autonomous and self-managing, framed as nutritional security infrastructure rather than lifestyle.</div></div>
+        <div class="node" data-dot="16" data-short="Climate-controlled"><div class="node-title">Climate-controlled growing</div><div class="node-desc">Indoor and peri-urban production built for genuine winter resilience — not a romanticised return to 1970s self-sufficiency that two heatwaves would end.</div></div>
+        <div class="node" data-dot="17" data-short="Labour &amp; assets"><div class="node-title">Undervalued labour &amp; assets</div><div class="node-desc">Recognising food’s essential workforce and community-value assets — from warehousing to leases that specify supplier standards as planning conditions.</div></div>
+        <div class="node" data-dot="18" data-short="Baseline food stack"><div class="node-title">Baseline food stack</div><div class="node-desc">Background food supply designed to hold when the “closed-loop” techno-dream can’t — the stack that deals with volatility, not just ambition.</div></div>
       </div>
     </div>
     </div>
@@ -1799,43 +1848,137 @@
       }
     });
 
-    /* ---- pathways + portfolio: one section, two stages ---- */
+    /* ---- pathways + portfolio: one section, two stages ----
+       Stage two folds the long annotations away, widens the waves, and lifts
+       every intervention onto the wave its pathway owns. The pills are built
+       from the table, so the items are written in one place only. The wave is
+       GPU noise we can't reproduce exactly in JS, so a pill tracks the centre
+       of its band and glides within it rather than chasing one strand. */
     (function portfolio(){
       var section = document.getElementById('foundations');
       var pf = document.getElementById('tracks');
+      var stage = document.querySelector('.rp-stage');
+      var canvas = document.getElementById('rpCanvas');
+      var overlay = document.getElementById('pfOverlay');
       var table = document.getElementById('pfTracks');
       var toggle = document.querySelector('.pf-toggle');
-      if(!section || !pf) return;
+      if(!section || !pf || !stage || !canvas || !overlay) return;
 
-      function wave(){ return window.__rpWave; }
+      var SPAN = 0.62, INNER = SPAN / 3;
+      var BANDS = [
+        {sel:'.track.pw-01', y: SPAN,  tk:'#e7964b', label:'P01 · DEMAND'},
+        {sel:'.track.pw-02', y: INNER, tk:'#8fb0ff', label:'P02 · HUB'},
+        {sel:'.track.pw-03', y:-INNER, tk:'#c9ced3', label:'P03 · NEW FOOD ECONOMICS'},
+        {sel:'.track.pw-04', y:-SPAN,  tk:'#4fb488', label:'P04 · SUPPLY'}
+      ];
 
-      // stage two starts when the portfolio's heading reaches the lower part of
-      // the viewport, and ends again when it goes back below the fold
+      var items = [];
+      BANDS.forEach(function(band, bi){
+        var track = document.querySelector(band.sel);
+        if(!track) return;
+
+        var bandEl = document.createElement('div');
+        bandEl.className = 'pf-band';
+        bandEl.style.setProperty('--tk', band.tk);
+        bandEl.textContent = band.label;
+        overlay.appendChild(bandEl);
+        band.el = bandEl;
+
+        var nodes = track.querySelectorAll('.node[data-short]');
+        nodes.forEach(function(node, i){
+          var pill = document.createElement('button');
+          pill.type = 'button';
+          pill.className = 'pf-pill';
+          pill.style.setProperty('--tk', band.tk);
+          pill.textContent = node.dataset.short;
+
+          var pop = document.createElement('div');
+          pop.className = 'pf-pop';
+          var title = document.createElement('strong');
+          title.textContent = node.querySelector('.node-title').textContent;
+          pop.appendChild(title);
+          pop.appendChild(document.createTextNode(node.querySelector('.node-desc').textContent));
+
+          overlay.appendChild(pill);
+          overlay.appendChild(pop);
+
+          items.push({
+            pill: pill, pop: pop, band: band,
+            col: nodes.length === 1 ? 0.5 : 0.10 + (i / (nodes.length - 1)) * 0.80,
+            /* neighbours alternate above and below the band centre so long
+               labels don't collide along a busy wave */
+            stagger: ((i % 3) - 1) * 26,
+            phase: i * 1.3 + bi * 0.7
+          });
+
+          function open(){ pill.classList.add('is-open'); pop.classList.add('is-open'); }
+          function shut(){ pill.classList.remove('is-open'); pop.classList.remove('is-open'); }
+          pill.addEventListener('mouseenter', open);
+          pill.addEventListener('mouseleave', shut);
+          pill.addEventListener('focus', open);
+          pill.addEventListener('blur', shut);
+        });
+      });
+
+      var t0 = performance.now();
+      function clock(){ return (performance.now() - t0) / 1000; }
+
+      function layout(t){
+        var s = stage.getBoundingClientRect(), c = canvas.getBoundingClientRect();
+        if(!c.width || !c.height) return;
+        var ox = c.left - s.left, oy = c.top - s.top;
+        function toY(w){ return oy + (1 - w) / 2 * c.height; }
+        function toX(col){ return ox + (((col * 2 - 1) * 0.96 + 1) / 2) * c.width; }
+
+        BANDS.forEach(function(b){
+          if(!b.el) return;
+          b.el.style.left = Math.round(ox + 2) + 'px';
+          b.el.style.top = Math.round(toY(b.y) - c.height * 0.085) + 'px';
+        });
+        items.forEach(function(it){
+          var drift = Math.sin(t * 0.45 + it.phase) * 0.035;
+          var x = toX(it.col), y = toY(it.band.y + drift) + it.stagger;
+          it.pill.style.left = Math.round(x) + 'px';
+          it.pill.style.top = Math.round(y) + 'px';
+          it.pop.style.left = Math.round(x) + 'px';
+          it.pop.style.top = Math.round(y + 16) + 'px';
+        });
+      }
+
+      layout(0);
+      window.addEventListener('resize', function(){ layout(clock()); });
+      if(window.ResizeObserver) new ResizeObserver(function(){ layout(clock()); }).observe(canvas);
+
+      var live = false;
+      (function tick(){
+        if(live) layout(clock());
+        requestAnimationFrame(tick);
+      })();
+
+      // stage two begins once the portfolio heading reaches the lower viewport,
+      // and holds while it stays above it
       new IntersectionObserver(function(entries){
         entries.forEach(function(e){
           var on = e.isIntersecting || e.boundingClientRect.top < 0;
           section.setAttribute('data-pfstage', on ? 'portfolio' : 'pathways');
-          if(wave()) wave().setPortfolio(on);
+          live = on;
+          if(on) layout(clock());
         });
-      }, {rootMargin: '-45% 0px 0px 0px'}).observe(pf);
-
-      // hovering a row lights that item's dot on its wave
-      document.querySelectorAll('.node[data-dot]').forEach(function(node){
-        var i = parseInt(node.dataset.dot, 10);
-        function on(){ if(wave()) wave().setActive(i); }
-        function off(){ if(wave()) wave().setActive(null); }
-        node.addEventListener('mouseenter', on);
-        node.addEventListener('mouseleave', off);
-        node.addEventListener('focusin', on);
-        node.addEventListener('focusout', off);
-      });
+      }, {rootMargin: '-40% 0px 0px 0px'}).observe(pf);
 
       if(toggle && table){
+        // the pills are off at narrow widths, so the table can't also start
+        // closed there -- it would put the whole portfolio behind a button
+        if(window.matchMedia('(max-width:900px)').matches){
+          table.hidden = false;
+          toggle.setAttribute('aria-expanded', 'true');
+          toggle.textContent = 'Hide the table';
+        }
         toggle.addEventListener('click', function(){
           var open = toggle.getAttribute('aria-expanded') === 'true';
           toggle.setAttribute('aria-expanded', String(!open));
           table.hidden = open;
-          toggle.textContent = open ? 'Show the table' : 'Hide the table';
+          toggle.textContent = open ? 'Show the full table' : 'Hide the table';
         });
       }
     })();
@@ -1848,7 +1991,7 @@
     });
   });
 </script>
-<script type="module" src="assets/foundations/wave.js?v=17"></script>
+<script type="module" src="assets/foundations/wave.js?v=18"></script>
 
 </body>
 </html>

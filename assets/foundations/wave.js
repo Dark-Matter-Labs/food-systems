@@ -42,20 +42,8 @@ if (host) {
 
   const U = {
     uTime: { value: 0 }, uFin: { value: 0 }, uPort: { value: 0 }, uRegion: { value: 0 }, uTop: { value: 0 },
-    uAspect: { value: 1 }, uDpr: { value: Math.min(2, window.devicePixelRatio || 1) },
-    /* the portfolio layer: uPortfolio fades the item dots in, uActive is the
-       index of the table row currently under the cursor (-1 for none) */
-    uPortfolio: { value: 0 }, uActive: { value: -1 }
+    uAspect: { value: 1 }, uDpr: { value: Math.min(2, window.devicePixelRatio || 1) }
   };
-
-  /* how many portfolio items ride each pathway's wave, in the order the table
-     lists them -- demand, hub, new food economics, supply */
-  const PORTFOLIO = [
-    { key: 'top', n: 5 },
-    { key: 'buy', n: 4 },
-    { key: 'mid', n: 4 },
-    { key: 'bot', n: 6 }
-  ];
 
   const NOISE = `
     float h1(vec2 p){ return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.545); }
@@ -610,73 +598,6 @@ if (host) {
     scene.add(new THREE.Points(g, m));
   })();
 
-  /* ---------- the portfolio: one dot per item, riding its pathway's wave.
-     The dots are drawn on the GPU from the same waveY the ribbons use, so they
-     sit exactly on the strand rather than near it. Their labels stay in the
-     table below -- hovering a row lights its dot. ---------- */
-  (function portfolio() {
-    const pos = [], aCol = [], aBase = [], aAmp = [], aSpread = [], aIdx = [], aTint = [];
-    let gi = 0;
-    PORTFOLIO.forEach(group => {
-      const band = BANDS.find(b => b.key === group.key);
-      for (let i = 0; i < group.n; i++) {
-        const col = group.n === 1 ? 0.5 : 0.13 + (i / (group.n - 1)) * 0.74;
-        pos.push(0, 0, 0);
-        aCol.push(col); aBase.push(band.y); aAmp.push(band.amp); aSpread.push(band.spread);
-        aIdx.push(gi++);
-        aTint.push(band.colour.r, band.colour.g, band.colour.b);
-      }
-    });
-
-    const g = new THREE.BufferGeometry();
-    g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
-    g.setAttribute('aCol', new THREE.Float32BufferAttribute(aCol, 1));
-    g.setAttribute('aBase', new THREE.Float32BufferAttribute(aBase, 1));
-    g.setAttribute('aAmp', new THREE.Float32BufferAttribute(aAmp, 1));
-    g.setAttribute('aSpread', new THREE.Float32BufferAttribute(aSpread, 1));
-    g.setAttribute('aIdx', new THREE.Float32BufferAttribute(aIdx, 1));
-    g.setAttribute('aTint', new THREE.Float32BufferAttribute(aTint, 3));
-
-    const m = new THREE.ShaderMaterial({
-      transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, uniforms: U,
-      vertexShader: NOISE + `
-        attribute float aCol; attribute float aBase; attribute float aAmp;
-        attribute float aSpread; attribute float aIdx; attribute vec3 aTint;
-        uniform float uTime, uAspect, uDpr, uPortfolio, uActive;
-        varying float vA; varying float vAct; varying vec3 vTint;
-        void main(){
-          float y = waveY(aCol, 0.5, uTime, aAmp, aSpread, aBase);
-          float x = (aCol * 2.0 - 1.0) * uAspect * 0.96;
-          gl_Position = projectionMatrix * modelViewMatrix * vec4(x, y, 0.0, 1.0);
-          float act = step(abs(uActive - aIdx), 0.5);
-          /* each dot breathes on its own phase so the row reads as alive
-             rather than as a blinking strip */
-          float breathe = 0.5 + 0.5 * sin(uTime * 0.85 + aIdx * 1.7);
-          gl_PointSize = (3.6 + breathe * 1.2 + act * 5.5) * uDpr * uPortfolio;
-          vA = uPortfolio * (0.42 + 0.3 * breathe + act * 0.55);
-          vAct = act; vTint = aTint;
-        }`,
-      fragmentShader: `
-        varying float vA; varying float vAct; varying vec3 vTint;
-        void main(){
-          float d = length(gl_PointCoord * 2.0 - 1.0);
-          float core = smoothstep(1.0, 0.15, d);
-          if (core < 0.02) discard;
-          vec3 c = mix(vTint * 1.45 + vec3(0.22), vec3(1.0, 0.86, 0.58), vAct);
-          gl_FragColor = vec4(c, core * vA);
-        }`
-    });
-    scene.add(new THREE.Points(g, m));
-  })();
-
-  /* the page drives the portfolio layer: reveal it with the second scroll
-     stage, and light one dot when its table row is hovered */
-  const wantPortfolio = { on: 0 };
-  window.__rpWave = {
-    setPortfolio(v) { wantPortfolio.on = v ? 1 : 0; },
-    setActive(i) { U.uActive.value = (i === null || i === undefined) ? -1 : i; }
-  };
-
   function n2rand(i, n) {
     /* low-discrepancy-ish spread so plants don't clump, without needing Math.random for position */
     const x = (i * 0.61803398875) % 1;
@@ -723,7 +644,6 @@ if (host) {
     U.uPort.value += (want.port - U.uPort.value) * 0.08;
     U.uRegion.value += (want.region - U.uRegion.value) * 0.06;
     U.uTop.value += (want.top - U.uTop.value) * 0.08;
-    U.uPortfolio.value += (wantPortfolio.on - U.uPortfolio.value) * 0.06;
     renderer.render(scene, camera);
   });
 }
