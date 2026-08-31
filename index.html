@@ -665,12 +665,19 @@
   }
   @media (max-width:900px){ .reframe{grid-template-columns:1fr;} }
   .reframe .big-quote{
-    font-family:var(--display); font-size:clamp(24px,3vw,34px); line-height:1.22;
+    font-family:var(--display); font-weight:700;
+    font-size:clamp(24px,3vw,34px); line-height:1.22;
     border-left:2px solid var(--paper-dim); padding-left:22px;
   }
-  /* the framing questions run as separate asks, not one block of display type */
   .reframe .big-quote p{margin:0 0 0.7em;}
   .reframe .big-quote p:last-child{margin-bottom:0;}
+  /* the second half of the ask drops to the body grey and steps in, so the
+     assertion carries the weight and the alternative reads as the answer */
+  .reframe .big-quote .bq-quiet{
+    display:block; margin-top:0.5em; margin-left:1.4em;
+    color:var(--paper-dim); font-weight:400;
+  }
+  @media (max-width:900px){ .reframe .big-quote .bq-quiet{margin-left:0.8em;} }
   /* one circle cut by a waterline: the cap above stays sharp, the mass below
      goes out of focus. a full-width band so the row above stays level, and the
      whole thing centred on the section */
@@ -1340,8 +1347,7 @@
     <div class="reveal">
       <div class="eyebrow">WHY ADJUSTMENT ISN’T ENOUGH</div>
       <div class="big-quote" style="margin-top:16px;">
-        <p>What if a mere market-based nutrition that we have been relying on for so long has failed?</p>
-        <p>And what could be an alternative more equitable model look like — one that benefits growers, and nourishes communities?</p>
+        <p>What if the market-based food system we’ve relied on has already failed<span class="bq-quiet">— and a fairer model, one that works for growers and nourishes communities, is what comes next?</span></p>
       </div>    </div>
     <div class="body reveal">
       <p>The economics of food don’t move by tinkering at the edges — they move with a genuinely new arrangement of ownership, contribution, and price.</p>
