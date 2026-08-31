@@ -1,11 +1,19 @@
 /* =========================================================================
-   PATHWAYS — three wave-string ribbons + a woven connector,
-   adapted from the Regional Food Resilience Platform diagram.
+   PATHWAYS — four wave-string ribbons, one per pathway, plus the woven
+   connectors between them, adapted from the Regional Food Resilience
+   Platform diagram.
 
-   Top (amber)    = Pathway 01, Civic-led delivery
-   Bottom (green) = Pathway 04, Nutrient density
-   Middle (silver)= Pathway 03, New Food Economics
-   Weave          = Pathway 02, Collective buying power
+   Ribbons run top to bottom in pathway order, so each label sits with
+   its own layer:
+
+   Pathway 01, Civic-led delivery          amber   +SPAN
+   Pathway 02, Collective buying power     blue    +SPAN/3
+   Pathway 03, New Food Economics          silver  -SPAN/3
+   Pathway 04, Nutrient density            green   -SPAN
+
+   The outer two keep their original positions, so everything woven
+   between them — the buying network and its supply roots, the cocoons,
+   the shrub growth on the land wave — is unchanged.
    ========================================================================= */
 import * as THREE from 'three';
 
@@ -17,9 +25,11 @@ if (host) {
   const STRANDS = SMALL ? 22 : 40;
   const STEPS = SMALL ? 130 : 220;
   const SPAN = 0.62; // how far top/bottom bands sit from centre -- wider spread
+  const INNER = SPAN / 3; // the two inner pathways, evenly spaced against the outer pair
   const BANDS = [
     { y: SPAN, colour: new THREE.Color('#e7964b'), spread: 0.050, amp: 0.100, key: 'top' },
-    { y: 0.00, colour: new THREE.Color('#c9ced3'), spread: 0.065, amp: 0.085, key: 'mid' },
+    { y: INNER, colour: new THREE.Color('#8fb0ff'), spread: 0.052, amp: 0.088, key: 'buy' },
+    { y: -INNER, colour: new THREE.Color('#c9ced3'), spread: 0.065, amp: 0.085, key: 'mid' },
     { y: -SPAN, colour: new THREE.Color('#2f9c66'), spread: 0.055, amp: 0.100, key: 'bot' }
   ];
 
@@ -48,9 +58,9 @@ if (host) {
       return base + (strand - 0.5) * spread + (w + w2) * amp;
     }`;
 
-  const TOP_BASE = SPAN, BOT_BASE = -SPAN;
+  const TOP_BASE = SPAN, BOT_BASE = -SPAN, MID_BASE = -INNER;
 
-  /* ---------- the three ribbons ---------- */
+  /* ---------- the four ribbons ---------- */
   BANDS.forEach(band => {
     const segs = (STEPS - 1) * STRANDS;
     const aX = new Float32Array(segs * 2);
@@ -74,29 +84,31 @@ if (host) {
         uAmp: { value: band.amp }, uSpread: { value: band.spread },
         uIsMid: { value: band.key === 'mid' ? 1 : 0 },
         uIsBot: { value: band.key === 'bot' ? 1 : 0 },
-        uIsTop: { value: band.key === 'top' ? 1 : 0 }
+        uIsTop: { value: band.key === 'top' ? 1 : 0 },
+        uIsBuy: { value: band.key === 'buy' ? 1 : 0 }
       }, U),
       vertexShader: NOISE + `
         attribute float aX; attribute float aS;
-        uniform float uTime, uBase, uAmp, uSpread, uAspect, uIsMid, uIsBot, uIsTop, uPort, uRegion, uTop;
+        uniform float uTime, uBase, uAmp, uSpread, uAspect, uIsMid, uIsBot, uIsTop, uIsBuy, uPort, uRegion, uTop, uFin;
         varying float vFade, vX;
         void main(){
           vX = aX;
           float y = waveY(aX, aS, uTime, uAmp, uSpread, uBase);
           y += uIsMid * uPort * 0.012 * sin(aX * 12.0 + uTime * 0.6);
           y += uIsTop * uTop * 0.010 * sin(aX * 10.0 + uTime * 0.5);
+          y += uIsBuy * uFin * 0.011 * sin(aX * 11.0 + uTime * 0.55);
           float x = (aX * 2.0 - 1.0) * uAspect * 0.96;
           gl_Position = projectionMatrix * modelViewMatrix * vec4(x, y, 0.0, 1.0);
           vFade = smoothstep(0.0, 0.16, aX) * smoothstep(1.0, 0.84, aX);
           vFade *= 0.28 + 0.72 * n2(vec2(aX * 9.0, aS * 4.0));
         }`,
       fragmentShader: `
-        uniform vec3 uColour; uniform float uIsBot, uRegion, uIsTop, uTop;
+        uniform vec3 uColour; uniform float uIsBot, uRegion, uIsTop, uTop, uIsBuy, uFin;
         varying float vFade, vX;
         void main(){
           vec3 c = uColour;
           c += uIsBot * uRegion * smoothstep(0.35, 1.0, vX) * vec3(0.05, 0.32, 0.14);
-          float glow = uIsTop * uTop * 0.6;
+          float glow = uIsTop * uTop * 0.6 + uIsBuy * uFin * 0.6;
           gl_FragColor = vec4(c, vFade * (0.15 + glow));
         }`
     });
@@ -355,7 +367,7 @@ if (host) {
              frequency/phase -- overlapping instruments interfering, not points */
           float freqShift = 1.0 + aL * 0.14;
           float phase = aL * 1.7;
-          float y = waveY(aX * freqShift, 0.5, uTime * 0.8 + phase, 0.085, 0.10 + aL * 0.03, 0.0);
+          float y = waveY(aX * freqShift, 0.5, uTime * 0.8 + phase, 0.085, 0.10 + aL * 0.03, ${MID_BASE.toFixed(3)});
           y += uPort * 0.03 * sin(aX * 8.0 + uTime * 0.7 + aL);
           float x = (aX * 2.0 - 1.0) * uAspect * 0.96;
           gl_Position = projectionMatrix * modelViewMatrix * vec4(x, y, 0.0, 1.0);
