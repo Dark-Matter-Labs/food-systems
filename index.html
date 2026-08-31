@@ -1127,12 +1127,35 @@
   .reading-list a:hover{text-decoration-color:var(--paper);}
 
   /* ===================== HORIZONS ===================== */
-  .horizons{display:grid; grid-template-columns:repeat(3,1fr); gap:0; border:1px solid var(--line);}
-  @media (max-width:860px){ .horizons{grid-template-columns:1fr;} }
-  .horizon{padding:26px 24px; border-left:1px solid var(--line);}
-  .horizon:first-child{border-left:none;}
-  @media (max-width:860px){ .horizon{border-left:none; border-top:1px solid var(--line);} .horizon:first-child{border-top:none;} }
+  /* three horizons on a cone rather than in three equal boxes: one point now,
+     opening out as it goes, the three moves outlined on top of it */
+  /* the cone has to be taller than the cards or they would cover it: the
+     opening reads in the bands above and below the row */
+  .horizons{position:relative; padding:clamp(34px,5vw,62px) 0;}
+  .hz-cone{position:absolute; inset:0; width:100%; height:100%; z-index:0; pointer-events:none;}
+  .hz-edge{fill:none; stroke:rgba(245,245,242,0.2); stroke-width:1;}
+  .hz-axis{fill:none; stroke:rgba(245,245,242,0.13); stroke-width:1; stroke-dasharray:4 7;}
+  .hz-row{
+    position:relative; z-index:1;
+    display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(12px,1.4vw,20px);
+  }
+  .horizon{
+    padding:22px 20px; border:1px solid var(--line-strong); border-radius:12px;
+    background:rgba(16,16,16,0.86);
+  }
+  @media (max-width:860px){
+    .hz-row{grid-template-columns:1fr;}
+    .hz-cone{display:none;}
+    .horizons{padding:0;}
+  }
   .horizon .htag{font-family:var(--mono); font-size:11.5px; letter-spacing:0.08em; text-transform:uppercase; color:var(--paper-dim);}
+  /* the marker grows with the horizon, the way the cone does */
+  .hz-dot{
+    display:inline-block; width:6px; height:6px; border-radius:50%;
+    background:var(--paper-dim); margin-right:9px; vertical-align:middle;
+  }
+  .horizon:nth-child(2) .hz-dot{width:8px; height:8px;}
+  .horizon:nth-child(3) .hz-dot{width:10px; height:10px; background:none; border:1px solid var(--paper-dim);}
   .horizon h4{font-size:18px; margin:10px 0 10px;}
   .horizon p{font-size:14.5px; color:var(--paper-dim); margin:0;}
 
@@ -2068,20 +2091,37 @@
       <p>The portfolio is built to be true at three different speeds at once — because the people in the room for this work are living in different horizons already.</p>
     </div>
     <div class="horizons reveal">
+      <!-- a cone of uncertainty: one point now, widening as it goes out, and
+           fading to nothing where it stops being a forecast -->
+      <svg class="hz-cone" viewBox="0 0 1200 420" preserveAspectRatio="none" aria-hidden="true">
+        <defs>
+          <linearGradient id="hzFade" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#f5f5f2" stop-opacity="0.15"/>
+            <stop offset="0.5" stop-color="#f5f5f2" stop-opacity="0.06"/>
+            <stop offset="1" stop-color="#f5f5f2" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+        <path d="M0,210 L1200,6 L1200,414 Z" fill="url(#hzFade)"/>
+        <path class="hz-edge" d="M0,210 L1200,6" vector-effect="non-scaling-stroke"/>
+        <path class="hz-edge" d="M0,210 L1200,414" vector-effect="non-scaling-stroke"/>
+        <path class="hz-axis" d="M0,210 H1200" vector-effect="non-scaling-stroke"/>
+      </svg>
+      <div class="hz-row">
       <div class="horizon">
-        <div class="htag">Now — before 5 Oct 2026</div>
+        <div class="htag"><span class="hz-dot"></span>Now — before 5 Oct 2026</div>
         <h4>Shock absorption</h4>
         <p>Food-price volatility and nutrition inequality are already moving cognition and health outcomes. The immediate, concrete move is standing up a Local Food Resilience Committee and responding to the Cabinet’s call for views before it closes — not waiting for a council procurement cycle to catch up.</p>
       </div>
       <div class="horizon">
-        <div class="htag">Next — 12–18 months</div>
+        <div class="htag"><span class="hz-dot"></span>Next — 12–18 months</div>
         <h4>Coalition &amp; charter</h4>
         <p>The Food Partnership publishes a declared work programme, four London boroughs sit down together on collective buying, and a policy briefing lands with national government inside its six-month window.</p>
       </div>
       <div class="horizon">
-        <div class="htag">2028 and beyond</div>
+        <div class="htag"><span class="hz-dot"></span>2028 and beyond</div>
         <h4>The labour shock</h4>
         <p>Automation reaches logistics and white-collar work at scale. Food-as-infrastructure is the argument for treating nutrition as social-contract security before that shock arrives — not the response to it afterwards.</p>
+      </div>
       </div>
     </div>
   </div>
