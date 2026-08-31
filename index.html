@@ -654,6 +654,12 @@
     font-family:var(--display); font-weight:700; font-size:clamp(14px,1.3vw,17px); line-height:1.25;
     color:var(--paper-dim);
   }
+  /* the same "Outcomes" sub-line the Health and Environmental steps carry, so
+     all five outcomes read the same way */
+  .rp-outcome-label span{
+    display:block; font-family:var(--body); font-weight:400; font-size:12.5px;
+    line-height:1.35; opacity:0.75; margin-top:2px;
+  }
   /* the original diagram's 3-step flow per wave (Demand>Diets>Health,
      Supply>Soils>Environmental) -- spans from the canvas's left edge to the
      outcomes column's right edge, so Health/Environmental land in that column
@@ -731,7 +737,6 @@
   .reframe .big-quote{
     font-family:var(--display); font-weight:700;
     font-size:clamp(24px,3vw,34px); line-height:1.22;
-    border-left:2px solid var(--paper-dim); padding-left:22px;
   }
   .reframe .big-quote p{margin:0 0 0.7em;}
   .reframe .big-quote p:last-child{margin-bottom:0;}
@@ -756,6 +761,22 @@
   /* the two readings hang off the halves they describe, so the page isn't
      saying the same thing twice */
   .cond-cap{margin:0;}
+  /* three examples either side of the line: what gets priced sits above it and
+     stays sharp, what the arrangement rests on sits below and stays dim */
+  .cond-ex{
+    list-style:none; margin:0; padding:0;
+    display:flex; flex-wrap:wrap; justify-content:center; gap:6px 18px;
+    font-family:var(--mono); font-size:10.5px; letter-spacing:0.05em;
+    text-transform:uppercase; max-width:460px;
+  }
+  .cond-ex li{position:relative; padding-left:11px;}
+  .cond-ex li::before{
+    content:''; position:absolute; left:0; top:0.42em;
+    width:4px; height:4px; border-radius:50%; background:currentColor;
+  }
+  .cond-ex-above{color:var(--paper); opacity:0.72;}
+  .cond-ex-below{color:var(--paper-dim); opacity:0.5;}
+  @media (max-width:600px){ .cond-ex{gap:5px 12px; font-size:9.5px;} }
   .cond-circle figcaption{font-size:15px; color:var(--paper-dim); line-height:1.6; margin:6px 0 0; max-width:520px;}
   .reframe .body p{margin:0 0 16px; color:var(--paper); opacity:0.9; font-size:16.5px;}
   .compare{
@@ -833,6 +854,37 @@
   #tracks[data-active-track] .track.is-active{opacity:1;}
 
   /* ===================== GOVERNANCE ===================== */
+  /* the two-key structure: an asset held in halves so neither holder can sell it
+     alone. Drawn in the Mietshäuser Syndikat's shape, in this site's language
+     rather than its stippled spheres. */
+  .gov-lock{margin:0 0 52px; padding:0;}
+  .gov-lock-svg{display:block; width:100%; max-width:900px; height:auto; margin:0 auto;}
+  .gl-body{stroke-width:1;}
+  .gl-coop{stroke:rgba(245,245,242,0.55);}
+  .gl-local{stroke:rgba(79,180,136,0.6);}
+  .gl-wide{stroke:rgba(143,176,255,0.6);}
+  .gl-fund{stroke:rgba(232,195,74,0.6);}
+  .gl-member{fill:rgba(143,176,255,0.5); stroke:rgba(143,176,255,0.45); stroke-width:1;}
+  .gl-link path{fill:none; stroke:var(--line-strong); stroke-width:1.2;}
+  .gl-link-thin path{stroke-width:0.9; opacity:0.7;}
+  .gl-link-dashed path{stroke-dasharray:3 5; opacity:0.75;}
+  .gl-share text{font-family:var(--mono); font-size:12px; letter-spacing:0.06em; fill:var(--paper);}
+  .gl-label-lead{font-family:var(--mono); font-size:10px; letter-spacing:0.12em; fill:var(--paper-dim);}
+  .gl-label-name{font-family:var(--display); font-weight:700; font-size:14px; fill:var(--paper);}
+  .gl-label-note{font-family:var(--body); font-size:11.5px; fill:var(--paper-dim);}
+  .gov-lock figcaption{
+    font-size:15px; line-height:1.6; color:var(--paper-dim);
+    max-width:760px; margin:22px auto 0; text-align:center;
+  }
+  .gov-lock figcaption strong{color:var(--paper);}
+  .gov-lock-scroll{overflow-x:auto;}
+  @media (max-width:760px){
+    .gov-lock{margin-bottom:34px;}
+    .gov-lock figcaption{text-align:left; font-size:14px;}
+    /* scaled to a phone the labels come out around 5px, so the diagram keeps a
+       readable width and scrolls inside its own box instead */
+    .gov-lock-svg{min-width:760px;}
+  }
   .gov-wrap{display:grid; grid-template-columns:1fr 1fr; gap:56px;}
   @media (max-width:900px){ .gov-wrap{grid-template-columns:1fr;} }
   .ladder{display:flex; flex-direction:column; gap:0;}
@@ -994,7 +1046,7 @@
     <div class="section-head reveal">
       <div class="eyebrow">WHO THIS IS FOR</div>
       <h2>City-wide Mobilisation</h2>
-      <p>Food systems resilience is built across multiple different scales. A coordinated effort, be it in buying power of more resilient supply, distribution, local processing capacity or reserve, has been mentioned multiple times as the most crucial element of a shared transition. This call-to-all aims to:</p>
+      <p>Food systems resilience is built across multiple different scales. A coordinated effort has been mentioned multiple times as the most crucial element of a shared transition (be it in buying power of more resilient supply, distribution, local processing capacity or reserve). This call-to-all gathers actors to:</p>
     </div>
   </div>
 
@@ -1370,16 +1422,16 @@
                   <path d="M5 7h14" />
                   <path d="M5 7l-2.5 5a2.5 2.5 0 0 0 5 0L5 7z" />
                   <path d="M19 7l-2.5 5a2.5 2.5 0 0 0 5 0L19 7z" />
-                </svg></span><div class="rp-outcome-label">Equity &amp; Fairness</div></div>
+                </svg></span><div class="rp-outcome-label">Equity &amp; Fairness<span>Outcomes</span></div></div>
           <div class="rp-outcome rp-outcome-02"><span class="rp-outcome-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
                   stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                   <path d="M4 16l5-5 4 4 7-8" />
                   <path d="M15 7h5v5" />
-                </svg></span><div class="rp-outcome-label">Economic Vitality</div></div>
+                </svg></span><div class="rp-outcome-label">Economic Vitality<span>Outcomes</span></div></div>
           <div class="rp-outcome rp-outcome-03"><span class="rp-outcome-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
                   stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                   <path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z" />
-                </svg></span><div class="rp-outcome-label">Resilience &amp; Preparedness</div></div>
+                </svg></span><div class="rp-outcome-label">Resilience &amp; Preparedness<span>Outcomes</span></div></div>
         </div>
       </div>
 
@@ -1492,6 +1544,11 @@
     </div>
     <figure class="cond-circle reveal">
       <button type="button" class="rp-note rp-note-no cond-cap" aria-label="What adjusting the edges means">Adjusting the edges<span class="rp-info-pop" role="tooltip">Voluntary schemes, pledges, food-bank partnerships bolted onto an unchanged price structure.</span></button>
+      <ul class="cond-ex cond-ex-above">
+        <li>Shelf price</li>
+        <li>Labels and pledges</li>
+        <li>Surplus redistribution</li>
+      </ul>
       <svg class="cond-disc" viewBox="0 0 320 320" role="img" aria-labelledby="condTitle condDesc">
         <title id="condTitle">One circle, cut by a waterline</title>
         <desc id="condDesc">A single filled circle divided by a waterline. The smaller part above the line is in sharp focus — what adjustment can reach. The larger part below it is blurred and out of focus: the conditions the arrangement actually rests on.</desc>
@@ -1515,6 +1572,11 @@
         </g>
         <line class="cond-line" x1="4" y1="126" x2="316" y2="126"/>
       </svg>
+      <ul class="cond-ex cond-ex-below">
+        <li>Assumptions about the future</li>
+        <li>The value of good nutrition</li>
+        <li>The externalities of poor diets</li>
+      </ul>
       <button type="button" class="rp-note rp-note-yes cond-cap" aria-label="What rebuilding the arrangement means">Rebuilding the arrangement<span class="rp-info-pop" role="tooltip">Public-interest grocers, contribution ledgers, part-volunteer/part-commercial ownership, open micro-procurement.</span></button>
       <figcaption>Adjustment only ever reaches the sharp edge above the line. Ownership, contribution and the externalities sit below it — never priced, so never in focus.</figcaption>
     </figure>
@@ -1533,6 +1595,91 @@
       </div>
       <p>For a council leader, this is the answer to “who else is doing this and how do we join.” For national government, it’s the delivery chain a policy actually runs through. In Germany’s <em>Mietshäuser Syndikat</em>, a tenants’ association and a wider syndicate each hold 50% of a building — so no single vote, however popular, can ever put it back on the speculative market. The question underneath this portfolio is whether food infrastructure can be governed the same way.</p>
     </div>
+    <figure class="gov-lock reveal">
+      <div class="gov-lock-scroll">
+      <svg class="gov-lock-svg" viewBox="0 0 900 500" role="img" aria-labelledby="glTitle glDesc">
+        <title id="glTitle">A two-key structure for food infrastructure</title>
+        <desc id="glDesc">A co-operative grocer or hub is held in two halves. A neighbourhood food association holds one half; a London-wide food syndicate, whose membership is open to interested individuals and organisations, holds the other. Selling the asset or changing its purpose needs both halves, so no single vote can return it to the market. Surpluses feed a solidarity fund, which seeds the next co-operative.</desc>
+        <defs>
+          <radialGradient id="glCoop" cx="42%" cy="34%" r="72%">
+            <stop offset="0" stop-color="#f5f5f2" stop-opacity="0.30"/>
+            <stop offset="1" stop-color="#f5f5f2" stop-opacity="0.04"/>
+          </radialGradient>
+          <radialGradient id="glLocal" cx="42%" cy="34%" r="72%">
+            <stop offset="0" stop-color="#4fb488" stop-opacity="0.34"/>
+            <stop offset="1" stop-color="#4fb488" stop-opacity="0.04"/>
+          </radialGradient>
+          <radialGradient id="glWide" cx="42%" cy="34%" r="72%">
+            <stop offset="0" stop-color="#8fb0ff" stop-opacity="0.32"/>
+            <stop offset="1" stop-color="#8fb0ff" stop-opacity="0.04"/>
+          </radialGradient>
+          <radialGradient id="glFund" cx="42%" cy="34%" r="72%">
+            <stop offset="0" stop-color="#e8c34a" stop-opacity="0.30"/>
+            <stop offset="1" stop-color="#e8c34a" stop-opacity="0.04"/>
+          </radialGradient>
+        </defs>
+
+        <!-- the two halves, drawn before the bodies so the lines sit under them -->
+        <g class="gl-link">
+          <path d="M243,243 L392,132"/>
+          <path d="M657,243 L508,132"/>
+        </g>
+        <g class="gl-share">
+          <text x="290" y="176" text-anchor="middle">50%</text>
+          <text x="610" y="176" text-anchor="middle">50%</text>
+        </g>
+
+        <!-- members joining the wide association -->
+        <g class="gl-link gl-link-thin">
+          <path d="M793,196 L749,238"/>
+          <path d="M826,246 L757,262"/>
+          <path d="M806,306 L751,288"/>
+          <path d="M772,344 L732,308"/>
+        </g>
+
+        <!-- surplus out to the fund, and the fund seeding the next one -->
+        <g class="gl-link">
+          <path d="M450,158 L450,362"/>
+        </g>
+        <g class="gl-link gl-link-dashed">
+          <path d="M418,394 C330,394 268,372 232,326"/>
+          <path d="M482,394 C588,394 660,368 690,326"/>
+        </g>
+
+        <circle class="gl-body gl-coop" cx="450" cy="100" r="58" fill="url(#glCoop)"/>
+        <circle class="gl-body gl-local" cx="196" cy="270" r="50" fill="url(#glLocal)"/>
+        <circle class="gl-body gl-wide" cx="704" cy="270" r="50" fill="url(#glWide)"/>
+        <circle class="gl-body gl-fund" cx="450" cy="394" r="32" fill="url(#glFund)"/>
+
+        <circle class="gl-member" cx="800" cy="188" r="13"/>
+        <circle class="gl-member" cx="834" cy="242" r="10"/>
+        <circle class="gl-member" cx="814" cy="312" r="12"/>
+        <circle class="gl-member" cx="778" cy="352" r="9"/>
+
+        <g class="gl-label">
+          <text class="gl-label-lead" x="450" y="34" text-anchor="middle">THE ASSET</text>
+          <text class="gl-label-name" x="450" y="104" text-anchor="middle">Co-operative</text>
+          <text class="gl-label-name" x="450" y="122" text-anchor="middle">grocer or hub</text>
+
+          <text class="gl-label-lead" x="196" y="352" text-anchor="middle">PARTNER 1</text>
+          <text class="gl-label-name" x="196" y="266" text-anchor="middle">Neighbourhood</text>
+          <text class="gl-label-name" x="196" y="284" text-anchor="middle">food association</text>
+
+          <text class="gl-label-lead" x="704" y="352" text-anchor="middle">PARTNER 2</text>
+          <text class="gl-label-name" x="704" y="266" text-anchor="middle">London food</text>
+          <text class="gl-label-name" x="704" y="284" text-anchor="middle">syndicate</text>
+
+          <text class="gl-label-name" x="450" y="399" text-anchor="middle">Solidarity fund</text>
+          <text class="gl-label-note" x="450" y="452" text-anchor="middle">surplus in — seed capital out to the next one</text>
+
+          <text class="gl-label-note" x="866" y="392" text-anchor="end">Interested individuals</text>
+          <text class="gl-label-note" x="866" y="407" text-anchor="end">and organisations join</text>
+        </g>
+      </svg>
+      <figcaption>
+        <strong>Two keys, one lock.</strong> The neighbourhood association runs the place and answers to the people who use it. The London-wide syndicate holds the other half and has one job: to refuse. Selling the asset or changing what it is for needs both halves to agree — so no single vote, however popular locally, can put it back on the speculative market. It is the <em>Mietshäuser Syndikat</em> mechanism, pointed at food infrastructure instead of housing.
+      </figcaption>
+    </figure>
     <div class="gov-wrap">
       <div class="ladder reveal">
         <div class="rung">
