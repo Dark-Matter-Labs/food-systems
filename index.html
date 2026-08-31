@@ -345,16 +345,48 @@
 
   /* ---- crisis chart + forward-projection annotations ---- */
   .crisis-chart{grid-column:1 / -1; margin-top:56px;}
+  /* the second half of the heading: the chart and the copy make the case, this
+     lands the point they were building to */
+  .crisis-close{
+    grid-column:1 / -1; font-size:clamp(26px,3vw,36px); line-height:1.18;
+    margin:52px 0 0; max-width:620px;
+  }
   .crisis-proj-eyebrow{font-family:var(--mono); font-size:11px; letter-spacing:0.1em; color:var(--paper-dim); text-transform:uppercase; margin:36px 0 16px; padding-top:24px; border-top:1px solid var(--line-strong);}
   .crisis-shocks-row{display:grid; grid-template-columns:1fr 1fr; gap:40px;}
   @media (max-width:760px){ .crisis-shocks-row{grid-template-columns:1fr; gap:28px;} }
   .crisis-caption{font-family:var(--display); font-size:15px; color:var(--paper); opacity:0.85; margin:0 0 14px; max-width:520px;}
   .crisis-caption.after{margin:14px 0 0;}
-  .crisis-img-wrap{position:relative; overflow:hidden;}
-  /* mobile default: render the SVG wider than the box and let overflow:hidden crop
-     away the "projected" zone, so only the to-scale historical chart shows */
-  .crisis-svg{display:block; width:125.93%; max-width:none; height:auto; overflow:visible;}
-  @media (min-width:761px){ .crisis-svg{width:100%;} }
+  .crisis-img-wrap{position:relative;}
+  .crisis-svg{display:block; width:100%; height:auto; overflow:visible;}
+  /* the shock figures sit at the end of the chart, big enough to read as the
+     headline they are. they are separate events, not where these lines lead */
+  .crisis-plot{
+    display:grid; grid-template-columns:1fr minmax(180px,232px);
+    gap:clamp(18px,2.6vw,38px); align-items:center;
+  }
+  @media (max-width:760px){ .crisis-plot{grid-template-columns:1fr; gap:24px;} }
+  .crisis-endstats{display:flex; flex-direction:column; gap:clamp(24px,3vw,44px);}
+  @media (max-width:520px){ .crisis-endstats{gap:22px;} }
+  .crisis-endstat{
+    display:block; width:100%; text-align:left; background:none; padding:0 0 0 15px;
+    border:none; border-left:2px solid rgba(232,195,74,0.45); cursor:pointer;
+  }
+  .crisis-endstat:hover, .crisis-endstat:focus-visible{border-left-color:#e8c34a;}
+  .crisis-endstat:focus{outline:none;}
+  .crisis-endstat:focus-visible{outline:1px dashed var(--line-strong); outline-offset:4px;}
+  .ces-dot{
+    display:block; width:11px; height:11px; border-radius:50%; background:#e8c34a;
+    box-shadow:0 0 0 6px rgba(232,195,74,0.15); margin-bottom:14px;
+  }
+  .ces-num{
+    display:block; font-family:var(--display); font-weight:700; color:#e8c34a;
+    font-size:clamp(38px,5vw,68px); line-height:0.95; letter-spacing:-0.02em;
+  }
+  .ces-cap{display:block; font-size:13px; line-height:1.45; color:var(--paper-dim); margin-top:10px;}
+  .ces-date{
+    display:block; font-family:var(--mono); font-size:11px; letter-spacing:0.06em;
+    text-transform:uppercase; color:#e8c34a; opacity:0.75; margin-top:7px;
+  }
   .cg-grid line{stroke:var(--line); stroke-width:1;}
   .cg-grid text{font-family:var(--mono); font-size:11px; fill:var(--paper-dim);}
   .cg-bands rect{fill:rgba(255,214,64,0.13); stroke:rgba(255,214,64,0.3); stroke-width:1;}
@@ -363,33 +395,10 @@
   .cg-fertiliser{stroke:#8f8fe8;}
   .cg-crude{stroke:var(--paper);}
   .cg-maize{stroke:var(--supply);}
-  .cg-divider{stroke:var(--line-strong); stroke-width:1; stroke-dasharray:3 4;}
-  .cg-now-label{font-family:var(--mono); font-size:9px; letter-spacing:0.08em; fill:var(--paper-dim);}
-  .cg-proj-line{fill:none; stroke-width:1.6; stroke-dasharray:1 5; stroke-linecap:round;}
-  .cg-proj-fert{stroke:#8f8fe8;}
-  .cg-proj-maize{stroke:var(--supply);}
-  .cg-proj-fert-dot{fill:#8f8fe8;}
-  .cg-proj-maize-dot{fill:var(--supply);}
-  .cg-proj-stat{font-family:var(--display); font-weight:700; font-size:15px; fill:var(--paper);}
-  .cg-proj-stat-sm{font-size:12px;}
-  .cg-proj-date{font-family:var(--mono); font-size:9.5px; letter-spacing:0.04em; fill:var(--paper-dim);}
   .crisis-legend{display:flex; gap:22px; flex-wrap:wrap; margin:14px 0 4px;}
   .crisis-legend span{display:inline-flex; align-items:center; gap:7px; font-family:var(--mono); font-size:11.5px; letter-spacing:0.03em; color:var(--paper-dim);}
   .crisis-legend i{width:14px; height:2.2px; display:inline-block; border-radius:2px;}
   .cg-band-labels text{font-family:var(--mono); font-size:10.5px; fill:#e8c34a;}
-  .crisis-mobile-indicator{
-    display:flex; align-items:center; gap:9px; margin-top:16px;
-    font-family:var(--mono); font-size:12px; letter-spacing:0.02em; color:var(--paper-dim);
-  }
-  .crisis-mobile-indicator .dot{
-    width:8px; height:8px; border-radius:50%; flex:none;
-    background:#e8c34a; box-shadow:0 0 0 4px rgba(232,195,74,0.18);
-  }
-  @media (min-width:761px){ .crisis-mobile-indicator{display:none;} }
-  /* the two projection dots double as click targets for the shock cards below */
-  .cg-shock{cursor:pointer;}
-  .cg-shock-ring{fill:none; stroke:#e8c34a; stroke-width:1.4; opacity:0; transition:opacity 0.15s ease;}
-  .cg-shock:hover .cg-shock-ring, .cg-shock:focus .cg-shock-ring{opacity:0.7;}
   .crisis-shock{padding:0; border:none;}
   .crisis-shock summary{list-style:none; cursor:pointer; display:flex; align-items:flex-start; justify-content:space-between; gap:14px;}
   .crisis-shock summary::-webkit-details-marker{display:none;}
@@ -944,7 +953,7 @@
   <div class="wrap why-now-grid">
     <div class="reveal">
       <div class="eyebrow">WHY NOW</div>
-      <h2 style="font-size:clamp(26px,3vw,36px); margin-top:14px;">The food crisis is finally getting attention.<button type="button" class="rp-info" aria-label="What's driving the recent attention"><span aria-hidden="true">i</span><span class="rp-info-pop" role="tooltip">An unpublished UK intelligence assessment on ecosystem collapse named food security a national-security threat (The Guardian, 8 July 2026); Tesco and Sainsbury’s backed a 100+ organisation letter urging a Good Food Bill (Food Foundation); Tim Lang’s National Preparedness Commission review, <em>Just in Case</em>, made the same case in February 2025.</span></button> Coordinated response for long-term resilience is the part that’s missing.</h2>
+      <h2 style="font-size:clamp(26px,3vw,36px); margin-top:14px;">The food crisis is finally getting attention.<button type="button" class="rp-info" aria-label="What's driving the recent attention"><span aria-hidden="true">i</span><span class="rp-info-pop" role="tooltip">An unpublished UK intelligence assessment on ecosystem collapse named food security a national-security threat (The Guardian, 8 July 2026); Tesco and Sainsbury’s backed a 100+ organisation letter urging a Good Food Bill (Food Foundation); Tim Lang’s National Preparedness Commission review, <em>Just in Case</em>, made the same case in February 2025.</span></button></h2>
     </div>
     <div class="reveal" style="color:var(--paper-dim); font-size:15.5px;">
       <p style="margin:0 0 14px;">Food inflation is forecast to reach around 9% by the end of 2026<button type="button" class="rp-info" aria-label="Source"><span aria-hidden="true">i</span><span class="rp-info-pop" role="tooltip">Food and Drink Federation, revised year-end 2026 forecast (1 April 2026); Energy and Climate Intelligence Unit, on climate-impacted foods driving the rise, not wages or regulation (7 July 2026).</span></button>, and the Food Foundation’s basic-basket tracker already shows prices roughly 30% higher than in April 2022 — a second price shock inside four years, arriving on top of the first.</p>
@@ -961,8 +970,9 @@
           <span><i style="background:var(--paper);"></i>Crude oil</span>
           <span><i style="background:var(--supply);"></i>Maize</span>
         </div>
+        <div class="crisis-plot">
         <div class="crisis-img-wrap">
-          <svg class="crisis-svg" viewBox="0 0 1214 470" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Energy, grain and fertiliser price movements, 2010 to 2026, with forecast annotations to December 2026. Source: Bloomberg.">
+          <svg class="crisis-svg" viewBox="0 0 966 470" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Energy, grain and fertiliser price movements, 2010 to 2026. Source: Bloomberg.">
             <g class="cg-grid">
               <line x1="54" y1="394.0" x2="954" y2="394.0"/><text x="44" y="398.0" text-anchor="end">0</text>
               <line x1="54" y1="333.2" x2="954" y2="333.2"/><text x="44" y="337.2" text-anchor="end">200</text>
@@ -998,30 +1008,24 @@
               <polyline class="cg-line cg-crude" points="0.0,327.1 4.1,327.1 8.2,327.1 12.3,327.1 16.4,327.1 20.5,327.1 24.5,327.1 28.6,327.1 32.7,326.5 36.8,326.2 40.9,325.3 45.0,323.5 49.1,319.5 53.2,313.4 57.3,306.4 61.4,300.7 65.5,296.1 69.5,292.1 73.6,290.3 77.7,289.1 81.8,288.2 85.9,285.8 90.0,284.2 94.1,283.0 98.2,282.1 102.3,281.2 106.4,281.2 110.5,282.7 114.5,284.2 118.6,283.6 122.7,281.5 126.8,278.2 130.9,273.0 135.0,266.0 139.1,258.1 143.2,249.6 147.3,242.9 151.4,239.2 155.5,237.4 159.5,236.8 163.6,239.6 167.7,242.3 171.8,242.6 175.9,244.1 180.0,245.9 184.1,243.8 188.2,239.2 192.3,235.9 196.4,234.1 200.5,235.9 204.5,241.1 208.6,245.3 212.7,247.8 216.8,248.7 220.9,245.6 225.0,242.3 229.1,241.4 233.2,241.4 237.3,240.8 241.4,241.7 245.5,243.2 249.5,245.0 253.6,247.5 257.7,248.4 261.8,247.2 265.9,245.9 270.0,244.4 274.1,242.6 278.2,242.6 282.3,243.8 286.4,243.8 290.5,244.1 294.5,244.7 298.6,244.1 302.7,243.5 306.8,244.1 310.9,245.6 315.0,249.0 319.1,255.1 323.2,263.6 327.3,275.4 331.4,287.9 335.5,297.6 339.5,304.6 343.6,307.3 347.7,306.1 351.8,303.7 355.9,304.0 360.0,305.2 364.1,309.2 368.2,313.4 372.3,317.7 376.4,322.2 380.5,326.8 384.5,330.1 388.6,332.0 392.7,331.4 396.8,328.3 400.9,325.3 405.0,323.5 409.1,321.3 413.2,320.7 417.3,320.7 421.4,320.4 425.5,317.7 429.5,315.9 433.6,314.3 437.7,313.7 441.8,313.1 445.9,313.4 450.0,314.9 454.1,315.9 458.2,315.9 462.3,314.9 466.4,312.8 470.5,309.5 474.5,306.1 478.6,302.2 482.7,298.8 486.8,296.7 490.9,294.0 495.0,291.5 499.1,289.1 503.2,287.0 507.3,285.2 511.4,283.3 515.5,282.1 519.5,283.9 523.6,288.5 527.7,293.1 531.8,296.7 535.9,300.4 540.0,300.7 544.1,298.2 548.2,296.4 552.3,296.4 556.4,297.9 560.5,299.7 564.5,301.3 568.6,302.2 572.7,302.2 576.8,301.3 580.9,302.2 585.0,306.7 589.1,314.9 593.2,324.1 597.3,330.8 601.4,334.4 605.5,334.1 609.5,331.1 613.6,327.4 617.7,326.8 621.8,325.6 625.9,323.2 630.0,318.9 634.1,312.5 638.2,306.7 642.3,302.2 646.4,297.9 650.5,294.0 654.5,293.4 658.6,291.2 662.7,288.2 666.8,285.2 670.9,285.8 675.0,282.7 679.1,277.9 683.2,271.2 687.3,263.6 691.4,254.4 695.5,245.6 699.5,241.1 703.6,242.3 707.7,245.6 711.8,250.2 715.9,256.0 720.0,262.7 724.1,267.8 728.2,271.5 732.3,274.5 736.4,278.2 740.5,279.4 744.5,280.6 748.6,282.1 752.7,281.5 756.8,279.7 760.9,276.6 765.0,273.9 769.1,273.6 773.2,275.1 777.3,276.9 781.4,279.1 785.5,279.1 789.5,277.2 793.6,276.0 797.7,275.1 801.8,275.4 805.9,278.2 810.0,281.2 814.1,282.4 818.2,285.5 822.3,287.3 826.4,286.7 830.5,286.7 834.5,288.5 838.6,290.6 842.7,292.4 846.8,294.3 850.9,295.2 855.0,295.8 859.1,290.0 863.2,286.4 867.3,283.3 871.4,276.9 875.5,270.0 879.5,266.0 883.6,259.9 887.7,253.2 891.8,249.0 895.9,246.2 900.0,244.4"/>
               <polyline class="cg-line cg-maize" points="0.0,308.9 4.1,308.9 8.2,308.9 12.3,308.9 16.4,308.9 20.5,308.9 24.5,308.9 28.6,308.9 32.7,311.0 36.8,314.9 40.9,314.0 45.0,315.9 49.1,317.4 53.2,317.7 57.3,317.7 61.4,321.9 65.5,324.1 69.5,325.6 73.6,325.0 77.7,321.9 81.8,319.5 85.9,318.6 90.0,318.9 94.1,317.1 98.2,317.7 102.3,318.3 106.4,317.4 110.5,315.9 114.5,316.5 118.6,313.1 122.7,308.9 126.8,302.5 130.9,294.6 135.0,287.6 139.1,283.0 143.2,277.2 147.3,269.3 151.4,266.9 155.5,266.6 159.5,265.7 163.6,266.9 167.7,273.6 171.8,275.1 175.9,276.9 180.0,280.0 184.1,280.9 188.2,278.5 192.3,271.2 196.4,270.9 200.5,263.9 204.5,262.0 208.6,259.9 212.7,264.2 216.8,259.0 220.9,261.1 225.0,261.4 229.1,263.3 233.2,264.8 237.3,266.9 241.4,266.9 245.5,268.4 249.5,270.6 253.6,274.8 257.7,281.8 261.8,289.4 265.9,295.2 270.0,300.4 274.1,306.1 278.2,308.0 282.3,307.0 286.4,304.9 290.5,302.8 294.5,298.2 298.6,294.9 302.7,298.5 306.8,302.2 310.9,306.7 315.0,311.3 319.1,313.4 323.2,312.2 327.3,311.0 331.4,308.6 335.5,308.6 339.5,310.7 343.6,311.6 347.7,315.6 351.8,317.1 355.9,319.2 360.0,320.4 364.1,321.6 368.2,321.3 372.3,324.7 376.4,323.8 380.5,323.8 384.5,324.7 388.6,324.7 392.7,322.8 396.8,323.5 400.9,322.8 405.0,316.5 409.1,317.1 413.2,318.3 417.3,318.0 421.4,318.9 425.5,325.0 429.5,323.5 433.6,322.8 437.7,322.8 441.8,322.8 445.9,322.2 450.0,323.2 454.1,322.5 458.2,322.8 462.3,322.8 466.4,322.2 470.5,321.6 474.5,322.8 478.6,323.5 482.7,322.2 486.8,321.0 490.9,320.4 495.0,318.9 499.1,318.0 503.2,318.3 507.3,321.0 511.4,322.8 515.5,321.9 519.5,320.7 523.6,321.0 527.7,319.8 531.8,318.3 535.9,318.9 540.0,321.0 544.1,320.1 548.2,319.2 552.3,318.3 556.4,318.3 560.5,317.4 564.5,317.1 568.6,317.7 572.7,317.7 576.8,317.1 580.9,316.5 585.0,322.8 589.1,324.7 593.2,328.3 597.3,327.4 601.4,328.0 605.5,323.8 609.5,318.0 613.6,315.2 617.7,315.6 621.8,314.9 625.9,311.6 630.0,311.3 634.1,306.1 638.2,302.5 642.3,291.8 646.4,284.5 650.5,280.6 654.5,281.8 658.6,283.6 662.7,289.7 666.8,291.2 670.9,293.4 675.0,283.3 679.1,279.4 683.2,270.6 687.3,267.8 691.4,261.4 695.5,262.7 699.5,259.0 703.6,264.5 707.7,266.3 711.8,266.9 715.9,269.6 720.0,265.4 724.1,265.4 728.2,247.8 732.3,239.9 736.4,236.8 740.5,245.9 744.5,245.3 748.6,267.2 752.7,283.0 756.8,292.4 760.9,292.8 765.0,297.3 769.1,299.4 773.2,301.3 777.3,303.1 781.4,308.3 785.5,305.2 789.5,307.0 793.6,306.4 797.7,305.5 801.8,303.1 805.9,310.1 810.0,310.4 814.1,310.4 818.2,311.6 822.3,312.8 826.4,305.5 830.5,304.0 834.5,304.3 838.6,303.7 842.7,300.7 846.8,304.3 850.9,305.8 855.0,308.6 859.1,290.9 863.2,292.4 867.3,288.5 871.4,282.4 875.5,281.5 879.5,293.4 883.6,295.2 887.7,296.1 891.8,299.7 895.9,295.8 900.0,300.4"/>
             </g>
-            <g class="cg-forecast">
-              <line class="cg-divider" x1="954" y1="14" x2="954" y2="394"/>
-              <text class="cg-now-label" x="960" y="10">PROJECTED</text>
-              <g class="cg-shock" tabindex="0" role="button" aria-expanded="false" aria-label="Shock: Strait of Hormuz, December 2026" data-target="shockHormuz">
-                <path class="cg-proj-line cg-proj-fert" d="M954.0,105.8 Q1004.0,40.0 1049.0,48.0"/>
-                <circle class="cg-shock-ring" cx="1049.0" cy="48.0" r="8"/>
-                <circle class="cg-proj-dot cg-proj-fert-dot" cx="1049.0" cy="48.0" r="3.5"/>
-                <text class="cg-proj-stat" x="1061.0" y="50.0">9–10%</text>
-                <text class="cg-proj-date" x="1061.0" y="64.0">Dec 2026</text>
-              </g>
-              <g class="cg-shock" tabindex="0" role="button" aria-expanded="false" aria-label="Shock: drought, Sept–Oct 2026" data-target="shockDrought">
-                <path class="cg-proj-line cg-proj-maize" d="M954.0,314.4 Q1004.0,248.0 1049.0,242.0"/>
-                <circle class="cg-shock-ring" cx="1049.0" cy="242.0" r="8"/>
-                <circle class="cg-proj-dot cg-proj-maize-dot" cx="1049.0" cy="242.0" r="3.5"/>
-                <text class="cg-proj-stat cg-proj-stat-sm" x="1061.0" y="244.0">+60/+90/+40%</text>
-                <text class="cg-proj-date" x="1061.0" y="258.0">Sept–Oct 2026</text>
-              </g>
-            </g>
           </svg>
         </div>
-        <div class="crisis-mobile-indicator">
-          <span class="dot"></span> Further inflation forecast to 9–10% by December 2026 — see right
+          <div class="crisis-endstats">
+            <button type="button" class="crisis-endstat" data-target="shockHormuz" aria-expanded="false">
+              <span class="ces-dot" aria-hidden="true"></span>
+              <span class="ces-num">9–10%</span>
+              <span class="ces-cap">Whole-basket food inflation, forecast</span>
+              <span class="ces-date">Dec 2026</span>
+            </button>
+            <button type="button" class="crisis-endstat" data-target="shockDrought" aria-expanded="false">
+              <span class="ces-dot" aria-hidden="true"></span>
+              <span class="ces-num">+90%</span>
+              <span class="ces-cap">Iceberg lettuce, wholesale — with tomatoes +60% and potatoes +40%</span>
+              <span class="ces-date">Sept–Oct 2026</span>
+            </button>
+          </div>
         </div>
-        <p class="crisis-caption after">Food inflation was easing — until spring 2026. As recently as the autumn-2025 outlook, the year was expected to end near 3%; the official annual food measure had even fallen to 1.7% (year to June 2026). That was the calm before the compounding began. Click either marker above for what changed.</p>
+        <p class="crisis-caption after">Food inflation was easing — until spring 2026. As recently as the autumn-2025 outlook, the year was expected to end near 3%; the official annual food measure had even fallen to 1.7% (year to June 2026). That was the calm before the compounding began. The two figures beside the chart are separate shocks, not where these price lines lead — click either for what changed.</p>
       </div>
 
       <div class="crisis-proj-eyebrow">The two shocks behind the forecast rise</div>
@@ -1050,7 +1054,8 @@
         </details>
       </div>
     </div>
-    <p class="crisis-sources">Sources: Bloomberg · ONS, Consumer Price Inflation UK (June 2026, published July 2026) · Food Foundation, Food Prices Tracker (July 2026) · Food and Drink Federation forecast (1 April 2026) · IMF, Regional Economic Outlook Update: Middle East and Central Asia (8 July 2026) · The Guardian (1 August 2026) · Energy and Climate Intelligence Unit (7 July 2026).</p>
+
+    <h2 class="crisis-close reveal">Coordinated response for long-term resilience is the part that’s missing.</h2>
 
     <div class="crisis-voices reveal">
       <div class="crisis-voices-eyebrow">The case, in their words</div>
@@ -1069,6 +1074,8 @@
         </div>
       </div>
     </div>
+
+    <p class="crisis-sources">Sources: Bloomberg · ONS, Consumer Price Inflation UK (June 2026, published July 2026) · Food Foundation, Food Prices Tracker (July 2026) · Food and Drink Federation forecast (1 April 2026) · IMF, Regional Economic Outlook Update: Middle East and Central Asia (8 July 2026) · The Guardian (1 August 2026) · Energy and Climate Intelligence Unit (7 July 2026).</p>
 
   </div>
 </section>
@@ -1757,8 +1764,8 @@
 </script>
 <script>
   document.addEventListener('DOMContentLoaded', function(){
-    var shocks = document.querySelectorAll('.cg-shock');
-    if(!shocks.length) return;
+    // the two big figures beside the chart open their own shock card
+    var shocks = document.querySelectorAll('.crisis-endstat');
     function toggle(el){
       var details = document.getElementById(el.dataset.target);
       if(!details) return;
@@ -1768,12 +1775,9 @@
     }
     shocks.forEach(function(el){
       el.addEventListener('click', function(){ toggle(el); });
-      el.addEventListener('keydown', function(e){
-        if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); toggle(el); }
-      });
     });
-    // keep the chart's aria-expanded in sync if someone opens/closes the
-    // <details> panel directly instead of via the chart dot
+    // keep the figure's aria-expanded in sync if someone opens or closes the
+    // <details> panel directly instead of via the figure
     // a source tooltip anchors to its (i), which can land anywhere on a line —
     // nudge it back inside the viewport instead of letting it scroll the page
     document.querySelectorAll('.rp-info, .rp-note').forEach(function(btn){
@@ -1795,7 +1799,7 @@
 
     document.querySelectorAll('.crisis-shock').forEach(function(details){
       details.addEventListener('toggle', function(){
-        var dot = document.querySelector('.cg-shock[data-target="' + details.id + '"]');
+        var dot = document.querySelector('.crisis-endstat[data-target="' + details.id + '"]');
         if(dot) dot.setAttribute('aria-expanded', String(details.open));
       });
     });
