@@ -169,7 +169,12 @@
   .audience-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:20px;}
   @media (max-width:860px){ .audience-grid{grid-template-columns:1fr;} }
   .audience-card{border:1px solid var(--line); padding:24px 22px; background:var(--surface);}
-  .a-tag{font-family:var(--mono); font-size:11px; letter-spacing:0.08em; color:var(--paper-dim); text-transform:uppercase; margin-bottom:14px;}
+  /* the scale labels read as pills -- they name a level, not a heading */
+  .a-tag{
+    display:inline-block; font-family:var(--mono); font-size:11px; letter-spacing:0.08em;
+    color:var(--paper-dim); text-transform:uppercase; margin-bottom:14px;
+    padding:6px 13px; border:1px solid var(--line-strong); border-radius:999px;
+  }
   .audience-card h3{font-size:18px; line-height:1.28; margin-bottom:10px;}
   .audience-card p{font-size:14.5px; color:var(--paper-dim); margin:0;}
 
@@ -183,15 +188,34 @@
       radial-gradient(ellipse 55% 30% at 55% 86%, rgba(245,245,242,0.04), transparent 62%);
     filter:blur(6px);
   }
+  /* the planes hold the centre column so the four of them stack down one
+     spine, and the text alternates into the column either side of it */
   .axo2-row{
     position:relative; z-index:1;
-    display:grid; grid-template-columns:0.9fr 1fr; gap:48px; align-items:center;
-    padding:52px 0;
+    display:grid; grid-template-columns:1fr minmax(0,360px) 1fr; gap:clamp(20px,2.6vw,40px);
+    align-items:center; padding:10px 0;
   }
-  @media (max-width:860px){ .axo2-row{grid-template-columns:1fr; gap:20px; padding:36px 0;} }
+  /* a transform doesn't shrink the layout box, so each tilted plane reserves
+     more height than it paints. pulling the rows together closes that slack --
+     the text can't collide because it alternates sides */
+  .axo2-row + .axo2-row{margin-top:-48px;}
+  @media (max-width:860px){ .axo2-row + .axo2-row{margin-top:0;} }
+  /* both pinned to row 1: the text comes first in the DOM, so on a flipped
+     row auto-placement would otherwise drop the graphic onto a second row */
+  .axo2-graphic{grid-column:2; grid-row:1;}
+  .axo2-text{grid-column:1; grid-row:1; text-align:right;}
+  .axo2-row.flip .axo2-text{grid-column:3; text-align:left;}
+  @media (max-width:860px){
+    .axo2-row{grid-template-columns:1fr; gap:20px; padding:26px 0;}
+    .axo2-graphic, .axo2-text, .axo2-row.flip .axo2-text{grid-column:1; grid-row:auto; text-align:left;}
+  }
   .axo2-text .a-tag{margin-bottom:16px;}
   .axo2-text h3{font-size:clamp(21px,2.4vw,27px); line-height:1.22; margin:0 0 14px;}
-  .axo2-text p{font-size:15.5px; color:var(--paper-dim); max-width:440px; margin:0;}
+  /* the copy keeps a readable measure and hugs the spine on whichever side
+     of it the text has landed */
+  .axo2-text p{font-size:15.5px; color:var(--paper-dim); max-width:440px; margin:0 0 0 auto;}
+  .axo2-row.flip .axo2-text p{margin:0 auto 0 0;}
+  @media (max-width:860px){ .axo2-text p, .axo2-row.flip .axo2-text p{margin:0;} }
   .axo2-text .actor-farmer{color:#d9a441;}
   .axo2-text .actor-business{color:var(--demand);}
   .axo2-text .actor-civic{color:var(--hub);}
@@ -810,7 +834,7 @@
       </div>
     </div>
 
-    <div class="wrap axo2-row reveal">
+    <div class="wrap axo2-row flip reveal">
       <div class="axo2-text">
         <span class="a-tag">LONDON — REGIONAL LEVEL</span>
         <h3>Pool buying power across London boroughs</h3>
@@ -892,7 +916,7 @@
       </div>
     </div>
 
-    <div class="wrap axo2-row reveal">
+    <div class="wrap axo2-row flip reveal">
       <div class="axo2-text">
         <span class="a-tag">NATIONAL GOVERNMENT</span>
         <h3>Build local proofs to encode new food economics</h3>
