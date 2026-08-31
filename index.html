@@ -508,14 +508,20 @@
     [data-table="closed"] .rp-figure{position:relative; top:auto;}
     .rp-stage{position:relative; top:auto; height:auto;}
     [data-pfstage="portfolio"] .rp-stage{height:auto;}
-    .rp-fnd p, [data-pfstage="portfolio"] .rp-fnd p{max-height:none; opacity:1;}
-    [data-pfstage="portfolio"] .rp-labels,
-    [data-pfstage="portfolio"] .rp-outcomes{opacity:1; pointer-events:auto;}
-    [data-pfstage="portfolio"] .rp-canvas{left:auto; width:100%;}
-    .pf-overlay{display:none;}
+    .rp-fnd p{max-height:none;}
+    /* stage two works here too: the descriptions fold away and the pills come
+       up on each pathway's own wave, which is what the reader is looking at */
+    [data-pfstage="portfolio"] .rp-fnd p{max-height:0; opacity:0;}
+    [data-pfstage="portfolio"] .rp-labels{opacity:1; pointer-events:auto;}
+    [data-pfstage="portfolio"] .rp-band{height:118px;}
+    .pf-pill{font-size:8.5px; padding:3px 7px;}
+    .pf-pop{width:200px; max-width:70vw; font-size:11px; padding:9px 11px;}
   }
   .rp-canvas{position:absolute; top:0; left:33%; bottom:0; width:45%; z-index:1;}
   .rp-canvas canvas{display:block;}
+  /* the per-pathway waves are a narrow-screen thing only: on a wide screen
+     the four bands are read together in the one canvas */
+  .rp-band{display:none;}
 
   /* ---- the interventions, riding their pathway's wave ---- */
   .pf-overlay{
@@ -658,27 +664,44 @@
   .rp-flow-outer-top .rp-step{color:#e7964b;}
   .rp-flow-outer-bottom .rp-step{color:#4fb488;}
   @media (max-width:860px){
-    .rp-flow-outer{width:100%; margin:0; grid-template-columns:1fr; gap:14px; text-align:left;}
+    .rp-flow-outer{width:100%; margin:0; grid-template-columns:1fr; gap:26px; text-align:left;}
     .rp-flow-outer .rp-step{text-align:left; display:flex; align-items:flex-start; gap:12px;}
     .rp-flow-outer .rp-ico{margin:0; flex:none;}
-    .rp-flow-outer .rp-step+.rp-step::before, .rp-flow-outer .rp-step+.rp-step::after{display:none;}
+    /* stacked here, so the flow reads downward -- a stem and a chevron under
+       each icon rather than the sideways arrows of the wide layout */
+    .rp-flow-outer .rp-step+.rp-step::before{
+      content:''; position:absolute; left:17px; top:-22px; width:1px; height:15px;
+      background:linear-gradient(180deg, transparent, currentColor); opacity:0.55;
+    }
+    .rp-flow-outer .rp-step+.rp-step::after{
+      content:''; position:absolute; left:13.5px; top:-8px;
+      border-top:5px solid currentColor; border-left:4px solid transparent;
+      border-right:4px solid transparent; opacity:0.65;
+    }
   }
   @media (max-width:860px){
-    .rp-stage{height:auto; display:flex; flex-direction:column;}
+    .rp-stage{height:auto; display:block;}
+    .rp-outcomes{display:none;}
+    .rp-labels{position:static; width:100%; display:block; padding:0; gap:0;}
+    .rp-fnd{margin:0 0 38px; padding:0;}
+    .rp-fnd:last-child{margin-bottom:0;}
+    /* each pathway carries its own slice of the one simulation, full width and
+       taller than the shared canvas was, so the wave is actually readable */
+    .rp-band{display:block; width:100%; height:150px; margin:0 0 16px;}
     /* left:33% from the desktop rule still applied as a relative offset,
        pushing the canvas 110px right and off the screen -- the source of the
        horizontal scroll on mobile */
-    .rp-canvas{position:relative; left:auto; right:auto; width:100%; height:280px; margin-bottom:18px; order:1;}
+    .rp-canvas{
+      position:fixed; left:0; top:0; width:320px; height:900px; margin:0;
+      visibility:hidden; pointer-events:none; z-index:-1;
+    }
     .rp-labels{
       position:static; width:100%; padding-right:0; order:2;
       display:flex; flex-direction:column; justify-content:flex-start; gap:22px;
     }
     .rp-fnd{position:static; max-width:none; width:100%; padding:0;}
-    .rp-outcomes{
-      position:static; width:100%; order:3; margin-top:28px;
-      display:grid; grid-template-columns:repeat(3,1fr); gap:14px; pointer-events:none;
-    }
-    .rp-outcome{position:static; transform:none;}
+    /* the outcomes are dropped from the narrow view -- see the display:none
+       further up; here the four waves and their pathways are the whole story */
   }
 
   /* ===================== REFRAME ===================== */
@@ -1288,24 +1311,28 @@
       <div class="rp-stage reveal">
         <div class="rp-labels">
           <div class="rp-fnd rp-fnd-01" data-k="top" tabindex="0">
+          <canvas class="rp-band" data-band="top" aria-hidden="true"></canvas>
             <div class="code">PATHWAY 01</div>
             <h4>Civic-led delivery, civic resilience and preparedness</h4>
             <p>Procurement protocols and buying coalitions don’t feed anyone on their own. Grocers, dinners, workshops and community-run hubs are the layer that turn food into fresh meals someone can buy or receive.</p>
           </div>
 
           <div class="rp-fnd rp-fnd-02" data-k="fin" tabindex="0">
+          <canvas class="rp-band" data-band="buy" aria-hidden="true"></canvas>
             <div class="code">PATHWAY 02</div>
             <h4>Coordinated, collective buying power of organic, resilient supply<button type="button" class="rp-info" aria-label="Why this is a resilience bet, not just a fairness one"><span aria-hidden="true">i</span><span class="rp-info-pop" role="tooltip">Rodale Institute’s 40-year side-by-side trial found organic corn yielding 31% more than conventional corn in drought years, with 15–20% more water moving through the soil and roughly 45% less fossil-fuel energy going in to grow it. That’s the difference between land that holds through a dry summer and land that doesn’t — and between a farm exposed to every fertiliser price spike out of a blocked strait and one that isn’t.</span></button></h4>
             <p>No single borough’s contract is big enough to move a farmer’s decision. A buying coalition of London boroughs and businesses is — turning committed public and commercial demand into the confidence a grower needs to convert land.</p>
           </div>
 
           <div class="rp-fnd rp-fnd-04" data-k="port" tabindex="0">
+          <canvas class="rp-band" data-band="mid" aria-hidden="true"></canvas>
             <div class="code">PATHWAY 03</div>
             <h4>New Food Economics</h4>
             <p>New economics of food through policy, economic, accounting, financing, and monetary instruments. Sounds complex — plenty of best practice to learn from.</p>
           </div>
 
           <div class="rp-fnd rp-fnd-03" data-k="region" tabindex="0">
+          <canvas class="rp-band" data-band="bot" aria-hidden="true"></canvas>
             <div class="code">PATHWAY 04</div>
             <h4>Nutrient density is the target, not calories<button type="button" class="rp-info" aria-label="Why this is a resilience bet, not just a fairness one"><span aria-hidden="true">i</span><span class="rp-info-pop" role="tooltip">Rodale Institute’s 40-year side-by-side trial found organic corn yielding 31% more than conventional corn in drought years, with 15–20% more water moving through the soil and roughly 45% less fossil-fuel energy going in to grow it. That’s the difference between land that holds through a dry summer and land that doesn’t — and between a farm exposed to every fertiliser price spike out of a blocked strait and one that isn’t.</span></button></h4>
             <p>The baseline shifts from “enough food” to genuinely nourishing food — because a system that only solves for calories quietly manufactures the next public-health crisis while claiming to have solved the last one.</p>
@@ -2065,10 +2092,10 @@
 
       var SPAN = 0.62, INNER = SPAN / 3;
       var BANDS = [
-        {sel:'.track.pw-01', y: SPAN,  tk:'#e7964b'},
-        {sel:'.track.pw-02', y: INNER, tk:'#8fb0ff'},
-        {sel:'.track.pw-03', y:-INNER, tk:'#c9ced3'},
-        {sel:'.track.pw-04', y:-SPAN,  tk:'#4fb488'}
+        {sel:'.track.pw-01', key:'top', y: SPAN,  tk:'#e7964b'},
+        {sel:'.track.pw-02', key:'buy', y: INNER, tk:'#8fb0ff'},
+        {sel:'.track.pw-03', key:'mid', y:-INNER, tk:'#c9ced3'},
+        {sel:'.track.pw-04', key:'bot', y:-SPAN,  tk:'#4fb488'}
       ];
 
       var items = [];
@@ -2115,7 +2142,9 @@
       var t0 = performance.now();
       function clock(){ return (performance.now() - t0) / 1000; }
 
+      var narrow = window.matchMedia('(max-width:860px)');
       function layout(t){
+        if(narrow.matches) return layoutBands(t);
         var s = stage.getBoundingClientRect(), c = canvas.getBoundingClientRect();
         if(!c.width || !c.height) return;
         var ox = c.left - s.left, oy = c.top - s.top;
@@ -2137,6 +2166,38 @@
         });
       }
 
+      /* narrow screens: every pathway has its own wave canvas, so a pill sits
+         over that band's own strip rather than over one shared plane */
+      function layoutBands(t){
+        var s = stage.getBoundingClientRect();
+        var byKey = {};
+        items.forEach(function(it){
+          var k = it.band.key;
+          (byKey[k] = byKey[k] || []).push(it);
+        });
+        Object.keys(byKey).forEach(function(k){
+          var band = document.querySelector('.rp-band[data-band="' + k + '"]');
+          if(!band) return;
+          var b = band.getBoundingClientRect();
+          if(!b.width || !b.height) return;
+          var ox = b.left - s.left, oy = b.top - s.top;
+          var group = byKey[k];
+          var step = Math.max(20, Math.min(26, b.height * 0.17));
+          group.forEach(function(it, i){
+            var drift = Math.sin(t * 0.45 + it.phase) * 0.05;
+            var x = ox + (0.08 + (group.length === 1 ? 0.42 : (i / (group.length - 1)) * 0.84)) * b.width;
+            // keep the pill inside its own band rather than the phone's edge
+            var halfPill = (it.pill.offsetWidth || 90) / 2;
+            x = Math.min(Math.max(x, ox + halfPill), ox + b.width - halfPill);
+            var y = oy + b.height / 2 + drift * b.height + ((i % 3) - 1) * step;
+            it.pill.style.left = Math.round(x) + 'px';
+            it.pill.style.top = Math.round(y) + 'px';
+            var half = (it.pop.offsetWidth || 200) / 2;
+            it.pop.style.left = Math.round(Math.min(Math.max(x, ox + half), ox + b.width - half)) + 'px';
+            it.pop.style.top = Math.round(y + 14) + 'px';
+          });
+        });
+      }
       layout(0);
       window.addEventListener('resize', function(){ layout(clock()); });
       if(window.ResizeObserver) new ResizeObserver(function(){ layout(clock()); }).observe(canvas);
@@ -2194,7 +2255,7 @@
 
   });
 </script>
-<script type="module" src="assets/foundations/wave.js?v=18"></script>
+<script type="module" src="assets/foundations/wave.js?v=19"></script>
 
 </body>
 </html>

@@ -35,7 +35,7 @@ if (host) {
 
   const scene = new THREE.Scene();
   const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, -10, 10);
-  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, preserveDrawingBuffer: SMALL });
   renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
   renderer.setClearColor(0x000000, 0);
   host.appendChild(renderer.domElement);
@@ -616,6 +616,43 @@ if (host) {
     el.addEventListener('blur', off);
   });
 
+
+  /* ---------- narrow screens: the four bands are read one at a time, each
+     above the pathway it belongs to. There is still only one simulation -- each
+     visible canvas gets the matching horizontal slice of it blitted in every
+     frame, so all four stay in step with each other. ---------- */
+  const SLICE_NDC = 0.17; // half-height of the strip taken per band
+  let slices = [];
+  function collectSlices() {
+    slices = [];
+    if (!SMALL) return;
+    BANDS.forEach(band => {
+      const el = document.querySelector('.rp-band[data-band="' + band.key + '"]');
+      if (!el) return;
+      slices.push({ el: el, ctx: el.getContext('2d'), y: band.y });
+    });
+  }
+  function blitSlices() {
+    if (!slices.length) return;
+    const src = renderer.domElement;
+    const SW = src.width, SH = src.height;
+    if (!SW || !SH) return;
+    const dpr = Math.min(2, window.devicePixelRatio || 1);
+    slices.forEach(s => {
+      const c = s.el;
+      const w = c.clientWidth, h = c.clientHeight;
+      if (!w || !h) return;
+      if (c.width !== Math.round(w * dpr) || c.height !== Math.round(h * dpr)) {
+        c.width = Math.round(w * dpr); c.height = Math.round(h * dpr);
+      }
+      const sy = (1 - (s.y + SLICE_NDC)) / 2 * SH;
+      const sh = SLICE_NDC * SH;
+      s.ctx.clearRect(0, 0, c.width, c.height);
+      s.ctx.drawImage(src, 0, sy, SW, sh, 0, 0, c.width, c.height);
+    });
+  }
+  collectSlices();
+  window.addEventListener('resize', collectSlices);
   function resize() {
     const w = host.clientWidth, h = host.clientHeight;
     if (!w || !h) return;
@@ -645,5 +682,6 @@ if (host) {
     U.uRegion.value += (want.region - U.uRegion.value) * 0.06;
     U.uTop.value += (want.top - U.uTop.value) * 0.08;
     renderer.render(scene, camera);
+    if (SMALL) blitSlices();
   });
 }
