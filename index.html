@@ -489,17 +489,20 @@
   .plaque p{font-size:15px; color:var(--paper-dim); margin:0;}
 
   /* ---- foundations wave diagram (adapted from the Resilience Platform piece) ---- */
-  .rp-stage{
-    /* one height for both stages. animating it resized the WebGL buffer every
-       frame of the transition, and shifting the page mid-scroll moved the very
-       element the stage switch was keyed off -- both showed up as flicker */
-    position:relative; margin-top:8px; height:clamp(430px, 70vh, 660px);
-  }
-  /* the waves hold their place while the pills are up. only while the table is
-     closed -- once it's open it is the thing being read, and a pinned stage
-     would swallow the rows as they came past */
-  [data-table="closed"] .rp-stage{
+  /* the whole figure pins, not just the waves: the demand/diets/health and
+     supply/soils/environmental rows are the pathways' outcomes and have to stay
+     on screen with them. only while the table is closed -- once it's open the
+     table is what's being read, and a pinned figure would swallow the rows. */
+  .rp-figure{position:relative;}
+  [data-table="closed"] .rp-figure{
     position:sticky; top:64px; z-index:3; background:var(--ink);
+  }
+  .rp-stage{
+    /* sized so the figure fits one screen with both flow rows, since the reader
+       should meet the diagram whole. one height for both stages: animating it
+       resized the WebGL buffer on every frame of the transition */
+    position:relative; margin-top:8px;
+    height:clamp(320px, calc(100vh - 300px), 620px);
   }
   /* a quiet stretch of scroll while the diagram is pinned: the pathways view
      holds for the first part of it and becomes the portfolio view partway
@@ -511,14 +514,17 @@
     transition:opacity .5s ease, max-height .7s ease, margin .7s ease;
   }
   [data-pfstage="portfolio"] .rp-fnd p{opacity:0; max-height:0;}
-  [data-pfstage="portfolio"] .rp-flow-outer{opacity:0.35; transition:opacity .4s ease;}
+  /* the flow rows stay legible in the portfolio view -- they are the outcomes
+     these pathways run towards, not decoration on the pathways view */
+  [data-pfstage="portfolio"] .rp-flow-outer{opacity:0.8; transition:opacity .5s ease;}
   @media (max-width:900px){
     /* the stage stacks vertically here, so the stage-two rearrangement and the
-       pills on the waves are both off -- the table carries the portfolio */
-    /* the [data-table] selector that pins the stage outranks a bare .rp-stage,
-       so the release has to be written at the same weight to land here */
-    .rp-stage,
-    [data-table="closed"] .rp-stage{position:relative; top:auto; height:auto;}
+       pills on the waves are both off -- the table carries the portfolio.
+       the [data-table] selector that pins outranks a bare class, so each
+       release has to be written at the same weight to land here */
+    .rp-figure,
+    [data-table="closed"] .rp-figure{position:relative; top:auto;}
+    .rp-stage{position:relative; top:auto; height:auto;}
     [data-pfstage="portfolio"] .rp-stage{height:auto;}
     .rp-fnd p, [data-pfstage="portfolio"] .rp-fnd p{max-height:none; opacity:1;}
     [data-pfstage="portfolio"] .rp-labels,
@@ -1222,111 +1228,115 @@
       <h2>Four pathways that build food system resilience and preparedness<span class="h2-sub">through connecting the demand and supply</span></h2>
       <p>There are multiple plausible ways to transform the food systems. The pathways below set direction, organise interventions, and actors around resilience, health, environmental, economic vitality, and equity &amp; fairness outcomes — each one makes the next possible, and skipping one is usually why a pilot doesn’t survive contact with scale.</p>
     </div>
-    <div class="rp-flow-outer rp-flow-outer-top reveal">
-      <div class="rp-step"><span class="rp-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <circle cx="12" cy="13" r="7" />
-            <path d="M5 13h14" />
-          </svg></span>
-        <h5>Demand</h5>
-        <p>For sustainable and local products</p>
-      </div>
-      <div class="rp-step"><span class="rp-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M12 20c0-6 3-11 8-13-1 8-4 12-8 13z" />
-            <path d="M12 20c0-4-2-8-6-9 1 5 3 8 6 9z" />
-          </svg></span>
-        <h5>Diets</h5>
-        <p>Nutrient-rich, sustainable &amp; healthy</p>
-      </div>
-      <div class="rp-step rp-step-jump"><span class="rp-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M12 20s-7-4.3-7-9a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 4.7-7 9-7 9z" />
-          </svg></span>
-        <h5>Health</h5>
-        <p>Outcomes</p>
-      </div>
-    </div>
-
-    <div class="rp-stage reveal">
-      <div class="rp-labels">
-        <div class="rp-fnd rp-fnd-01" data-k="top" tabindex="0">
-          <div class="code">PATHWAY 01</div>
-          <h4>Civic-led delivery, civic resilience and preparedness</h4>
-          <p>Procurement protocols and buying coalitions don’t feed anyone on their own. Grocers, dinners, workshops and community-run hubs are the layer that turn food into fresh meals someone can buy or receive.</p>
+    <!-- the diagram is one unit: the demand/diets/health row, the four waves
+         and the supply/soils/environmental row all pin and hold together -->
+    <div class="rp-figure">
+      <div class="rp-flow-outer rp-flow-outer-top reveal">
+        <div class="rp-step"><span class="rp-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="13" r="7" />
+              <path d="M5 13h14" />
+            </svg></span>
+          <h5>Demand</h5>
+          <p>For sustainable and local products</p>
         </div>
-
-        <div class="rp-fnd rp-fnd-02" data-k="fin" tabindex="0">
-          <div class="code">PATHWAY 02</div>
-          <h4>Coordinated, collective buying power of organic, resilient supply<button type="button" class="rp-info" aria-label="Why this is a resilience bet, not just a fairness one"><span aria-hidden="true">i</span><span class="rp-info-pop" role="tooltip">Rodale Institute’s 40-year side-by-side trial found organic corn yielding 31% more than conventional corn in drought years, with 15–20% more water moving through the soil and roughly 45% less fossil-fuel energy going in to grow it. That’s the difference between land that holds through a dry summer and land that doesn’t — and between a farm exposed to every fertiliser price spike out of a blocked strait and one that isn’t.</span></button></h4>
-          <p>No single borough’s contract is big enough to move a farmer’s decision. A buying coalition of London boroughs and businesses is — turning committed public and commercial demand into the confidence a grower needs to convert land.</p>
+        <div class="rp-step"><span class="rp-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 20c0-6 3-11 8-13-1 8-4 12-8 13z" />
+              <path d="M12 20c0-4-2-8-6-9 1 5 3 8 6 9z" />
+            </svg></span>
+          <h5>Diets</h5>
+          <p>Nutrient-rich, sustainable &amp; healthy</p>
         </div>
-
-        <div class="rp-fnd rp-fnd-04" data-k="port" tabindex="0">
-          <div class="code">PATHWAY 03</div>
-          <h4>New Food Economics</h4>
-          <p>New economics of food through policy, economic, accounting, financing, and monetary instruments. Sounds complex — plenty of best practice to learn from.</p>
-        </div>
-
-        <div class="rp-fnd rp-fnd-03" data-k="region" tabindex="0">
-          <div class="code">PATHWAY 04</div>
-          <h4>Nutrient density is the target, not calories<button type="button" class="rp-info" aria-label="Why this is a resilience bet, not just a fairness one"><span aria-hidden="true">i</span><span class="rp-info-pop" role="tooltip">Rodale Institute’s 40-year side-by-side trial found organic corn yielding 31% more than conventional corn in drought years, with 15–20% more water moving through the soil and roughly 45% less fossil-fuel energy going in to grow it. That’s the difference between land that holds through a dry summer and land that doesn’t — and between a farm exposed to every fertiliser price spike out of a blocked strait and one that isn’t.</span></button></h4>
-          <p>The baseline shifts from “enough food” to genuinely nourishing food — because a system that only solves for calories quietly manufactures the next public-health crisis while claiming to have solved the last one.</p>
+        <div class="rp-step rp-step-jump"><span class="rp-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 20s-7-4.3-7-9a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 4.7-7 9-7 9z" />
+            </svg></span>
+          <h5>Health</h5>
+          <p>Outcomes</p>
         </div>
       </div>
 
-      <div class="rp-canvas" id="rpCanvas"></div>
+      <div class="rp-stage reveal">
+        <div class="rp-labels">
+          <div class="rp-fnd rp-fnd-01" data-k="top" tabindex="0">
+            <div class="code">PATHWAY 01</div>
+            <h4>Civic-led delivery, civic resilience and preparedness</h4>
+            <p>Procurement protocols and buying coalitions don’t feed anyone on their own. Grocers, dinners, workshops and community-run hubs are the layer that turn food into fresh meals someone can buy or receive.</p>
+          </div>
 
-      <!-- built from the table below, so the items live in one place only -->
-      <div class="pf-overlay" id="pfOverlay" aria-hidden="true"></div>
+          <div class="rp-fnd rp-fnd-02" data-k="fin" tabindex="0">
+            <div class="code">PATHWAY 02</div>
+            <h4>Coordinated, collective buying power of organic, resilient supply<button type="button" class="rp-info" aria-label="Why this is a resilience bet, not just a fairness one"><span aria-hidden="true">i</span><span class="rp-info-pop" role="tooltip">Rodale Institute’s 40-year side-by-side trial found organic corn yielding 31% more than conventional corn in drought years, with 15–20% more water moving through the soil and roughly 45% less fossil-fuel energy going in to grow it. That’s the difference between land that holds through a dry summer and land that doesn’t — and between a farm exposed to every fertiliser price spike out of a blocked strait and one that isn’t.</span></button></h4>
+            <p>No single borough’s contract is big enough to move a farmer’s decision. A buying coalition of London boroughs and businesses is — turning committed public and commercial demand into the confidence a grower needs to convert land.</p>
+          </div>
 
-      <div class="rp-outcomes">
-        <div class="rp-outcome rp-outcome-01"><span class="rp-outcome-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M12 3v17" />
-                <path d="M5 7h14" />
-                <path d="M5 7l-2.5 5a2.5 2.5 0 0 0 5 0L5 7z" />
-                <path d="M19 7l-2.5 5a2.5 2.5 0 0 0 5 0L19 7z" />
-              </svg></span><div class="rp-outcome-label">Equity &amp; Fairness</div></div>
-        <div class="rp-outcome rp-outcome-02"><span class="rp-outcome-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M4 16l5-5 4 4 7-8" />
-                <path d="M15 7h5v5" />
-              </svg></span><div class="rp-outcome-label">Economic Vitality</div></div>
-        <div class="rp-outcome rp-outcome-03"><span class="rp-outcome-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z" />
-              </svg></span><div class="rp-outcome-label">Resilience &amp; Preparedness</div></div>
-      </div>
-    </div>
+          <div class="rp-fnd rp-fnd-04" data-k="port" tabindex="0">
+            <div class="code">PATHWAY 03</div>
+            <h4>New Food Economics</h4>
+            <p>New economics of food through policy, economic, accounting, financing, and monetary instruments. Sounds complex — plenty of best practice to learn from.</p>
+          </div>
 
-    <div class="rp-flow-outer rp-flow-outer-bottom reveal">
-      <div class="rp-step"><span class="rp-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M4 15c3-2 6-2 9 0 2-1 4-1 7 0" />
-            <circle cx="12" cy="8" r="3" />
-            <path d="M12 6.6v2.8M10.8 7.2h2.4" />
-          </svg></span>
-        <h5>Supply</h5>
-        <p>De-risking farm transitions</p>
+          <div class="rp-fnd rp-fnd-03" data-k="region" tabindex="0">
+            <div class="code">PATHWAY 04</div>
+            <h4>Nutrient density is the target, not calories<button type="button" class="rp-info" aria-label="Why this is a resilience bet, not just a fairness one"><span aria-hidden="true">i</span><span class="rp-info-pop" role="tooltip">Rodale Institute’s 40-year side-by-side trial found organic corn yielding 31% more than conventional corn in drought years, with 15–20% more water moving through the soil and roughly 45% less fossil-fuel energy going in to grow it. That’s the difference between land that holds through a dry summer and land that doesn’t — and between a farm exposed to every fertiliser price spike out of a blocked strait and one that isn’t.</span></button></h4>
+            <p>The baseline shifts from “enough food” to genuinely nourishing food — because a system that only solves for calories quietly manufactures the next public-health crisis while claiming to have solved the last one.</p>
+          </div>
+        </div>
+
+        <div class="rp-canvas" id="rpCanvas"></div>
+
+        <!-- built from the table below, so the items live in one place only -->
+        <div class="pf-overlay" id="pfOverlay" aria-hidden="true"></div>
+
+        <div class="rp-outcomes">
+          <div class="rp-outcome rp-outcome-01"><span class="rp-outcome-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M12 3v17" />
+                  <path d="M5 7h14" />
+                  <path d="M5 7l-2.5 5a2.5 2.5 0 0 0 5 0L5 7z" />
+                  <path d="M19 7l-2.5 5a2.5 2.5 0 0 0 5 0L19 7z" />
+                </svg></span><div class="rp-outcome-label">Equity &amp; Fairness</div></div>
+          <div class="rp-outcome rp-outcome-02"><span class="rp-outcome-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M4 16l5-5 4 4 7-8" />
+                  <path d="M15 7h5v5" />
+                </svg></span><div class="rp-outcome-label">Economic Vitality</div></div>
+          <div class="rp-outcome rp-outcome-03"><span class="rp-outcome-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z" />
+                </svg></span><div class="rp-outcome-label">Resilience &amp; Preparedness</div></div>
+        </div>
       </div>
-      <div class="rp-step"><span class="rp-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M3 18h18" />
-            <path d="M8 18c0-4 1-6 3-7M8 18c-2 0-3-2-3-4 2 0 3 1 3 3" />
-            <path d="M15 18c0-3 1-5 3-6" />
-          </svg></span>
-        <h5>Soils</h5>
-        <p>Nutrient-rich, sustainable &amp; healthy</p>
-      </div>
-      <div class="rp-step rp-step-jump"><span class="rp-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M3 18c3-4 5-6 8-6s5 2 8 6" />
-            <path d="M3 21h18" />
-            <circle cx="16" cy="7" r="2.4" />
-          </svg></span>
-        <h5>Environmental</h5>
-        <p>Outcomes</p>
+
+      <div class="rp-flow-outer rp-flow-outer-bottom reveal">
+        <div class="rp-step"><span class="rp-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M4 15c3-2 6-2 9 0 2-1 4-1 7 0" />
+              <circle cx="12" cy="8" r="3" />
+              <path d="M12 6.6v2.8M10.8 7.2h2.4" />
+            </svg></span>
+          <h5>Supply</h5>
+          <p>De-risking farm transitions</p>
+        </div>
+        <div class="rp-step"><span class="rp-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M3 18h18" />
+              <path d="M8 18c0-4 1-6 3-7M8 18c-2 0-3-2-3-4 2 0 3 1 3 3" />
+              <path d="M15 18c0-3 1-5 3-6" />
+            </svg></span>
+          <h5>Soils</h5>
+          <p>Nutrient-rich, sustainable &amp; healthy</p>
+        </div>
+        <div class="rp-step rp-step-jump"><span class="rp-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M3 18c3-4 5-6 8-6s5 2 8 6" />
+              <path d="M3 21h18" />
+              <circle cx="16" cy="7" r="2.4" />
+            </svg></span>
+          <h5>Environmental</h5>
+          <p>Outcomes</p>
+        </div>
       </div>
     </div>
 
@@ -1991,7 +2001,9 @@
         function toX(col){ return ox + (((col * 2 - 1) * 0.96 + 1) / 2) * c.width; }
         /* the bands close up as the stage shortens, so the stagger has to shrink
            with them or neighbouring waves collide */
-        var step = Math.min(32, c.height * 0.052);
+        /* floored: on a short screen the proportional step fell below the pill
+           height and neighbouring levels started touching */
+        var step = Math.max(28, Math.min(34, c.height * 0.055));
 
         items.forEach(function(it){
           var drift = Math.sin(t * 0.45 + it.phase) * 0.008;
@@ -2007,15 +2019,15 @@
       window.addEventListener('resize', function(){ layout(clock()); });
       if(window.ResizeObserver) new ResizeObserver(function(){ layout(clock()); }).observe(canvas);
 
-      /* The switch waits until the diagram has actually reached the top of the
-         viewport, so the pathways view gets a full screen of scrolling before it
-         changes. It is measured from the flow row directly above the stage, not
-         from the stage itself: the stage pins once the switch fires, which would
-         freeze its own measurement and flip the switch back.
-         PIN_TOP matches the sticky offset, so the moment the switch fires is the
-         moment the stage would have reached its pinned position -- no jump. */
+      /* The figure pins when it reaches the top of the viewport and only becomes
+         the portfolio view DWELL pixels later, so the pathways view gets a held
+         screen of its own first. Both are measured off the section, whose top is
+         unaffected by the pin -- reading the figure's own rect would freeze once
+         it pinned and flip the switch back. offsetTop is used for the same
+         reason: sticky does not move it. */
       var PIN_TOP = 64, DWELL = 300;
-      var ref = section.querySelector('.rp-flow-outer-top') || section.querySelector('.section-head');
+      var figure = section.querySelector('.rp-figure');
+      var figOffset = figure ? figure.offsetTop - section.offsetTop : 0;
       var live = false;
       function setStage(on){
         if(on === live) return;
@@ -2024,8 +2036,8 @@
         if(on) layout(clock());
       }
       function check(){
-        if(!ref) return;
-        var b = ref.getBoundingClientRect().bottom;
+        if(!figure) return;
+        var b = section.getBoundingClientRect().top + figOffset;
         if(!live && b <= PIN_TOP - DWELL) setStage(true);
         else if(live && b > PIN_TOP - DWELL + 120) setStage(false);
       }
