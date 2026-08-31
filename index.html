@@ -147,7 +147,7 @@
     display:block; font-size:clamp(16px,1.8vw,22px); font-weight:400; letter-spacing:0;
     color:var(--paper-dim); margin-top:6px;
   }
-  .section-head p{color:var(--paper-dim); font-size:16px; margin-top:14px;}
+  .section-head p{color:var(--paper-dim); font-size:16.5px; margin-top:14px;}
   .plain-summary{
     background: rgba(245,245,242,0.06); border-left:3px solid var(--paper-dim);
     padding:16px 20px; margin:18px 0 6px; max-width:680px;
@@ -673,7 +673,7 @@
   }
   .rp-fnd{
     position:relative; width:100%; max-width:380px; text-align:left;
-    pointer-events:auto; cursor:default; border-radius:10px; padding:6px;
+    pointer-events:auto; cursor:default; border-radius:8px; padding:6px;
   }
   .rp-fnd:focus{outline:none;}
   .rp-fnd:focus-visible{outline:1px dashed var(--line-strong); outline-offset:4px;}
@@ -975,7 +975,7 @@
     padding-top:30px; border-top:1px solid var(--line-strong); margin-bottom:22px;
   }
   @media (max-width:760px){ .pf-portfolio-head{flex-direction:column; align-items:flex-start; gap:16px;} }
-  .pf-portfolio-title{font-family:var(--display); font-size:clamp(20px,2.2vw,26px); margin:12px 0 10px;}
+  .pf-portfolio-title{font-family:var(--display); font-size:clamp(21px,2.4vw,27px); margin:12px 0 10px;}
   .pf-portfolio-lede{font-size:15px; color:var(--paper-dim); line-height:1.6; margin:0; max-width:780px;}
   .pf-toggle{
     flex:none; background:none; border:1px solid var(--line-strong); border-radius:999px;
@@ -1140,7 +1140,7 @@
     display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(12px,1.4vw,20px);
   }
   .horizon{
-    padding:22px 20px; border:1px solid var(--line-strong); border-radius:12px;
+    padding:22px 20px; border:1px solid var(--line-strong);
     background:rgba(16,16,16,0.86);
   }
   @media (max-width:860px){
@@ -1148,7 +1148,7 @@
     .hz-cone{display:none;}
     .horizons{padding:0;}
   }
-  .horizon .htag{font-family:var(--mono); font-size:11.5px; letter-spacing:0.08em; text-transform:uppercase; color:var(--paper-dim);}
+  .horizon .htag{font-family:var(--mono); font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:var(--paper-dim);}
   /* the marker grows with the horizon, the way the cone does */
   .hz-dot{
     display:inline-block; width:6px; height:6px; border-radius:50%;
@@ -1200,7 +1200,7 @@
   .foot-brand{font-family:var(--mono); font-size:13px; max-width:340px; color:var(--paper-dim); line-height:1.6;}
   .foot-brand strong{color:var(--paper); font-family:var(--display); display:block; font-size:16px; margin-bottom:10px;}
   .foot-links{display:flex; gap:36px; flex-wrap:wrap;}
-  .foot-col h5{font-family:var(--mono); font-size:11.5px; text-transform:uppercase; letter-spacing:0.07em; color:var(--paper-dim); margin-bottom:12px;}
+  .foot-col h5{font-family:var(--mono); font-size:11px; text-transform:uppercase; letter-spacing:0.08em; color:var(--paper-dim); margin-bottom:12px;}
   .foot-col a{display:block; font-size:14px; margin-bottom:8px; text-decoration:none; color:var(--paper); opacity:0.85;}
   .foot-col a:hover{color:var(--paper); opacity:1;}
   .foot-bottom{margin-top:44px; padding-top:20px; border-top:1px solid var(--line); font-family:var(--mono); font-size:11.5px; color:var(--paper-dim); display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;}
@@ -1268,7 +1268,7 @@
 <div class="wrap"><div class="roadline"></div></div>
 
 <!-- ===================== AUDIENCE ===================== -->
-<section class="tight" id="audience">
+<section id="audience">
   <div class="wrap">
     <div class="section-head reveal">
       <div class="eyebrow">WHO THIS IS FOR</div>
@@ -2083,7 +2083,7 @@
 </section>
 
 <!-- ===================== HORIZONS ===================== -->
-<section id="horizons" style="background:var(--surface); border-top:1px solid var(--line); border-bottom:1px solid var(--line);">
+<section id="horizons" class="tight" style="background:var(--surface); border-top:1px solid var(--line); border-bottom:1px solid var(--line);">
   <div class="wrap">
     <div class="section-head reveal">
       <div class="eyebrow">SEQUENCING THE RESPONSE</div>
