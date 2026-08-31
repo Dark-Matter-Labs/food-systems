@@ -481,6 +481,14 @@
     width:320px; max-width:min(78vw,340px);
     text-transform:none; letter-spacing:0; font-size:12.5px;
   }
+  /* a pop carrying a short list rather than a single sentence. a <button> only
+     takes phrasing content, so the items are spans with their own dash */
+  .rp-note .rp-info-pop-wide{width:390px; max-width:min(82vw,400px);}
+  .rp-pop-lead{display:block; color:var(--paper); margin-bottom:9px;}
+  .rp-pop-item{display:block; position:relative; padding-left:17px; margin-bottom:7px;}
+  .rp-pop-item:last-child{margin-bottom:0;}
+  .rp-pop-item::before{content:'—'; position:absolute; left:0; color:var(--paper-dim);}
+  .rp-pop-tag{font-family:var(--mono); font-size:11px; color:var(--paper-dim);}
   .rp-note:hover .rp-info-pop, .rp-note:focus-visible .rp-info-pop, .rp-note:focus .rp-info-pop{
     opacity:1; visibility:visible; transform:translateY(0); pointer-events:auto;
   }
@@ -1154,15 +1162,8 @@
       </div>
     </div>
 
-    <div class="plain-summary reveal" style="margin-top:28px;">
-      <span class="ps-label">In plain terms</span>
-      <p>We’re proposing four things:</p>
-      <ul>
-        <li>food that actually nourishes people and regenerates soils and ecosystems <span class="ps-tag">(P04)</span></li>
-        <li>new economic and financing instruments to build food system resilience and sovereignty <span class="ps-tag">(P03)</span></li>
-        <li>enough buying power from councils and businesses together to help more farms build resilience and de-risk transition <span class="ps-tag">(P02)</span></li>
-        <li>and local people and projects doing the everyday work of getting it onto plates <span class="ps-tag">(P01)</span></li>
-      </ul>
+    <div class="rp-notes-row reveal" style="margin-top:28px;">
+      <button type="button" class="rp-note" aria-label="In plain terms">In plain terms<span class="rp-info-pop rp-info-pop-wide" role="tooltip"><span class="rp-pop-lead">We’re proposing four things:</span><span class="rp-pop-item">food that actually nourishes people and regenerates soils and ecosystems <span class="rp-pop-tag">(P04)</span></span><span class="rp-pop-item">new economic and financing instruments to build food system resilience and sovereignty <span class="rp-pop-tag">(P03)</span></span><span class="rp-pop-item">enough buying power from councils and businesses together to help more farms build resilience and de-risk transition <span class="rp-pop-tag">(P02)</span></span><span class="rp-pop-item">and local people and projects doing the everyday work of getting it onto plates <span class="rp-pop-tag">(P01)</span></span></span></button>
     </div>
   </div>
 </section>
