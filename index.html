@@ -214,9 +214,9 @@
   .axo2-text p{font-size:15.5px; color:var(--paper-dim); max-width:440px; margin:0 0 0 auto;}
   .axo2-row.flip .axo2-text p{margin:0 auto 0 0;}
   @media (max-width:860px){ .axo2-text p, .axo2-row.flip .axo2-text p{margin:0;} }
-  .axo2-text .actor-farmer{color:#d9a441;}
-  .axo2-text .actor-business{color:var(--demand);}
-  .axo2-text .actor-civic{color:var(--hub);}
+  .axo2-text .actor-farmer{color:#cfe4fa;}
+  .axo2-text .actor-business{color:#8fb8e8;}
+  .axo2-text .actor-civic{color:#5f93d6;}
   .axo2-graphic{display:flex; justify-content:center; perspective:1100px;}
   .axo2-plane-wrap{position:relative; width:100%; max-width:360px;}
   /* the UK relief map's real aspect (~0.68) is much taller-than-wide than
@@ -242,9 +242,9 @@
   .actor-shadow{fill:rgba(0,0,0,0.5); opacity:0.75;}
   .actor-stem{fill:none; stroke:rgba(245,245,242,0.2); stroke-width:1.2;}
   .axo2-dots .aloft{filter:drop-shadow(0 0 7px rgba(0,0,0,0.55));}
-  .axo2-dots .farmer{fill:#d9a441;}
-  .axo2-dots .business{fill:var(--demand);}
-  .axo2-dots .civic{fill:var(--hub);}
+  .axo2-dots .farmer{fill:#cfe4fa;}
+  .axo2-dots .business{fill:#8fb8e8;}
+  .axo2-dots .civic{fill:#5f93d6;}
 
   /* a live network, not scattered points: a pulsing mesh between nearby actors,
      civic organisations acting as the connective hubs, plus a few travelling
@@ -263,7 +263,7 @@
   }
   .axo2-dots circle:nth-of-type(3n+1){animation-delay:0.5s;}
   .axo2-dots circle:nth-of-type(3n+2){animation-delay:1.3s;}
-  .mesh-signal{fill:#f2ead9; opacity:0.85;}
+  .mesh-signal{fill:#dbe9f8; opacity:0.85;}
   .mesh-signal[data-path="1"]{offset-path:url(#meshLine1); animation:meshTravel 3.2s linear infinite;}
   .mesh-signal[data-path="2"]{offset-path:url(#meshLine2); animation:meshTravel 2.6s linear infinite; animation-delay:0.6s;}
   .mesh-signal[data-path="3"]{offset-path:url(#meshLine3); animation:meshTravel 2.9s linear infinite; animation-delay:1.2s;}
@@ -305,12 +305,19 @@
   }
   @keyframes inflowTravel{ from{offset-distance:0%;} to{offset-distance:100%;} }
 
-  #planeLondonGrey svg path{fill:#232320; stroke:var(--line); stroke-width:0.7;}
+  #planeLondonGrey svg path{fill:#1c222b; stroke:var(--line); stroke-width:0.7;}
 
   /* uk-relief.svg wraps a real SRTM-derived hillshade (Wikimedia Commons,
      CC BY-SA 3.0), cropped to Great Britain and re-toned for the dark theme --
      see the credit line under the section for attribution */
-  #planeUk svg image{opacity:0.92;}
+  /* It takes the stack's blue through a filter rather than a blended overlay:
+     the hillshade is transparent outside the coastline, and a blend would have
+     painted that whole box blue. Tuned against the image's own mid grey, which
+     lands on hsl(214, 61%) -- the borough ramp's blue. */
+  #planeUk svg image{
+    opacity:0.92;
+    filter:sepia(1) saturate(3) hue-rotate(174deg) brightness(0.96);
+  }
 
   /* ===================== WHY NOW ===================== */
   .why-now-grid{display:grid; grid-template-columns:0.9fr 1.1fr; gap:48px; align-items:start;}
@@ -762,10 +769,17 @@
   }
 
   /* ===================== REFRAME ===================== */
+  /* the argument runs down the left -- question, then the four moves under
+     it -- and the ball holds the right on its own, where it has room to be big */
   .reframe{
-    display:grid; grid-template-columns:0.9fr 1.1fr; gap:56px; align-items:start;
+    display:grid; grid-template-columns:1.02fr 0.98fr; gap:34px 56px; align-items:start;
   }
-  @media (max-width:900px){ .reframe{grid-template-columns:1fr;} }
+  .reframe > .reveal:first-child{grid-column:1; grid-row:1;}
+  .reframe .body{grid-column:1; grid-row:2;}
+  @media (max-width:900px){
+    .reframe{grid-template-columns:1fr; gap:30px;}
+    .reframe > .reveal:first-child, .reframe .body{grid-column:1; grid-row:auto;}
+  }
   .reframe .big-quote{
     font-family:var(--display); font-weight:700;
     font-size:clamp(24px,3vw,34px); line-height:1.22;
@@ -783,12 +797,19 @@
      goes out of focus. a full-width band so the row above stays level, and the
      whole thing centred on the section */
   .cond-circle{
-    grid-column:1 / -1; margin:14px 0 0; padding-top:40px; border-top:1px solid var(--line-strong);
-    display:flex; flex-direction:column; align-items:center; text-align:center; gap:18px;
+    grid-column:2; grid-row:1 / span 2; margin:0; padding:0;
+    display:flex; flex-direction:column; align-items:center; text-align:center; gap:16px;
   }
-  .cond-disc{display:block; width:100%; max-width:320px; height:auto; overflow:visible;}
-  .cond-above{fill:var(--paper); fill-opacity:0.88;}
-  .cond-below{fill:var(--paper); fill-opacity:0.5;}
+  /* has to sit after the rule above rather than with the other mobile
+     overrides: at equal specificity the later declaration wins, and a
+     grid-column:2 that survives would conjure a second column back */
+  @media (max-width:900px){
+    .cond-circle{grid-column:1; grid-row:auto; margin-top:8px;}
+  }
+  .cond-disc{display:block; width:100%; max-width:440px; height:auto; overflow:visible;}
+  /* silver rather than paper: at full white the ball read as a hole in the page */
+  .cond-above{fill:#c9ced3; fill-opacity:0.7;}
+  .cond-below{fill:#c9ced3; fill-opacity:0.38;}
   /* The waterline holds still and the ball rides over it, so the split
      between sharp and blurred walks up and down the ball on its own. Both
      halves share one bob timing to stay in register at the surface; the
@@ -840,7 +861,7 @@
   .cond-ex-above{color:var(--paper); opacity:0.72;}
   .cond-ex-below{color:var(--paper-dim); opacity:0.5;}
   @media (max-width:600px){ .cond-ex{gap:5px 12px; font-size:9.5px;} }
-  .cond-circle figcaption{font-size:15px; color:var(--paper-dim); line-height:1.6; margin:6px 0 0; max-width:520px;}
+  .cond-circle figcaption{font-size:14.5px; color:var(--paper-dim); line-height:1.6; margin:4px 0 0; max-width:460px;}
   .reframe .body p{margin:0 0 16px; color:var(--paper-dim); font-size:16.5px;}
   .compare{
     display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:26px;
@@ -969,8 +990,17 @@
     transition:transform 1.6s cubic-bezier(.2,.75,.2,1) .2s, fill 1s ease 1.5s, stroke 1s ease 1.5s;
   }
   .axo2-row.in #govPlaneLondon svg path{transform:none;}
+  /* every borough lights as it joins, on its own delay, so the coalition
+     spreads out of Camden instead of switching on in one block */
+  .axo2-row.in #govPlaneLondon svg path.is-joining{
+    fill:rgba(122,179,239,0.26); stroke:rgba(122,179,239,0.44);
+    transition:transform 1.6s cubic-bezier(.2,.75,.2,1) .2s,
+               fill .9s ease var(--jd, 1s), stroke .9s ease var(--jd, 1s);
+  }
   .axo2-row.in #govPlaneLondon svg path.is-founding{
-    fill:rgba(122,179,239,0.38); stroke:rgba(122,179,239,0.6);
+    fill:rgba(122,179,239,0.44); stroke:rgba(122,179,239,0.68);
+    transition:transform 1.6s cubic-bezier(.2,.75,.2,1) .2s,
+               fill .9s ease var(--jd, .9s), stroke .9s ease var(--jd, .9s);
   }
   .axo2-row.in #govPlaneLondon svg #Camden{
     fill:rgba(122,179,239,0.72); stroke:rgba(176,214,248,0.9);
@@ -1180,7 +1210,7 @@
                 <stop offset="100%" stop-color="#7ab3ef" stop-opacity="0"/>
               </radialGradient>
             </defs>
-            <circle class="inflow-glow" cx="622" cy="308" r="260" fill="url(#camdenGlow)"/>
+            <circle class="inflow-glow" cx="622" cy="322" r="224" fill="url(#camdenGlow)"/>
             <!-- roads and traffic are generated: fourteen of them, starting
                  outside London, so they aren't kept by hand here -->
           </svg>
@@ -1661,7 +1691,7 @@
           <clipPath id="condBelow"><path d="M-160,126 q20,-4 40,0 q20,4 40,0 q20,-4 40,0 q20,4 40,0 q20,-4 40,0 q20,4 40,0 q20,-4 40,0 q20,4 40,0 q20,-4 40,0 q20,4 40,0 q20,-4 40,0 q20,4 40,0 q20,-4 40,0 q20,4 40,0 q20,-4 40,0 q20,4 40,0 L480,430 L-160,430 Z"/></clipPath>
           <clipPath id="condFrame"><rect x="0" y="0" width="320" height="320"/></clipPath>
           <radialGradient id="condSheen" cx="40%" cy="28%" r="82%">
-            <stop offset="0" stop-color="#ffffff" stop-opacity="0.30"/>
+            <stop offset="0" stop-color="#ffffff" stop-opacity="0.17"/>
             <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
           </radialGradient>
           <linearGradient id="condWater" x1="0" y1="0" x2="0" y2="1">
@@ -1700,6 +1730,8 @@
         <li>Assumptions about the future</li>
         <li>The value of good nutrition</li>
         <li>The externalities of poor diets</li>
+        <li>The economics of the food system</li>
+        <li>Monetary transition</li>
       </ul>
       <button type="button" class="rp-note rp-note-yes cond-cap" aria-label="What rebuilding the arrangement means">Rebuilding the arrangement<span class="rp-info-pop" role="tooltip">Public-interest grocers, contribution ledgers, part-volunteer/part-commercial ownership, open micro-procurement.</span></button>
       <figcaption>Adjustment only ever reaches the sharp edge above the line. Ownership, contribution and the externalities sit below it — never priced, so never in focus.</figcaption>
@@ -2241,11 +2273,17 @@
         it.el.style.setProperty('--oy', (dy / len * push).toFixed(1) + 'px');
       });
       if(!camden) return;
-      items.filter(function(it){ return it !== camden; })
+      /* every borough joins, not four of them -- and they light in the order
+         they would actually be reached, so the coalition spreads outward from
+         Camden rather than switching on all at once */
+      var ranked = items.filter(function(it){ return it !== camden; })
         .map(function(it){ return {it:it, d:Math.hypot(it.x - camden.x, it.y - camden.y)}; })
-        .sort(function(a, b){ return a.d - b.d; })
-        .slice(0, 4)
-        .forEach(function(n){ n.it.el.classList.add('is-founding'); });
+        .sort(function(a, b){ return a.d - b.d; });
+      var far = ranked.length ? ranked[ranked.length - 1].d : 1;
+      ranked.forEach(function(n, i){
+        n.it.el.classList.add(i < 4 ? 'is-founding' : 'is-joining');
+        n.it.el.style.setProperty('--jd', (0.9 + (n.d / far) * 1.7).toFixed(2) + 's');
+      });
     }
 
     /* Tier 3: proof travelling up from places that are organising, and the
