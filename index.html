@@ -197,6 +197,10 @@
   .axo2-text .actor-civic{color:var(--hub);}
   .axo2-graphic{display:flex; justify-content:center; perspective:1100px;}
   .axo2-plane-wrap{position:relative; width:100%; max-width:360px;}
+  /* the UK relief map's real aspect (~0.68) is much taller-than-wide than
+     the borough shapes -- shrink its width so its rendered height stays in
+     line with the other rows instead of towering over them */
+  .axo2-plane-wrap-uk{max-width:230px;}
   .axo2-plane{
     width:100%;
     transform:rotateX(52deg) rotateZ(-2deg) scale(var(--axo-focus, 0.92));
@@ -825,7 +829,7 @@
         <p>The enabling infrastructure — the frameworks and fiscal instruments that make local and regional action scalable — sits at this level. We aim to strengthen existing and build new coalitions to influence national policy.</p>
       </div>
       <div class="axo2-graphic">
-        <div class="axo2-plane-wrap">
+        <div class="axo2-plane-wrap axo2-plane-wrap-uk">
           <div class="axo2-plane" id="planeUk"></div>
         </div>
       </div>
