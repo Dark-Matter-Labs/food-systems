@@ -508,20 +508,39 @@
     [data-table="closed"] .rp-figure{position:relative; top:auto;}
     .rp-stage{position:relative; top:auto; height:auto;}
     [data-pfstage="portfolio"] .rp-stage{height:auto;}
-    .rp-fnd p{max-height:none;}
-    /* stage two works here too: the descriptions fold away and the pills come
-       up on each pathway's own wave, which is what the reader is looking at */
-    [data-pfstage="portfolio"] .rp-fnd p{max-height:0; opacity:0;}
+    /* the descriptions stay on a phone -- the interventions sit under them as
+       a quiet list rather than riding the wave, so nothing needs to fold */
+    .rp-fnd p, [data-pfstage="portfolio"] .rp-fnd p{max-height:none; opacity:1;}
     [data-pfstage="portfolio"] .rp-labels{opacity:1; pointer-events:auto;}
-    [data-pfstage="portfolio"] .rp-band{height:118px;}
-    .pf-pill{font-size:8.5px; padding:3px 7px;}
-    .pf-pop{width:200px; max-width:70vw; font-size:11px; padding:9px 11px;}
+    .pf-overlay{display:none;}
+    .pf-band-list{
+      display:flex; flex-wrap:wrap; gap:6px; margin-top:12px;
+      padding-top:12px; border-top:1px solid var(--line);
+    }
+    /* greyed and static: they name what sits on this pathway without
+       competing with the wave or the description above them */
+    .pf-pill.is-listed{
+      position:relative; left:auto; top:auto; transform:none; pointer-events:auto;
+      font-size:9.5px; padding:4px 9px; background:none;
+      color:var(--paper-dim); border-color:var(--line-strong);
+    }
+    .pf-pill.is-listed:hover, .pf-pill.is-listed:focus-visible, .pf-pill.is-listed.is-open{
+      color:var(--tk); border-color:var(--tk); background:none;
+    }
+    .pf-pill.is-listed .pf-pop, .pf-band-list .pf-pop{
+      position:absolute; left:0; top:calc(100% + 8px); transform:none;
+      width:210px; max-width:72vw; font-size:11px; padding:9px 11px;
+    }
   }
   .rp-canvas{position:absolute; top:0; left:33%; bottom:0; width:45%; z-index:1;}
   .rp-canvas canvas{display:block;}
   /* the per-pathway waves are a narrow-screen thing only: on a wide screen
      the four bands are read together in the one canvas */
   .rp-band{display:none;}
+  /* min-width rather than a bare display:none: the narrow rule that shows this
+     list is declared earlier in the sheet, so an unconditional hide here would
+     outrank it at every width */
+  @media (min-width:861px){ .pf-band-list{display:none;} }
 
   /* ---- the interventions, riding their pathway's wave ---- */
   .pf-overlay{
@@ -2098,10 +2117,22 @@
         {sel:'.track.pw-04', key:'bot', y:-SPAN,  tk:'#4fb488'}
       ];
 
+      var narrow = window.matchMedia('(max-width:860px)');
       var items = [];
+      /* On a narrow screen the interventions are a quiet static list under the
+         pathway they belong to, not pills floating over the wave. Each band
+         gets a home in its own .rp-fnd, and the pills move between there and
+         the overlay when the breakpoint changes. */
       BANDS.forEach(function(band, bi){
         var track = document.querySelector(band.sel);
         if(!track) return;
+        var canvasEl = document.querySelector('.rp-band[data-band="' + band.key + '"]');
+        var fnd = canvasEl && canvasEl.closest('.rp-fnd');
+        if(fnd){
+          band.list = document.createElement('div');
+          band.list.className = 'pf-band-list';
+          fnd.appendChild(band.list);
+        }
 
         var nodes = track.querySelectorAll('.node[data-short]');
         nodes.forEach(function(node, i){
@@ -2139,12 +2170,22 @@
         });
       });
 
+      /* pills live in one of two places depending on width, so there is only
+         ever one copy of each */
+      function placePills(){
+        var toList = narrow.matches;
+        items.forEach(function(it){
+          var home = toList ? (it.band.list || overlay) : overlay;
+          if(it.pill.parentNode !== home){ home.appendChild(it.pill); home.appendChild(it.pop); }
+          it.pill.classList.toggle('is-listed', toList);
+          if(toList){ it.pill.style.left = ''; it.pill.style.top = ''; it.pop.style.left = ''; it.pop.style.top = ''; }
+        });
+      }
       var t0 = performance.now();
       function clock(){ return (performance.now() - t0) / 1000; }
 
-      var narrow = window.matchMedia('(max-width:860px)');
       function layout(t){
-        if(narrow.matches) return layoutBands(t);
+        if(narrow.matches) return;
         var s = stage.getBoundingClientRect(), c = canvas.getBoundingClientRect();
         if(!c.width || !c.height) return;
         var ox = c.left - s.left, oy = c.top - s.top;
@@ -2198,6 +2239,8 @@
           });
         });
       }
+      placePills();
+      if(narrow.addEventListener) narrow.addEventListener('change', placePills);
       layout(0);
       window.addEventListener('resize', function(){ layout(clock()); });
       if(window.ResizeObserver) new ResizeObserver(function(){ layout(clock()); }).observe(canvas);
