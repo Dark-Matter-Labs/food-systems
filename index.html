@@ -484,7 +484,7 @@
        should meet the diagram whole. one height for both stages: animating it
        resized the WebGL buffer on every frame of the transition */
     position:relative; margin-top:8px;
-    height:clamp(320px, calc(100vh - 300px), 620px);
+    height:clamp(320px, calc(100vh - 284px), 620px);
   }
   /* a quiet stretch of scroll while the diagram is pinned: the pathways view
      holds for the first part of it and becomes the portfolio view partway
@@ -532,7 +532,7 @@
       width:210px; max-width:72vw; font-size:11px; padding:9px 11px;
     }
   }
-  .rp-canvas{position:absolute; top:0; left:33%; bottom:0; width:45%; z-index:1;}
+  .rp-canvas{position:absolute; top:0; left:37.5%; bottom:0; width:42%; z-index:1;}
   .rp-canvas canvas{display:block;}
   /* the per-pathway waves are a narrow-screen thing only: on a wide screen
      the four bands are read together in the one canvas */
@@ -572,8 +572,10 @@
     margin-bottom:6px; white-space:normal;
   }
   .rp-labels{
-    position:absolute; top:0; left:0; bottom:0; width:31%; z-index:2; pointer-events:none;
-    display:flex; flex-direction:column; justify-content:space-between; gap:clamp(18px,3vh,40px);
+    --fs:1;
+    position:absolute; top:0; left:0; bottom:0; width:36%; z-index:2; pointer-events:none;
+    display:flex; flex-direction:column; justify-content:space-between;
+    gap:calc(clamp(8px,2vh,30px) * var(--fs, 1));
     padding-right:clamp(20px,4vw,56px);
   }
   .rp-fnd{
@@ -582,9 +584,12 @@
   }
   .rp-fnd:focus{outline:none;}
   .rp-fnd:focus-visible{outline:1px dashed var(--line-strong); outline-offset:4px;}
-  .rp-fnd .code{font-family:var(--mono); font-size:11px; letter-spacing:0.08em; text-transform:uppercase; margin-bottom:8px;}
-  .rp-fnd h4{font-family:var(--display); font-weight:700; font-size:clamp(16px,1.6vw,20px); line-height:1.2; margin:0 0 6px;}
-  .rp-fnd p{font-size:12.5px; line-height:1.44; color:var(--paper-dim); margin:0;}
+  .rp-fnd .code{font-family:var(--mono); font-size:calc(11px * var(--fs, 1)); letter-spacing:0.08em; text-transform:uppercase; margin-bottom:calc(8px * var(--fs, 1));}
+  .rp-fnd h4{font-family:var(--display); font-weight:700; font-size:calc(clamp(15px,1.4vw,18px) * var(--fs, 1)); line-height:1.2; margin:0 0 calc(6px * var(--fs, 1));}
+  .rp-fnd p{font-size:calc(11.5px * var(--fs, 1)); line-height:1.4; color:var(--paper-dim); margin:0;}
+  .rp-labels.is-tight .rp-fnd p{
+    display:-webkit-box; -webkit-box-orient:vertical; -webkit-line-clamp:var(--lines, 4); overflow:hidden;
+  }
   .rp-fnd-01 .code, .rp-fnd-01 h4{color:#e7964b;}
   .rp-fnd-03 .code, .rp-fnd-03 h4{color:#4fb488;}
   .rp-fnd-04 .code, .rp-fnd-04 h4{color:#c9ced3;}
@@ -757,7 +762,38 @@
   .cond-disc{display:block; width:100%; max-width:320px; height:auto; overflow:visible;}
   .cond-above{fill:var(--paper); fill-opacity:0.88;}
   .cond-below{fill:var(--paper); fill-opacity:0.5;}
-  .cond-line{stroke:var(--paper); stroke-width:1; stroke-dasharray:3 5; opacity:0.55;}
+  /* The waterline holds still and the ball rides over it, so the split
+     between sharp and blurred walks up and down the ball on its own. Both
+     halves share one bob timing to stay in register at the surface; the
+     submerged half sways a little wider, which reads as refraction. */
+  @keyframes condBob{
+    0%   {transform:translate(0,0) rotate(0deg);}
+    22%  {transform:translate(-2.4px,7px) rotate(1.3deg);}
+    48%  {transform:translate(0.8px,11px) rotate(-0.3deg);}
+    72%  {transform:translate(2.4px,2px) rotate(-1.4deg);}
+    88%  {transform:translate(1px,-3px) rotate(-0.6deg);}
+    100% {transform:translate(0,0) rotate(0deg);}
+  }
+  @keyframes condBobDeep{
+    0%   {transform:translate(0,0) rotate(0deg);}
+    22%  {transform:translate(-4.4px,7px) rotate(1.3deg);}
+    48%  {transform:translate(1.6px,11px) rotate(-0.3deg);}
+    72%  {transform:translate(4.4px,2px) rotate(-1.4deg);}
+    88%  {transform:translate(1.8px,-3px) rotate(-0.6deg);}
+    100% {transform:translate(0,0) rotate(0deg);}
+  }
+  /* one period of the wave, so the loop has no seam */
+  @keyframes condDrift{from{transform:translateX(0);} to{transform:translateX(-80px);}}
+  .cond-bob{transform-box:fill-box; transform-origin:center; animation:condBob 9s ease-in-out infinite;}
+  .cond-bob-deep{animation-name:condBobDeep;}
+  .cond-drift{animation:condDrift 9s linear infinite;}
+  .cond-drift-back{animation:condDrift 14s linear infinite reverse;}
+  .cond-surface{fill:none; stroke:var(--paper); stroke-width:1;}
+  .cond-surface-1{opacity:0.5;}
+  .cond-surface-2{opacity:0.2;}
+  @media (prefers-reduced-motion: reduce){
+    .cond-bob, .cond-drift, .cond-drift-back{animation:none;}
+  }
   /* the two readings hang off the halves they describe, so the page isn't
      saying the same thing twice */
   .cond-cap{margin:0;}
@@ -778,7 +814,7 @@
   .cond-ex-below{color:var(--paper-dim); opacity:0.5;}
   @media (max-width:600px){ .cond-ex{gap:5px 12px; font-size:9.5px;} }
   .cond-circle figcaption{font-size:15px; color:var(--paper-dim); line-height:1.6; margin:6px 0 0; max-width:520px;}
-  .reframe .body p{margin:0 0 16px; color:var(--paper); opacity:0.9; font-size:16.5px;}
+  .reframe .body p{margin:0 0 16px; color:var(--paper-dim); font-size:16.5px;}
   .compare{
     display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:26px;
   }
@@ -1576,27 +1612,53 @@
         <li>Surplus redistribution</li>
       </ul>
       <svg class="cond-disc" viewBox="0 0 320 320" role="img" aria-labelledby="condTitle condDesc">
-        <title id="condTitle">One circle, cut by a waterline</title>
-        <desc id="condDesc">A single filled circle divided by a waterline. The smaller part above the line is in sharp focus — what adjustment can reach. The larger part below it is blurred and out of focus: the conditions the arrangement actually rests on.</desc>
+        <title id="condTitle">One ball, floating</title>
+        <desc id="condDesc">A single ball floating in water. The part riding above the surface is in sharp focus — what adjustment can reach. The larger part below the surface is blurred and out of focus: the conditions the arrangement actually rests on. The ball drifts and bobs, so the waterline walks slowly up and down it, but most of it never surfaces.</desc>
         <defs>
           <filter id="condBlur" x="-40%" y="-40%" width="180%" height="180%">
             <feGaussianBlur stdDeviation="9"/>
           </filter>
-          <clipPath id="condAbove"><rect x="-30" y="0" width="380" height="126"/></clipPath>
-          <clipPath id="condBelow"><rect x="-30" y="112" width="380" height="330"/></clipPath>
+          <!-- one wave, eight periods of 80 units, so a drift of exactly one
+               period loops seamlessly -->
+          <path id="condWave" d="M-160,126 q20,-4 40,0 q20,4 40,0 q20,-4 40,0 q20,4 40,0 q20,-4 40,0 q20,4 40,0 q20,-4 40,0 q20,4 40,0 q20,-4 40,0 q20,4 40,0 q20,-4 40,0 q20,4 40,0 q20,-4 40,0 q20,4 40,0 q20,-4 40,0 q20,4 40,0"/>
+          <clipPath id="condAbove"><path d="M-160,126 q20,-4 40,0 q20,4 40,0 q20,-4 40,0 q20,4 40,0 q20,-4 40,0 q20,4 40,0 q20,-4 40,0 q20,4 40,0 q20,-4 40,0 q20,4 40,0 q20,-4 40,0 q20,4 40,0 q20,-4 40,0 q20,4 40,0 q20,-4 40,0 q20,4 40,0 L480,-90 L-160,-90 Z"/></clipPath>
+          <clipPath id="condBelow"><path d="M-160,126 q20,-4 40,0 q20,4 40,0 q20,-4 40,0 q20,4 40,0 q20,-4 40,0 q20,4 40,0 q20,-4 40,0 q20,4 40,0 q20,-4 40,0 q20,4 40,0 q20,-4 40,0 q20,4 40,0 q20,-4 40,0 q20,4 40,0 q20,-4 40,0 q20,4 40,0 L480,430 L-160,430 Z"/></clipPath>
+          <clipPath id="condFrame"><rect x="0" y="0" width="320" height="320"/></clipPath>
           <radialGradient id="condSheen" cx="40%" cy="28%" r="82%">
             <stop offset="0" stop-color="#ffffff" stop-opacity="0.30"/>
             <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
           </radialGradient>
+          <linearGradient id="condWater" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#f5f5f2" stop-opacity="0.11"/>
+            <stop offset="0.34" stop-color="#f5f5f2" stop-opacity="0.045"/>
+            <stop offset="1" stop-color="#f5f5f2" stop-opacity="0.008"/>
+          </linearGradient>
         </defs>
-        <g clip-path="url(#condBelow)" filter="url(#condBlur)">
-          <circle class="cond-below" cx="160" cy="160" r="128"/>
+        <g clip-path="url(#condFrame)">
+          <!-- the pool: a body of water, brighter where the light still
+               reaches, fading out with depth -->
+          <g clip-path="url(#condBelow)">
+            <rect x="-40" y="96" width="400" height="320" fill="url(#condWater)"/>
+          </g>
+          <!-- the submerged part, swaying a touch wider than the rest: refraction -->
+          <g clip-path="url(#condBelow)" filter="url(#condBlur)">
+            <g class="cond-bob cond-bob-deep">
+              <circle class="cond-below" cx="160" cy="160" r="128"/>
+            </g>
+          </g>
+          <!-- the surface itself, and the rings where the ball meets it -->
+          <g clip-path="url(#condBelow)">
+            <use class="cond-surface cond-surface-2 cond-drift-back" href="#condWave"/>
+          </g>
+          <!-- the part riding above the surface -->
+          <g clip-path="url(#condAbove)">
+            <g class="cond-bob">
+              <circle class="cond-above" cx="160" cy="160" r="128"/>
+              <circle class="cond-sheen" cx="160" cy="160" r="128" fill="url(#condSheen)"/>
+            </g>
+          </g>
+          <use class="cond-surface cond-surface-1 cond-drift" href="#condWave"/>
         </g>
-        <g clip-path="url(#condAbove)">
-          <circle class="cond-above" cx="160" cy="160" r="128"/>
-          <circle class="cond-sheen" cx="160" cy="160" r="128" fill="url(#condSheen)"/>
-        </g>
-        <line class="cond-line" x1="4" y1="126" x2="316" y2="126"/>
       </svg>
       <ul class="cond-ex cond-ex-below">
         <li>Assumptions about the future</li>
@@ -2458,7 +2520,68 @@
       placePills();
       if(narrow.addEventListener) narrow.addEventListener('change', placePills);
       layout(0);
-      window.addEventListener('resize', function(){ layout(clock()); });
+
+      /* The four rungs share one fixed-height column, so rather than trust a
+         clamp to guess right at every window height, measure what the text
+         wants, compare it with the column, and scale the type down until it
+         fits -- correcting a few times for the reflow shrinking causes. */
+      var labels = section.querySelector('.rp-labels');
+      var rungs = labels ? [].slice.call(labels.querySelectorAll('.rp-fnd')) : [];
+      var pendingFit = false;
+      function fitLabels(){
+        if(!labels || !rungs.length) return;
+        if(getComputedStyle(labels).position !== 'absolute'){ labels.style.removeProperty('--fs'); return; }
+        var FLOOR = 0.8;
+        labels.classList.remove('is-tight');
+        rungs.forEach(function(r){ var p = r.querySelector('p'); if(p) p.style.removeProperty('--lines'); });
+        var scale = 1;
+        for(var pass = 0; pass < 5; pass++){
+          labels.style.setProperty('--fs', scale.toFixed(3));
+          var gap = parseFloat(getComputedStyle(labels).rowGap) || 0;
+          var want = rungs.reduce(function(sum, r){ return sum + r.offsetHeight; }, 0) + gap * (rungs.length - 1);
+          var have = labels.clientHeight;
+          if(!want || !have || want <= have - 1) break;
+          var next = Math.max(FLOOR, scale * (have / want));
+          if(Math.abs(next - scale) < 0.004){ scale = next; labels.style.setProperty('--fs', scale.toFixed(3)); break; }
+          scale = next;
+        }
+        // still over at the floor: give each rung the lines it can actually show
+        var gapNow = parseFloat(getComputedStyle(labels).rowGap) || 0;
+        var total = rungs.reduce(function(sum, r){ return sum + r.offsetHeight; }, 0) + gapNow * (rungs.length - 1);
+        if(total > labels.clientHeight + 1){
+          labels.classList.add('is-tight');
+          var room = (labels.clientHeight - gapNow * (rungs.length - 1)) / rungs.length;
+          rungs.forEach(function(r){
+            var p = r.querySelector('p');
+            if(!p) return;
+            var lineH = parseFloat(getComputedStyle(p).lineHeight) || 15;
+            var chrome = r.offsetHeight - p.offsetHeight;
+            p.style.setProperty('--lines', Math.max(1, Math.floor((room - chrome) / lineH)));
+          });
+          // headings wrap differently rung to rung, so trim the tallest one
+          // at a time until the column really is clear
+          for(var trim = 0; trim < 8; trim++){
+            var over = rungs.reduce(function(sum, r){ return sum + r.offsetHeight; }, 0) + gapNow * (rungs.length - 1) - labels.clientHeight;
+            if(over <= 1) break;
+            var worst = null, worstLines = 0;
+            rungs.forEach(function(r){
+              var p = r.querySelector('p');
+              var n = p ? parseInt(p.style.getPropertyValue('--lines'), 10) : 0;
+              if(p && n > worstLines){ worstLines = n; worst = p; }
+            });
+            if(!worst || worstLines <= 1) break;
+            worst.style.setProperty('--lines', worstLines - 1);
+          }
+        }
+      }
+      fitLabels();
+      if(document.fonts && document.fonts.ready) document.fonts.ready.then(fitLabels);
+      window.addEventListener('resize', function(){
+        layout(clock());
+        // the descriptions are collapsed in the portfolio view, so measuring
+        // them there would read a height they do not keep
+        if(live) pendingFit = true; else fitLabels();
+      });
       if(window.ResizeObserver) new ResizeObserver(function(){ layout(clock()); }).observe(canvas);
 
       /* The figure pins when it reaches the top of the viewport and only becomes
@@ -2476,6 +2599,7 @@
         live = on;
         section.setAttribute('data-pfstage', on ? 'portfolio' : 'pathways');
         if(on) layout(clock());
+        else if(pendingFit){ pendingFit = false; setTimeout(fitLabels, 780); }
       }
       function check(){
         if(!figure) return;
