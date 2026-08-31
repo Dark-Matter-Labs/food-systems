@@ -890,7 +890,33 @@
   .ladder{display:flex; flex-direction:column; gap:0;}
   .rung{
     border:1px solid var(--line); padding:20px 22px; position:relative;
+    display:grid; grid-template-columns:1fr 168px; gap:22px; align-items:center;
   }
+  @media (max-width:900px){ .rung{grid-template-columns:1fr; gap:14px;} }
+  /* one move per tier, drawn small: the empty middle of the table, the line
+     that peers join rather than restart, the route and its window */
+  .rung-fig{display:block; width:100%; max-width:168px; height:auto; overflow:visible;}
+  @media (max-width:900px){ .rung-fig{margin:0 auto;} }
+  .rf-table{fill:none; stroke:var(--line-strong); stroke-width:1; stroke-dasharray:2 4;}
+  .rf-seat{fill:none; stroke:var(--paper-dim); stroke-width:1.2; opacity:0.75;}
+  .rf-seat-on{fill:rgba(255,90,31,0.55); stroke:#ff5a1f;}
+  .rf-spine{fill:none; stroke:var(--line-strong); stroke-width:1.2;}
+  .rf-node{fill:none; stroke:var(--paper-dim); stroke-width:1.2; opacity:0.7;}
+  .rf-node-on{fill:rgba(79,180,136,0.5); stroke:#4fb488; opacity:1;}
+  .rf-node-faint{opacity:0.35;}
+  .rf-brace{fill:none; stroke:var(--paper-dim); stroke-width:1; opacity:0.5;}
+  .rf-route{fill:none; stroke:var(--paper-dim); stroke-width:1.2; opacity:0.8;}
+  .rf-way{fill:none; stroke:var(--paper); stroke-width:1.3;}
+  /* the barrier with a gap in it: the deregulation being argued for */
+  .rf-gate{fill:none; stroke:#e05a3d; stroke-width:1.6; opacity:0.7;}
+  /* the labels are captions in HTML rather than SVG text: at a 190px render
+     the in-diagram type came out literally 7px, which nobody can read */
+  .rung-figwrap{margin:0; padding:0;}
+  .rung-figwrap figcaption{
+    font-family:var(--mono); font-size:10px; line-height:1.5; letter-spacing:0.03em;
+    color:var(--paper-dim); opacity:0.8; margin-top:10px; text-align:center;
+  }
+  @media (max-width:900px){ .rung-figwrap figcaption{text-align:left; font-size:11px;} }
   .rung + .rung{border-top:none;}
   .rung .tier{font-family:var(--mono); font-size:11.5px; letter-spacing:0.08em; color:var(--paper-dim); text-transform:uppercase;}
   .rung h4{font-size:17px; margin:8px 0 6px;}
@@ -1683,20 +1709,63 @@
     <div class="gov-wrap">
       <div class="ladder reveal">
         <div class="rung">
-          <div class="tier">Tier 1 — Borough</div>
-          <h4>An independent Food Partnership</h4>
-          <p>The Council keeps a seat at the table — funding, convening, advertising the work — without holding the steering wheel. A declared, public work programme replaces “come and collaborate.”</p>
+          <div class="rung-text">
+            <div class="tier">Tier 1 — Borough</div>
+            <h4>An independent Food Partnership</h4>
+            <p>The Council keeps a seat at the table — funding, convening, advertising the work — without holding the steering wheel. A declared, public work programme replaces “come and collaborate.”</p>          </div>
+          <figure class="rung-figwrap">
+            <svg class="rung-fig" viewBox="0 0 190 130" aria-hidden="true">
+              <circle class="rf-table" cx="95" cy="62" r="38"/>
+              <circle class="rf-seat" cx="95" cy="24" r="6"/>
+              <circle class="rf-seat" cx="128" cy="43" r="6"/>
+              <circle class="rf-seat" cx="128" cy="81" r="6"/>
+              <circle class="rf-seat" cx="95" cy="100" r="6"/>
+              <circle class="rf-seat" cx="62" cy="81" r="6"/>
+              <circle class="rf-seat rf-seat-on" cx="62" cy="43" r="6.5"/>
+            </svg>
+            <figcaption>The Council holds a seat. The middle stays empty.</figcaption>
+          </figure>
         </div>
         <div class="rung">
-          <div class="tier">Tier 2 — London</div>
-          <h4>A coalition of boroughs</h4>
-          <p>Peer boroughs — starting with a founding group of neighbours — take on shared standards, collective buying, and a common protocol, so the model compounds rather than repeats from zero each time.</p>
-          <p style="margin-top:10px;">The Future Food Dinner — an experiential, cross-sector convening format already tested in Camden — is the concrete mechanism for building that coalition one peer group at a time, not just its stated ambition.</p>
+          <div class="rung-text">
+            <div class="tier">Tier 2 — London</div>
+            <h4>A coalition of boroughs</h4>
+            <p>Peer boroughs — starting with a founding group of neighbours — take on shared standards, collective buying, and a common protocol, so the model compounds rather than repeats from zero each time.</p>
+            <p style="margin-top:10px;">The Future Food Dinner — an experiential, cross-sector convening format already tested in Camden — is the concrete mechanism for building that coalition one peer group at a time, not just its stated ambition.</p>          </div>
+          <figure class="rung-figwrap">
+            <svg class="rung-fig" viewBox="0 0 190 130" aria-hidden="true">
+              <path class="rf-spine" d="M18,74 H172"/>
+              <circle class="rf-node rf-node-on" cx="30" cy="74" r="7"/>
+              <circle class="rf-node rf-node-on" cx="58" cy="74" r="7"/>
+              <circle class="rf-node rf-node-on" cx="86" cy="74" r="7"/>
+              <circle class="rf-node" cx="114" cy="74" r="7"/>
+              <circle class="rf-node rf-node-faint" cx="142" cy="74" r="7"/>
+              <circle class="rf-node rf-node-faint" cx="168" cy="74" r="6"/>
+              <path class="rf-brace" d="M24,90 V96 H92 V90"/>
+            </svg>
+            <figcaption>Three neighbours start the line. Peers join it rather than restart.</figcaption>
+          </figure>
         </div>
         <div class="rung">
-          <div class="tier">Tier 3 — National</div>
-          <h4>Permission from the centre</h4>
-          <p>A policy briefing routed through Oxford to national government, timed to a six-month window, arguing for the deregulation that lets already-brilliant local actors build without red tape.</p>
+          <div class="rung-text">
+            <div class="tier">Tier 3 — National</div>
+            <h4>Permission from the centre</h4>
+            <p>A policy briefing routed through Oxford to national government, timed to a six-month window, arguing for the deregulation that lets already-brilliant local actors build without red tape.</p>          </div>
+          <figure class="rung-figwrap">
+            <svg class="rung-fig" viewBox="0 0 190 130" aria-hidden="true">
+              <circle class="rf-node rf-node-on" cx="22" cy="84" r="5"/>
+              <circle class="rf-node rf-node-on" cx="34" cy="96" r="4"/>
+              <circle class="rf-node rf-node-on" cx="18" cy="100" r="3.5"/>
+              <path class="rf-route" d="M30,86 C58,74 74,64 92,56"/>
+              <circle class="rf-way" cx="96" cy="54" r="6"/>
+              <path class="rf-route" d="M102,50 C124,40 140,34 156,30"/>
+              <circle class="rf-node rf-node-on" cx="164" cy="28" r="8"/>
+              <path class="rf-gate" d="M130,10 V30"/>
+              <path class="rf-gate" d="M130,50 V70"/>
+              <path class="rf-brace" d="M30,116 V122 H156 V116"/>
+            </svg>
+            <figcaption>Local proof, routed via Oxford, inside one six-month window.</figcaption>
+          </figure>
         </div>
       </div>
       <div class="callout reveal">
