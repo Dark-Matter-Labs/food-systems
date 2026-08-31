@@ -637,6 +637,22 @@
   /* a pop carrying a short list rather than a single sentence. a <button> only
      takes phrasing content, so the items are spans with their own dash */
   .rp-note .rp-info-pop-wide{width:390px; max-width:min(82vw,400px);}
+  .note-drop{position:relative; display:inline-block;}
+  .note-drop .note-pop{
+    width:min(520px,86vw); max-width:min(520px,86vw);
+    font-size:13.5px; line-height:1.62; padding:16px 18px;
+  }
+  .note-drop:hover .note-pop, .note-drop:focus-within .note-pop,
+  .note-drop[data-open="true"] .note-pop{
+    opacity:1; visibility:visible; transform:translateY(0); pointer-events:auto;
+  }
+  .note-drop[data-open="true"] .rp-note::after{content:"–";}
+  .note-pop p{margin:0 0 11px;}
+  .note-pop p:last-child{margin-bottom:0;}
+  .note-pop a{color:var(--paper); text-decoration:underline; text-decoration-color:var(--supply);}
+  .note-pop a:hover{color:var(--supply);}
+  .note-row{display:flex; flex-wrap:wrap; align-items:center; gap:14px 18px;}
+  .note-row-lead{font-size:14px; color:var(--paper-dim); margin:0; max-width:520px;}
   .rp-pop-lead{display:block; color:var(--paper); margin-bottom:9px;}
   .rp-pop-item{display:block; position:relative; padding-left:17px; margin-bottom:7px;}
   .rp-pop-item:last-child{margin-bottom:0;}
@@ -670,8 +686,8 @@
      outcomes column's right edge, so Health/Environmental land in that column
      while staying in the same arrow-connected row as the rest */
   .rp-flow-outer{
-    display:grid; grid-template-columns:1fr 1fr 0.845fr; gap:clamp(10px,2vw,30px);
-    width:67%; margin:0 0 0 33%; padding:0 8px;
+    display:grid; grid-template-columns:1fr 1fr 0.93fr; gap:clamp(10px,2vw,30px);
+    width:62.5%; margin:0 0 0 37.5%; padding:0 8px;
   }
   .rp-flow-outer-top{margin-bottom:20px;}
   .rp-flow-outer-bottom{margin-top:20px;}
@@ -921,14 +937,21 @@
        readable width and scrolls inside its own box instead */
     .gov-lock-svg{min-width:760px;}
   }
-  .gov-wrap{display:grid; grid-template-columns:1fr 1fr; gap:56px;}
-  @media (max-width:900px){ .gov-wrap{grid-template-columns:1fr;} }
-  .ladder{display:flex; flex-direction:column; gap:0;}
+  .gov-wrap{display:grid; grid-template-columns:1fr; gap:26px;}
+  .ladder{display:grid; grid-template-columns:repeat(3, 1fr); gap:0;}
+  /* one continuous box with two dividers, and the figures pushed to the foot
+     of each column so all three sit on the same line */
   .rung{
-    border:1px solid var(--line); padding:20px 22px; position:relative;
-    display:grid; grid-template-columns:1fr 168px; gap:22px; align-items:center;
+    border:1px solid var(--line); border-left-width:0; padding:22px 22px 24px; position:relative;
+    display:flex; flex-direction:column; gap:16px;
   }
-  @media (max-width:900px){ .rung{grid-template-columns:1fr; gap:14px;} }
+  .rung:first-child{border-left-width:1px;}
+  .rung-figwrap{margin-top:auto;}
+  @media (max-width:900px){
+    .ladder{grid-template-columns:1fr;}
+    .rung{border-left-width:1px; border-top-width:0; gap:14px;}
+    .rung:first-child{border-top-width:1px;}
+  }
   /* one move per tier, drawn small: the empty middle of the table, the line
      that peers join rather than restart, the route and its window */
   .rung-fig{display:block; width:100%; max-width:168px; height:auto; overflow:visible;}
@@ -947,13 +970,12 @@
   .rf-gate{fill:none; stroke:#e05a3d; stroke-width:1.6; opacity:0.7;}
   /* the labels are captions in HTML rather than SVG text: at a 190px render
      the in-diagram type came out literally 7px, which nobody can read */
-  .rung-figwrap{margin:0; padding:0;}
+  .rung-figwrap{margin-top:auto; padding:0;}
   .rung-figwrap figcaption{
     font-family:var(--mono); font-size:10px; line-height:1.5; letter-spacing:0.03em;
     color:var(--paper-dim); opacity:0.8; margin-top:10px; text-align:center;
   }
   @media (max-width:900px){ .rung-figwrap figcaption{text-align:left; font-size:11px;} }
-  .rung + .rung{border-top:none;}
   .rung .tier{font-family:var(--mono); font-size:11.5px; letter-spacing:0.08em; color:var(--paper-dim); text-transform:uppercase;}
   .rung h4{font-size:17px; margin:8px 0 6px;}
   .rung p{font-size:14.5px; color:var(--paper-dim); margin:0;}
@@ -964,6 +986,7 @@
   .callout .code{font-family:var(--mono); font-size:12px; color:var(--hub); letter-spacing:0.06em; display:block; margin-bottom:10px;}
   .callout p{margin:0 0 14px; opacity:0.92;}
   .callout p:last-child{margin-bottom:0;}
+  .precedent-row{margin-top:32px; border-top:1px dashed var(--line-strong); padding-top:24px;}
   .precedent-note{margin-top:32px; border-top:1px dashed var(--line-strong); padding-top:24px; max-width:760px;}
   .precedent-note .code{font-family:var(--mono); font-size:12px; letter-spacing:0.06em; display:block; margin-bottom:10px;}
   .precedent-note p{font-size:15px; color:var(--paper-dim); margin:0;}
@@ -1830,17 +1853,27 @@
           </figure>
         </div>
       </div>
-      <div class="callout reveal">
-        <span class="code">ACCOUNTABILITY LAYER</span>
-        <p>A charter sits above individual projects: minimum requirements to count as a genuine partner, and visibility between members so nobody drifts from the same goal. A food bank can be a member — but only if it’s providing real wraparound support, not a parcel and a goodbye.</p>
-        <p>The same logic extends to a borough market’s trader waiting list, hotel-development leases, and any contract long enough to lock in a supplier’s behaviour rather than just their price.</p>
-        <p>In practice, that means people nominate themselves for a workstream and declare, in front of the group, where they want to be in six months — soft accountability that turns “come and collaborate” into something with an actual deadline.</p>
+      <div class="note-row reveal">
+        <div class="note-drop">
+          <button type="button" class="rp-note" aria-expanded="false" aria-controls="accountNote">Accountability layer</button>
+          <div class="rp-info-pop note-pop" id="accountNote" role="region" aria-label="The accountability layer">
+            <p>A charter sits above individual projects: minimum requirements to count as a genuine partner, and visibility between members so nobody drifts from the same goal. A food bank can be a member — but only if it’s providing real wraparound support, not a parcel and a goodbye.</p>
+            <p>The same logic extends to a borough market’s trader waiting list, hotel-development leases, and any contract long enough to lock in a supplier’s behaviour rather than just their price.</p>
+            <p>In practice, that means people nominate themselves for a workstream and declare, in front of the group, where they want to be in six months — soft accountability that turns “come and collaborate” into something with an actual deadline.</p>
+          </div>
+        </div>
+        <p class="note-row-lead">A charter sits across all three tiers: what it takes to count as a genuine partner, and visibility between members so nobody drifts.</p>
       </div>
     </div>
-    <div class="precedent-note reveal">
-      <span class="code" style="color:var(--supply);">PRECEDENT</span>
-      <p>This isn’t the first time the “as infrastructure” reframe has done real work inside Dark Matter Labs. <a href="https://darkmatterlabs.org/initiatives/treesai" target="_blank" rel="noopener">Trees as Infrastructure (TreesAI)</a> made the same move for urban canopy — building the funding infrastructure for something previously treated as decoration. Food follows the same logic, one step down the same road.</p>
-      <p style="margin-top:14px;">Dark Matter Labs’ role here is researcher, coordinator, and orchestrator of the work and the funding behind it. Camden is one of several London boroughs genuinely moving the needle on this — a partner, not a commissioner — each testing a local answer to what is, underneath, a global pattern. Cities everywhere are hitting the same wall: food fragility that no single council, or country, can price its way out of alone.</p>
+    <div class="note-row precedent-row reveal">
+      <div class="note-drop">
+        <button type="button" class="rp-note" aria-expanded="false" aria-controls="precedentNote" style="color:var(--supply);">Precedent &amp; our role</button>
+        <div class="rp-info-pop note-pop" id="precedentNote" role="region" aria-label="Precedent and our role">
+          <p>This isn’t the first time the “as infrastructure” reframe has done real work inside Dark Matter Labs. <a href="https://darkmatterlabs.org/initiatives/treesai" target="_blank" rel="noopener">Trees as Infrastructure (TreesAI)</a> made the same move for urban canopy — building the funding infrastructure for something previously treated as decoration. Food follows the same logic, one step down the same road.</p>
+          <p>Dark Matter Labs’ role here is researcher, coordinator, and orchestrator of the work and the funding behind it. Camden is one of several London boroughs genuinely moving the needle on this — a partner, not a commissioner — each testing a local answer to what is, underneath, a global pattern. Cities everywhere are hitting the same wall: food fragility that no single council, or country, can price its way out of alone.</p>
+        </div>
+      </div>
+      <p class="note-row-lead">The “as infrastructure” move has done this work before — for urban canopy, through TreesAI.</p>
     </div>
   </div>
 </section>
@@ -2323,11 +2356,12 @@
   document.addEventListener('DOMContentLoaded', function(){
     // a tooltip anchors to whatever opened it, which can land anywhere on a
     // line — nudge it back inside the viewport instead of scrolling the page
-    document.querySelectorAll('.rp-info, .rp-note, .crisis-endstat').forEach(function(btn){
+    document.querySelectorAll('.rp-info, .rp-note, .crisis-endstat, .note-drop').forEach(function(btn){
       var pop = btn.querySelector('.rp-info-pop');
       if(!pop) return;
       btn.addEventListener('pointerenter', place);
       btn.addEventListener('focus', place);
+      btn.addEventListener('focusin', place);
       window.addEventListener('resize', place);
       window.addEventListener('load', place);
       place();
@@ -2338,6 +2372,22 @@
         if(r.left + shift < pad) shift = pad - r.left;
         if(shift) pop.style.marginLeft = Math.round(shift) + 'px';
       }
+    });
+
+    /* the two long-form notes hold open on click as well as hover, so they can
+       be read on a touch screen and the link inside one can be followed */
+    document.querySelectorAll('.note-drop').forEach(function(drop){
+      var btn = drop.querySelector('.rp-note');
+      if(!btn) return;
+      function set(open){
+        drop.setAttribute('data-open', String(open));
+        btn.setAttribute('aria-expanded', String(open));
+      }
+      btn.addEventListener('click', function(){ set(drop.getAttribute('data-open') !== 'true'); });
+      drop.addEventListener('keydown', function(e){
+        if(e.key === 'Escape' || e.key === 'Esc'){ set(false); btn.focus(); }
+      });
+      document.addEventListener('click', function(e){ if(!drop.contains(e.target)) set(false); });
     });
 
     /* ---- the crisis chart draws itself when it comes into view ---- */
