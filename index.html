@@ -461,23 +461,31 @@
   /* the waves hold their place while the pills are up. only while the table is
      closed -- once it's open it is the thing being read, and a pinned stage
      would swallow the rows as they came past */
-  [data-pfstage="portfolio"][data-table="closed"] .rp-stage{
+  [data-table="closed"] .rp-stage{
     position:sticky; top:64px; z-index:3; background:var(--ink);
   }
-  .rp-labels, .rp-outcomes{transition:opacity .4s ease;}
+  .rp-labels, .rp-outcomes{transition:opacity .75s ease;}
+  /* a quiet stretch of scroll while the diagram is pinned: the pathways view
+     holds for the first part of it and becomes the portfolio view partway
+     through, so the change is something you scroll into rather than trip */
+  .pf-hold{height:420px; pointer-events:none;}
+  @media (max-width:900px){ .pf-hold{height:0;} }
   [data-pfstage="portfolio"] .rp-labels,
   [data-pfstage="portfolio"] .rp-outcomes{opacity:0; pointer-events:none;}
   [data-pfstage="portfolio"] .rp-canvas{left:3%; width:94%;}
   .rp-fnd p{
     max-height:260px; overflow:hidden;
-    transition:opacity .3s ease, max-height .5s ease, margin .5s ease;
+    transition:opacity .5s ease, max-height .7s ease, margin .7s ease;
   }
   [data-pfstage="portfolio"] .rp-fnd p{opacity:0; max-height:0;}
   [data-pfstage="portfolio"] .rp-flow-outer{opacity:0.35; transition:opacity .4s ease;}
   @media (max-width:900px){
     /* the stage stacks vertically here, so the stage-two rearrangement and the
        pills on the waves are both off -- the table carries the portfolio */
-    .rp-stage{position:relative; top:auto; height:auto;}
+    /* the [data-table] selector that pins the stage outranks a bare .rp-stage,
+       so the release has to be written at the same weight to land here */
+    .rp-stage,
+    [data-table="closed"] .rp-stage{position:relative; top:auto; height:auto;}
     [data-pfstage="portfolio"] .rp-stage{height:auto;}
     .rp-fnd p, [data-pfstage="portfolio"] .rp-fnd p{max-height:none; opacity:1;}
     [data-pfstage="portfolio"] .rp-labels,
@@ -491,7 +499,7 @@
   /* ---- the interventions, riding their pathway's wave ---- */
   .pf-overlay{
     position:absolute; inset:0; z-index:4; pointer-events:none;
-    opacity:0; transition:opacity .45s ease;
+    opacity:0; transition:opacity .75s ease .12s;
   }
   [data-pfstage="portfolio"] .pf-overlay{opacity:1;}
   .pf-band{
@@ -1290,6 +1298,8 @@
 
     <!-- the portfolio: the same four pathways, itemised. each row's dot rides
          its pathway's wave above. -->
+    <div class="pf-hold" aria-hidden="true"></div>
+
     <div class="pf-portfolio" id="tracks">
     <div class="pf-portfolio-head reveal">
       <div>
@@ -1940,12 +1950,15 @@
       window.addEventListener('resize', function(){ layout(clock()); });
       if(window.ResizeObserver) new ResizeObserver(function(){ layout(clock()); }).observe(canvas);
 
-      /* The switch is keyed off the section heading, which sits above the stage
-         and so cannot be moved by the switch itself. Watching the portfolio
-         instead meant the stage change shifted the element being watched, which
-         flipped it back -- the flicker on the transform. The two thresholds are
-         deliberately apart so a scroll resting on the boundary can't oscillate. */
-      var head = section.querySelector('.section-head');
+      /* The switch waits until the diagram has actually reached the top of the
+         viewport, so the pathways view gets a full screen of scrolling before it
+         changes. It is measured from the flow row directly above the stage, not
+         from the stage itself: the stage pins once the switch fires, which would
+         freeze its own measurement and flip the switch back.
+         PIN_TOP matches the sticky offset, so the moment the switch fires is the
+         moment the stage would have reached its pinned position -- no jump. */
+      var PIN_TOP = 64, DWELL = 300;
+      var ref = section.querySelector('.rp-flow-outer-top') || section.querySelector('.section-head');
       var live = false;
       function setStage(on){
         if(on === live) return;
@@ -1954,10 +1967,10 @@
         if(on) layout(clock());
       }
       function check(){
-        if(!head) return;
-        var b = head.getBoundingClientRect().bottom, vh = window.innerHeight;
-        if(!live && b < vh * 0.16) setStage(true);
-        else if(live && b > vh * 0.34) setStage(false);
+        if(!ref) return;
+        var b = ref.getBoundingClientRect().bottom;
+        if(!live && b <= PIN_TOP - DWELL) setStage(true);
+        else if(live && b > PIN_TOP - DWELL + 120) setStage(false);
       }
 
       /* and the pills only need positioning while the stage is actually on
