@@ -347,21 +347,30 @@
     transition:transform .6s cubic-bezier(.2,.75,.2,1), color .35s ease;
   }
   @keyframes ctaLabelFloat{
-    0%,100%{transform:translate(-50%,-50%) translateY(0);}
-    35%{transform:translate(-50%,-50%) translateY(5px);}
-    70%{transform:translate(-50%,-50%) translateY(-3px);}
+    0%,100%{transform:translate(-50%,-50%) translateY(50px);}
+    35%{transform:translate(-50%,-50%) translateY(55px);}
+    70%{transform:translate(-50%,-50%) translateY(46px);}
   }
   .cta-ball-arrow{display:inline-block; transition:transform .45s ease;}
   .cta-top{fill:#c9ced3; fill-opacity:0.9;}
-  .cta-sub{fill:#c9ced3; fill-opacity:0.42;}
+  /* brighter than it was: the second line of the label now sits over this
+     half, and dark ink needs something to sit on */
+  .cta-sub{fill:#c9ced3; fill-opacity:0.6;}
   .cta-surface{fill:none; stroke:url(#ctaEnds); stroke-width:1.1;}
   .cta-surface-front{opacity:0.5;}
   .cta-surface-back{opacity:0.2;}
   /* it floats: a small idle bob, so the ask has a pulse to it */
+  /* It rests in the water -- sunk far enough that the waterline runs between
+     the two lines of the label -- and comes out of it when you reach for it. */
   @keyframes ctaFloat{
-    0%,100%{transform:translateY(0) rotate(0deg);}
-    35%{transform:translateY(5px) rotate(0.9deg);}
-    70%{transform:translateY(-3px) rotate(-0.8deg);}
+    0%,100%{transform:translateY(50px) rotate(0deg);}
+    35%{transform:translateY(55px) rotate(0.9deg);}
+    70%{transform:translateY(46px) rotate(-0.8deg);}
+  }
+  @keyframes ctaFloatDeep{
+    0%,100%{transform:translateY(54px) rotate(0deg);}
+    35%{transform:translateY(60px) rotate(0.9deg);}
+    70%{transform:translateY(49px) rotate(-0.8deg);}
   }
   @keyframes ctaDrift{from{transform:translateX(0);} to{transform:translateX(-65px);}}
   @keyframes ctaRing{
@@ -374,6 +383,8 @@
     animation:ctaFloat 6s ease-in-out infinite;
     transition:transform .6s cubic-bezier(.2,.75,.2,1);
   }
+  /* the submerged half sways a touch wider, which reads as refraction */
+  .cta-dip-deep{animation-name:ctaFloatDeep;}
   .cta-surface-front{animation:ctaDrift 7s linear infinite;}
   .cta-surface-back{animation:ctaDrift 11s linear infinite reverse;}
   /* the rings only run while it is diving */
@@ -384,12 +395,13 @@
   .cta-ball:hover .cta-ripple, .cta-ball:focus-visible .cta-ripple{animation:ctaRing 1.6s ease-out infinite;}
   .cta-ripple-2{animation-delay:.55s;}
   /* the dive itself: the waterline stays put, so sinking the ball is all it takes */
-  .cta-ball:hover .cta-dip, .cta-ball:focus-visible .cta-dip{
-    animation:none; transform:translateY(50px);
+  /* out of the water: clear of the surface, with the water left behind it */
+  .cta-ball:hover .cta-dip, .cta-ball:focus-visible .cta-dip,
+  .cta-ball:hover .cta-dip-deep, .cta-ball:focus-visible .cta-dip-deep{
+    animation:none; transform:translateY(-28px);
   }
-  .cta-ball:hover .cta-dip-deep, .cta-ball:focus-visible .cta-dip-deep{transform:translateY(55px);}
   .cta-ball:hover .cta-ball-label, .cta-ball:focus-visible .cta-ball-label{
-    animation:none; transform:translate(-50%,-50%) translateY(50px);
+    animation:none; transform:translate(-50%,-50%) translateY(-28px);
   }
   .cta-ball:hover .cta-ball-arrow, .cta-ball:focus-visible .cta-ball-arrow{transform:translate(2px,-2px);}
   .cta-ball:focus{outline:none;}
@@ -917,7 +929,7 @@
   .cond-bob-deep{animation-name:condBobDeep;}
   .cond-drift{animation:condDrift 9s linear infinite;}
   .cond-drift-back{animation:condDrift 14s linear infinite reverse;}
-  .cond-surface{fill:none; stroke:var(--paper); stroke-width:1;}
+  .cond-surface{fill:none; stroke:url(#condEnds); stroke-width:1;}
   .cond-surface-1{opacity:0.5;}
   .cond-surface-2{opacity:0.2;}
   @media (prefers-reduced-motion: reduce){
@@ -1860,17 +1872,26 @@
             <stop offset="0" stop-color="#ffffff" stop-opacity="0.17"/>
             <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
           </radialGradient>
-          <linearGradient id="condWater" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stop-color="#f5f5f2" stop-opacity="0.11"/>
-            <stop offset="0.34" stop-color="#f5f5f2" stop-opacity="0.045"/>
-            <stop offset="1" stop-color="#f5f5f2" stop-opacity="0.008"/>
+          <!-- the same round water as the ask: a rectangle of it shows its own
+               corners, and reaching nothing before its own edge means the pool
+               has no boundary to give itself away -->
+          <radialGradient id="condWater" cx="50%" cy="6%" r="96%">
+            <stop offset="0" stop-color="#f5f5f2" stop-opacity="0.13"/>
+            <stop offset="0.45" stop-color="#f5f5f2" stop-opacity="0.05"/>
+            <stop offset="0.82" stop-color="#f5f5f2" stop-opacity="0"/>
+          </radialGradient>
+          <linearGradient id="condEnds" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="320" y2="0">
+            <stop offset="0" stop-color="#f5f5f2" stop-opacity="0"/>
+            <stop offset="0.24" stop-color="#f5f5f2" stop-opacity="1"/>
+            <stop offset="0.76" stop-color="#f5f5f2" stop-opacity="1"/>
+            <stop offset="1" stop-color="#f5f5f2" stop-opacity="0"/>
           </linearGradient>
         </defs>
         <g clip-path="url(#condFrame)">
           <!-- the pool: a body of water, brighter where the light still
                reaches, fading out with depth -->
           <g clip-path="url(#condBelow)">
-            <rect x="-40" y="96" width="400" height="320" fill="url(#condWater)"/>
+            <ellipse cx="160" cy="126" rx="158" ry="140" fill="url(#condWater)"/>
           </g>
           <!-- the submerged part, swaying a touch wider than the rest: refraction -->
           <g clip-path="url(#condBelow)" filter="url(#condBlur)">
