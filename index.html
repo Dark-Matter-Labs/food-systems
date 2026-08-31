@@ -462,6 +462,28 @@
   .rp-info:hover .rp-info-pop, .rp-info:focus-visible .rp-info-pop, .rp-info:focus .rp-info-pop{
     opacity:1; visibility:visible; transform:translateY(0); pointer-events:auto;
   }
+  /* a labelled sibling of the (i): secondary reading stays one hover or tap
+     away instead of sitting in the main column */
+  .rp-notes-row{display:flex; flex-wrap:wrap; gap:10px; margin-top:26px;}
+  .rp-note{
+    position:relative; display:inline-flex; align-items:center; gap:9px;
+    padding:8px 14px; border-radius:999px; border:1px solid var(--line-strong);
+    background:none; color:var(--paper-dim); cursor:pointer;
+    font-family:var(--mono); font-size:11px; letter-spacing:0.07em; text-transform:uppercase;
+  }
+  .rp-note::after{content:'+'; font-size:14px; line-height:1; opacity:0.75;}
+  .rp-note:hover, .rp-note:focus-visible{color:var(--paper); border-color:var(--paper-dim);}
+  .rp-note:focus{outline:none;}
+  .rp-note:focus-visible{outline:1px dashed var(--line-strong); outline-offset:3px;}
+  .rp-note-no{color:#e05a3d;}
+  .rp-note-yes{color:var(--hub);}
+  .rp-note .rp-info-pop{
+    width:320px; max-width:min(78vw,340px);
+    text-transform:none; letter-spacing:0; font-size:12.5px;
+  }
+  .rp-note:hover .rp-info-pop, .rp-note:focus-visible .rp-info-pop, .rp-note:focus .rp-info-pop{
+    opacity:1; visibility:visible; transform:translateY(0); pointer-events:auto;
+  }
   .rp-outcomes{position:absolute; top:0; right:0; bottom:0; width:19%; z-index:2; pointer-events:none;}
   .rp-outcome{position:absolute; left:0; width:100%; text-align:center; transform:translateY(-50%); color:var(--paper-dim);}
   .rp-outcome-01{top:19%;}
@@ -537,6 +559,21 @@
   /* the framing questions run as separate asks, not one block of display type */
   .reframe .big-quote p{margin:0 0 0.7em;}
   .reframe .big-quote p:last-child{margin-bottom:0;}
+  /* one circle cut by a waterline: the cap above stays sharp, the mass below
+     goes out of focus. a full-width band so the row above stays level, and the
+     whole thing centred on the section */
+  .cond-circle{
+    grid-column:1 / -1; margin:14px 0 0; padding-top:40px; border-top:1px solid var(--line-strong);
+    display:flex; flex-direction:column; align-items:center; text-align:center; gap:18px;
+  }
+  .cond-disc{display:block; width:100%; max-width:320px; height:auto; overflow:visible;}
+  .cond-above{fill:var(--paper); fill-opacity:0.88;}
+  .cond-below{fill:var(--paper); fill-opacity:0.5;}
+  .cond-line{stroke:var(--paper); stroke-width:1; stroke-dasharray:3 5; opacity:0.55;}
+  /* the two readings hang off the halves they describe, so the page isn't
+     saying the same thing twice */
+  .cond-cap{margin:0;}
+  .cond-circle figcaption{font-size:15px; color:var(--paper-dim); line-height:1.6; margin:6px 0 0; max-width:520px;}
   .reframe .body p{margin:0 0 16px; color:var(--paper); opacity:0.9; font-size:16.5px;}
   .compare{
     display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:26px;
@@ -547,7 +584,6 @@
   .compare .col.no h4{color:#e05a3d;}
   .compare .col.yes h4{color:var(--hub);}
   .compare .col p{font-size:14.5px; margin:0; color:var(--paper-dim);}
-
   /* ===================== TRACKS ===================== */
   .tracks{display:grid; grid-template-columns:repeat(3,1fr); gap:2px; background:var(--line);}
   @media (max-width:900px){ .tracks{grid-template-columns:1fr;} }
@@ -1001,6 +1037,7 @@
         </div>
       </div>
     </div>
+
   </div>
 </section>
 
@@ -1138,28 +1175,44 @@
       <div class="big-quote" style="margin-top:16px;">
         <p>What if a mere market-based nutrition that we have been relying on for so long has failed?</p>
         <p>And what could be an alternative more equitable model look like — one that benefits growers, and nourishes communities?</p>
-      </div>
-    </div>
+      </div>    </div>
     <div class="body reveal">
-      <div class="plain-summary">
-        <span class="ps-label">In plain terms</span>
-        <p>Small fixes — a nicer label, a voluntary pledge — won’t solve this. We need genuinely cheaper, fairer ways to get food to people, like proper discount grocers and shops people can actually have a stake in.</p>
-      </div>
       <p>The economics of food don’t move by tinkering at the edges — they move with a genuinely new arrangement of ownership, contribution, and price.</p>
       <p>Look at the current food market as a product that’s failing and you get edge-adjustments: a nicer label, a voluntary pledge, food surplus recycling with CO2 certificates, that do a lot of good but do not change the underlying logic.</p>
       <p>Look at the market-based nutrition as a product that has already failed — generating externalities and vulnerability faster than it delivers continuity — and the theory of intervention changes completely.</p>
       <p>Public-interest grocers already show the gap: prices structurally lower on a fixed cadence, not “voluntary contributions” bolted onto a still-too-expensive shelf.</p>
-      <div class="compare">
-        <div class="col no">
-          <h4>Adjusting the edges</h4>
-          <p>Voluntary schemes, pledges, food-bank partnerships bolted onto an unchanged price structure.</p>
-        </div>
-        <div class="col yes">
-          <h4>Rebuilding the arrangement</h4>
-          <p>Public-interest grocers, contribution ledgers, part-volunteer/part-commercial ownership, open micro-procurement.</p>
-        </div>
+      <div class="rp-notes-row">
+        <button type="button" class="rp-note" aria-label="In plain terms">In plain terms<span class="rp-info-pop" role="tooltip">Small fixes — a nicer label, a voluntary pledge — won’t solve this. We need genuinely cheaper, fairer ways to get food to people, like proper discount grocers and shops people can actually have a stake in.</span></button>
       </div>
     </div>
+    <figure class="cond-circle reveal">
+      <button type="button" class="rp-note rp-note-no cond-cap" aria-label="What adjusting the edges means">Adjusting the edges<span class="rp-info-pop" role="tooltip">Voluntary schemes, pledges, food-bank partnerships bolted onto an unchanged price structure.</span></button>
+      <svg class="cond-disc" viewBox="0 0 320 320" role="img" aria-labelledby="condTitle condDesc">
+        <title id="condTitle">One circle, cut by a waterline</title>
+        <desc id="condDesc">A single filled circle divided by a waterline. The smaller part above the line is in sharp focus — what adjustment can reach. The larger part below it is blurred and out of focus: the conditions the arrangement actually rests on.</desc>
+        <defs>
+          <filter id="condBlur" x="-40%" y="-40%" width="180%" height="180%">
+            <feGaussianBlur stdDeviation="9"/>
+          </filter>
+          <clipPath id="condAbove"><rect x="-30" y="0" width="380" height="126"/></clipPath>
+          <clipPath id="condBelow"><rect x="-30" y="112" width="380" height="330"/></clipPath>
+          <radialGradient id="condSheen" cx="40%" cy="28%" r="82%">
+            <stop offset="0" stop-color="#ffffff" stop-opacity="0.30"/>
+            <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+        <g clip-path="url(#condBelow)" filter="url(#condBlur)">
+          <circle class="cond-below" cx="160" cy="160" r="128"/>
+        </g>
+        <g clip-path="url(#condAbove)">
+          <circle class="cond-above" cx="160" cy="160" r="128"/>
+          <circle class="cond-sheen" cx="160" cy="160" r="128" fill="url(#condSheen)"/>
+        </g>
+        <line class="cond-line" x1="4" y1="126" x2="316" y2="126"/>
+      </svg>
+      <button type="button" class="rp-note rp-note-yes cond-cap" aria-label="What rebuilding the arrangement means">Rebuilding the arrangement<span class="rp-info-pop" role="tooltip">Public-interest grocers, contribution ledgers, part-volunteer/part-commercial ownership, open micro-procurement.</span></button>
+      <figcaption>Adjustment only ever reaches the sharp edge above the line. Ownership, contribution and the externalities sit below it — never priced, so never in focus.</figcaption>
+    </figure>
   </div>
 </section>
 
@@ -1640,7 +1693,7 @@
       {id:'planeCamden', src:'assets/axo/camden.svg'},
       {id:'planeLondonContext', src:'assets/axo/london-boroughs.svg'},
       {id:'planeLondonGrey', src:'assets/axo/london-boroughs.svg'},
-      {id:'planeUk', src:'assets/axo/uk-relief.svg?v=4'}
+      {id:'planeUk', src:'assets/axo/uk-relief.svg?v=5'}
     ];
     var cache = {};
     targets.forEach(function(t){
@@ -1698,7 +1751,7 @@
     // <details> panel directly instead of via the chart dot
     // a source tooltip anchors to its (i), which can land anywhere on a line —
     // nudge it back inside the viewport instead of letting it scroll the page
-    document.querySelectorAll('.rp-info').forEach(function(btn){
+    document.querySelectorAll('.rp-info, .rp-note').forEach(function(btn){
       var pop = btn.querySelector('.rp-info-pop');
       if(!pop) return;
       btn.addEventListener('pointerenter', place);
