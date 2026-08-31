@@ -411,8 +411,9 @@
   .crisis-legend i{width:14px; height:2.2px; display:inline-block; border-radius:2px;}
   .cg-band-labels text{font-family:var(--mono); font-size:10.5px; fill:#e8c34a;}
   .crisis-sources{grid-column:1 / -1; font-size:12px; color:var(--paper-dim); opacity:0.7; margin-top:28px; max-width:900px; line-height:1.6;}
-  /* the section's sources, behind a pill rather than a paragraph of citations */
-  .crisis-sources-row{grid-column:1 / -1; margin-top:30px;}
+  /* the sources belong to the chart and the figures beside it, so the pill sits
+     with them rather than at the foot of the section */
+  .crisis-sources-row{margin-top:20px;}
 
   /* ---- voices, sitting under the crisis chart ---- */
   .crisis-voices{grid-column:1 / -1; margin-top:44px; padding-top:32px; border-top:1px solid var(--line-strong);}
@@ -1130,6 +1131,9 @@
             </button>
           </div>
         </div>
+          <div class="crisis-sources-row">
+            <button type="button" class="rp-note">Sources<span class="rp-info-pop rp-info-pop-wide" role="tooltip"><span class="rp-pop-item">Bloomberg</span><span class="rp-pop-item">ONS, Consumer Price Inflation UK (June 2026, published July 2026)</span><span class="rp-pop-item">Food Foundation, Food Prices Tracker (July 2026)</span><span class="rp-pop-item">Food and Drink Federation forecast (1 April 2026)</span><span class="rp-pop-item">IMF, Regional Economic Outlook Update: Middle East and Central Asia (8 July 2026)</span><span class="rp-pop-item">The Guardian (1 August 2026)</span><span class="rp-pop-item">Energy and Climate Intelligence Unit (7 July 2026)</span></span></button>
+          </div>
       </div>
     </div>
 
@@ -1153,9 +1157,6 @@
       </div>
     </div>
 
-    <div class="crisis-sources-row">
-      <button type="button" class="rp-note" aria-label="Sources for this section">Sources<span class="rp-info-pop rp-info-pop-wide" role="tooltip"><span class="rp-pop-item">Bloomberg</span><span class="rp-pop-item">ONS, Consumer Price Inflation UK (June 2026, published July 2026)</span><span class="rp-pop-item">Food Foundation, Food Prices Tracker (July 2026)</span><span class="rp-pop-item">Food and Drink Federation forecast (1 April 2026)</span><span class="rp-pop-item">IMF, Regional Economic Outlook Update: Middle East and Central Asia (8 July 2026)</span><span class="rp-pop-item">The Guardian (1 August 2026)</span><span class="rp-pop-item">Energy and Climate Intelligence Unit (7 July 2026)</span></span></button>
-    </div>
 
   </div>
 </section>
