@@ -343,13 +343,14 @@
     position:absolute; left:50%; top:43.08%; transform:translate(-50%,-50%);
     max-width:62%; font-family:var(--display); font-weight:700;
     font-size:clamp(14px,1.5vw,17px); line-height:1.28; color:var(--ink);
-    animation:ctaLabelFloat 6s ease-in-out infinite;
-    transition:transform .6s cubic-bezier(.2,.75,.2,1), color .35s ease;
+    transition:transform .85s cubic-bezier(.22,.61,.36,1), color .35s ease;
   }
-  @keyframes ctaLabelFloat{
-    0%,100%{transform:translate(-50%,-50%) translateY(50px);}
-    35%{transform:translate(-50%,-50%) translateY(55px);}
-    70%{transform:translate(-50%,-50%) translateY(46px);}
+  .cta-ball-label{transform:translate(-50%,-50%) translateY(50px);}
+  .cta-ball-label-in{display:block; animation:ctaBobLabel 6s ease-in-out infinite;}
+  @keyframes ctaBobLabel{
+    0%,100%{transform:translateY(0);}
+    35%{transform:translateY(5px);}
+    70%{transform:translateY(-4px);}
   }
   .cta-ball-arrow{display:inline-block; transition:transform .45s ease;}
   .cta-top{fill:#c9ced3; fill-opacity:0.9;}
@@ -359,18 +360,21 @@
   .cta-surface{fill:none; stroke:url(#ctaEnds); stroke-width:1.1;}
   .cta-surface-front{opacity:0.5;}
   .cta-surface-back{opacity:0.2;}
-  /* it floats: a small idle bob, so the ask has a pulse to it */
   /* It rests in the water -- sunk far enough that the waterline runs between
-     the two lines of the label -- and comes out of it when you reach for it. */
-  @keyframes ctaFloat{
-    0%,100%{transform:translateY(50px) rotate(0deg);}
-    35%{transform:translateY(55px) rotate(0.9deg);}
-    70%{transform:translateY(46px) rotate(-0.8deg);}
+     the two lines of the label -- and rises out of it when you reach for it.
+     The state and the idle bob sit on separate elements on purpose: switching
+     an animation off to run a transition makes the value jump, which is what
+     made the rise pop. Now the transform that moves and the transform that
+     breathes never share an element. */
+  @keyframes ctaBob{
+    0%,100%{transform:translateY(0) rotate(0deg);}
+    35%{transform:translateY(5px) rotate(0.9deg);}
+    70%{transform:translateY(-4px) rotate(-0.8deg);}
   }
-  @keyframes ctaFloatDeep{
-    0%,100%{transform:translateY(54px) rotate(0deg);}
-    35%{transform:translateY(60px) rotate(0.9deg);}
-    70%{transform:translateY(49px) rotate(-0.8deg);}
+  @keyframes ctaBobDeep{
+    0%,100%{transform:translateY(0) rotate(0deg);}
+    35%{transform:translateY(6px) rotate(1deg);}
+    70%{transform:translateY(-5px) rotate(-0.9deg);}
   }
   @keyframes ctaDrift{from{transform:translateX(0);} to{transform:translateX(-65px);}}
   @keyframes ctaRing{
@@ -379,35 +383,38 @@
     100%{transform:scale(1.3); opacity:0;}
   }
   .cta-dip{
-    transform-box:fill-box; transform-origin:center;
-    animation:ctaFloat 6s ease-in-out infinite;
-    transition:transform .6s cubic-bezier(.2,.75,.2,1);
+    transform:translateY(50px);
+    transition:transform .85s cubic-bezier(.22,.61,.36,1);
   }
-  /* the submerged half sways a touch wider, which reads as refraction */
-  .cta-dip-deep{animation-name:ctaFloatDeep;}
+  /* the submerged half rides a little lower and sways wider: refraction */
+  .cta-dip-deep{transform:translateY(54px);}
+  .cta-bob{
+    transform-box:fill-box; transform-origin:center;
+    animation:ctaBob 6s ease-in-out infinite;
+  }
+  .cta-bob-deep{animation-name:ctaBobDeep;}
   .cta-surface-front{animation:ctaDrift 7s linear infinite;}
   .cta-surface-back{animation:ctaDrift 11s linear infinite reverse;}
-  /* the rings only run while it is diving */
+  /* the rings only run while it is breaking the surface */
   .cta-ripple{
     fill:none; stroke:var(--paper); stroke-width:1; opacity:0;
     transform-box:fill-box; transform-origin:center;
   }
   .cta-ball:hover .cta-ripple, .cta-ball:focus-visible .cta-ripple{animation:ctaRing 1.6s ease-out infinite;}
   .cta-ripple-2{animation-delay:.55s;}
-  /* the dive itself: the waterline stays put, so sinking the ball is all it takes */
   /* out of the water: clear of the surface, with the water left behind it */
   .cta-ball:hover .cta-dip, .cta-ball:focus-visible .cta-dip,
   .cta-ball:hover .cta-dip-deep, .cta-ball:focus-visible .cta-dip-deep{
-    animation:none; transform:translateY(-28px);
+    transform:translateY(-28px);
   }
   .cta-ball:hover .cta-ball-label, .cta-ball:focus-visible .cta-ball-label{
-    animation:none; transform:translate(-50%,-50%) translateY(-28px);
+    transform:translate(-50%,-50%) translateY(-28px);
   }
   .cta-ball:hover .cta-ball-arrow, .cta-ball:focus-visible .cta-ball-arrow{transform:translate(2px,-2px);}
   .cta-ball:focus{outline:none;}
   .cta-ball:focus-visible{outline:1px dashed var(--line-strong); outline-offset:8px;}
   @media (prefers-reduced-motion: reduce){
-    .cta-dip, .cta-surface-front, .cta-surface-back, .cta-ball-label{animation:none;}
+    .cta-bob, .cta-bob-deep, .cta-surface-front, .cta-surface-back, .cta-ball-label-in{animation:none;}
     .cta-ball:hover .cta-ripple, .cta-ball:focus-visible .cta-ripple{animation:none; opacity:0.18;}
   }
   @media (max-width:600px){ .cta-dive{min-height:0; padding:24px 0 8px; gap:20px;} }
@@ -421,9 +428,16 @@
   /* the second half of the heading: the chart and the copy make the case, this
      lands the point they were building to */
   .crisis-close{
-    grid-column:1 / -1; font-size:clamp(26px,3vw,36px); line-height:1.18;
-    margin:52px 0 0; max-width:620px;
+    grid-column:1 / -1; font-size:clamp(28px,3.4vw,42px); line-height:1.18;
+    max-width:620px;
+    /* the rule belongs above this line, not below it: it closes the chart and
+       the copy, and opens the case that follows */
+    margin:48px 0 0; padding-top:34px; border-top:1px solid var(--line-strong);
   }
+  .why-now-more{grid-column:2; color:var(--paper-dim); font-size:15.5px; margin-top:34px;}
+  .why-now-more p{margin:0 0 14px;}
+  .why-now-more p:last-child{margin-bottom:0;}
+  @media (max-width:900px){ .why-now-more{grid-column:1; margin-top:26px;} }
   .crisis-caption{font-family:var(--display); font-size:15px; color:var(--paper); opacity:0.85; margin:0 0 14px; max-width:520px;}
   .crisis-chart-title{font-family:var(--display); font-weight:700; font-size:17px; color:var(--paper); margin:0 0 12px;}
   /* the 2022 note, sitting on the band it describes */
@@ -536,7 +550,7 @@
   .crisis-sources-row{margin-top:20px;}
 
   /* ---- voices, sitting under the crisis chart ---- */
-  .crisis-voices{grid-column:1 / -1; margin-top:44px; padding-top:32px; border-top:1px solid var(--line-strong);}
+  .crisis-voices{grid-column:1 / -1; margin-top:40px;}
   .crisis-voices-eyebrow{font-family:var(--mono); font-size:11px; letter-spacing:0.1em; color:var(--paper-dim); text-transform:uppercase; margin-bottom:26px;}
   .quotes-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:34px;}
   @media (max-width:860px){ .quotes-grid{grid-template-columns:1fr; gap:30px;} }
@@ -1294,7 +1308,7 @@
     <div class="section-head reveal">
       <div class="eyebrow">WHO THIS IS FOR</div>
       <h2>City-wide Mobilisation</h2>
-      <p>Food systems resilience is built across multiple different scales. A coordinated effort has been mentioned multiple times as the most crucial element of a shared transition (be it in buying power of more resilient supply, distribution, local processing capacity or reserve). This call-to-all gathers actors to:</p>
+      <p>Food systems resilience is built across multiple different scales. A coordinated effort across food actors and London boroughs has been identified as the most crucial element of a shared transition (be it in buying power of more resilient supply, distribution, local processing capacity or reserve). This call-to-all gathers actors to:</p>
     </div>
   </div>
 
@@ -1497,7 +1511,9 @@
             <!-- the submerged part: the waterline holds still, the ball moves -->
             <g clip-path="url(#ctaBelow)" filter="url(#ctaBlur)">
               <g class="cta-dip cta-dip-deep">
-                <circle class="cta-sub" cx="130" cy="112" r="78"/>
+                <g class="cta-bob cta-bob-deep">
+                  <circle class="cta-sub" cx="130" cy="112" r="78"/>
+                </g>
               </g>
             </g>
             <g clip-path="url(#ctaBelow)">
@@ -1505,8 +1521,10 @@
             </g>
             <g clip-path="url(#ctaAbove)">
               <g class="cta-dip">
-                <circle class="cta-top" cx="130" cy="112" r="78"/>
-                <circle class="cta-sheen" cx="130" cy="112" r="78" fill="url(#ctaSheen)"/>
+                <g class="cta-bob">
+                  <circle class="cta-top" cx="130" cy="112" r="78"/>
+                  <circle class="cta-sheen" cx="130" cy="112" r="78" fill="url(#ctaSheen)"/>
+                </g>
               </g>
             </g>
             <ellipse class="cta-ripple" cx="130" cy="177" rx="62" ry="9"/>
@@ -1514,7 +1532,7 @@
             <use class="cta-surface cta-surface-front" href="#ctaWave"/>
           </g>
         </svg>
-        <span class="cta-ball-label">Tell us<br>where you fit <span class="cta-ball-arrow">↗</span></span>
+        <span class="cta-ball-label"><span class="cta-ball-label-in">Tell us<br>where you fit <span class="cta-ball-arrow">↗</span></span></span>
       </a>
     </div>
   </div>
@@ -1525,13 +1543,10 @@
   <div class="wrap why-now-grid">
     <div class="reveal">
       <div class="eyebrow">WHY NOW</div>
-      <h2 style="font-size:clamp(26px,3vw,36px); margin-top:14px;">The food crisis is finally getting attention.<button type="button" class="rp-info" aria-label="What's driving the recent attention"><span aria-hidden="true">i</span><span class="rp-info-pop" role="tooltip">An unpublished UK intelligence assessment on ecosystem collapse named food security a national-security threat (The Guardian, 8 July 2026); Tesco and Sainsbury’s backed a 100+ organisation letter urging a Good Food Bill (Food Foundation); Tim Lang’s National Preparedness Commission review, <em>Just in Case</em>, made the same case in February 2025.</span></button></h2>
+      <h2 style="font-size:clamp(28px,3.4vw,42px); margin-top:14px;">The food crisis is finally getting attention.<button type="button" class="rp-info" aria-label="What's driving the recent attention"><span aria-hidden="true">i</span><span class="rp-info-pop" role="tooltip">An unpublished UK intelligence assessment on ecosystem collapse named food security a national-security threat (The Guardian, 8 July 2026); Tesco and Sainsbury’s backed a 100+ organisation letter urging a Good Food Bill (Food Foundation); Tim Lang’s National Preparedness Commission review, <em>Just in Case</em>, made the same case in February 2025.</span></button></h2>
     </div>
     <div class="reveal" style="color:var(--paper-dim); font-size:15.5px;">
       <p style="margin:0 0 14px;">Food inflation is forecast to reach around 9% by the end of 2026<button type="button" class="rp-info" aria-label="Source"><span aria-hidden="true">i</span><span class="rp-info-pop" role="tooltip">Food and Drink Federation, revised year-end 2026 forecast (1 April 2026); Energy and Climate Intelligence Unit, on climate-impacted foods driving the rise, not wages or regulation (7 July 2026).</span></button>, and the Food Foundation’s basic-basket tracker already shows prices roughly 30% higher than in April 2022 — a second price shock inside four years, arriving on top of the first.</p>
-      <p style="margin:0 0 14px;">The Joint Intelligence Committee and Defra have both gone further, warning of a strategic risk of catastrophic UK food system failure <strong>by 2030</strong> — not a distant scenario, but inside the term of whoever is in office right now.</p>
-      <p style="margin:0 0 14px;">This isn’t the first attempt. The UK has passed roughly <strong>689 food and health policies and 14 national strategies over the past 30 years</strong>, with no measurable dent in obesity or health inequality to show for it.</p>
-      <p style="margin:0;">That’s exactly the moment London’s 32 boroughs risk running 32 more uncoordinated pilots — each rediscovering the same procurement problem alone, the way national policy already has, repeatedly. The pathways below exist so that doesn’t happen again.</p>
     </div>
 
     <div class="crisis-chart reveal">
@@ -1622,6 +1637,14 @@
             <button type="button" class="rp-note">Sources<span class="rp-info-pop rp-info-pop-wide" role="tooltip"><span class="rp-pop-item">Bloomberg</span><span class="rp-pop-item">ONS, Consumer Price Inflation UK (June 2026, published July 2026)</span><span class="rp-pop-item">Food Foundation, Food Prices Tracker (July 2026)</span><span class="rp-pop-item">Food and Drink Federation forecast (1 April 2026)</span><span class="rp-pop-item">IMF, Regional Economic Outlook Update: Middle East and Central Asia (8 July 2026)</span><span class="rp-pop-item">The Guardian (1 August 2026)</span><span class="rp-pop-item">Energy and Climate Intelligence Unit (7 July 2026)</span></span></button>
           </div>
       </div>
+    </div>
+
+    <!-- the rest of the case reads better after the evidence than before it,
+         and stays in the same column the first paragraph set -->
+    <div class="why-now-more reveal">
+      <p>The Joint Intelligence Committee and Defra have both gone further, warning of a strategic risk of catastrophic UK food system failure <strong>by 2030</strong> — not a distant scenario, but inside the term of whoever is in office right now.</p>
+      <p>This isn’t the first attempt. The UK has passed roughly <strong>689 food and health policies and 14 national strategies over the past 30 years</strong>, with no measurable dent in obesity or health inequality to show for it.</p>
+      <p>That’s exactly the moment London’s 32 boroughs risk running 32 more uncoordinated pilots — each rediscovering the same procurement problem alone, the way national policy already has, repeatedly. The pathways below exist so that doesn’t happen again.</p>
     </div>
 
     <h2 class="crisis-close reveal">Coordinated response for long-term resilience is the part that’s missing.</h2>
