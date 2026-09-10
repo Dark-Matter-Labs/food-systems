@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Six Pathways to a Civic Food System — Food as Infrastructure</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FFFFFF;
+    --paper-2:#F5F3EC;
+    --paper-3:#EFECE1;
+    --ink:#1E211C;
+    --ink-soft:#5B5A50;
+    --rule:#E0DDD0;
+    --green:#33502F;
+    --green-deep:#243A21;
+    --green-soft:#E7EDE1;
+    --ochre:#B4791E;
+    --ochre-soft:#F3E4CB;
+    --teal:#274955;
+    --teal-soft:#DFE8EA;
+    --maxw: 1080px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0; background:var(--paper); color:var(--ink);
+    font-family:'Inter', -apple-system, sans-serif; font-size:16px; line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,h4{font-family:'Fraunces', serif; font-weight:600; line-height:1.08; margin:0; letter-spacing:-0.01em;}
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 28px;}
+  a{color:var(--green); text-decoration-color: rgba(51,80,47,0.35);}
+  a:hover{text-decoration-color: var(--green);}
+  .eyebrow{font-family:'IBM Plex Mono', monospace; font-size:11.5px; letter-spacing:0.14em; text-transform:uppercase; color:var(--ink-soft);}
+  .rule{border:none; border-top:1px solid var(--rule); margin:0;}
+
+  nav{position:sticky; top:0; z-index:50; background:rgba(255,255,255,0.94); backdrop-filter: blur(6px); border-bottom:1px solid var(--rule);}
+  .navrow{display:flex; align-items:center; justify-content:space-between; padding:14px 28px; max-width:var(--maxw); margin:0 auto; gap:16px; flex-wrap:wrap;}
+  .navbrand{font-family:'IBM Plex Mono', monospace; font-size:12px; letter-spacing:0.08em; color:var(--ink-soft); text-transform:uppercase;}
+  .navlinks{display:flex; gap:18px; flex-wrap:wrap;}
+  .navlinks a{font-size:13px; color:var(--ink); text-decoration:none; font-weight:500; border-bottom:2px solid transparent; padding-bottom:3px;}
+  .navlinks a:hover{border-bottom-color:var(--ochre);}
+
+  .hero{background:var(--paper); padding:80px 0 54px; border-bottom:1px solid var(--rule);}
+  .hero .eyebrow{color:var(--green);}
+  .hero h1{font-size:clamp(34px, 4.6vw, 54px); color:var(--ink); margin-top:14px; max-width:18ch;}
+  .hero .sub{max-width:680px; font-size:18.5px; color:var(--ink-soft); margin-top:20px; line-height:1.55;}
+  .hero .ctarow{display:flex; gap:14px; margin-top:30px; flex-wrap:wrap;}
+  .btn{display:inline-block; font-size:14px; font-weight:600; padding:12px 20px; border-radius:2px; text-decoration:none; font-family:'Inter',sans-serif;}
+  .btn-primary{background:var(--green); color:#FBF8EF;}
+  .btn-primary:hover{background:var(--green-deep);}
+  .btn-ghost{border:1px solid #B7C2AC; color:var(--green);}
+  .btn-ghost:hover{border-color:var(--green);}
+
+  section{padding:56px 0;}
+  .sec-head{max-width:700px; margin-bottom:32px;}
+  .sec-head h2{font-size:clamp(25px,3.1vw,34px); margin-top:10px;}
+  .sec-head p{color:var(--ink-soft); margin-top:14px; font-size:16.5px;}
+
+  .band-tint{background:var(--paper-2);}
+  .band-line{border-top:1px solid var(--rule); border-bottom:1px solid var(--rule);}
+
+  .note{background:var(--ochre-soft); border-left:3px solid var(--ochre); padding:14px 18px; font-size:13.5px; color:#5B4A2E; margin:14px 0; border-radius:2px;}
+  .plain{background:var(--paper-2); border-left:3px solid var(--green); padding:16px 20px; font-size:14.5px; color:var(--ink-soft); margin:20px 0; border-radius:2px;}
+  .plain b{color:var(--ink); font-weight:600;}
+
+  /* Ambition strip */
+  .ambition-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-top:26px;}
+  .ambition-card{background:var(--paper); border:1px solid var(--rule); padding:20px; border-radius:3px;}
+  .ambition-card .tag{font-family:'IBM Plex Mono',monospace; font-size:10.5px; letter-spacing:0.07em; text-transform:uppercase; color:var(--ochre);}
+  .ambition-card h4{font-size:16px; margin-top:8px; font-family:'Inter',sans-serif; font-weight:600;}
+  .ambition-card p{font-size:13px; color:var(--ink-soft); margin-top:8px;}
+
+  /* Pathway list */
+  .pathway{display:grid; grid-template-columns:64px 1fr; gap:22px; padding:34px 0; border-top:1px solid var(--rule);}
+  .pathway:first-of-type{border-top:1px solid var(--rule);}
+  .pathway .num{font-family:'Fraunces',serif; font-size:38px; font-weight:700; color:var(--rule); line-height:1;}
+  .pathway.track-demand .num{color:var(--teal);}
+  .pathway.track-supply .num{color:var(--green);}
+  .pathway.track-hub .num{color:var(--ochre);}
+  .pathway-head{display:flex; align-items:baseline; gap:12px; flex-wrap:wrap;}
+  .pathway h3{font-size:clamp(20px,2.4vw,26px);}
+  .track-tag{font-family:'IBM Plex Mono',monospace; font-size:10px; text-transform:uppercase; letter-spacing:0.05em; padding:3px 9px; border-radius:20px; color:#fff; white-space:nowrap;}
+  .track-tag.demand{background:var(--teal);}
+  .track-tag.supply{background:var(--green);}
+  .track-tag.hub{background:var(--ochre);}
+  .track-tag.civic{background:var(--ink-soft);}
+  .pathway .lever{font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.05em; text-transform:uppercase; color:var(--ink-soft); margin-top:6px;}
+  .pathway p.mech{margin-top:14px; font-size:15px; color:var(--ink); max-width:760px;}
+  .pathway .tradeoff{margin-top:14px; background:var(--paper-2); border-left:3px solid var(--rule); padding:12px 16px; font-size:13.5px; color:var(--ink-soft); border-radius:2px; max-width:760px;}
+  .pathway .tradeoff b{color:var(--ink); font-weight:600;}
+  .pathway .connects{margin-top:12px; font-size:12px; font-family:'IBM Plex Mono',monospace; color:var(--ink-soft);}
+  .pathway .connects a{color:var(--green);}
+
+  table.grid-table{width:100%; border-collapse:collapse; margin-top:22px; font-size:14px;}
+  table.grid-table th{text-align:left; font-family:'IBM Plex Mono',monospace; font-size:10.5px; text-transform:uppercase; letter-spacing:0.05em; color:#fff; background:var(--green); padding:11px 13px;}
+  table.grid-table td{padding:13px; border-bottom:1px solid var(--rule); vertical-align:top;}
+  table.grid-table tr:nth-child(even) td{background:var(--paper-2);}
+  table.grid-table td.ws{font-weight:600; width:20%;}
+
+  .cta-box{background:var(--green-deep); color:#F4F1E6; border-radius:6px; padding:34px 30px; margin-top:18px;}
+  .cta-box .eyebrow{color:#B9C7A9;}
+  .cta-box h3{color:#FBF8EF; font-size:23px; margin-top:8px;}
+  .cta-box p{color:#DCE4D3; margin-top:10px; font-size:14.5px; max-width:640px;}
+  .cta-box .ctarow{display:flex; gap:12px; margin-top:18px; flex-wrap:wrap;}
+  .cta-box .btn-primary{background:#EEDFB6; color:#20200F;}
+  .cta-box .btn-ghost{border:1px solid #587056; color:#EDEFE4;}
+
+  .toolgrid{display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-top:24px;}
+  .tool{background:var(--paper); border:1px solid var(--rule); border-radius:4px; padding:16px; text-decoration:none; display:block;}
+  .tool:hover{border-color:var(--green);}
+  .tool .tag{font-family:'IBM Plex Mono',monospace; font-size:10px; text-transform:uppercase; color:var(--ochre); letter-spacing:0.05em;}
+  .tool h4{font-size:15px; margin-top:8px; color:var(--ink); font-family:'Inter',sans-serif; font-weight:600;}
+  .tool p{font-size:12.5px; color:var(--ink-soft); margin-top:6px;}
+
+  footer{background:var(--green-deep); color:#B9C0A8; padding:40px 0; font-size:13px;}
+  footer a{color:#DCE4D3;}
+  footer .wrap{display:flex; justify-content:space-between; flex-wrap:wrap; gap:20px;}
+
+  @media (max-width: 760px){
+    .ambition-grid, .toolgrid{grid-template-columns:1fr;}
+    .pathway{grid-template-columns:40px 1fr;}
+    .pathway .num{font-size:26px;}
+  }
+
+  .reveal{opacity:0; transform:translateY(12px); transition:opacity 0.5s ease, transform 0.5s ease;}
+  .reveal.in{opacity:1; transform:translateY(0);}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="navrow">
+    <div class="navbrand">Food as Infrastructure · Pathways</div>
+    <div class="navlinks">
+      <a href="#ambition">The ambition</a>
+      <a href="#pathways">The six pathways</a>
+      <a href="#traction">Where we are</a>
+      <a href="#tools">Related tools</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">A working framework — not a decided plan</div>
+    <h1>Six pathways to a civic, regenerative food system</h1>
+    <p class="sub">The ambition is simple to state and hard to do: move London’s collective buying power behind organic and regenerative farms, make nutrient density — not calories — the target, and build a food system that is more resistant to shocks and more civic-led and owned. There is no single plan that delivers all of that at once. There are several distinct levers, each with a different starting point, a different pace, and a different failure mode. This page sets them out side by side.</p>
+    <div class="ctarow">
+      <a class="btn btn-primary" href="#pathways">See the six pathways ↓</a>
+      <a class="btn btn-ghost" href="index.html">← Back to the portfolio</a>
+    </div>
+  </div>
+</header>
+
+<section id="ambition" class="reveal">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">Stated once, so every pathway can be tested against it</div>
+      <h2>Four things the system has to do at once</h2>
+      <p>Each pathway below is a different route toward all four of these — none of them get there alone.</p>
+    </div>
+    <div class="ambition-grid">
+      <div class="ambition-card">
+        <div class="tag">Buying power</div>
+        <h4>Collective, not fragmented</h4>
+        <p>London’s institutional demand — councils, schools, health services, markets — moves as a coalition large enough to change a farmer’s decision, not as 33 separate pilots.</p>
+      </div>
+      <div class="ambition-card">
+        <div class="tag">Nutrient density</div>
+        <h4>The target, not calories</h4>
+        <p>What gets grown, bought and served is measured against what actually nourishes people, not against volume or cost alone.</p>
+      </div>
+      <div class="ambition-card">
+        <div class="tag">Resilience</div>
+        <h4>A system that absorbs shocks</h4>
+        <p>Organic and regenerative soils hold more water and need fewer imported inputs — a food system built on them is measurably steadier under stress, not just greener.</p>
+      </div>
+      <div class="ambition-card">
+        <div class="tag">Civic ownership</div>
+        <h4>Held by the community, not the market</h4>
+        <p>Whatever gets built — a hub, a farm relationship, a buying engine — stays governed by the people who depend on it, structurally protected from resale to speculative capital.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="pathways" class="band-tint reveal">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">Six entry points, one destination</div>
+      <h2>The six pathways</h2>
+      <p>Each is a different lever to pull first. The portfolio already has real traction on two of them — see <a href="#traction">where we are</a> below — but it is worth being explicit that they are separable strategies, not one sequence everyone has already agreed to.</p>
+    </div>
+
+    <div class="pathway track-demand">
+      <div class="num">01</div>
+      <div>
+        <div class="pathway-head"><h3>Demand-first — aggregate the buying power</h3><span class="track-tag demand">Demand lever</span></div>
+        <div class="lever">Institutional procurement — councils, schools, NHS, markets</div>
+        <p class="mech">Start by getting London’s institutional buyers into a shared procurement charter or buying coalition, using guaranteed collective volume as the credibility signal that pulls supply into being. This is the fastest way to show boroughs moving together.</p>
+        <div class="tradeoff"><b>Tradeoff:</b> demand without patient capital on the supply side just reshuffles existing organic supply between buyers rather than growing it — needs Pathway 02 running alongside it, or the gains plateau fast.</div>
+        <div class="connects">Connects to: <a href="hubs-and-markets-working-group.html">the Procurement Charter and Collective Buying Engine</a></div>
+      </div>
+    </div>
+
+    <div class="pathway track-supply">
+      <div class="num">02</div>
+      <div>
+        <div class="pathway-head"><h3>Supply-first — de-risk the conversion</h3><span class="track-tag supply">Supply lever</span></div>
+        <div class="lever">Farmer and grower transition finance</div>
+        <p class="mech">Lead with the money that gets land converted: bridge financing for the multi-year “J-curve” income dip that organic and regenerative conversion causes, sponsored or underwritten farmland, and blended capital vehicles. This is what actually grows the acreage — and the resilience benefit that comes with it.</p>
+        <div class="tradeoff"><b>Tradeoff:</b> farms that convert into a market that isn’t guaranteed yet are carrying the risk alone. This only works safely tied tightly to a demand commitment, or with the coalition itself underwriting the loan.</div>
+        <div class="connects">Connects to: <a href="sovereign-food-system.html">sponsored/underwritten farmland and organic-transition bridge financing</a></div>
+      </div>
+    </div>
+
+    <div class="pathway track-hub">
+      <div class="num">03</div>
+      <div>
+        <div class="pathway-head"><h3>Infrastructure-first — build the connective hubs</h3><span class="track-tag hub">Hub lever</span></div>
+        <div class="lever">Logistics, storage and aggregation capacity</div>
+        <p class="mech">Prioritise the physical capacity — hub-and-spoke sites, cold storage, forecasting — that lets many small regenerative producers reach many institutional buyers reliably. This solves the structural problem that no single small farm can meet one large council contract alone, and it is the connective tissue Pathways 01 and 02 both depend on.</p>
+        <div class="tradeoff"><b>Tradeoff:</b> infrastructure without either a committed buyer base or a growing supply base is expensive capacity sitting idle — sequencing matters more here than anywhere else.</div>
+        <div class="connects">Connects to: <a href="hubs-and-markets-working-group.html">the London Hubs &amp; Markets Working Group, Camden food hub(s)</a></div>
+      </div>
+    </div>
+
+    <div class="pathway">
+      <div class="num">04</div>
+      <div>
+        <div class="pathway-head"><h3>Ownership-first — lock in civic control before scaling</h3><span class="track-tag civic">Civic muscle</span></div>
+        <div class="lever">Governance and asset structure</div>
+        <p class="mech">Build the governance structure — distributed, two-key style ownership, where local stewardship and a wider civic body both have to agree before an asset can be sold — before or alongside the first hub or contract, so nothing that later succeeds commercially becomes acquirable by speculative capital.</p>
+        <div class="tradeoff"><b>Tradeoff:</b> getting governance right first can slow momentum when the urgent thing people want to see is a working pilot. There is a real risk of over-designing the lock before there is anything worth locking.</div>
+        <div class="connects">Connects to: <a href="index.html#governance">Distributed Governance and De-risked Transitional Ownership</a></div>
+      </div>
+    </div>
+
+    <div class="pathway">
+      <div class="num">05</div>
+      <div>
+        <div class="pathway-head"><h3>Policy-first — change the national operating environment</h3><span class="track-tag civic">Civic muscle</span></div>
+        <div class="lever">National regulation and funding rules</div>
+        <p class="mech">Use London’s own evidence base to push for procurement rule changes, funding eligibility and deregulation that make every pathway above cheaper and legal to do at scale — the Tier 3 lever the wider portfolio is already timing to the Civil Contingencies Act review.</p>
+        <div class="tradeoff"><b>Tradeoff:</b> national policy moves on its own clock. A policy-first sequence risks nothing changing on the ground while the centre catches up.</div>
+        <div class="connects">Connects to: <a href="wheres-the-energy.html#resilience">the Local Food Resilience Committee first move</a></div>
+      </div>
+    </div>
+
+    <div class="pathway track-demand">
+      <div class="num">06</div>
+      <div>
+        <div class="pathway-head"><h3>Culture-first — redefine what “good” means</h3><span class="track-tag demand">Demand lever</span></div>
+        <div class="lever">Public demand and measurement</div>
+        <p class="mech">Start by shifting the measure itself: nutrition and supply-gap mapping, a marketing investment fund, consumption transparency — making nutrient density, not calories, the explicit standard institutions procure against. This builds a durable, values-based mandate that outlives any one contract or administration.</p>
+        <div class="tradeoff"><b>Tradeoff:</b> changing what people measure and want doesn’t by itself move a single tonne of food — it needs one of the harder infrastructural pathways to cash it in.</div>
+        <div class="connects">Connects to: <a href="nutrition-supply-map.html">the Nutrition Supply Map and Cascade Model</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="traction" class="reveal">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">Read honestly, not aspirationally</div>
+      <h2>Where we already have traction — and where the gap is</h2>
+      <p>None of these pathways are mutually exclusive, and the portfolio is already running more than one at once. Being explicit about which ones are moving and which are lagging is more useful than treating all six as equally live.</p>
+    </div>
+    <table class="grid-table">
+      <tr><th>Pathway</th><th>Where it’s already moving</th><th>What’s still missing</th></tr>
+      <tr><td class="ws">01 — Demand</td><td>Procurement charter conversations underway; several boroughs aligning on collective buying</td><td>A binding collective commitment across the founding boroughs</td></tr>
+      <tr><td class="ws">02 — Supply</td><td>Named as an instrument in the Sovereign Food System catalogue</td><td>A funded, working bridge-financing vehicle — the most exposed gap right now</td></tr>
+      <tr><td class="ws">03 — Infrastructure</td><td>The London Hubs &amp; Markets Working Group; Regis Road anchor site in progress</td><td>Cold-chain and forecasting capacity at full scale</td></tr>
+      <tr><td class="ws">04 — Ownership</td><td>Distributed Governance model drafted on the main portfolio</td><td>Not yet tested against a real, live asset</td></tr>
+      <tr><td class="ws">05 — Policy</td><td>Local Food Resilience Committee response to the Civil Contingencies Act review</td><td>A dedicated London-wide policy ask beyond the resilience committee</td></tr>
+      <tr><td class="ws">06 — Culture</td><td>Nutrition Supply Map and Cascade Model live and public</td><td>A public-facing demand campaign to match the research</td></tr>
+    </table>
+    <div class="plain" style="margin-top:26px;"><b>The honest read:</b> demand (01) and infrastructure (03) are moving fastest. That makes supply-side transition finance (02) the clearest current gap — the coalition is building buying power and logistics faster than it is de-risking the farms meant to fill them. Ownership (04) is the pathway most easily deferred until “later,” but it is also the hardest to retrofit once a hub is already profitable and attractive to buy.</div>
+  </div>
+</section>
+
+<section id="tools" class="band-tint reveal">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">Already live</div>
+      <h2>The tools these pathways draw on</h2>
+      <p>Each pathway above connects to work that already exists and is public. Worth opening alongside this page.</p>
+    </div>
+    <div class="toolgrid">
+      <a class="tool" href="hubs-and-markets-working-group.html" target="_blank">
+        <div class="tag">Pathways 01 &amp; 03</div>
+        <h4>Hubs and Markets Working Group</h4>
+        <p>Where the demand and infrastructure pathways are already being tested against real boroughs, leases and funding gaps.</p>
+      </a>
+      <a class="tool" href="sovereign-food-system.html" target="_blank">
+        <div class="tag">Pathway 02</div>
+        <h4>A Sovereign Food System</h4>
+        <p>Economic and monetary instruments for redesigning food-system finance, including transition bridge financing and de-risked ownership.</p>
+      </a>
+      <a class="tool" href="index.html#governance" target="_blank">
+        <div class="tag">Pathways 04 &amp; 05</div>
+        <h4>Governance, on the main portfolio</h4>
+        <p>The Distributed Governance and three-tier (Borough / London / Policy) model these two pathways are built on.</p>
+      </a>
+      <a class="tool" href="nutrition-supply-map.html" target="_blank">
+        <div class="tag">Pathway 06</div>
+        <h4>Nutrition Supply Map</h4>
+        <p>Where the food actually comes from, and the case for treating nutrient density as the target.</p>
+      </a>
+      <a class="tool" href="wheres-the-energy.html" target="_blank">
+        <div class="tag">All pathways</div>
+        <h4>Where’s the Energy?</h4>
+        <p>What was actually raised by name, and by whom, at the Camden Future Food Dinner and Workshop — the ground-level read this page synthesises upward from.</p>
+      </a>
+      <a class="tool" href="index.html" target="_blank">
+        <div class="tag">The whole portfolio</div>
+        <h4>Food as Infrastructure</h4>
+        <p>The main portfolio site these six pathways sit underneath.</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="reveal">
+  <div class="wrap">
+    <div class="cta-box">
+      <div class="eyebrow">If you’re weighing where to start</div>
+      <h3>These pathways are a diagnostic, not a queue</h3>
+      <p>The point of setting them out separately is to make it possible to ask, honestly, which lever a given piece of work is actually pulling — and which of the other five it is quietly assuming someone else is handling. If you think the sequencing above is wrong, or a pathway is missing, say so.</p>
+      <div class="ctarow">
+        <a class="btn btn-primary" href="index.html#audience">Open the portfolio ↗</a>
+        <a class="btn btn-ghost" href="https://darkmatterlabs.org/contact" target="_blank">Contact Dark Matter Labs ↗</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <div style="font-family:'Fraunces',serif; font-size:16px; color:#F4F1E6; margin-bottom:8px;">Food as Infrastructure — Six Pathways</div>
+      <div>A Dark Matter Labs working framework, developed from the portfolio’s existing tracks, tiers and instruments.</div>
+    </div>
+    <div>
+      <a href="index.html" target="_blank">Full portfolio site ↗</a><br>
+      <a href="hubs-and-markets-working-group.html" target="_blank">Hubs &amp; Markets Working Group ↗</a><br>
+      <a href="https://darkmatterlabs.org/contact" target="_blank">Contact Dark Matter Labs ↗</a>
+    </div>
+  </div>
+  <div class="wrap" style="margin-top:16px; font-size:12px; opacity:0.85;">
+    <div>Parts of this page were drafted with AI assistance (Claude). Licensed CC BY-SA 4.0 — see the <a href="index.html">homepage</a> for full credit and lineage.</div>
+  </div>
+</footer>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const obs = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); obs.unobserve(e.target); } });
+  }, {threshold:0.08});
+  reveals.forEach(el=>obs.observe(el));
+</script>
+
+</body>
+</html>
