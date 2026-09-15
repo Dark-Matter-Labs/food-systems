@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hackney Food Hub — Overview &amp; Ambition</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#101010; --ink-2:#171717; --surface:#1a1a1a;
+    --paper:#f5f5f2; --paper-dim:#a3a39c;
+    --line: rgba(245,245,242,0.14); --line-strong: rgba(245,245,242,0.26);
+    --supply:#c98a3b; --hub:#2e7d6b; --demand:#ff5a1f;
+    --display:"Poppins", sans-serif; --body:"Poppins", sans-serif; --mono:"IBM Plex Mono", monospace;
+    --maxw:1180px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0; background:var(--ink); color:var(--paper); font-family:var(--body); font-size:17px; line-height:1.6; -webkit-font-smoothing:antialiased;}
+  @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto;} }
+  h1,h2,h3,h4{font-family:var(--display); margin:0; font-weight:600; letter-spacing:-0.01em;}
+  a{color:inherit;}
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 32px;}
+  @media (max-width:720px){ .wrap{padding:0 20px;} }
+  .eyebrow{font-family:var(--mono); text-transform:uppercase; letter-spacing:0.14em; font-size:12px; color:var(--paper-dim); display:flex; align-items:center; gap:10px;}
+  .eyebrow::before{content:""; width:16px; height:2px; background:var(--paper-dim); display:inline-block;}
+  .roadline{height:1px; background-image:repeating-linear-gradient(90deg, var(--line-strong) 0 22px, transparent 22px 40px);}
+
+  header{position:sticky; top:0; z-index:50; background:rgba(16,16,16,0.9); backdrop-filter:blur(8px); border-bottom:1px solid var(--line);}
+  nav{display:flex; align-items:center; justify-content:space-between; max-width:var(--maxw); margin:0 auto; padding:16px 32px; flex-wrap:wrap; gap:12px;}
+  .brand{display:flex; align-items:center; gap:10px; font-family:var(--mono); font-size:13px; letter-spacing:0.04em; text-decoration:none; text-transform:uppercase;}
+  .dm-logo{height:22px; width:auto; display:block; border-radius:3px;}
+  .brand-div{color:var(--line-strong); font-weight:400;}
+  .navlinks{display:flex; gap:22px; font-family:var(--mono); font-size:12px; letter-spacing:0.05em;}
+  .navlinks a{text-decoration:none; color:var(--paper-dim); text-transform:uppercase; transition:color .2s;}
+  .navlinks a:hover{color:var(--paper);}
+  @media (max-width:900px){ .navlinks{display:none;} }
+
+  .hero{padding:88px 0 56px;}
+  .hero h1{font-size:clamp(34px, 5vw, 58px); line-height:1.06; margin:16px 0 6px;}
+  .hero .subtitle{font-family:var(--mono); font-size:13px; letter-spacing:0.04em; color:var(--paper-dim); text-transform:uppercase; margin:0 0 18px;}
+  .hero p.lede{font-size:18px; max-width:700px; margin:0 0 24px; opacity:0.94;}
+  .hero .meta{font-family:var(--mono); font-size:12.5px; color:var(--paper-dim); border-top:1px solid var(--line); padding-top:14px; max-width:780px;}
+  .hero .credit-line{font-family:var(--mono); font-size:11.5px; color:var(--paper-dim); opacity:0.75; max-width:780px; margin-top:10px; line-height:1.6;}
+  .btn{font-family:var(--mono); font-size:12.5px; text-transform:uppercase; letter-spacing:0.07em; padding:12px 18px; border:1px solid var(--line-strong); text-decoration:none; display:inline-flex; align-items:center; gap:8px; transition:all .2s; color:var(--paper);}
+  .btn.solid{background:var(--paper); border-color:var(--paper); color:var(--ink); font-weight:600;}
+  .btn:hover{border-color:var(--paper); color:var(--paper);}
+  .cta-row{display:flex; gap:14px; flex-wrap:wrap; margin:22px 0 0;}
+
+  section{padding:72px 0;}
+  section.tight{padding:52px 0;}
+  .section-head{max-width:760px; margin-bottom:36px;}
+  .section-head h2{font-size:clamp(26px,3vw,38px); margin-top:12px;}
+  .section-head p{color:var(--paper-dim); font-size:15.5px; margin-top:12px;}
+
+  .plain-summary{background: rgba(245,245,242,0.06); border-left:3px solid var(--paper-dim); padding:16px 20px; margin:16px 0 6px; max-width:700px;}
+  .plain-summary .ps-label{font-family:var(--mono); font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:var(--paper-dim); display:block; margin-bottom:8px;}
+  .plain-summary p{font-size:15px; line-height:1.55; margin:0; color:var(--paper); opacity:0.95;}
+
+  .audience-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:16px;}
+  @media (max-width:1000px){ .audience-grid{grid-template-columns:repeat(2,1fr);} }
+  @media (max-width:600px){ .audience-grid{grid-template-columns:1fr;} }
+  .audience-card{border:1px solid var(--line); padding:20px 18px; background:var(--surface);}
+  .a-tag{font-family:var(--mono); font-size:10.5px; letter-spacing:0.07em; color:var(--paper-dim); text-transform:uppercase; margin-bottom:12px;}
+  .audience-card h3{font-size:16px; line-height:1.3; margin-bottom:8px;}
+  .audience-card p{font-size:13.5px; color:var(--paper-dim); margin:0;}
+
+  .plaques{display:grid; grid-template-columns:repeat(2,1fr); gap:18px;}
+  @media (max-width:800px){ .plaques{grid-template-columns:1fr;} }
+  .plaque{position:relative; background:var(--surface); border:1px solid var(--line); padding:22px 20px 20px;}
+  .plaque .code{font-family:var(--mono); font-size:11px; color:var(--paper-dim); letter-spacing:0.06em;}
+  .plaque h3{font-size:17px; margin:10px 0 10px; line-height:1.28;}
+  .plaque p{font-size:14px; color:var(--paper-dim); margin:0; line-height:1.55;}
+
+  .ladder{display:flex; flex-direction:column; gap:0;}
+  .rung{border:1px solid var(--line); padding:18px 20px; position:relative;}
+  .rung + .rung{border-top:none;}
+  .rung .tier{font-family:var(--mono); font-size:11px; letter-spacing:0.06em; color:var(--supply); text-transform:uppercase;}
+  .rung h4{font-size:16px; margin:8px 0 6px;}
+  .rung p{font-size:14px; color:var(--paper-dim); margin:0;}
+  .rung a.crossover{display:inline-block; margin-top:10px; font-family:var(--mono); font-size:10.5px; letter-spacing:0.04em; text-transform:uppercase; color:var(--hub); border:1px solid rgba(46,125,107,0.4); padding:5px 9px; text-decoration:none;}
+  .rung a.crossover:hover{border-color:var(--hub); color:var(--paper);}
+
+  .tools-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:18px;}
+  @media (max-width:800px){ .tools-grid{grid-template-columns:1fr;} }
+  .tool-card{
+    display:flex; flex-direction:column; justify-content:space-between;
+    border:1px solid var(--line); background:var(--surface); padding:22px 22px 20px;
+    position:relative; min-height:150px; text-decoration:none; color:inherit;
+    transition:border-color .2s, transform .2s;
+  }
+  .tool-card:hover{border-color:var(--paper-dim); transform:translateY(-2px);}
+  .tool-top{display:flex; justify-content:space-between; align-items:flex-start; gap:14px;}
+  .tool-code{font-family:var(--mono); font-size:10.5px; letter-spacing:0.06em; color:var(--ink); background:var(--paper); padding:4px 8px; white-space:nowrap;}
+  .tool-card h3{font-size:17px; margin:14px 0 8px; line-height:1.25;}
+  .tool-card p{font-size:13.5px; color:var(--paper-dim); margin:0 0 14px;}
+  .tool-link{font-family:var(--mono); font-size:11.5px; text-transform:uppercase; letter-spacing:0.06em; display:flex; align-items:center; gap:8px; color:var(--paper);}
+  .tool-link .arrow{transition:transform .2s;}
+  .tool-card:hover .arrow{transform:translate(3px,-3px);}
+
+  footer{border-top:1px solid var(--line); padding:44px 0 32px;}
+  .foot-grid{display:flex; justify-content:space-between; gap:32px; flex-wrap:wrap;}
+  .foot-brand{font-family:var(--mono); font-size:12.5px; max-width:460px; color:var(--paper-dim); line-height:1.6;}
+  .foot-brand strong{color:var(--paper); font-family:var(--display); display:block; font-size:15px; margin-bottom:8px;}
+  .foot-col h5{font-family:var(--mono); font-size:11px; text-transform:uppercase; letter-spacing:0.06em; color:var(--paper-dim); margin-bottom:10px;}
+  .foot-col a{display:block; font-size:13.5px; margin-bottom:7px; text-decoration:none; color:var(--paper); opacity:0.85;}
+  .foot-col a:hover{color:var(--paper); opacity:1;}
+  .foot-bottom{margin-top:32px; padding-top:16px; border-top:1px solid var(--line); font-family:var(--mono); font-size:11px; color:var(--paper-dim); display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;}
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <a class="brand" href="https://darkmatterlabs.org/" target="_blank" rel="noopener">
+      <img src="https://darkmatterlabs.org/_next/static/media/DmLogoFull.d4ebb743.png" alt="Dark Matter Labs" class="dm-logo">
+      <span class="brand-div">/</span>HACKNEY FOOD HUB
+    </a>
+    <div class="navlinks">
+      <a href="#overview">Overview</a>
+      <a href="#ambition">Ambition</a>
+      <a href="#connections">Wider work</a>
+      <a href="#coordination">Coordination</a>
+    </div>
+  </nav>
+</header>
+
+<!-- ===================== HERO / OVERVIEW ===================== -->
+<section class="hero" id="overview">
+  <div class="wrap">
+    <div class="eyebrow">DRAFT — A PARTNER WORKSTREAM — HACKNEY FOOD HUB GROUP</div>
+    <h1>Buying, storing and feeding Hackney, together.</h1>
+    <p class="subtitle">An overview for everyone working on Hackney's food hub</p>
+    <p class="lede">A group of Hackney council officers, community food organisations and independent traders has been meeting to work out how the borough's food groups could buy, store and share food collectively, backed by shared infrastructure rather than each organisation fending for itself. This page is a single place to see what that's for, how it connects to work already happening across London, and how it stays coordinated as it develops.</p>
+    <div class="cta-row">
+      <a class="btn solid" href="#ambition">Read the ambition ↓</a>
+      <a class="btn" href="hackney-food-hub.html" target="_blank" rel="noopener">See where things stand, in detail ↗</a>
+    </div>
+    <div class="meta">STATUS — DRAFT, shared for early review · CONVENED BY — Hackney's food hub working group, with Dark Matter Labs facilitating · PART OF — the London Hubs &amp; Markets Working Group</div>
+    <div class="credit-line">Drawn from Hackney's food hub working sessions and cross-checked against the London Hubs &amp; Markets Working Group's own findings from Lambeth, Newham, Tower Hamlets and Camden + Islington.</div>
+  </div>
+</section>
+
+<div class="wrap"><div class="roadline"></div></div>
+
+<!-- ===================== AMBITION ===================== -->
+<section id="ambition">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">WHY THIS EXISTS</div>
+      <h2>Four things this has to do at once</h2>
+      <p>This isn't only about finding a warehouse. It's about building something that does all four of these together — the same test the wider Food as Infrastructure portfolio holds every idea to.</p>
+    </div>
+    <div class="plaques">
+      <div class="plaque">
+        <div class="code">01 — BUYING POWER</div>
+        <h3>Collective, not each group alone</h3>
+        <p>Hackney's food organisations currently buy separately, mostly at standard retail prices. Buying together — even at small scale — makes better food genuinely affordable, not just a values choice.</p>
+      </div>
+      <div class="plaque">
+        <div class="code">02 — A REAL CO-OP, NOT JUST A STORE</div>
+        <h3>Owned and run by the groups that use it</h3>
+        <p>The ambition is a collective food co-op: shared storage and buying power that Hackney's community organisations own and direct, not a service delivered to them from outside.</p>
+      </div>
+      <div class="plaque">
+        <div class="code">03 — RESILIENCE</div>
+        <h3>Less exposed to the next shock</h3>
+        <p>Shared storage and shared supplier relationships mean no single organisation's food access depends on one contract, one van, or one good year.</p>
+      </div>
+      <div class="plaque">
+        <div class="code">04 — BUILT TO LAST, NOT JUST TO COPE</div>
+        <h3>Community capacity, not just emergency response</h3>
+        <p>The point isn't only to move surplus food more efficiently. It's to build lasting organising and logistics capacity — a foundation to grow from over years, not a one-off pandemic-style response.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="roadline"></div></div>
+
+<!-- ===================== WHO'S INVOLVED ===================== -->
+<section class="tight" id="room">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">WHO'S IN THE ROOM</div>
+      <h2>A small group, deliberately open to grow</h2>
+      <p>Nobody is claiming to have this solved. The value of the group so far has been in comparing notes honestly — including admitting where it's stuck.</p>
+    </div>
+    <div class="audience-grid">
+      <div class="audience-card">
+        <div class="a-tag">Hackney Council</div>
+        <h3>Officers working on food and economic development</h3>
+        <p>Looking at food hub infrastructure as part of the borough's wider economic development strategy — including how it could support small, independent local food shops, not only community groups.</p>
+      </div>
+      <div class="audience-card">
+        <div class="a-tag">Community &amp; trade partners</div>
+        <h3>Food co-ops, an independent grocer, and community food organisations</h3>
+        <p>Includes an established local food cooperative and an independent grocer already trusted by community organisations across Hackney and neighbouring Haringey.</p>
+      </div>
+      <div class="audience-card">
+        <div class="a-tag">Coordinating the hub network</div>
+        <h3>Felix Project convenes; Sustain is building the funding case</h3>
+        <p>Felix Project has been working with at least ten boroughs already building or exploring a hub, coordinating the Hubs &amp; Markets Working Group to share best practice and encourage collaboration instead of separate funding bids. That's led to Sustain building a consortium and sharing their National Lottery bid with boroughs, asking for expressions of interest.</p>
+      </div>
+      <div class="audience-card">
+        <div class="a-tag">The wider portfolio</div>
+        <h3>Dark Matter Labs: the broader picture of London's buying power</h3>
+        <p>Focused beyond hubs and civic infrastructure alone — on the collective buying power of London as a whole, including larger procurement and business purchases — and building a wider portfolio of work around that focus.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="roadline"></div></div>
+
+<!-- ===================== CONNECTION TO WIDER WORK ===================== -->
+<section id="connections">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">NOT STARTING FROM ZERO</div>
+      <h2>How this connects to the wider work</h2>
+      <p>Hackney is the newest borough working through this — but four others have already built, or are building, a version of the same thing. This effort sits inside a much larger, already-moving picture.</p>
+    </div>
+    <div class="tools-grid">
+      <a class="tool-card" href="hubs-and-markets-working-group.html" target="_blank" rel="noopener">
+        <div>
+          <div class="tool-top">
+            <h3>The London Hubs &amp; Markets Working Group</h3>
+            <span class="tool-code">WORKING GROUP</span>
+          </div>
+          <p>The wider group Hackney is now part of — spanning most of north and east London, comparing real hubs in Lambeth, Newham, Tower Hamlets and Camden + Islington.</p>
+        </div>
+        <div class="tool-link">Open the working group <span class="arrow">↗</span></div>
+      </a>
+      <a class="tool-card" href="hackney-food-hub.html" target="_blank" rel="noopener">
+        <div>
+          <div class="tool-top">
+            <h3>Where Hackney stands, in detail</h3>
+            <span class="tool-code">STATE OF PLAY</span>
+          </div>
+          <p>The fuller working note: what's already been found, mapped directly onto what other boroughs learned, and the concrete next steps.</p>
+        </div>
+        <div class="tool-link">Read the detail <span class="arrow">↗</span></div>
+      </a>
+      <a class="tool-card" href="pathways-to-civic-food-system.html" target="_blank" rel="noopener">
+        <div>
+          <div class="tool-top">
+            <h3>Six Pathways to a Civic Food System</h3>
+            <span class="tool-code">WHY THIS MATTERS</span>
+          </div>
+          <p>The wider argument this work sits inside — six different levers for moving London's buying power behind organic, resilient, civic-led food.</p>
+        </div>
+        <div class="tool-link">Explore the pathways <span class="arrow">↗</span></div>
+      </a>
+      <a class="tool-card" href="index.html" target="_blank" rel="noopener">
+        <div>
+          <div class="tool-top">
+            <h3>Food as Infrastructure</h3>
+            <span class="tool-code">THE FULL PORTFOLIO</span>
+          </div>
+          <p>The full, London-wide portfolio this workstream is one part of — councils, national government and people on the ground building on the same foundations.</p>
+        </div>
+        <div class="tool-link">Open the portfolio <span class="arrow">↗</span></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="roadline"></div></div>
+
+<!-- ===================== COORDINATION ===================== -->
+<section id="coordination">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">HOW THIS STAYS JOINED UP</div>
+      <h2>Coordination, not just conversation</h2>
+      <p>The group has been honest that it's felt directionless at times. These are the mechanisms meant to fix that.</p>
+    </div>
+    <div class="ladder">
+      <div class="rung">
+        <div class="tier">Now</div>
+        <h4>A structuring session, 22 September</h4>
+        <p>A working session set specifically to bring clarity: who leads, what the first concrete step is, and how the small-scale pilot option gets tested — rather than another open-ended discussion.</p>
+      </div>
+      <div class="rung">
+        <div class="tier">Standing</div>
+        <h4>The London Hubs &amp; Markets Working Group, bi-monthly</h4>
+        <p>Hackney now sits inside a wider, regularly-meeting group comparing real hub examples across boroughs — so lessons travel both ways, not just from Hackney out.</p>
+        <a class="crossover" href="hubs-and-markets-working-group.html#next">↳ See the working group's own work-ahead list</a>
+      </div>
+      <div class="rung">
+        <div class="tier">Shared resource</div>
+        <h4>The Hub Documentation library</h4>
+        <p>A shared library of hub proposals, capacity models and go-live plans from every borough already building one — the first place to look before designing something from scratch.</p>
+      </div>
+      <div class="rung">
+        <div class="tier">Practical habit</div>
+        <h4>One shared site-search log, not several</h4>
+        <p>Council teams looking for hub or storage space are now logging it in one place, so different parts of the council stop independently approaching the same landlords.</p>
+      </div>
+      <div class="rung">
+        <div class="tier">Ongoing</div>
+        <h4>This page, and the detailed working note, kept current</h4>
+        <p>As the 22 September session and what follows produce real decisions, both this overview and the more detailed state-of-play note get updated — so anyone joining later doesn't start from zero either.</p>
+        <a class="crossover" href="hackney-food-hub.html">↳ Read the detailed working note</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FOOTER ===================== -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <strong>Hackney Food Hub</strong>
+        An overview for everyone working on Hackney's food hub effort — part of the London Hubs &amp; Markets Working Group, itself part of Dark Matter Labs' Food as Infrastructure portfolio.
+        <br><br>
+        This page is a working draft, not yet linked from the main portfolio homepage. Drawn from Hackney's food hub working sessions; names of individuals are omitted by default.
+        <br><br>
+        Parts of this page were drafted with AI assistance (Claude). Licensed CC BY-SA 4.0 — see the <a href="index.html">homepage</a> for full credit and lineage.
+      </div>
+      <div class="foot-col">
+        <h5>On this page</h5>
+        <a href="#overview">Overview</a>
+        <a href="#ambition">Ambition</a>
+        <a href="#room">Who's in the room</a>
+        <a href="#connections">Wider work</a>
+        <a href="#coordination">Coordination</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span><a href="index.html" style="text-decoration:underline;">← Food as Infrastructure</a> · HACKNEY FOOD HUB GROUP</span>
+      <span><a href="hackney-food-hub.html" style="text-decoration:underline; color:inherit;">The detailed working note →</a></span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
