@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Islington: What's Next — Hubs &amp; Markets Working Group</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+  :root{
+    --paper:#F1ECDE;
+    --paper-2:#E8E0CA;
+    --ink:#1C2B21;
+    --ink-soft:#4C5C4F;
+    --ink-faint:#8B9385;
+    --gold:#B9812B;
+    --gold-deep:#8F6114;
+    --brick:#A94525;
+    --green-deep:#233A2A;
+    --green-panel:#20342A;
+    --line:#CDC0A0;
+    --line-soft:#DED4B9;
+    --cream-text:#F1ECDE;
+    --maxw: 1180px;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0; background:var(--paper); color:var(--ink);
+    font-family:'Inter',sans-serif; font-size:16px; line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,h4{font-family:'Fraunces',serif; font-weight:600; color:var(--ink); margin:0; letter-spacing:-0.01em;}
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 32px;}
+  @media (max-width:720px){ .wrap{padding:0 20px;} }
+  a{color:var(--brick); text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace; font-size:11.5px; letter-spacing:0.14em;
+    text-transform:uppercase; color:var(--gold-deep); display:flex; align-items:center; gap:10px;
+  }
+  .eyebrow::before{content:''; width:16px; height:1px; background:var(--gold-deep); display:inline-block;}
+
+  header.site-nav{
+    position:sticky; top:0; z-index:50; background:rgba(241,236,222,0.92);
+    backdrop-filter:blur(6px); border-bottom:1px solid var(--line);
+  }
+  .nav-inner{
+    max-width:var(--maxw); margin:0 auto; padding:14px 32px;
+    display:flex; align-items:center; justify-content:space-between; gap:24px; flex-wrap:wrap;
+  }
+  .nav-mark{
+    font-family:'IBM Plex Mono', monospace; font-size:12px; letter-spacing:0.08em; text-transform:uppercase;
+    color:var(--ink); display:flex; flex-direction:column; line-height:1.3;
+  }
+  .nav-mark strong{font-size:13px; letter-spacing:0.1em;}
+  .nav-mark span{color:var(--ink-faint); font-size:10.5px;}
+  nav.nav-links{display:flex; gap:22px; flex-wrap:wrap;}
+  nav.nav-links a{
+    font-family:'IBM Plex Mono', monospace; font-size:11.5px; letter-spacing:0.08em; text-transform:uppercase;
+    color:var(--ink-soft);
+  }
+  nav.nav-links a:hover{color:var(--brick); text-decoration:none;}
+  @media (max-width:760px){ nav.nav-links{display:none;} }
+
+  .status-strip{background:var(--paper-2); border-bottom:1px solid var(--line); padding:12px 0;}
+  .status-strip .wrap{display:flex; align-items:center; gap:14px; flex-wrap:wrap;}
+  .status-dot{width:8px; height:8px; border-radius:50%; background:var(--gold-deep); flex-shrink:0; box-shadow:0 0 0 3px rgba(143,97,20,0.15);}
+  .status-strip p{margin:0; font-size:13.5px; color:var(--ink-soft);}
+  .status-strip strong{color:var(--ink);}
+  .status-strip .status-date{
+    margin-left:auto; font-family:'IBM Plex Mono',monospace; font-size:10.5px; color:var(--ink-faint);
+    letter-spacing:0.06em; text-transform:uppercase;
+  }
+
+  .hero{padding:76px 0 56px; border-bottom:1px solid var(--line); position:relative; overflow:hidden;}
+  .hero::before{
+    content:''; position:absolute; right:-120px; top:-80px; width:440px; height:440px; border-radius:50%;
+    background:radial-gradient(circle at 30% 30%, rgba(185,129,43,0.16), transparent 70%);
+  }
+  .hero .lot-number{font-family:'IBM Plex Mono', monospace; font-size:12px; color:var(--ink-faint); letter-spacing:0.1em; margin-bottom:18px;}
+  .hero h1{font-size:clamp(36px, 5.6vw, 62px); line-height:1.05; max-width:820px;}
+  .hero h1 em{font-style:italic; color:var(--brick); font-weight:500;}
+  .hero .lede{max-width:660px; margin-top:24px; font-size:18.5px; color:var(--ink-soft); line-height:1.6;}
+  .hero .cta-row{margin-top:32px; display:flex; gap:24px; flex-wrap:wrap; align-items:center;}
+  .btn{
+    font-family:'IBM Plex Mono', monospace; font-size:12px; letter-spacing:0.06em; text-transform:uppercase;
+    padding:13px 22px; border:1px solid var(--ink); border-radius:2px; color:var(--ink); background:transparent;
+    display:inline-flex; align-items:center; gap:8px; cursor:pointer;
+  }
+  .btn:hover{background:var(--ink); color:var(--paper); text-decoration:none;}
+  .btn.primary{background:var(--brick); border-color:var(--brick); color:#fff;}
+  .btn.primary:hover{background:var(--gold-deep); border-color:var(--gold-deep);}
+
+  .hero-strip{margin-top:48px; padding-top:24px; border-top:1px solid var(--line-soft); display:grid; grid-template-columns:repeat(4,1fr); gap:22px;}
+  @media (max-width:860px){ .hero-strip{grid-template-columns:repeat(2,1fr);} }
+  .hero-strip .stat b{display:block; font-family:'Fraunces',serif; font-size:28px; color:var(--brick); font-weight:600;}
+  .hero-strip .stat span{font-family:'IBM Plex Mono',monospace; font-size:10.5px; color:var(--ink-faint); letter-spacing:0.04em; text-transform:uppercase;}
+
+  section{padding:72px 0; border-bottom:1px solid var(--line);}
+  section.dark{background:var(--green-deep); color:var(--cream-text); border-bottom:1px solid rgba(0,0,0,0.2);}
+  section.dark h2, section.dark h3, section.dark h4{color:var(--cream-text);}
+  section.dark .eyebrow{color:#D9A85C;}
+  section.dark .eyebrow::before{background:#D9A85C;}
+  section.dark p{color:#CBD4C6;}
+  section.dark a{color:#E3A25E;}
+
+  .section-head{max-width:760px; margin-bottom:40px;}
+  .section-head h2{font-size:clamp(26px,3.2vw,38px); margin-top:14px;}
+  .section-head p.sub{color:var(--ink-soft); margin-top:14px; font-size:16.5px;}
+  section.dark .section-head p.sub{color:#CBD4C6;}
+
+  .objective-block{display:grid; grid-template-columns:1.05fr 0.95fr; gap:52px; align-items:start;}
+  @media (max-width:860px){ .objective-block{grid-template-columns:1fr;} }
+  .objective-block .lede-text{font-size:16.5px; line-height:1.7; color:var(--ink);}
+  .objective-block .lede-text p + p{margin-top:14px;}
+
+  .roll{border-top:1px solid var(--line);}
+  .roll-title{font-family:'IBM Plex Mono',monospace; font-size:11px; text-transform:uppercase; letter-spacing:0.1em; color:var(--ink-faint); padding:16px 0 10px;}
+  .roll-item{display:flex; justify-content:space-between; gap:14px; padding:11px 0; border-top:1px solid var(--line-soft); font-size:14px;}
+  .roll-item .who{color:var(--ink); font-weight:500;}
+  .roll-item .org{color:var(--ink-faint); text-align:right; font-size:12.5px; max-width:56%;}
+
+  .tie-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:2px; background:var(--line);}
+  @media (max-width:860px){ .tie-grid{grid-template-columns:1fr;} }
+  .tie-card{background:var(--green-panel); padding:28px;}
+  .tie-card .num{font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--gold); letter-spacing:0.08em;}
+  .tie-card h4{font-size:18px; margin-top:10px; color:var(--cream-text);}
+  .tie-card p{font-size:14px; color:#CBD4C6; margin-top:10px;}
+  .tie-card p.lesson{color:#F1ECDE; font-weight:500; margin-top:14px;}
+  .tie-card p.lesson b{color:#E3A25E;}
+  .tie-card a{font-family:'IBM Plex Mono',monospace; font-size:11.5px; text-transform:uppercase; letter-spacing:0.04em; display:inline-block; margin-top:14px;}
+
+  .lane{margin-bottom:32px;}
+  .lane-head{display:flex; align-items:center; gap:12px; margin-bottom:4px;}
+  .lane-head .who-badge{
+    font-family:'IBM Plex Mono',monospace; font-size:10.5px; letter-spacing:0.05em; text-transform:uppercase;
+    color:#fff; padding:4px 10px; border-radius:20px;
+  }
+  .who-badge.islington{background:var(--brick);}
+  .who-badge.group{background:var(--gold-deep);}
+  .lane-head span.role{font-size:12.5px; color:var(--ink-faint);}
+  .lane-rows{margin-top:6px;}
+  .next-row{display:grid; grid-template-columns:32px 1fr auto; gap:14px; align-items:baseline; padding:13px 0; border-top:1px solid var(--line-soft);}
+  .next-row .n{font-family:'IBM Plex Mono',monospace; color:var(--brick); font-size:13px;}
+  .next-row p{margin:0; font-size:15px; color:var(--ink);}
+  .next-row .status{
+    font-family:'IBM Plex Mono',monospace; font-size:10.5px; text-transform:uppercase; letter-spacing:0.05em;
+    color:var(--ink-faint); border:1px solid var(--line); padding:4px 9px; border-radius:2px; white-space:nowrap;
+  }
+
+  .callout{margin-top:16px; padding:14px 16px; background:var(--paper); border-left:3px solid var(--brick); font-size:13.5px; color:var(--ink);}
+  .callout b{color:var(--brick);}
+
+  footer{background:var(--green-deep); color:#B9C0A8; padding:44px 0; font-size:13px;}
+  footer a{color:#DCE4D3;}
+  footer .wrap{display:flex; justify-content:space-between; flex-wrap:wrap; gap:24px;}
+  footer .col h4{color:#F1ECDE; font-size:15px;}
+  footer .col a{display:block; margin-top:8px; font-size:13px;}
+  footer .footer-bottom{margin-top:0; padding-top:0;}
+  footer .credit{font-size:12px; color:#7C8878; margin-top:24px; border-top:1px solid rgba(255,255,255,0.1); padding-top:20px;}
+</style>
+</head>
+<body>
+
+<header class="site-nav">
+  <div class="nav-inner">
+    <div class="nav-mark">
+      <strong>ISLINGTON FOOD HUB</strong>
+      <span>Working Group · Food as Infrastructure</span>
+    </div>
+    <nav class="nav-links">
+      <a href="#now">Where Islington is now</a>
+      <a href="#lessons">What the hub already confirms</a>
+      <a href="#next">What's next</a>
+      <a href="hubs-and-markets-working-group.html">Full working group ↗</a>
+    </nav>
+  </div>
+</header>
+
+<div class="status-strip">
+  <div class="wrap">
+    <span class="status-dot" aria-hidden="true"></span>
+    <p><strong>Draft — restructuring while shipping.</strong> Islington is further along than most: an established partnership, mid-way through a governance rebuild, with its shared hub with Camden now recruiting an operator.</p>
+    <span class="status-date">DRAFT · WORKING NOTE · SEPT 2026</span>
+  </div>
+</div>
+
+<main id="main">
+
+  <!-- HERO -->
+  <section class="hero" style="border-bottom:1px solid var(--line); padding-bottom:0;">
+    <div class="wrap">
+      <div class="lot-number">DRAFT — WORKING GROUP NOTE — ISLINGTON, 2026</div>
+      <h1>Four action groups, and a hub about to <em>get an operator.</em></h1>
+      <p class="lede">Islington isn't building something from a blank page — the Islington Food Partnership already exists, already has funding, and is mid-way through restructuring itself for delivery. Its shared food hub with Camden, at Regis Road, is now recruiting the operator who will run it. This page holds the honest state of both, checked against what the rest of this working group has already learned.</p>
+      <div class="cta-row">
+        <a class="btn primary" href="#next">See what's next ↓</a>
+        <a class="btn" href="islington-food-partnership.html" target="_blank" rel="noopener">Read the shareable overview ↗</a>
+        <a class="btn" href="hubs-and-markets-working-group.html" target="_blank" rel="noopener">Open the full working group ↗</a>
+      </div>
+      <div class="hero-strip">
+        <div class="stat"><b>4</b><span>Action groups replacing one coordinating group</span></div>
+        <div class="stat"><b>~£3m</b><span>Funding case that won the joint hub bid (~£200k cost)</span></div>
+        <div class="stat"><b>Early Oct</b><span>Expressions-of-interest deadline for the hub operator</span></div>
+        <div class="stat"><b>3yr</b><span>IFP's confirmed funding term, to August 2028</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHERE ISLINGTON IS NOW -->
+  <section id="now">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">Stated plainly, not smoothed over</div>
+        <h2>Where Islington is right now</h2>
+        <p class="sub">Two things are happening at once: a governance rebuild of the partnership itself, and the operator search for the physical hub it's been working toward. Neither is finished.</p>
+      </div>
+      <div class="objective-block">
+        <div class="lede-text">
+          <p>The Islington Food Partnership (IFP) is an established, independently funded partnership — council-funded, but not run inside the council, unlike Camden's equivalent, which sits within council structures. It's restructuring from one general coordinating group into four dedicated action groups: Healthy &amp; Affordable Food for All, Climate &amp; Nature Emergency, Sustainable Local Food Economy, and a new, cross-cutting Fundraising group. Each will run with roughly 10&ndash;12 members, at least one IFP staff member embedded, board sign-off on who joins, and at least one representative from every action group also sitting on the strategic board — so there's less disconnect between what a group is doing and what the board hears.</p>
+          <p>The shared food distribution hub with Camden, at Regis Road, has moved into its next concrete phase: recruiting an operator. Expressions of interest are open, with site visits arranged for anyone interested, and a deadline in early October. The initial term is two years, and part of the operator's brief is to work out the site's longer-term future, not just run day-to-day logistics. One genuine structural quirk worth naming: because Camden's food partnership sits inside its council and Islington's IFP is a separate, independently funded body, the incoming operator will have to manage two different kinds of relationship, not one symmetrical arrangement either side of the borough line.</p>
+          <p>Alongside the hub, Islington is trialling a partnership with a national hygiene-bank charity — deliberately hyper-local, in one small area first, since the shared hub isn't operational yet and the system is being tested at a manageable scale before any wider rollout. A separate idea — connecting with a national charity that distributes donated non-food essentials — has been raised but not yet followed up.</p>
+          <p>If the Regis Road site doesn't work out long-term, Islington has also asked whether a disused council building could host a hub instead. Nothing has come forward yet, though a borough-wide review of surplus school and community buildings — a consequence of falling pupil numbers — is under way, and any resulting space would be treated as a high priority for a hub.</p>
+        </div>
+        <div>
+          <div class="roll">
+            <div class="roll-title">The state of play, in short</div>
+            <div class="roll-item"><span class="who">Vision</span><span class="org">Four action groups delivering a shared 3-year plan, backed by a joint hub with Camden</span></div>
+            <div class="roll-item"><span class="who">Structure</span><span class="org">An independent, council-funded partnership — not run inside the council</span></div>
+            <div class="roll-item"><span class="who">Hub status</span><span class="org">Operator recruitment open now, deadline early October, initial 2-year term</span></div>
+            <div class="roll-item"><span class="who">The funding case that won it</span><span class="org">~£1m food value + ~£2m social value, against a ~£200k cost</span></div>
+            <div class="roll-item"><span class="who">SROI tool</span><span class="org">Piloting with a small number of providers first, before wider rollout</span></div>
+            <div class="roll-item"><span class="who">Hygiene-bank trial</span><span class="org">Starting hyper-local, in one small area, ahead of the hub going live</span></div>
+            <div class="roll-item"><span class="who">Fallback site option</span><span class="org">A borough-wide review of surplus school/community buildings, none confirmed</span></div>
+            <div class="roll-item"><span class="who">IFP funding</span><span class="org">Confirmed for 3 years, to August 2028, aligned to the food strategy</span></div>
+            <div class="roll-item"><span class="who">Next fixed point</span><span class="org">Board sign-off on action-group membership; a London-wide dinner planned for November</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT THE HUB ALREADY CONFIRMS -->
+  <section id="lessons" class="dark">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">Islington is close enough to live that it's now a source of lessons, not just a recipient</div>
+        <h2>What Islington's own hub already confirms — and one new question it raises</h2>
+        <p class="sub">Three of these check out against what the rest of the group has already found. The fourth is something Islington is running into that nobody else has documented yet.</p>
+      </div>
+      <div class="tie-grid">
+        <div class="tie-card">
+          <div class="num">WILL A REFINED SROI TOOL ACTUALLY GET USED?</div>
+          <h4>Islington's own social-value tool is being kept deliberately small, on purpose</h4>
+          <p>Islington's Social Return on Investment tool, developed with a university partner, is being piloted with just one or two food-aid providers first — not because of caution for its own sake, but because the current version is genuinely clunky (one single line for "advice", when there are really dozens of distinct types). A direct request from the room: keep it simple enough that time-poor frontline staff will actually use it. This checks out against Birmingham's independent finding elsewhere in this group: a proper SROI study is effectively out of reach without funding a university partner directly.</p>
+          <p class="lesson"><b>The lesson to carry over:</b> refine before rolling out, and design for the staff who have the least spare time to fill in a form — not the funders who'll eventually read the results.</p>
+          <a href="hubs-and-markets-working-group.html#second-meeting">See the Birmingham finding ↗</a>
+        </div>
+        <div class="tie-card">
+          <div class="num">CAN A HUB SERVE ORGANIC AMBITIONS WHEN SURPLUS IS FREE?</div>
+          <h4>Islington is living the "both markets" question, not just discussing it</h4>
+          <p>Sustain's National Lottery bid concept is framed around agroecological and organic food — but Felix Project can supply surplus for free, and food-aid budgets are tight enough that paying for "better" food is a genuinely hard sell right now. This is the live, lived version of an open design question already sitting on this page: whether one hub can serve both nutrient-dense organic supply and surplus redistribution from the same infrastructure, without one undercutting the other.</p>
+          <p class="lesson"><b>The lesson to carry over:</b> Islington's experience here is worth feeding back to the wider group directly — it's a real test of a question the rest of the group has so far only raised in theory.</p>
+          <a href="hubs-and-markets-working-group.html#network">See the full finding ↗</a>
+        </div>
+        <div class="tie-card">
+          <div class="num">WHAT IF THE SHARED SITE FALLS THROUGH?</div>
+          <h4>Tower Hamlets shows a fallback that doesn't need a perfect site</h4>
+          <p>Tower Hamlets' hub isn't really fit for purpose, but a developer with Section 106 obligations agreed to install shipping containers on land awaiting redevelopment — giving a working food hub for a three-year term on a site that would otherwise sit empty. It's a workable, replicable model, not a compromise to be embarrassed about.</p>
+          <p class="lesson"><b>The lesson to carry over:</b> if Islington's own review of surplus school and community buildings doesn't produce a result in time, a Section 106-funded meanwhile structure is a proven fallback, not a last resort.</p>
+          <a href="hubs-and-markets-working-group.html#anatomy">See the hub anatomy ↗</a>
+        </div>
+        <div class="tie-card">
+          <div class="num">HOW DO YOU RUN ONE HUB ACROSS TWO DIFFERENT BOROUGH STRUCTURES?</div>
+          <h4>A new finding, not a borrowed one — worth watching closely</h4>
+          <p>Because Camden's food partnership sits inside its council and Islington's IFP is an independently funded body outside the council, the hub operator being recruited now will have to build and manage two structurally different relationships from day one — not a single, symmetrical partnership. Nobody else in this working group has documented this pattern yet, but every future multi-borough hub will likely hit some version of it.</p>
+          <p class="lesson"><b>The lesson to carry over:</b> this is Islington's contribution back to the group, not a lesson borrowed from it — worth writing up properly once the operator is appointed and the arrangement is tested for real.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT'S NEXT -->
+  <section id="next">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">Concrete, not another open conversation</div>
+        <h2>What's next for Islington</h2>
+        <p class="sub">Twelve actions, in the order they were actually raised.</p>
+      </div>
+
+      <div class="lane">
+        <div class="lane-head">
+          <span class="who-badge islington">Islington</span>
+          <span class="role">IFP staff, council officers, action-group members</span>
+        </div>
+        <div class="lane-rows">
+          <div class="next-row">
+            <span class="n">01</span>
+            <p>Confirm board sign-off on action-group membership and recruit the remaining places, particularly for the newer local-economy and fundraising groups.</p>
+            <span class="status">In progress</span>
+          </div>
+          <div class="next-row">
+            <span class="n">02</span>
+            <p>Close the hub operator expressions-of-interest window (early October) and run the arranged site visits.</p>
+            <span class="status">In progress</span>
+          </div>
+          <div class="next-row">
+            <span class="n">03</span>
+            <p>Decide, from the expressions of interest received, which applicant(s) move to a fuller proposal stage.</p>
+            <span class="status">Open</span>
+          </div>
+          <div class="next-row">
+            <span class="n">04</span>
+            <p>Continue the hygiene-bank trial in its one small pilot area, and open a conversation with a national in-kind-donations charity about non-food essentials.</p>
+            <span class="status">Open</span>
+          </div>
+          <div class="next-row">
+            <span class="n">05</span>
+            <p>Launch the per-action-group WhatsApp groups and shared SharePoint drive, and move board updates to a short written highlight report instead of long verbal ones.</p>
+            <span class="status">In progress</span>
+          </div>
+          <div class="next-row">
+            <span class="n">06</span>
+            <p>Keep piloting the SROI tool with a small number of providers, refine it for simplicity, then plan the wider rollout.</p>
+            <span class="status">In progress</span>
+          </div>
+          <div class="next-row">
+            <span class="n">07</span>
+            <p>Wait on Sustain's confirmation of whether Islington is a regional partner in the National Lottery bid, and what that would involve.</p>
+            <span class="status">Awaiting decision</span>
+          </div>
+          <div class="next-row">
+            <span class="n">08</span>
+            <p>Complete the Sustainable Food Places Silver Award application, pending outstanding feedback.</p>
+            <span class="status">In progress</span>
+          </div>
+          <div class="next-row">
+            <span class="n">09</span>
+            <p>Add dietary-requirement fields (vegan, vegetarian, halal) to the internal food-provider map, and decide whether to publish a joint Camden + Islington public-facing map, given how much use already crosses the border.</p>
+            <span class="status">Open</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="lane">
+        <div class="lane-head">
+          <span class="who-badge group">The working group</span>
+          <span class="role">Dark Matter Labs, Felix Project, the wider network</span>
+        </div>
+        <div class="lane-rows">
+          <div class="next-row">
+            <span class="n">10</span>
+            <p>Bring Islington into the November Future Food Dinner and workshop, extending the format already run with Camden to more boroughs.</p>
+            <span class="status">Planned</span>
+          </div>
+          <div class="next-row">
+            <span class="n">11</span>
+            <p>Fold Islington's hub-operator process and governance restructure into the Hub Documentation library, as a live example for other boroughs going through the same thing.</p>
+            <span class="status">Ongoing</span>
+          </div>
+          <div class="next-row">
+            <span class="n">12</span>
+            <p>Feed Islington's "surplus is free, agroecological costs money" experience back into the working group's own open question about hubs serving both markets at once.</p>
+            <span class="status">Open</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout"><b>The point of this list:</b> Islington isn't waiting on a theory — it's mid-way through building the thing. What's left is closing the operator search cleanly, keeping the governance rebuild from losing momentum, and writing up what it's already learning for the boroughs still behind it.</div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="col" style="max-width:340px;">
+      <h4>Islington Food Hub</h4>
+      <p style="color:#AAB6A4; font-size:13.5px; line-height:1.6;">A working note on the Islington Food Partnership's governance rebuild and its shared hub with Camden, part of the London Hubs &amp; Markets Working Group and Dark Matter Labs' Food as Infrastructure portfolio.</p>
+    </div>
+    <div class="col">
+      <h4>This page</h4>
+      <a href="#now">Where Islington is now</a>
+      <a href="#lessons">What the hub already confirms</a>
+      <a href="#next">What's next</a>
+    </div>
+    <div class="col">
+      <h4>Wider portfolio</h4>
+      <a href="hubs-and-markets-working-group.html" target="_blank" rel="noopener">Hubs &amp; Markets Working Group ↗</a>
+      <a href="index.html" target="_blank" rel="noopener">Food as Infrastructure ↗</a>
+      <a href="pathways-to-civic-food-system.html" target="_blank" rel="noopener">Six Pathways to a Civic Food System ↗</a>
+    </div>
+  </div>
+  <div class="wrap footer-bottom">
+    <div class="credit">Source: an Islington Food Partnership board meeting, September 2026, cross-referenced against the London Hubs &amp; Markets Working Group's existing findings. Names of individuals are omitted by default; organisations already named elsewhere on this site (Felix Project, Dark Matter Labs, Sustain) are named here too.<br><br>Parts of this page were drafted with AI assistance (Claude). Licensed CC BY-SA 4.0 — see the <a href="index.html">homepage</a> for full credit and lineage.</div>
+  </div>
+</footer>
+
+</body>
+</html>
