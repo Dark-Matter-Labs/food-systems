@@ -1,0 +1,740 @@
+<title>The Overdue Bill</title>
+<meta name="description" content="What the UK's broken food system already costs the country every year — itemised, sourced, and compounding while nothing changes.">
+<style>
+  :root{
+    --paper:#F6F5F0;
+    --paper-line:#E4E1D6;
+    --ink:#141310;
+    --ink-soft:#5A574C;
+    --ink-faint:#96927F;
+    --red:#B3231C;
+    --red-dim:#F3E0DD;
+    --stamp:#B3231C;
+    --blue:#1C5CAB;
+    --blue-dim:#DCE6F3;
+    --surface:#FCFCFB;
+
+    --display:'Archivo', system-ui, sans-serif;
+    --body:'Source Sans 3', system-ui, sans-serif;
+    --mono:'IBM Plex Mono', ui-monospace, monospace;
+    color-scheme: light;
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--body);
+    font-size:16.5px;
+    line-height:1.6;
+    padding-inline:20px;
+    padding-block:0 90px;
+  }
+  h1,h2,h3{font-family:var(--display); margin:0; text-wrap:balance;}
+  p{margin:0;}
+  .mono{font-family:var(--mono); font-variant-numeric:tabular-nums;}
+  .wrap{max-width:880px; margin-inline:auto;}
+  .wrap-wide{max-width:1080px; margin-inline:auto;}
+
+  /* ===================== MASTHEAD ===================== */
+  .masthead{
+    max-width:1080px; margin:0 auto; padding:22px 0 16px;
+    display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:10px;
+    border-bottom:2px solid var(--ink);
+  }
+  .masthead .brand{font-family:var(--mono); font-size:12px; letter-spacing:0.08em; text-transform:uppercase; color:var(--ink-soft);}
+  .masthead .ref{font-family:var(--mono); font-size:12px; color:var(--ink-faint);}
+
+  .draft-banner{
+    max-width:1080px; margin:16px auto 0; padding:12px 18px;
+    background:var(--red-dim); border:1px solid var(--red);
+    display:flex; align-items:center; gap:10px; flex-wrap:wrap;
+    font-family:var(--mono); font-size:12px; color:#6E170F; letter-spacing:0.01em;
+  }
+  .draft-banner b{text-transform:uppercase; letter-spacing:0.06em; color:var(--red);}
+
+  /* ===================== INVOICE HEADER ===================== */
+  .invoice-head{padding:48px 0 40px;}
+  .invoice-meta{
+    display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-bottom:34px;
+    font-family:var(--mono); font-size:13px; color:var(--ink-soft);
+  }
+  .invoice-meta .label{text-transform:uppercase; letter-spacing:0.06em; font-size:10.5px; color:var(--ink-faint); display:block; margin-bottom:4px;}
+  .invoice-meta .val{color:var(--ink); font-size:14px;}
+  @media (max-width:600px){ .invoice-meta{grid-template-columns:1fr;} }
+
+  h1.big{
+    font-size:clamp(38px,7vw,68px); line-height:0.98; letter-spacing:-0.01em; font-weight:900;
+    text-transform:uppercase;
+  }
+  .dek{font-size:18.5px; line-height:1.5; color:var(--ink-soft); max-width:60ch; margin-top:20px;}
+
+  .total-box{
+    margin-top:40px; border:2px solid var(--ink); padding:26px 28px;
+    display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;
+    background:#fff;
+  }
+  .total-box .tl{font-family:var(--mono); font-size:12px; text-transform:uppercase; letter-spacing:0.08em; color:var(--ink-soft);}
+  .total-box .tl small{display:block; font-size:11px; color:var(--ink-faint); text-transform:none; letter-spacing:0; margin-top:4px;}
+  .total-box .amt{font-family:var(--display); font-size:clamp(34px,6vw,54px); font-weight:900; color:var(--red); line-height:1;}
+
+  .stamp{
+    display:inline-block; border:3px solid var(--red); color:var(--red);
+    font-family:var(--mono); font-weight:700; font-size:13px; letter-spacing:0.12em; text-transform:uppercase;
+    padding:6px 14px; transform:rotate(-4deg); border-radius:4px; margin-top:22px;
+  }
+
+  /* ===================== SECTION SHELL ===================== */
+  section{padding:16px 0 8px;}
+  .rule-heavy{border:none; border-top:2px solid var(--ink); margin:36px 0 0;}
+  .rule{border:none; border-top:1px solid var(--paper-line); margin:0;}
+  .cat-head{
+    display:flex; justify-content:space-between; align-items:baseline; gap:16px; flex-wrap:wrap;
+    padding:30px 0 6px;
+  }
+  .cat-head h2{font-size:clamp(20px,2.6vw,25px); text-transform:uppercase; letter-spacing:0.01em;}
+  .cat-head .cat-sub{font-family:var(--mono); font-size:11.5px; color:var(--ink-faint); text-transform:uppercase; letter-spacing:0.05em;}
+
+  /* ===================== LINE ITEMS ===================== */
+  .line-item{
+    display:grid; grid-template-columns:1fr auto; gap:18px; align-items:start;
+    padding:20px 0; border-top:1px solid var(--paper-line);
+  }
+  .line-item .desc h3{font-size:16.5px; font-family:var(--body); font-weight:700; margin-bottom:6px; text-transform:none;}
+  .line-item .desc p{font-size:14.5px; color:var(--ink-soft); max-width:58ch;}
+  .line-item .desc .src{font-family:var(--mono); font-size:11px; color:var(--ink-faint); margin-top:8px; display:block;}
+  .line-item .amount{
+    font-family:var(--mono); font-weight:600; font-size:22px; white-space:nowrap; text-align:right; padding-top:2px;
+  }
+  .line-item .amount.small{font-size:16px;}
+  @media (max-width:560px){
+    .line-item{grid-template-columns:1fr;}
+    .line-item .amount{text-align:left; font-size:26px;}
+  }
+
+  /* ===================== MODEL ===================== */
+  .model-panel{
+    border:2px solid var(--ink); background:var(--surface); padding:32px 30px;
+    margin-top:6px;
+  }
+  .model-intro p{font-size:15.5px; color:var(--ink-soft); max-width:70ch; line-height:1.6;}
+  .model-intro p+p{margin-top:10px;}
+
+  .controls{
+    display:flex; flex-wrap:wrap; gap:28px; align-items:flex-end;
+    margin-top:28px; padding:20px 20px; background:var(--paper); border:1px solid var(--paper-line);
+  }
+  .control-block{flex:1; min-width:240px;}
+  .control-block .clabel{
+    font-family:var(--mono); font-size:11px; text-transform:uppercase; letter-spacing:0.06em;
+    color:var(--ink-faint); display:flex; justify-content:space-between; margin-bottom:10px;
+  }
+  .control-block .clabel b{color:var(--blue); font-size:14px; font-family:var(--mono);}
+  input[type=range]{
+    width:100%; accent-color:var(--blue); height:22px; cursor:pointer;
+  }
+  .range-scale{display:flex; justify-content:space-between; font-family:var(--mono); font-size:10px; color:var(--ink-faint); margin-top:2px;}
+  .toggle-row{display:flex; gap:0; border:1px solid var(--ink); width:fit-content;}
+  .toggle-btn{
+    font-family:var(--mono); font-size:12.5px; text-transform:uppercase; letter-spacing:0.04em;
+    padding:9px 18px; background:var(--paper); color:var(--ink-soft); border:none; cursor:pointer;
+  }
+  .toggle-btn+.toggle-btn{border-left:1px solid var(--ink);}
+  .toggle-btn.active{background:var(--ink); color:var(--paper);}
+
+  .model-readout{
+    display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--paper-line);
+    border:1px solid var(--paper-line); margin-top:24px;
+  }
+  .readout-cell{background:var(--surface); padding:20px 22px;}
+  .readout-cell .rl{font-family:var(--mono); font-size:11px; text-transform:uppercase; letter-spacing:0.05em; color:var(--ink-faint);}
+  .readout-cell .rv{font-family:var(--display); font-weight:900; font-size:clamp(24px,3.4vw,34px); margin-top:6px;}
+  .readout-cell.hero .rv{color:var(--blue);}
+  .readout-cell .rc{font-size:12.5px; color:var(--ink-soft); margin-top:6px;}
+  @media (max-width:600px){ .model-readout{grid-template-columns:1fr;} }
+
+  .chart-shell{margin-top:26px;}
+  .chart-scroll{overflow-x:auto;}
+  .chart-scroll svg{display:block; min-width:640px; width:100%; height:auto;}
+  .legend-row{display:flex; gap:22px; margin-top:10px; flex-wrap:wrap;}
+  .legend-item{display:flex; align-items:center; gap:8px; font-size:12.5px; color:var(--ink-soft); font-family:var(--mono);}
+  .legend-swatch{width:16px; height:3px; border-radius:2px; flex:none;}
+
+  details.method{margin-top:24px; border-top:1px solid var(--paper-line); padding-top:16px;}
+  details.method summary{
+    cursor:pointer; font-family:var(--mono); font-size:12px; text-transform:uppercase;
+    letter-spacing:0.05em; color:var(--ink-soft);
+  }
+  details.method .method-body{margin-top:14px; font-size:13.5px; color:var(--ink-soft); line-height:1.65;}
+  details.method .method-body code{
+    font-family:var(--mono); background:var(--paper); padding:1px 5px; border-radius:2px; font-size:12.5px; color:var(--ink);
+  }
+  details.method ul{margin:10px 0 0; padding-left:18px;}
+  details.method li{margin-bottom:6px;}
+
+  .shock-block{
+    margin-top:12px; display:grid; grid-template-columns:1fr 1fr; gap:20px;
+  }
+  @media (max-width:700px){ .shock-block{grid-template-columns:1fr;} }
+  .shock-card{border:1px solid var(--paper-line); background:var(--paper); padding:20px 22px;}
+  .shock-card .sk{font-family:var(--mono); font-size:11px; text-transform:uppercase; letter-spacing:0.05em; color:var(--ink-faint);}
+  .shock-card h4{font-family:var(--body); font-weight:700; font-size:15px; margin-top:8px; text-transform:none;}
+  .shock-card p{font-size:13.5px; color:var(--ink-soft); margin-top:8px; line-height:1.55;}
+  .shock-card .sv{font-family:var(--mono); font-weight:600; color:var(--red); font-size:20px; margin-top:10px;}
+  .shock-card.reform .sv{color:var(--blue);}
+
+  /* ===================== COMPOUND SECTION ===================== */
+  .compound{
+    margin:56px 0; padding:32px 28px; background:var(--ink); color:var(--paper);
+  }
+  .compound .sec-eyebrow{color:#D9A9A5; font-family:var(--mono); font-size:11.5px; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:12px;}
+  .compound h2{font-size:clamp(22px,3vw,28px); color:#fff; margin-bottom:16px;}
+  .compound p{font-size:15.5px; line-height:1.6; color:#D8D5C8; max-width:68ch; margin-bottom:14px;}
+  .compound p:last-child{margin-bottom:0;}
+  .trend-row{display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:rgba(255,255,255,0.14); margin-top:24px; border:1px solid rgba(255,255,255,0.14);}
+  .trend-cell{background:#1D1C17; padding:18px 16px;}
+  .trend-cell .tag{font-family:var(--mono); font-size:10px; text-transform:uppercase; letter-spacing:0.05em; color:#B7B29A;}
+  .trend-cell .num{font-family:var(--display); font-size:26px; font-weight:900; color:#fff; margin-top:8px;}
+  .trend-cell .cap{font-size:12.5px; color:#B7B29A; margin-top:4px;}
+  @media (max-width:700px){ .trend-row{grid-template-columns:1fr;} }
+
+  /* ===================== CLOSE ===================== */
+  .close{padding:52px 0 20px;}
+  .close h2{font-size:clamp(24px,3.6vw,32px); max-width:20ch;}
+  .close p{font-size:16px; color:var(--ink-soft); max-width:62ch; margin-top:16px; line-height:1.6;}
+  .close p.signoff{font-family:var(--mono); font-size:12.5px; color:var(--ink-faint); margin-top:28px;}
+
+  /* ===================== SOURCES ===================== */
+  .sources{margin-top:44px; padding-top:20px; border-top:1px solid var(--paper-line);}
+  .sources h3{font-family:var(--mono); font-size:11px; text-transform:uppercase; letter-spacing:0.08em; color:var(--ink-faint); margin-bottom:14px; font-weight:500;}
+  .sources ul{columns:2; column-gap:32px; list-style:none; margin:0; padding:0; font-size:12.5px;}
+  .sources li{margin-bottom:8px; break-inside:avoid; color:var(--ink-soft);}
+  .sources a{color:var(--ink-soft);}
+  @media (max-width:600px){ .sources ul{columns:1;} }
+
+  footer{
+    max-width:1080px; margin:40px auto 0; padding-top:18px; border-top:1px solid var(--paper-line);
+    font-size:12px; color:var(--ink-faint); line-height:1.6;
+  }
+</style>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;800;900&family=Source+Sans+3:wght@400;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<div class="draft-banner">
+  <b>Draft — not for general circulation</b>
+  <span>Shared by direct link only. Not linked from site navigation or search. Figures are our own illustrative modelling, not verified forecasts — see "Show the working" in Section 05.</span>
+</div>
+
+<div class="masthead">
+  <div class="brand">Food as Infrastructure — Discovery Series</div>
+  <div class="ref mono">Ref. UK/FOOD/001 — draft</div>
+</div>
+
+<div class="wrap">
+  <div class="invoice-head">
+    <div class="invoice-meta">
+      <div>
+        <span class="label">Billed to</span>
+        <span class="val">HM Treasury, on behalf of the UK taxpayer</span>
+      </div>
+      <div>
+        <span class="label">Billing period</span>
+        <span class="val">Every year we don't fix it — this one included</span>
+      </div>
+    </div>
+
+    <h1 class="big">The Overdue Bill</h1>
+    <p class="dek">The UK doesn't have a food policy bill before Parliament. It has an invoice — for a food system that can't feed its own children well, can't pay its own farmers, and can't weather its own shocks. Nobody's signed for it. It's still due.</p>
+
+    <div class="total-box">
+      <div class="tl">Total due, this year alone<br><small>Food-attributable chronic disease — healthcare, social care, welfare and lost output</small></div>
+      <div class="amt">£268bn</div>
+    </div>
+    <div class="stamp">Past due — every year, compounding</div>
+  </div>
+</div>
+
+<hr class="rule-heavy">
+
+<div class="wrap">
+  <div class="cat-head">
+    <h2>01 — What it does to children</h2>
+    <div class="cat-sub">NHS &amp; DfE data</div>
+  </div>
+
+  <div class="line-item">
+    <div class="desc">
+      <h3>A child's obesity risk more than doubles between Reception and Year 6</h3>
+      <p>10.5% of children are living with obesity when they start primary school. By the time they leave it, six years later, that's 22.2% — more than double, on the government's own measurement programme.</p>
+      <span class="src mono">NHS/OHID, National Child Measurement Programme, 2024/25</span>
+    </div>
+    <div class="amount">10.5% → 22.2%</div>
+  </div>
+
+  <div class="line-item">
+    <div class="desc">
+      <h3>The poorer the area, the wider the gap — and it's widening</h3>
+      <p>Obesity by Year 6 runs at 29.3% in the most deprived areas against 13.5% in the least deprived — more than double, and the gap has grown every year the programme has measured it.</p>
+      <span class="src mono">NHS/OHID, NCMP, 2024/25</span>
+    </div>
+    <div class="amount">29.3% vs 13.5%</div>
+  </div>
+
+  <div class="line-item">
+    <div class="desc">
+      <h3>On current trends, most of today's children will be overweight or obese adults</h3>
+      <p>More than 80% of children born in 2022 who survive to 65 are projected to be overweight or obese, if nothing about the food environment they grow up in changes.</p>
+      <span class="src mono">The Food Foundation, The Broken Plate 2026</span>
+    </div>
+    <div class="amount">80%+</div>
+  </div>
+
+  <div class="line-item">
+    <div class="desc">
+      <h3>School dinners are funded below their own true cost</h3>
+      <p>Government funds universal infant free school meals at £2.61 a head for 2025/26. An independent costing puts what a nutritious meal actually costs to make at £3.16. The gap gets made up in the food, not the invoice.</p>
+      <span class="src mono">DfE UIFSM grant conditions 2025/26; School Food Matters</span>
+    </div>
+    <div class="amount">£2.61 <span style="color:var(--ink-faint); font-size:16px;">funded, vs</span> £3.16 <span style="color:var(--ink-faint); font-size:16px;">real cost</span></div>
+  </div>
+</div>
+
+<hr class="rule-heavy">
+
+<div class="wrap">
+  <div class="cat-head">
+    <h2>02 — What it costs to treat</h2>
+    <div class="cat-sub">NHS, social care, productivity</div>
+  </div>
+
+  <div class="line-item">
+    <div class="desc">
+      <h3>Obesity and excess weight alone, every single year</h3>
+      <p>£71.4bn in healthy years of life lost, £30.8bn in lost productivity, £12.6bn in direct NHS treatment, £11.7bn in social care. Not a one-off — the annual run rate.</p>
+      <span class="src mono">Nesta / Frontier Economics, July 2025</span>
+    </div>
+    <div class="amount">£126bn/yr</div>
+  </div>
+
+  <div class="line-item">
+    <div class="desc">
+      <h3>Healthy food costs more than twice as much, per calorie, as unhealthy food</h3>
+      <p>The lowest-income fifth of households would need to spend 85% of their income to afford the government's own recommended healthy diet. It isn't a willpower problem. It's a pricing one.</p>
+      <span class="src mono">The Food Foundation, The Broken Plate</span>
+    </div>
+    <div class="amount">85% of income</div>
+  </div>
+
+  <div class="line-item">
+    <div class="desc">
+      <h3>The people growing and serving the food are the worst paid in the economy</h3>
+      <p>22% of food system workers earn the National Minimum Wage or below, against 8% across the wider economy. The system runs a wage deficit at both ends — the field and the till.</p>
+      <span class="src mono">The Food Foundation, The Broken Plate</span>
+    </div>
+    <div class="amount">22% vs 8%</div>
+  </div>
+</div>
+
+<hr class="rule-heavy">
+
+<div class="wrap">
+  <div class="cat-head">
+    <h2>03 — What it costs to grow it here</h2>
+    <div class="cat-sub">Defra, farm income</div>
+  </div>
+
+  <div class="line-item">
+    <div class="desc">
+      <h3>Farm incomes are falling again, having only just recovered</h3>
+      <p>Farm Business Income is forecast down across cereals, general cropping and mixed farms for 2025/26 — reversing most of the gains made the year before. Lower cereal prices, volatile yields, and a shrinking delinked payment are named causes.</p>
+      <span class="src mono">Defra, Farm Business Income forecasts, 2025/26</span>
+    </div>
+    <div class="amount small">Falling again</div>
+  </div>
+
+  <div class="line-item">
+    <div class="desc">
+      <h3>Fresh vegetable self-sufficiency is the lowest it's ever been recorded</h3>
+      <p>53% of the fresh vegetables eaten in the UK are grown here — the lowest figure since records began in 1988. The rest is a supply chain nobody in this country controls.</p>
+      <span class="src mono">Defra, Agriculture in the UK 2025</span>
+    </div>
+    <div class="amount">53%</div>
+  </div>
+
+  <div class="line-item">
+    <div class="desc">
+      <h3>One year of input-price shock cost UK farms an extra half a billion in fertiliser alone</h3>
+      <p>Fertiliser costs for UK farms rose from £1.5bn to £2bn in a single year, 2021 to 2022 — the opening act of the food inflation spike that followed.</p>
+      <span class="src mono">UK food inflation reporting, 2022–23</span>
+    </div>
+    <div class="amount">+£0.5bn/yr</div>
+  </div>
+</div>
+
+<hr class="rule-heavy">
+
+<div class="wrap">
+  <div class="cat-head">
+    <h2>04 — What it costs when it breaks</h2>
+    <div class="cat-sub">Resilience &amp; exposure</div>
+  </div>
+
+  <div class="line-item">
+    <div class="desc">
+      <h3>Food inflation hit its highest rate since 1977</h3>
+      <p>19.1% at its March 2023 peak — the price the UK paid for depending so heavily on imported energy, fertiliser and grain the moment global supply was disrupted.</p>
+      <span class="src mono">ONS / Food Foundation, Food Prices Tracker</span>
+    </div>
+    <div class="amount">19.1%</div>
+  </div>
+
+  <div class="line-item">
+    <div class="desc">
+      <h3>Self-sufficiency is falling, not holding steady</h3>
+      <p>By value, the UK produced 60% of the food it consumed in 2025, down from 65% the year before. On an actual-consumption basis it's closer to 54%. The trade gap that fills the difference has widened to £42.1bn.</p>
+      <span class="src mono">Defra, Agriculture in the UK 2025</span>
+    </div>
+    <div class="amount">65% → 60%</div>
+  </div>
+
+  <div class="line-item">
+    <div class="desc">
+      <h3>Four retailers still hold roughly two-thirds of the market that decides what farmers are offered</h3>
+      <p>Tesco, Sainsbury's, Asda and Morrisons hold around 60–65% of UK grocery retail between them. Discounters are gaining ground — but the buying power that sets the price a farm is offered is still concentrated in a handful of hands.</p>
+      <span class="src mono">Grocery market share reporting, 2025–26</span>
+    </div>
+    <div class="amount">~60–65%</div>
+  </div>
+</div>
+
+<hr class="rule-heavy">
+
+<div class="wrap">
+  <div class="cat-head">
+    <h2>05 — Modelling the alternative</h2>
+    <div class="cat-sub">Illustrative, methodology shown</div>
+  </div>
+
+  <div class="model-panel">
+    <div class="model-intro">
+      <p><b>The hypothesis:</b> fix what schools serve — nutrient-dense, organic food, properly funded — and fewer children leave primary school living with obesity. Because childhood obesity strongly predicts adult obesity, that reduction doesn't stop at Year 6: it compounds through the rest of their lives.</p>
+      <p>This is our own model, built transparently from public data — not a peer-reviewed forecast. Move the slider to see how the result changes with the assumption. The methodology is shown in full below the chart.</p>
+    </div>
+
+    <div class="controls">
+      <div class="control-block">
+        <div class="clabel">Assumed effect of school food reform on Year 6 obesity <b id="rVal">−20%</b></div>
+        <input type="range" id="rSlider" min="0" max="40" value="20" step="1">
+        <div class="range-scale"><span>No effect</span><span>Small, evidenced</span><span>IPPR's "halved" scenario</span></div>
+      </div>
+      <div class="control-block" style="flex:0 0 auto;">
+        <div class="clabel">Horizon</div>
+        <div class="toggle-row">
+          <button class="toggle-btn" id="btn10">10 years</button>
+          <button class="toggle-btn active" id="btn20">20 years</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="model-readout">
+      <div class="readout-cell hero">
+        <div class="rl">NHS cost avoided, school years only<span id="hzLabel"> · 20yr</span></div>
+        <div class="rv" id="savingOut">£127m</div>
+        <div class="rc">Our calculation — see methodology</div>
+      </div>
+      <div class="readout-cell">
+        <div class="rl">Children spared obesity, once fully phased in</div>
+        <div class="rv" id="sparedOut">52,400</div>
+        <div class="rc">Standing reduction in England's primary schools each year, from year 7 onward</div>
+      </div>
+    </div>
+
+    <div class="chart-shell">
+      <div class="chart-scroll">
+        <svg id="chartSvg" viewBox="0 0 920 380" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Children living with obesity in England's primary schools, current path vs with school food reform"></svg>
+      </div>
+      <div class="legend-row">
+        <div class="legend-item"><span class="legend-swatch" style="background:var(--red);"></span>Current path — unchanged school food</div>
+        <div class="legend-item"><span class="legend-swatch" style="background:var(--blue);"></span>With school food reform</div>
+      </div>
+    </div>
+
+    <details class="method">
+      <summary>Show the working</summary>
+      <div class="method-body">
+        <p>England has roughly 4.5m primary pupils across 7 year groups — about <code>640,000</code> children per year group. NCMP puts obesity at <code>10.5%</code> in Reception and <code>22.2%</code> in Year 6; we model that rise as roughly linear across the seven years. The slider reduces how much obesity rises over primary school, not the Reception starting point.</p>
+        <p>Reform doesn't help existing Year 6 pupils overnight — it only benefits children who experience it for more of their time in school, so the effect phases in over the first 7 years as one new cohort starts in a reformed Reception each year, until every year group has known nothing else.</p>
+        <p>The NHS cost of a child with a weight issue is set at <code>£136/year</code> — the Oxford study's own aggregate (£340m a year across 2.5m children). That's the only cost figure this calculation uses; it deliberately doesn't touch the £126bn or £268bn figures above, which are economy-wide, all-ages numbers built on a different basis.</p>
+        <ul>
+          <li>This is a childhood-years figure only — it stops counting the day a child leaves Year 6.</li>
+          <li>It assumes the slider's effect size holds steady for every cohort, with no fade-out and no error margin.</li>
+          <li>It doesn't account for the cost of the reform itself — this is the saving side of the ledger only.</li>
+        </ul>
+      </div>
+    </details>
+
+    <div style="margin-top:28px; padding-top:20px; border-top:1px solid var(--paper-line);">
+      <p style="font-size:14.5px; color:var(--ink-soft); max-width:70ch; line-height:1.6;">And that's before persistence compounds it. Around <b style="color:var(--ink);">70% of obese adolescents remain obese as adults</b> — so the children this model spares don't just have healthier school years, a meaningful share of them avoid a lifetime of it. IPPR's own independent modelling of halving childhood obesity puts the NHS saving over that generation's <i>lifetime</i> at <b style="color:var(--ink);">£37bn</b>, and the combined NHS-and-economy saving at <b style="color:var(--ink);">£425bn</b> — figures this page cites, not recalculates.</p>
+    </div>
+  </div>
+
+  <div style="margin-top:40px;">
+    <div class="cat-head" style="padding-top:0;">
+      <h3 style="font-family:var(--display); font-size:19px; text-transform:uppercase;">What it buys when the next shock lands</h3>
+      <div class="cat-sub">COVID as the precedent</div>
+    </div>
+    <p style="font-size:14.5px; color:var(--ink-soft); max-width:70ch; margin-top:6px; line-height:1.6;">COVID is the live precedent for what a food-and-health shock actually does here. Obese patients were around <b style="color:var(--ink);">twice as likely to be hospitalised</b> with COVID-19 than patients at a healthy weight — and in the same crisis, emergency food parcels handed out by Trussell Trust food banks rose <b style="color:var(--ink);">81%</b> in the opening weeks, <b style="color:var(--ink);">122%</b> for children. A healthier, more food-secure population doesn't prevent the next shock. It changes how hard the shock lands.</p>
+
+    <div class="shock-block">
+      <div class="shock-card">
+        <div class="sk">Current path, next shock of similar scale</div>
+        <h4>The population carrying 2× risk stays as large as today</h4>
+        <p>Every child this model doesn't spare grows into an adult still carrying that doubled hospitalisation risk into whatever comes next.</p>
+        <div class="sv" id="shockBase">30.0% of adults</div>
+      </div>
+      <div class="shock-card reform">
+        <div class="sk">With reform, same shock</div>
+        <h4>A measurably smaller share enters the next shock at elevated risk</h4>
+        <p id="shockReformText">Roughly 146,800 fewer adults carrying that 2× risk, purely from this one lever, after 20 years.</p>
+        <div class="sv" id="shockReform">29.7% of adults</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="compound">
+  <div class="sec-eyebrow">Not a one-off charge</div>
+  <h2>This bill renews itself, automatically, every year</h2>
+  <p>Every figure above is an annual run rate, not a historic total. The £268bn doesn't get paid off — it gets re-billed next year, usually for more, because nothing upstream has changed. That's the actual cost of inaction: not one bad year, but a standing order nobody's cancelled.</p>
+  <div class="trend-row">
+    <div class="trend-cell">
+      <div class="tag">Children's health</div>
+      <div class="num">Worsening</div>
+      <div class="cap">Reception-year obesity at its highest recorded rate outside the pandemic peak</div>
+    </div>
+    <div class="trend-cell">
+      <div class="tag">Food resilience</div>
+      <div class="num">Worsening</div>
+      <div class="cap">Self-sufficiency falling for the second year; fresh veg at a record low</div>
+    </div>
+    <div class="trend-cell">
+      <div class="tag">Farm economics</div>
+      <div class="num">Volatile</div>
+      <div class="cap">Incomes recover one year, fall the next — no floor under the people growing the food</div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap close">
+  <h2>None of this is the cost of acting. It's the cost of not.</h2>
+  <p>Every figure on this page is what the current food system already costs, doing nothing differently. It is not a forecast of what reform might cost — it's the bill for the status quo, sourced from government's own data and the researchers government itself commissions. The question worth putting in front of Treasury isn't "can we afford to fix this" — it's how much more of this bill they're willing to keep paying before they do.</p>
+  <p class="signoff">Working draft — Dark Matter Labs, Food as Infrastructure. Not yet public.</p>
+</div>
+
+<div class="wrap sources">
+  <h3>Sources</h3>
+  <ul>
+    <li>NHS/OHID, National Child Measurement Programme 2024/25 — <a href="https://www.gov.uk/government/statistics/national-child-measurement-programme-ncmp-annual-report-academic-year-2024-to-2025-england" target="_blank" rel="noopener">GOV.UK</a></li>
+    <li>Obesity Health Alliance comment on NCMP data — <a href="https://obesityhealthalliance.org.uk/2025/11/04/oha-comment-latest-national-child-measurement-programme-data-published/" target="_blank" rel="noopener">OHA</a></li>
+    <li>The Food Foundation, The Broken Plate 2026 — <a href="https://foodfoundation.org.uk/publication/broken-plate-2026" target="_blank" rel="noopener">Food Foundation</a></li>
+    <li>The Broken Plate 2025 (full PDF) — <a href="https://foodfoundation.org.uk/sites/default/files/2025-04/TFF_The%20Broken%20Plate%202025.pdf" target="_blank" rel="noopener">Food Foundation</a></li>
+    <li>Nesta / Frontier Economics, cost of obesity, July 2025 — <a href="https://www.nesta.org.uk/report/the-economic-and-productivity-costs-of-obesity-and-overweight-in-the-uk/" target="_blank" rel="noopener">Nesta</a></li>
+    <li>Tony Blair Institute, "Unhealthy Numbers" — <a href="https://institute.global/insights/public-services/unhealthy-numbers-the-rising-cost-of-obesity-in-the-uk" target="_blank" rel="noopener">institute.global</a></li>
+    <li>Food, Farming & Countryside Commission, £268bn food-related chronic disease cost — <a href="https://ffcc.co.uk/news-and-press/unhealthy-food-costing-uk-billions" target="_blank" rel="noopener">FFCC</a></li>
+    <li>Sustainable Food Trust, True Cost Accounting — <a href="https://sustainablefoodtrust.org/our-work/true-cost-accounting/" target="_blank" rel="noopener">Sustainable Food Trust</a></li>
+    <li>DfE, Universal Infant Free School Meals conditions of grant 2025/26 — <a href="https://www.gov.uk/government/publications/universal-infant-free-school-meals-uifsm-2025-to-2026/universal-infant-free-school-meals-uifsm-conditions-of-grant-2025-to-2026" target="_blank" rel="noopener">GOV.UK</a></li>
+    <li>School meal true-cost reporting — <a href="https://www.tes.com/magazine/news/early-years/universal-infant-free-school-meals-funding-increased" target="_blank" rel="noopener">TES</a></li>
+    <li>Defra, Agriculture in the United Kingdom 2025, farming income — <a href="https://www.gov.uk/government/statistics/agriculture-in-the-united-kingdom-2025/chapter-3-farming-income" target="_blank" rel="noopener">GOV.UK</a></li>
+    <li>Defra Farm Business Income forecasts 2025/26 — <a href="https://farmbusinesssurvey.co.uk/defra-publishes-latest-farm-business-income-forecasts-for-2025-26/" target="_blank" rel="noopener">Farm Business Survey</a></li>
+    <li>Farm income fall reporting — <a href="https://www.fwi.co.uk/business/farm-business-incomes-show-partial-recovery-after-sharp-fall" target="_blank" rel="noopener">Farmers Weekly</a></li>
+    <li>UK food self-sufficiency, 2025 figures — <a href="https://www.fwi.co.uk/news/uk-food-self-sufficiency-falls-as-import-costs-rise" target="_blank" rel="noopener">Farmers Weekly</a></li>
+    <li>House of Commons Library, food security measurement — <a href="https://commonslibrary.parliament.uk/research-briefings/cbp-12146/" target="_blank" rel="noopener">Commons Library</a></li>
+    <li>UK food price inflation and the fertiliser/energy shock, 2022–23 — <a href="https://ericschnurrenberger.substack.com/p/the-anatomy-of-uk-food-prices" target="_blank" rel="noopener">Anatomy of UK Food Prices</a></li>
+    <li>Food Foundation, Food Prices Tracker, Jan 2023 — <a href="https://foodfoundation.org.uk/news/food-prices-tracker-january-2023" target="_blank" rel="noopener">Food Foundation</a></li>
+    <li>UK grocery market share, 2025 — <a href="https://www.grocerytradenews.com/uk-grocery-market-share-2025/" target="_blank" rel="noopener">Grocery Trade News</a></li>
+    <li>Grocery market shares in Great Britain, 1997–2025 — <a href="https://stirlingretail.com/2025/08/05/grocery-market-shares-in-great-britain-1997-to-2025/" target="_blank" rel="noopener">Stirling Retail</a></li>
+    <li>IPPR, NHS and economy savings from halving childhood obesity — <a href="https://www.ippr.org/media-office/425-billion-saving-for-nhs-and-economy-over-children-s-lifetime-if-government-successful-in-anti-obesity-drive" target="_blank" rel="noopener">IPPR</a></li>
+    <li>Oxford study, child BMI and NHS healthcare costs — <a href="https://www.ox.ac.uk/news/2025-10-15-underweight-children-cost-nhs-much-child-children-obesity" target="_blank" rel="noopener">University of Oxford</a></li>
+    <li>Childhood obesity persistence into adulthood, meta-analysis — <a href="https://pubmed.ncbi.nlm.nih.gov/26696565/" target="_blank" rel="noopener">PubMed</a></li>
+    <li>Obesity and COVID-19 hospitalisation risk, UK Biobank — <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7536945/" target="_blank" rel="noopener">NCBI</a></li>
+    <li>Overweight, obesity and risk of COVID-19 hospitalisation, UK cohort — <a href="https://www.pnas.org/doi/10.1073/pnas.2011086117" target="_blank" rel="noopener">PNAS</a></li>
+    <li>Trussell Trust, COVID-19 impact on food banks — <a href="https://www.trussell.org.uk/news-and-research/publications/report/lockdown-lifelines-and-the-long-haul-ahead-the-impact-of" target="_blank" rel="noopener">Trussell Trust</a></li>
+    <li>Health Survey for England 2024, adult obesity — <a href="https://natcen.ac.uk/health-survey-for-england-report-part1" target="_blank" rel="noopener">NatCen</a></li>
+    <li>Primary school pupil numbers, England — <a href="https://explore-education-statistics.service.gov.uk/find-statistics/school-pupils-and-their-characteristics/2025-26" target="_blank" rel="noopener">Explore Education Statistics</a></li>
+  </ul>
+</div>
+
+<footer>
+  Working draft between Adam and Claude, part of the London food-systems portfolio. Every figure above is drawn from a public, named source — see above — not modelled or estimated by us. The interactive model in Section 05 is our own illustrative calculation, built transparently from those sources — see "Show the working" — not a peer-reviewed forecast. Published by direct link only — not linked from the main site.
+</footer>
+
+<script>
+(function(){
+  var COHORT = 640000, GROUPS = 7, BASE_RECEP = 10.5, BASE_Y6 = 22.2;
+  var NHS_COST_PER_CHILD = 136, PERSIST = 0.70;
+  var ADULT_POP = 45000000, ADULT_OBESITY_BASE = 30.0, HOSP_MULT = 2;
+
+  function rateAt(k, r){
+    var base = BASE_RECEP + (BASE_Y6 - BASE_RECEP) * (k / (GROUPS - 1));
+    var reformed = BASE_RECEP + (BASE_Y6 - BASE_RECEP) * (k / (GROUPS - 1)) * (1 - r);
+    return { base: base, reformed: reformed };
+  }
+  function stockAt(t, r){
+    var base = 0, reformed = 0;
+    for (var k = 0; k < GROUPS; k++){
+      var rr = rateAt(k, r);
+      var f = Math.min(t, k + 1) / (k + 1);
+      var actual = rr.base - f * (rr.base - rr.reformed);
+      base += COHORT * rr.base / 100;
+      reformed += COHORT * actual / 100;
+    }
+    return { base: base, reformed: reformed };
+  }
+  function cumulativeSavings(H, r){
+    var total = 0;
+    for (var t = 1; t <= H; t++){
+      var s = stockAt(t, r);
+      total += (s.base - s.reformed) * NHS_COST_PER_CHILD;
+    }
+    return total;
+  }
+  function fullCohortsGraduated(H){ return Math.max(0, H - 6); }
+  function adultsSpared(H, r){
+    var rr = rateAt(GROUPS - 1, r);
+    var perCohort = COHORT * (rr.base - rr.reformed) / 100 * PERSIST;
+    return perCohort * fullCohortsGraduated(H);
+  }
+
+  function fmtGBP(n){
+    if (n >= 1e9) return '£' + (n/1e9).toFixed(2) + 'bn';
+    if (n >= 1e6) return '£' + (n/1e6).toFixed(1) + 'm';
+    return '£' + Math.round(n).toLocaleString('en-GB');
+  }
+  function fmtInt(n){ return Math.round(n).toLocaleString('en-GB'); }
+
+  var slider = document.getElementById('rSlider');
+  var rVal = document.getElementById('rVal');
+  var btn10 = document.getElementById('btn10');
+  var btn20 = document.getElementById('btn20');
+  var hzLabel = document.getElementById('hzLabel');
+  var savingOut = document.getElementById('savingOut');
+  var sparedOut = document.getElementById('sparedOut');
+  var shockReform = document.getElementById('shockReform');
+  var shockReformText = document.getElementById('shockReformText');
+  var svg = document.getElementById('chartSvg');
+  var horizon = 20;
+
+  function drawChart(r, H){
+    var W = 920, Ht = 380, padL = 70, padR = 30, padT = 24, padB = 44;
+    var plotW = W - padL - padR, plotH = Ht - padT - padB;
+    var pts = [];
+    for (var t = 0; t <= H; t++) pts.push(stockAt(t, r));
+    var maxY = 0;
+    pts.forEach(function(p){ maxY = Math.max(maxY, p.base, p.reformed); });
+    maxY = Math.ceil(maxY / 100000) * 100000;
+    var minY = 0;
+
+    function x(t){ return padL + (t / H) * plotW; }
+    function y(v){ return padT + plotH - ((v - minY) / (maxY - minY)) * plotH; }
+
+    var svgns = 'http://www.w3.org/2000/svg';
+    while (svg.firstChild) svg.removeChild(svg.firstChild);
+
+    function el(tag, attrs){
+      var e = document.createElementNS(svgns, tag);
+      for (var k in attrs) e.setAttribute(k, attrs[k]);
+      return e;
+    }
+
+    // gridlines + y labels
+    var steps = 4;
+    for (var i = 0; i <= steps; i++){
+      var v = minY + (maxY - minY) * i / steps;
+      var gy = y(v);
+      svg.appendChild(el('line', {x1: padL, x2: W - padR, y1: gy, y2: gy, stroke: '#E4E1D6', 'stroke-width': 1}));
+      var lbl = el('text', {x: padL - 10, y: gy + 4, 'text-anchor': 'end', 'font-family': 'IBM Plex Mono, monospace', 'font-size': 11, fill: '#96927F'});
+      lbl.textContent = Math.round(v/1000) + 'k';
+      svg.appendChild(lbl);
+    }
+    // x axis labels
+    var xticks = H === 20 ? [0,5,10,15,20] : [0,2,4,6,8,10];
+    xticks.forEach(function(t){
+      var lbl = el('text', {x: x(t), y: Ht - padB + 22, 'text-anchor': 'middle', 'font-family': 'IBM Plex Mono, monospace', 'font-size': 11, fill: '#96927F'});
+      lbl.textContent = 'Yr ' + t;
+      svg.appendChild(lbl);
+    });
+    svg.appendChild(el('line', {x1: padL, x2: W - padR, y1: Ht - padB, y2: Ht - padB, stroke: '#C3C2B7', 'stroke-width': 1}));
+
+    function pathFor(key){
+      var d = pts.map(function(p, i){ return (i === 0 ? 'M' : 'L') + x(i) + ',' + y(p[key]); }).join(' ');
+      return d;
+    }
+    svg.appendChild(el('path', {d: pathFor('base'), fill: 'none', stroke: '#B3231C', 'stroke-width': 2.5, 'stroke-linecap': 'round'}));
+    svg.appendChild(el('path', {d: pathFor('reformed'), fill: 'none', stroke: '#1C5CAB', 'stroke-width': 2.5, 'stroke-linecap': 'round'}));
+
+    // end markers + direct labels
+    var lastBase = pts[pts.length-1].base, lastReformed = pts[pts.length-1].reformed;
+    svg.appendChild(el('circle', {cx: x(H), cy: y(lastBase), r: 4.5, fill: '#B3231C'}));
+    svg.appendChild(el('circle', {cx: x(H), cy: y(lastReformed), r: 4.5, fill: '#1C5CAB'}));
+
+    var baseLbl = el('text', {x: x(H) - 8, y: y(lastBase) - 10, 'text-anchor': 'end', 'font-family': 'IBM Plex Mono, monospace', 'font-size': 11.5, fill: '#B3231C', 'font-weight': 600});
+    baseLbl.textContent = fmtInt(lastBase);
+    svg.appendChild(baseLbl);
+    var refLbl = el('text', {x: x(H) - 8, y: y(lastReformed) + 16, 'text-anchor': 'end', 'font-family': 'IBM Plex Mono, monospace', 'font-size': 11.5, fill: '#1C5CAB', 'font-weight': 600});
+    refLbl.textContent = fmtInt(lastReformed);
+    svg.appendChild(refLbl);
+
+    // hover crosshair
+    var hoverLine = el('line', {x1:0, x2:0, y1: padT, y2: Ht - padB, stroke: '#96927F', 'stroke-width': 1, 'stroke-dasharray': '3,3', visibility: 'hidden'});
+    svg.appendChild(hoverLine);
+    var hoverText = el('text', {x:0, y: padT - 6, 'text-anchor': 'middle', 'font-family': 'IBM Plex Mono, monospace', 'font-size': 11, fill: '#141310', visibility: 'hidden'});
+    svg.appendChild(hoverText);
+    var hitArea = el('rect', {x: padL, y: padT, width: plotW, height: plotH, fill: 'transparent'});
+    svg.appendChild(hitArea);
+    hitArea.addEventListener('mousemove', function(evt){
+      var rect = svg.getBoundingClientRect();
+      var mx = (evt.clientX - rect.left) * (W / rect.width);
+      var t = Math.round(((mx - padL) / plotW) * H);
+      t = Math.max(0, Math.min(H, t));
+      hoverLine.setAttribute('x1', x(t)); hoverLine.setAttribute('x2', x(t));
+      hoverLine.setAttribute('visibility', 'visible');
+      hoverText.setAttribute('x', x(t));
+      hoverText.setAttribute('visibility', 'visible');
+      hoverText.textContent = 'Year ' + t + ' — ' + fmtInt(pts[t].reformed) + ' vs ' + fmtInt(pts[t].base);
+    });
+    hitArea.addEventListener('mouseleave', function(){
+      hoverLine.setAttribute('visibility', 'hidden');
+      hoverText.setAttribute('visibility', 'hidden');
+    });
+  }
+
+  function update(){
+    var r = (+slider.value) / 100;
+    rVal.textContent = '−' + slider.value + '%';
+    hzLabel.textContent = ' · ' + horizon + 'yr';
+
+    var saving = cumulativeSavings(horizon, r);
+    savingOut.textContent = fmtGBP(saving);
+
+    var s = stockAt(horizon, r);
+    sparedOut.textContent = fmtInt(s.base - s.reformed);
+
+    var spared = adultsSpared(horizon, r);
+    var reformedRate = ADULT_OBESITY_BASE - (spared / ADULT_POP * 100);
+    shockReform.textContent = reformedRate.toFixed(2) + '% of adults';
+    shockReformText.textContent = 'Roughly ' + fmtInt(spared) + ' fewer adults carrying that 2× risk, purely from this one lever, after ' + horizon + ' years.';
+
+    drawChart(r, horizon);
+  }
+
+  slider.addEventListener('input', update);
+  btn10.addEventListener('click', function(){ horizon = 10; btn10.classList.add('active'); btn20.classList.remove('active'); update(); });
+  btn20.addEventListener('click', function(){ horizon = 20; btn20.classList.add('active'); btn10.classList.remove('active'); update(); });
+
+  document.getElementById('shockBase').textContent = ADULT_OBESITY_BASE.toFixed(1) + '% of adults';
+  update();
+})();
+</script>
