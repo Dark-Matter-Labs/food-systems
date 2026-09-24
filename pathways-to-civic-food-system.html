@@ -6,126 +6,217 @@
 <title>Six Pathways to a Civic Food System — Food as Infrastructure</title>
 <style>
   :root{
-    --paper:#FFFFFF;
-    --paper-2:#F5F3EC;
-    --paper-3:#EFECE1;
-    --ink:#1E211C;
-    --ink-soft:#5B5A50;
-    --rule:#E0DDD0;
-    --green:#33502F;
-    --green-deep:#243A21;
-    --green-soft:#E7EDE1;
-    --ochre:#B4791E;
-    --ochre-soft:#F3E4CB;
-    --teal:#274955;
-    --teal-soft:#DFE8EA;
-    --maxw: 1080px;
+    --paper:var(--fai-paper);
+    --paper-2:var(--fai-field);
+    --paper-3:var(--fai-field);
+    --ink:var(--fai-ink);
+    --ink-soft:var(--fai-ink-2);
+    --ink-faint:var(--fai-ink-3);
+    --rule:var(--fai-rule);
+    --rule-strong:var(--fai-rule-strong);
+    --accent:var(--fai-beet);
+    /* Track colours: data colours from STYLE.md, used only to encode track */
+    --track-supply:#A86A1F;
+    --track-hub:#2E7D6B;
+    --track-demand:#8B2252;
+    --track-civic:#8A8B84;
+    --maxw:var(--fai-container);
   }
   *{box-sizing:border-box;}
   html{scroll-behavior:smooth;}
   body{
     margin:0; background:var(--paper); color:var(--ink);
-    font-family:'Inter', -apple-system, sans-serif; font-size:16px; line-height:1.6;
-    -webkit-font-smoothing:antialiased;
+    font-family:var(--fai-sans); font-size:17px; line-height:1.6;
   }
-  h1,h2,h3,h4{font-family:'Fraunces', serif; font-weight:600; line-height:1.08; margin:0; letter-spacing:-0.01em;}
-  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 28px;}
-  a{color:var(--green); text-decoration-color: rgba(51,80,47,0.35);}
-  a:hover{text-decoration-color: var(--green);}
-  .eyebrow{font-family:'IBM Plex Mono', monospace; font-size:11.5px; letter-spacing:0.14em; text-transform:uppercase; color:var(--ink-soft);}
+  h1,h2,h3,h4{font-weight:500; line-height:1.1; margin:0; color:var(--ink);}
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 32px;}
+  a{color:var(--ink); text-decoration:underline; text-decoration-color:var(--accent); text-decoration-thickness:1px; text-underline-offset:3px;}
+  a:hover{color:var(--accent);}
+  .eyebrow{font-size:14px; line-height:1.45; color:var(--ink-faint);}
   .rule{border:none; border-top:1px solid var(--rule); margin:0;}
 
-  nav{position:sticky; top:0; z-index:50; background:rgba(255,255,255,0.94); backdrop-filter: blur(6px); border-bottom:1px solid var(--rule);}
-  .navrow{display:flex; align-items:center; justify-content:space-between; padding:14px 28px; max-width:var(--maxw); margin:0 auto; gap:16px; flex-wrap:wrap;}
-  .navbrand{font-family:'IBM Plex Mono', monospace; font-size:12px; letter-spacing:0.08em; color:var(--ink-soft); text-transform:uppercase;}
-  .navlinks{display:flex; gap:18px; flex-wrap:wrap;}
-  .navlinks a{font-size:13px; color:var(--ink); text-decoration:none; font-weight:500; border-bottom:2px solid transparent; padding-bottom:3px;}
-  .navlinks a:hover{border-bottom-color:var(--ochre);}
+  /* Page nav */
+  nav{position:sticky; top:0; z-index:50; background:var(--paper); border-bottom:1px solid var(--rule);}
+  .navrow{display:flex; align-items:center; justify-content:space-between; padding:14px 32px; max-width:var(--maxw); margin:0 auto; gap:24px;}
+  .navbrand{font-size:15px; font-weight:600; color:var(--ink); white-space:nowrap;}
+  .navlinks{display:flex; gap:20px; flex-wrap:wrap; justify-content:flex-end;}
+  .navlinks a{font-size:14px; color:var(--ink-soft); text-decoration:none; white-space:nowrap;}
+  .navlinks a:hover{color:var(--ink); text-decoration:underline; text-decoration-color:var(--accent);}
 
-  .hero{background:var(--paper); padding:80px 0 54px; border-bottom:1px solid var(--rule);}
-  .hero .eyebrow{color:var(--green);}
-  .hero h1{font-size:clamp(34px, 4.6vw, 54px); color:var(--ink); margin-top:14px; max-width:18ch;}
-  .hero .sub{max-width:680px; font-size:18.5px; color:var(--ink-soft); margin-top:20px; line-height:1.55;}
-  .hero .ctarow{display:flex; gap:14px; margin-top:30px; flex-wrap:wrap;}
-  .btn{display:inline-block; font-size:14px; font-weight:600; padding:12px 20px; border-radius:2px; text-decoration:none; font-family:'Inter',sans-serif;}
-  .btn-primary{background:var(--green); color:#FBF8EF;}
-  .btn-primary:hover{background:var(--green-deep);}
-  .btn-ghost{border:1px solid #B7C2AC; color:var(--green);}
-  .btn-ghost:hover{border-color:var(--green);}
+  /* Hero */
+  .hero{background:var(--paper); padding:72px 0 64px; border-bottom:1px solid var(--rule);}
+  .hero h1{font-size:clamp(40px, 6vw, 76px); line-height:1.02; font-weight:500; margin-top:16px; max-width:18ch;}
+  .hero .sub{max-width:var(--fai-measure); font-size:21px; color:var(--ink-soft); margin:24px 0 0; line-height:1.45;}
+  .hero .ctarow{display:flex; gap:12px; margin-top:32px; flex-wrap:wrap;}
+  .btn{
+    display:inline-block; font-size:15px; font-weight:500; line-height:1.2; padding:12px 18px; border-radius:3px;
+    text-decoration:none; border:1px solid transparent;
+    transition:background var(--fai-ease), border-color var(--fai-ease), color var(--fai-ease);
+  }
+  .btn-primary{background:var(--ink); border-color:var(--ink); color:var(--paper);}
+  .btn-primary:hover{background:var(--accent); border-color:var(--accent); color:var(--paper);}
+  .btn-ghost{border-color:var(--rule-strong); color:var(--ink); background:transparent;}
+  .btn-ghost:hover{border-color:var(--ink); color:var(--ink);}
+  .hero-meta{display:flex; gap:0; margin-top:56px; flex-wrap:wrap; border-top:1px solid var(--rule);}
+  .hero-meta div{flex:1 1 220px; font-size:14px; line-height:1.5; color:var(--ink-soft); padding:18px 24px 0 0;}
+  .hero-meta b{display:block; color:var(--ink); font-size:15px; font-weight:600; margin-bottom:4px;}
 
-  section{padding:56px 0;}
-  .sec-head{max-width:700px; margin-bottom:32px;}
-  .sec-head h2{font-size:clamp(25px,3.1vw,34px); margin-top:10px;}
-  .sec-head p{color:var(--ink-soft); margin-top:14px; font-size:16.5px;}
+  /* Sections */
+  section{padding:96px 0;}
+  section + section{border-top:1px solid var(--rule);}
+  .sec-head{max-width:760px; margin-bottom:40px;}
+  .sec-head h2{font-size:clamp(28px,3.4vw,40px); line-height:1.1; font-weight:500; margin-top:10px;}
+  .sec-head p{color:var(--ink-soft); margin:16px 0 0; font-size:17px; max-width:var(--fai-measure);}
 
-  .band-tint{background:var(--paper-2);}
-  .band-line{border-top:1px solid var(--rule); border-bottom:1px solid var(--rule);}
+  .band-tint{background:transparent;}
+  .band-line{}
 
-  .note{background:var(--ochre-soft); border-left:3px solid var(--ochre); padding:14px 18px; font-size:13.5px; color:#5B4A2E; margin:14px 0; border-radius:2px;}
-  .plain{background:var(--paper-2); border-left:3px solid var(--green); padding:16px 20px; font-size:14.5px; color:var(--ink-soft); margin:20px 0; border-radius:2px;}
-  .plain b{color:var(--ink); font-weight:600;}
+  .note, .plain{background:var(--paper-2); padding:18px 20px; font-size:16px; line-height:1.55; color:var(--ink-soft); margin:20px 0; max-width:var(--fai-measure);}
+  .plain b, .note b{color:var(--ink); font-weight:600;}
 
-  /* Ambition strip */
-  .ambition-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-top:26px;}
-  .ambition-card{background:var(--paper); border:1px solid var(--rule); padding:20px; border-radius:3px;}
-  .ambition-card .tag{font-family:'IBM Plex Mono',monospace; font-size:10.5px; letter-spacing:0.07em; text-transform:uppercase; color:var(--ochre);}
-  .ambition-card h4{font-size:16px; margin-top:8px; font-family:'Inter',sans-serif; font-weight:600;}
-  .ambition-card p{font-size:13px; color:var(--ink-soft); margin-top:8px;}
+  /* Track chips and legend */
+  .track-tag{
+    display:inline-flex; align-items:center; gap:7px; font-size:13px; line-height:1.2; font-weight:400;
+    padding:4px 10px; border-radius:999px; border:1px solid var(--rule-strong); color:var(--ink-soft);
+    white-space:nowrap; background:var(--paper);
+  }
+  .track-tag::before{content:""; width:8px; height:8px; border-radius:50%; background:var(--track-civic); flex:none;}
+  .track-tag.supply::before{background:var(--track-supply);}
+  .track-tag.hub::before{background:var(--track-hub);}
+  .track-tag.demand::before{background:var(--track-demand);}
+  .track-tag.civic::before{background:var(--track-civic);}
+  .legend{display:flex; gap:8px 20px; margin:0 0 24px; flex-wrap:wrap; align-items:center;}
+  .legend span{display:inline-flex; align-items:center; gap:8px; font-size:14px; color:var(--ink-soft);}
+  .legend .legend-note{color:var(--ink-faint);}
+  .dot{width:9px; height:9px; border-radius:50%; display:inline-block;}
+  .dot.supply{background:var(--track-supply);}
+  .dot.hub{background:var(--track-hub);}
+  .dot.demand{background:var(--track-demand);}
+
+  /* Ambition strip (pathways) */
+  .ambition-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-top:24px;}
+  .ambition-card{background:var(--paper-2); padding:22px;}
+  .ambition-card .tag{font-size:14px; color:var(--ink-faint);}
+  .ambition-card h4{font-size:20px; line-height:1.25; font-weight:600; margin-top:6px;}
+  .ambition-card p{font-size:15px; line-height:1.55; color:var(--ink-soft); margin:10px 0 0;}
 
   /* Pathway list */
-  .pathway{display:grid; grid-template-columns:64px 1fr; gap:22px; padding:34px 0; border-top:1px solid var(--rule);}
-  .pathway:first-of-type{border-top:1px solid var(--rule);}
-  .pathway .num{font-family:'Fraunces',serif; font-size:38px; font-weight:700; color:var(--rule); line-height:1;}
-  .pathway.track-demand .num{color:var(--teal);}
-  .pathway.track-supply .num{color:var(--green);}
-  .pathway.track-hub .num{color:var(--ochre);}
+  .pathway{display:grid; grid-template-columns:64px 1fr; gap:24px; padding:36px 0; border-top:1px solid var(--rule);}
+  .pathway .num{font-size:28px; font-weight:500; color:var(--ink-faint); line-height:1.1; font-variant-numeric:tabular-nums;}
   .pathway-head{display:flex; align-items:baseline; gap:12px; flex-wrap:wrap;}
-  .pathway h3{font-size:clamp(20px,2.4vw,26px);}
-  .track-tag{font-family:'IBM Plex Mono',monospace; font-size:10px; text-transform:uppercase; letter-spacing:0.05em; padding:3px 9px; border-radius:20px; color:#fff; white-space:nowrap;}
-  .track-tag.demand{background:var(--teal);}
-  .track-tag.supply{background:var(--green);}
-  .track-tag.hub{background:var(--ochre);}
-  .track-tag.civic{background:var(--ink-soft);}
-  .pathway .lever{font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.05em; text-transform:uppercase; color:var(--ink-soft); margin-top:6px;}
-  .pathway p.mech{margin-top:14px; font-size:15px; color:var(--ink); max-width:760px;}
-  .pathway .tradeoff{margin-top:14px; background:var(--paper-2); border-left:3px solid var(--rule); padding:12px 16px; font-size:13.5px; color:var(--ink-soft); border-radius:2px; max-width:760px;}
+  .pathway h3{font-size:clamp(20px,2.2vw,24px); line-height:1.25; font-weight:600;}
+  .pathway .lever{font-size:14px; color:var(--ink-faint); margin-top:8px;}
+  .pathway p.mech{margin:14px 0 0; font-size:17px; color:var(--ink); max-width:var(--fai-measure);}
+  .pathway .tradeoff{margin-top:16px; background:var(--paper-2); padding:14px 18px; font-size:16px; line-height:1.55; color:var(--ink-soft); max-width:var(--fai-measure);}
   .pathway .tradeoff b{color:var(--ink); font-weight:600;}
-  .pathway .connects{margin-top:12px; font-size:12px; font-family:'IBM Plex Mono',monospace; color:var(--ink-soft);}
-  .pathway .connects a{color:var(--green);}
+  .pathway .connects{margin-top:14px; font-size:14px; color:var(--ink-faint);}
 
-  table.grid-table{width:100%; border-collapse:collapse; margin-top:22px; font-size:14px;}
-  table.grid-table th{text-align:left; font-family:'IBM Plex Mono',monospace; font-size:10.5px; text-transform:uppercase; letter-spacing:0.05em; color:#fff; background:var(--green); padding:11px 13px;}
-  table.grid-table td{padding:13px; border-bottom:1px solid var(--rule); vertical-align:top;}
-  table.grid-table tr:nth-child(even) td{background:var(--paper-2);}
-  table.grid-table td.ws{font-weight:600; width:20%;}
+  /* Foundations (energy) */
+  .found-strip{display:flex; flex-direction:column; margin-top:8px; border-bottom:1px solid var(--rule);}
+  .found-row{padding:24px 0; border-top:1px solid var(--rule);}
+  .found-row h4{font-size:21px; line-height:1.25; font-weight:600;}
+  .found-row p{margin:8px 0 0; color:var(--ink-soft); font-size:17px; max-width:var(--fai-measure);}
+  .fnd-head{margin-bottom:0;}
+  .fnd-kicker{display:block; font-size:14px; color:var(--ink-faint); margin-bottom:10px;}
+  .fnd-title{font-size:clamp(28px,3.4vw,40px); line-height:1.1; font-weight:500; max-width:24ch;}
+  .fnd-sub{color:var(--ink-soft); font-size:17px; max-width:var(--fai-measure); margin:16px 0 32px;}
+  .fnd-rule{display:none;}
 
-  .cta-box{background:var(--green-deep); color:#F4F1E6; border-radius:6px; padding:34px 30px; margin-top:18px;}
-  .cta-box .eyebrow{color:#B9C7A9;}
-  .cta-box h3{color:#FBF8EF; font-size:23px; margin-top:8px;}
-  .cta-box p{color:#DCE4D3; margin-top:10px; font-size:14.5px; max-width:640px;}
-  .cta-box .ctarow{display:flex; gap:12px; margin-top:18px; flex-wrap:wrap;}
-  .cta-box .btn-primary{background:#EEDFB6; color:#20200F;}
-  .cta-box .btn-ghost{border:1px solid #587056; color:#EDEFE4;}
+  /* Cards (energy) */
+  .cardgrid{display:grid; grid-template-columns:repeat(2,1fr); gap:16px; margin-bottom:8px;}
+  .card{background:var(--paper-2); padding:22px 24px;}
+  .card-top{display:flex; justify-content:space-between; align-items:flex-start; gap:12px;}
+  .card h4{font-size:20px; line-height:1.25; font-weight:600;}
+  .card p{font-size:16px; line-height:1.55; color:var(--ink-soft); margin:10px 0 0;}
+  .grounded{display:block; margin-top:14px; padding-top:12px; border-top:1px solid var(--rule-strong); font-size:14px; color:var(--ink-faint); line-height:1.5;}
+  .grounded b{color:var(--ink); font-weight:600;}
 
-  .toolgrid{display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-top:24px;}
-  .tool{background:var(--paper); border:1px solid var(--rule); border-radius:4px; padding:16px; text-decoration:none; display:block;}
-  .tool:hover{border-color:var(--green);}
-  .tool .tag{font-family:'IBM Plex Mono',monospace; font-size:10px; text-transform:uppercase; color:var(--ochre); letter-spacing:0.05em;}
-  .tool h4{font-size:15px; margin-top:8px; color:var(--ink); font-family:'Inter',sans-serif; font-weight:600;}
-  .tool p{font-size:12.5px; color:var(--ink-soft); margin-top:6px;}
+  .subhead-mini{font-size:21px; line-height:1.25; font-weight:600; color:var(--ink); margin:64px 0 10px; padding-top:24px; border-top:1px solid var(--rule);}
 
-  footer{background:var(--green-deep); color:#B9C0A8; padding:40px 0; font-size:13px;}
-  footer a{color:#DCE4D3;}
-  footer .wrap{display:flex; justify-content:space-between; flex-wrap:wrap; gap:20px;}
+  .origin-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:24px;}
+  .origin-card{background:var(--paper-2); padding:22px;}
+  .origin-card .tag{font-size:14px; color:var(--ink-faint);}
+  .origin-card h4{font-size:20px; line-height:1.25; font-weight:600; margin-top:6px;}
+  .origin-card p{font-size:15px; line-height:1.55; color:var(--ink-soft); margin:10px 0 0;}
 
-  @media (max-width: 760px){
-    .ambition-grid, .toolgrid{grid-template-columns:1fr;}
-    .pathway{grid-template-columns:40px 1fr;}
-    .pathway .num{font-size:26px;}
+  .horizons{display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:24px;}
+  .hz{padding:24px 22px; background:var(--paper-2); border-top:3px solid var(--rule-strong);}
+  .hz.now{border-top-color:var(--ink);}
+  .hz h4{font-size:21px; line-height:1.25; font-weight:600; margin-top:8px;}
+  .hz ul{margin:14px 0 0; padding-left:18px; font-size:15px; line-height:1.55; color:var(--ink-soft);}
+  .hz li{margin-bottom:8px;}
+
+  table.grid-table{width:100%; border-collapse:collapse; margin-top:24px; font-size:15px; line-height:1.5; font-variant-numeric:normal;}
+  table.grid-table th{text-align:left; font-size:14px; font-weight:600; color:var(--ink); background:var(--paper-2); padding:12px 14px; border-bottom:1px solid var(--rule-strong);}
+  table.grid-table td{padding:14px; border-bottom:1px solid var(--rule); vertical-align:top; color:var(--ink-soft);}
+  table.grid-table td.ws{font-weight:600; width:22%; color:var(--ink);}
+
+  .tiers{display:flex; flex-direction:column; gap:12px; margin-top:24px;}
+  .tier{display:grid; grid-template-columns:140px 1fr; gap:20px; align-items:start; background:var(--paper); padding:20px 0; border-top:1px solid var(--rule);}
+  .tiers .tier:last-child{border-bottom:1px solid var(--rule);}
+  .tier .tlabel{font-size:14px; color:var(--ink-faint); padding-top:3px;}
+  .tier h4{font-size:20px; line-height:1.25; font-weight:600;}
+  .tier p{font-size:16px; line-height:1.55; color:var(--ink-soft); margin:8px 0 0; max-width:var(--fai-measure);}
+
+  .cta-box{background:var(--paper-2); padding:32px; margin-top:24px;}
+  .cta-box h3{font-size:clamp(22px,2.4vw,28px); line-height:1.2; font-weight:500; margin-top:8px; max-width:40ch;}
+  .cta-box p{color:var(--ink-soft); margin:12px 0 0; font-size:17px; max-width:var(--fai-measure);}
+  .cta-box .ctarow{display:flex; gap:12px; margin-top:24px; flex-wrap:wrap;}
+
+  .tension{display:grid; grid-template-columns:1fr 1.4fr; gap:12px 32px; padding:18px 0; border-top:1px solid var(--rule);}
+  .tension:last-child{border-bottom:1px solid var(--rule);}
+  .tension .q{font-weight:600; font-size:17px; line-height:1.4;}
+  .tension .a{font-size:16px; line-height:1.55; color:var(--ink-soft);}
+
+  .toolgrid{display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:24px;}
+  .tool{background:var(--paper-2); padding:20px 22px; text-decoration:none; display:block; color:var(--ink);}
+  .tool:hover{color:var(--ink);}
+  .tool:hover h4{text-decoration:underline; text-decoration-color:var(--accent); text-decoration-thickness:1px; text-underline-offset:3px;}
+  .tool .tag{font-size:14px; color:var(--ink-faint);}
+  .tool h4{font-size:19px; line-height:1.3; font-weight:600; margin-top:6px; color:var(--ink);}
+  .tool p{font-size:15px; line-height:1.5; color:var(--ink-soft); margin:8px 0 0;}
+
+  /* Footer */
+  footer{background:var(--paper); color:var(--ink-soft); padding:56px 0 48px; font-size:14px; line-height:1.55; border-top:1px solid var(--rule);}
+  footer a{color:var(--ink-soft); text-decoration:none;}
+  footer a:hover{color:var(--ink); text-decoration:underline; text-decoration-color:var(--accent);}
+  footer .wrap{display:flex; justify-content:space-between; flex-wrap:wrap; gap:24px 32px;}
+  footer .foot-title{font-size:15px; font-weight:600; color:var(--ink); margin-bottom:6px;}
+  footer .foot-links{line-height:2;}
+  footer .credit{flex:1 1 100%; margin-top:32px; padding-top:20px; border-top:1px solid var(--rule); color:var(--ink-faint);}
+  footer .credit a{color:var(--ink-faint); text-decoration:underline; text-decoration-color:var(--accent); text-underline-offset:3px;}
+
+  @media (max-width: 860px){
+    .ambition-grid{grid-template-columns:repeat(2,1fr);}
+    .origin-grid, .toolgrid{grid-template-columns:repeat(2,1fr);}
   }
-
-  .reveal{opacity:0; transform:translateY(12px); transition:opacity 0.5s ease, transform 0.5s ease;}
-  .reveal.in{opacity:1; transform:translateY(0);}
+  @media (max-width: 760px){
+    .wrap{padding:0 16px;}
+    .navrow{padding:12px 16px; flex-wrap:wrap; gap:6px 16px;}
+    .navlinks{flex-wrap:nowrap; overflow-x:auto; justify-content:flex-start; width:100%; gap:18px; padding-bottom:2px; scrollbar-width:none;}
+    .navlinks::-webkit-scrollbar{display:none;}
+    .hero{padding:48px 0 48px;}
+    .hero .sub{font-size:19px;}
+    section{padding:56px 0;}
+    .ambition-grid, .origin-grid, .cardgrid, .horizons, .toolgrid{grid-template-columns:1fr;}
+    .tension{grid-template-columns:1fr;}
+    .tier{grid-template-columns:1fr; gap:6px;}
+    .pathway{grid-template-columns:36px 1fr; gap:14px;}
+    .pathway .num{font-size:20px;}
+    .card-top{flex-direction:column; gap:8px;}
+    .cta-box{padding:24px 20px;}
+    table.grid-table{font-size:14px;}
+    table.grid-table th, table.grid-table td{padding:10px 8px;}
+    table.grid-table td.ws{width:30%;}
+  }
+  @media (max-width: 560px){
+    table.grid-table, table.grid-table tbody, table.grid-table tr, table.grid-table td{display:block; width:auto;}
+    table.grid-table tr:first-child{display:none;}
+    table.grid-table tr{padding:14px 0; border-bottom:1px solid var(--rule);}
+    table.grid-table td{padding:4px 0; border:none;}
+    table.grid-table td.ws{width:auto; font-size:16px; padding-bottom:6px;}
+    table.grid-table td[data-label]::before{content:attr(data-label); display:block; font-size:14px; color:var(--ink-faint); margin-top:4px;}
+  }
 </style>
 <!-- fai:head -->
 <link rel="icon" href="assets/fai/favicon.svg" type="image/svg+xml">
@@ -150,7 +241,7 @@
 
 <nav>
   <div class="navrow">
-    <div class="navbrand">Food as Infrastructure · Pathways</div>
+    <div class="navbrand">Six Pathways</div>
     <div class="navlinks">
       <a href="#ambition">The ambition</a>
       <a href="#pathways">The six pathways</a>
@@ -162,17 +253,17 @@
 
 <header class="hero">
   <div class="wrap">
-    <div class="eyebrow">A working framework — not a decided plan</div>
+    <div class="eyebrow">A working framework, not a decided plan</div>
     <h1>Six pathways to a civic, regenerative food system</h1>
     <p class="sub">The ambition is simple to state and hard to do: move London’s collective buying power behind organic and regenerative farms, make nutrient density — not calories — the target, and build a food system that is more resistant to shocks and more civic-led and owned. There is no single plan that delivers all of that at once. There are several distinct levers, each with a different starting point, a different pace, and a different failure mode. This page sets them out side by side.</p>
     <div class="ctarow">
-      <a class="btn btn-primary" href="#pathways">See the six pathways ↓</a>
-      <a class="btn btn-ghost" href="index.html">← Back to the portfolio</a>
+      <a class="btn btn-primary" href="#pathways">See the six pathways</a>
+      <a class="btn btn-ghost" href="index.html">Back to the portfolio</a>
     </div>
   </div>
 </header>
 
-<section id="ambition" class="reveal">
+<section id="ambition">
   <div class="wrap">
     <div class="sec-head">
       <div class="eyebrow">Stated once, so every pathway can be tested against it</div>
@@ -204,7 +295,7 @@
   </div>
 </section>
 
-<section id="pathways" class="band-tint reveal">
+<section id="pathways" class="band-tint">
   <div class="wrap">
     <div class="sec-head">
       <div class="eyebrow">Six entry points, one destination</div>
@@ -216,7 +307,7 @@
       <div class="num">01</div>
       <div>
         <div class="pathway-head"><h3>Demand-first — aggregate the buying power</h3><span class="track-tag demand">Demand lever</span></div>
-        <div class="lever">Institutional procurement — councils, schools, NHS, markets</div>
+        <div class="lever">Institutional procurement: councils, schools, NHS, markets</div>
         <p class="mech">Start by getting London’s institutional buyers into a shared procurement charter or buying coalition, using guaranteed collective volume as the credibility signal that pulls supply into being. This is the fastest way to show boroughs moving together.</p>
         <div class="tradeoff"><b>Tradeoff:</b> demand without patient capital on the supply side just reshuffles existing organic supply between buyers rather than growing it — needs Pathway 02 running alongside it, or the gains plateau fast.</div>
         <div class="connects">Connects to: <a href="hubs-and-markets-working-group.html">the Procurement Charter and Collective Buying Engine</a></div>
@@ -280,7 +371,7 @@
   </div>
 </section>
 
-<section id="traction" class="reveal">
+<section id="traction">
   <div class="wrap">
     <div class="sec-head">
       <div class="eyebrow">Read honestly, not aspirationally</div>
@@ -289,18 +380,18 @@
     </div>
     <table class="grid-table">
       <tr><th>Pathway</th><th>Where it’s already moving</th><th>What’s still missing</th></tr>
-      <tr><td class="ws">01 — Demand</td><td>Procurement charter conversations underway; several boroughs aligning on collective buying</td><td>A binding collective commitment across the founding boroughs</td></tr>
-      <tr><td class="ws">02 — Supply</td><td>Named as an instrument in the Sovereign Food System catalogue</td><td>A funded, working bridge-financing vehicle — the most exposed gap right now</td></tr>
-      <tr><td class="ws">03 — Infrastructure</td><td>The London Hubs &amp; Markets Working Group; Regis Road anchor site in progress</td><td>Cold-chain and forecasting capacity at full scale</td></tr>
-      <tr><td class="ws">04 — Ownership</td><td>Distributed Governance model drafted on the main portfolio</td><td>Not yet tested against a real, live asset</td></tr>
-      <tr><td class="ws">05 — Policy</td><td>Local Food Resilience Committee response to the Civil Contingencies Act review</td><td>A dedicated London-wide policy ask beyond the resilience committee</td></tr>
-      <tr><td class="ws">06 — Culture</td><td>Nutrition Supply Map and Cascade Model live and public</td><td>A public-facing demand campaign to match the research</td></tr>
+      <tr><td class="ws">01 Demand</td><td data-label="Where it’s already moving">Procurement charter conversations underway; several boroughs aligning on collective buying</td><td data-label="What’s still missing">A binding collective commitment across the founding boroughs</td></tr>
+      <tr><td class="ws">02 Supply</td><td data-label="Where it’s already moving">Named as an instrument in the Sovereign Food System catalogue</td><td data-label="What’s still missing">A funded, working bridge-financing vehicle — the most exposed gap right now</td></tr>
+      <tr><td class="ws">03 Infrastructure</td><td data-label="Where it’s already moving">The London Hubs &amp; Markets Working Group; Regis Road anchor site in progress</td><td data-label="What’s still missing">Cold-chain and forecasting capacity at full scale</td></tr>
+      <tr><td class="ws">04 Ownership</td><td data-label="Where it’s already moving">Distributed Governance model drafted on the main portfolio</td><td data-label="What’s still missing">Not yet tested against a real, live asset</td></tr>
+      <tr><td class="ws">05 Policy</td><td data-label="Where it’s already moving">Local Food Resilience Committee response to the Civil Contingencies Act review</td><td data-label="What’s still missing">A dedicated London-wide policy ask beyond the resilience committee</td></tr>
+      <tr><td class="ws">06 Culture</td><td data-label="Where it’s already moving">Nutrition Supply Map and Cascade Model live and public</td><td data-label="What’s still missing">A public-facing demand campaign to match the research</td></tr>
     </table>
     <div class="plain" style="margin-top:26px;"><b>The honest read:</b> demand (01) and infrastructure (03) are moving fastest. That makes supply-side transition finance (02) the clearest current gap — the coalition is building buying power and logistics faster than it is de-risking the farms meant to fill them. Ownership (04) is the pathway most easily deferred until “later,” but it is also the hardest to retrofit once a hub is already profitable and attractive to buy.</div>
   </div>
 </section>
 
-<section id="tools" class="band-tint reveal">
+<section id="tools" class="band-tint">
   <div class="wrap">
     <div class="sec-head">
       <div class="eyebrow">Already live</div>
@@ -342,14 +433,14 @@
   </div>
 </section>
 
-<section class="reveal">
+<section>
   <div class="wrap">
     <div class="cta-box">
       <div class="eyebrow">If you’re weighing where to start</div>
       <h3>These pathways are a diagnostic, not a queue</h3>
       <p>The point of setting them out separately is to make it possible to ask, honestly, which lever a given piece of work is actually pulling — and which of the other five it is quietly assuming someone else is handling. If you think the sequencing above is wrong, or a pathway is missing, say so.</p>
       <div class="ctarow">
-        <a class="btn btn-primary" href="index.html#audience">Open the portfolio ↗</a>
+        <a class="btn btn-primary" href="index.html#audience">Open the portfolio</a>
         <a class="btn btn-ghost" href="https://darkmatterlabs.org/contact" target="_blank">Contact Dark Matter Labs ↗</a>
       </div>
     </div>
@@ -359,27 +450,20 @@
 <footer>
   <div class="wrap">
     <div>
-      <div style="font-family:'Fraunces',serif; font-size:16px; color:#F4F1E6; margin-bottom:8px;">Food as Infrastructure — Six Pathways</div>
+      <div class="foot-title">Six Pathways to a Civic Food System</div>
       <div>A Dark Matter Labs working framework, developed from the portfolio’s existing tracks, tiers and instruments.</div>
     </div>
-    <div>
-      <a href="index.html" target="_blank">Full portfolio site ↗</a><br>
-      <a href="hubs-and-markets-working-group.html" target="_blank">Hubs &amp; Markets Working Group ↗</a><br>
+    <div class="foot-links">
+      <a href="index.html" target="_blank">Full portfolio site</a><br>
+      <a href="hubs-and-markets-working-group.html" target="_blank">Hubs &amp; Markets Working Group</a><br>
       <a href="https://darkmatterlabs.org/contact" target="_blank">Contact Dark Matter Labs ↗</a>
     </div>
   </div>
-  <div class="wrap" style="margin-top:16px; font-size:12px; opacity:0.85;">
-    <div>Parts of this page were drafted with AI assistance (Claude). Licensed CC BY-SA 4.0 — see the <a href="index.html">homepage</a> for full credit and lineage.</div>
+  <div class="wrap">
+    <div class="credit">Parts of this page were drafted with AI assistance (Claude). Licensed CC BY-SA 4.0 — see the <a href="index.html">homepage</a> for full credit and lineage.</div>
   </div>
 </footer>
 
-<script>
-  const reveals = document.querySelectorAll('.reveal');
-  const obs = new IntersectionObserver((entries)=>{
-    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); obs.unobserve(e.target); } });
-  }, {threshold:0.08});
-  reveals.forEach(el=>obs.observe(el));
-</script>
 
 </body>
 </html>

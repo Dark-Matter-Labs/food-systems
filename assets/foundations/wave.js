@@ -27,10 +27,10 @@ if (host) {
   const SPAN = 0.62; // how far top/bottom bands sit from centre -- wider spread
   const INNER = SPAN / 3; // the two inner pathways, evenly spaced against the outer pair
   const BANDS = [
-    { y: SPAN, colour: new THREE.Color('#e7964b'), spread: 0.050, amp: 0.100, key: 'top' },
-    { y: INNER, colour: new THREE.Color('#a98cf5'), spread: 0.052, amp: 0.088, key: 'buy' },
+    { y: SPAN, colour: new THREE.Color('#D19A4E'), spread: 0.050, amp: 0.100, key: 'top' },
+    { y: INNER, colour: new THREE.Color('#A28CC6'), spread: 0.052, amp: 0.088, key: 'buy' },
     { y: -INNER, colour: new THREE.Color('#c9ced3'), spread: 0.065, amp: 0.085, key: 'mid' },
-    { y: -SPAN, colour: new THREE.Color('#4fb488'), spread: 0.055, amp: 0.100, key: 'bot' }
+    { y: -SPAN, colour: new THREE.Color('#5FB39C'), spread: 0.055, amp: 0.100, key: 'bot' }
   ];
 
   const scene = new THREE.Scene();

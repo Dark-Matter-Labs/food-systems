@@ -5,162 +5,160 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Hackney: What's Next — Hubs &amp; Markets Working Group</title>
 <style>
-  
-
   :root{
-    --paper:#F1ECDE;
-    --paper-2:#E8E0CA;
-    --ink:#1C2B21;
-    --ink-soft:#4C5C4F;
-    --ink-faint:#8B9385;
-    --gold:#B9812B;
-    --gold-deep:#8F6114;
-    --brick:#A94525;
-    --green-deep:#233A2A;
-    --green-panel:#20342A;
-    --line:#CDC0A0;
-    --line-soft:#DED4B9;
-    --cream-text:#F1ECDE;
-    --maxw: 1180px;
+    --paper:var(--fai-paper);
+    --paper-2:var(--fai-field);
+    --ink:var(--fai-ink);
+    --ink-soft:var(--fai-ink-2);
+    --ink-faint:var(--fai-ink-3);
+    --accent:var(--fai-beet);
+    --line:var(--fai-rule);
+    --line-soft:var(--fai-rule);
+    --line-strong:var(--fai-rule-strong);
+    --maxw:var(--fai-container);
   }
 
   *{box-sizing:border-box;}
   html{scroll-behavior:smooth;}
   body{
     margin:0; background:var(--paper); color:var(--ink);
-    font-family:'Inter',sans-serif; font-size:16px; line-height:1.55;
-    -webkit-font-smoothing:antialiased;
+    font-family:var(--fai-sans); font-size:17px; line-height:1.6;
   }
-  h1,h2,h3,h4{font-family:'Fraunces',serif; font-weight:600; color:var(--ink); margin:0; letter-spacing:-0.01em;}
+  h1,h2,h3,h4{font-weight:500; color:var(--ink); margin:0;}
   .wrap{max-width:var(--maxw); margin:0 auto; padding:0 32px;}
-  @media (max-width:720px){ .wrap{padding:0 20px;} }
-  a{color:var(--brick); text-decoration:none;}
-  a:hover{text-decoration:underline;}
-
-  .eyebrow{
-    font-family:'IBM Plex Mono', monospace; font-size:11.5px; letter-spacing:0.14em;
-    text-transform:uppercase; color:var(--gold-deep); display:flex; align-items:center; gap:10px;
+  @media (max-width:720px){ .wrap{padding:0 16px;} }
+  a{color:var(--ink);}
+  main p a, footer .credit a{
+    color:var(--ink); text-decoration:underline; text-decoration-color:var(--accent);
+    text-decoration-thickness:1px; text-underline-offset:3px;
   }
-  .eyebrow::before{content:''; width:16px; height:1px; background:var(--gold-deep); display:inline-block;}
+  main p a:hover, footer .credit a:hover{color:var(--accent);}
 
+  .eyebrow{font-size:14px; line-height:1.45; color:var(--ink-faint);}
+
+  /* Page nav */
   header.site-nav{
-    position:sticky; top:0; z-index:50; background:rgba(241,236,222,0.92);
-    backdrop-filter:blur(6px); border-bottom:1px solid var(--line);
+    position:sticky; top:0; z-index:50; background:var(--paper);
+    border-bottom:1px solid var(--line);
   }
   .nav-inner{
     max-width:var(--maxw); margin:0 auto; padding:14px 32px;
     display:flex; align-items:center; justify-content:space-between; gap:24px; flex-wrap:wrap;
   }
-  .nav-mark{
-    font-family:'IBM Plex Mono', monospace; font-size:12px; letter-spacing:0.08em; text-transform:uppercase;
-    color:var(--ink); display:flex; flex-direction:column; line-height:1.3;
-  }
-  .nav-mark strong{font-size:13px; letter-spacing:0.1em;}
-  .nav-mark span{color:var(--ink-faint); font-size:10.5px;}
+  @media (max-width:720px){ .nav-inner{padding:12px 16px;} }
+  .nav-mark{display:flex; align-items:baseline; gap:12px; flex-wrap:wrap; line-height:1.3;}
+  .nav-mark strong{font-size:15px; font-weight:600; color:var(--ink);}
+  .nav-mark span{font-size:14px; color:var(--ink-faint);}
   nav.nav-links{display:flex; gap:22px; flex-wrap:wrap;}
-  nav.nav-links a{
-    font-family:'IBM Plex Mono', monospace; font-size:11.5px; letter-spacing:0.08em; text-transform:uppercase;
-    color:var(--ink-soft);
-  }
-  nav.nav-links a:hover{color:var(--brick); text-decoration:none;}
-  @media (max-width:760px){ nav.nav-links{display:none;} }
+  nav.nav-links a{font-size:14px; color:var(--ink-soft); text-decoration:none;}
+  nav.nav-links a:hover{color:var(--ink); text-decoration:underline; text-decoration-color:var(--accent); text-underline-offset:3px;}
+  @media (max-width:760px){ nav.nav-links, .nav-mark span{display:none;} }
 
-  .status-strip{background:var(--paper-2); border-bottom:1px solid var(--line); padding:12px 0;}
-  .status-strip .wrap{display:flex; align-items:center; gap:14px; flex-wrap:wrap;}
-  .status-dot{width:8px; height:8px; border-radius:50%; background:var(--gold-deep); flex-shrink:0; box-shadow:0 0 0 3px rgba(143,97,20,0.15);}
-  .status-strip p{margin:0; font-size:13.5px; color:var(--ink-soft);}
-  .status-strip strong{color:var(--ink);}
-  .status-strip .status-date{
-    margin-left:auto; font-family:'IBM Plex Mono',monospace; font-size:10.5px; color:var(--ink-faint);
-    letter-spacing:0.06em; text-transform:uppercase;
+  /* Status note */
+  .status-strip{padding:32px 0 0;}
+  .status-note{
+    background:var(--paper-2); border-left:3px solid var(--accent);
+    padding:14px 18px; font-size:15px; line-height:1.5; color:var(--ink-soft); max-width:var(--fai-measure);
   }
+  .status-note p{margin:0;}
+  .status-note strong{color:var(--ink); font-weight:600;}
+  .status-note .status-date{display:block; margin-top:6px; font-size:14px; color:var(--ink-faint);}
 
-  .hero{padding:76px 0 56px; border-bottom:1px solid var(--line); position:relative; overflow:hidden;}
-  .hero::before{
-    content:''; position:absolute; right:-120px; top:-80px; width:440px; height:440px; border-radius:50%;
-    background:radial-gradient(circle at 30% 30%, rgba(185,129,43,0.16), transparent 70%);
-  }
-  .hero .lot-number{font-family:'IBM Plex Mono', monospace; font-size:12px; color:var(--ink-faint); letter-spacing:0.1em; margin-bottom:18px;}
-  .hero h1{font-size:clamp(36px, 5.6vw, 62px); line-height:1.05; max-width:820px;}
-  .hero h1 em{font-style:italic; color:var(--brick); font-weight:500;}
-  .hero .lede{max-width:660px; margin-top:24px; font-size:18.5px; color:var(--ink-soft); line-height:1.6;}
-  .hero .cta-row{margin-top:32px; display:flex; gap:24px; flex-wrap:wrap; align-items:center;}
+  /* Hero */
+  .hero{padding:56px 0 64px; border-bottom:1px solid var(--line);}
+  .hero .lot-number{font-size:14px; color:var(--ink-faint); margin-bottom:16px;}
+  .hero h1{font-size:clamp(40px, 6vw, 76px); line-height:1.02; font-weight:500; max-width:18ch;}
+  .hero h1 em{font-style:normal; color:inherit; font-weight:inherit;}
+  .hero .lede{max-width:var(--fai-measure); margin:24px 0 0; font-size:21px; color:var(--ink-soft); line-height:1.45;}
+  .hero .cta-row{margin-top:32px; display:flex; gap:12px; flex-wrap:wrap; align-items:center;}
   .btn{
-    font-family:'IBM Plex Mono', monospace; font-size:12px; letter-spacing:0.06em; text-transform:uppercase;
-    padding:13px 22px; border:1px solid var(--ink); border-radius:2px; color:var(--ink); background:transparent;
-    display:inline-flex; align-items:center; gap:8px; cursor:pointer;
+    font-size:15px; font-weight:500; line-height:1.2;
+    padding:12px 18px; border:1px solid var(--line-strong); border-radius:3px; color:var(--ink); background:transparent;
+    display:inline-flex; align-items:center; gap:8px; cursor:pointer; text-decoration:none;
+    transition:background var(--fai-ease), border-color var(--fai-ease), color var(--fai-ease);
   }
-  .btn:hover{background:var(--ink); color:var(--paper); text-decoration:none;}
-  .btn.primary{background:var(--brick); border-color:var(--brick); color:#fff;}
-  .btn.primary:hover{background:var(--gold-deep); border-color:var(--gold-deep);}
+  .btn:hover{border-color:var(--ink);}
+  .btn.primary{background:var(--ink); border-color:var(--ink); color:var(--paper);}
+  .btn.primary:hover{background:var(--accent); border-color:var(--accent);}
 
-  .hero-strip{margin-top:48px; padding-top:24px; border-top:1px solid var(--line-soft); display:grid; grid-template-columns:repeat(4,1fr); gap:22px;}
+  .hero-strip{margin-top:56px; padding-top:24px; border-top:1px solid var(--line); display:grid; grid-template-columns:repeat(4,1fr); gap:24px;}
   @media (max-width:860px){ .hero-strip{grid-template-columns:repeat(2,1fr);} }
-  .hero-strip .stat b{display:block; font-family:'Fraunces',serif; font-size:28px; color:var(--brick); font-weight:600;}
-  .hero-strip .stat span{font-family:'IBM Plex Mono',monospace; font-size:10.5px; color:var(--ink-faint); letter-spacing:0.04em; text-transform:uppercase;}
+  .hero-strip .stat b{display:block; font-size:32px; line-height:1.1; font-weight:500; color:var(--accent); font-variant-numeric:tabular-nums;}
+  .hero-strip .stat span{display:block; margin-top:6px; font-size:14px; line-height:1.45; color:var(--ink-faint);}
 
-  section{padding:72px 0; border-bottom:1px solid var(--line);}
-  section.dark{background:var(--green-deep); color:var(--cream-text); border-bottom:1px solid rgba(0,0,0,0.2);}
-  section.dark h2, section.dark h3, section.dark h4{color:var(--cream-text);}
-  section.dark .eyebrow{color:#D9A85C;}
-  section.dark .eyebrow::before{background:#D9A85C;}
-  section.dark p{color:#CBD4C6;}
-  section.dark a{color:#E3A25E;}
+  /* Sections */
+  section{padding:96px 0; border-bottom:1px solid var(--line);}
+  main > section:last-child{border-bottom:none;}
+  @media (max-width:720px){ section{padding:56px 0;} .hero{padding:40px 0 48px;} .hero .lede{font-size:19px;} }
 
   .section-head{max-width:760px; margin-bottom:40px;}
-  .section-head h2{font-size:clamp(26px,3.2vw,38px); margin-top:14px;}
-  .section-head p.sub{color:var(--ink-soft); margin-top:14px; font-size:16.5px;}
-  section.dark .section-head p.sub{color:#CBD4C6;}
+  .section-head h2{font-size:clamp(28px,3.4vw,40px); line-height:1.1; font-weight:500; margin-top:10px;}
+  .section-head p.sub{color:var(--ink-soft); margin-top:16px; font-size:17px; max-width:var(--fai-measure);}
 
-  .objective-block{display:grid; grid-template-columns:1.05fr 0.95fr; gap:52px; align-items:start;}
-  @media (max-width:860px){ .objective-block{grid-template-columns:1fr;} }
-  .objective-block .lede-text{font-size:16.5px; line-height:1.7; color:var(--ink);}
-  .objective-block .lede-text p + p{margin-top:14px;}
+  .objective-block{display:grid; grid-template-columns:1.05fr 0.95fr; gap:56px; align-items:start;}
+  @media (max-width:860px){ .objective-block{grid-template-columns:1fr; gap:40px;} }
+  .objective-block .lede-text{font-size:17px; line-height:1.6; color:var(--ink); max-width:var(--fai-measure);}
+  .objective-block .lede-text p{margin:0;}
+  .objective-block .lede-text p + p{margin-top:16px;}
 
-  .roll{border-top:1px solid var(--line);}
-  .roll-title{font-family:'IBM Plex Mono',monospace; font-size:11px; text-transform:uppercase; letter-spacing:0.1em; color:var(--ink-faint); padding:16px 0 10px;}
-  .roll-item{display:flex; justify-content:space-between; gap:14px; padding:11px 0; border-top:1px solid var(--line-soft); font-size:14px;}
-  .roll-item .who{color:var(--ink); font-weight:500;}
-  .roll-item .org{color:var(--ink-faint); text-align:right; font-size:12.5px; max-width:56%;}
+  .roll{border-top:1px solid var(--ink);}
+  .roll-title{font-size:14px; font-weight:600; color:var(--ink); padding:14px 0 10px;}
+  .roll-item{display:flex; justify-content:space-between; gap:16px; padding:12px 0; border-top:1px solid var(--line); font-size:15px; line-height:1.45;}
+  .roll-item .who{color:var(--ink); font-weight:600; flex:none; max-width:40%;}
+  .roll-item .org{color:var(--ink-soft); text-align:right; font-size:14px; max-width:60%;}
 
-  .tie-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:2px; background:var(--line);}
+  /* Findings */
+  .tie-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:16px;}
   @media (max-width:860px){ .tie-grid{grid-template-columns:1fr;} }
-  .tie-card{background:var(--green-panel); padding:28px;}
-  .tie-card .num{font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--gold); letter-spacing:0.08em;}
-  .tie-card h4{font-size:18px; margin-top:10px; color:var(--cream-text);}
-  .tie-card p{font-size:14px; color:#CBD4C6; margin-top:10px;}
-  .tie-card p.lesson{color:#F1ECDE; font-weight:500; margin-top:14px;}
-  .tie-card p.lesson b{color:#E3A25E;}
-  .tie-card a{font-family:'IBM Plex Mono',monospace; font-size:11.5px; text-transform:uppercase; letter-spacing:0.04em; display:inline-block; margin-top:14px;}
+  .tie-card{background:var(--paper-2); padding:28px;}
+  @media (max-width:720px){ .tie-card{padding:22px 20px;} }
+  .tie-card .num{font-size:14px; line-height:1.45; color:var(--ink-faint);}
+  .tie-card h4{font-size:21px; line-height:1.25; font-weight:600; margin-top:8px; color:var(--ink);}
+  .tie-card p{font-size:16px; line-height:1.6; color:var(--ink-soft); margin:12px 0 0;}
+  .tie-card p.lesson{color:var(--ink); margin-top:16px; padding-top:14px; border-top:1px solid var(--line-strong);}
+  .tie-card p.lesson b{color:var(--ink); font-weight:600;}
+  .tie-card a{
+    font-size:15px; display:inline-block; margin-top:16px; color:var(--ink);
+    text-decoration:underline; text-decoration-color:var(--accent); text-decoration-thickness:1px; text-underline-offset:3px;
+  }
+  .tie-card a:hover{color:var(--accent);}
 
-  .lane{margin-bottom:32px;}
-  .lane-head{display:flex; align-items:center; gap:12px; margin-bottom:4px;}
+  /* What's next */
+  .lane{margin-bottom:48px;}
+  .lane-head{display:flex; align-items:center; gap:12px; margin-bottom:8px; flex-wrap:wrap;}
   .lane-head .who-badge{
-    font-family:'IBM Plex Mono',monospace; font-size:10.5px; letter-spacing:0.05em; text-transform:uppercase;
-    color:#fff; padding:4px 10px; border-radius:20px;
+    font-size:13px; line-height:1.2; color:var(--ink); padding:4px 11px; border-radius:999px;
+    border:1px solid var(--line-strong);
   }
-  .who-badge.hackney{background:var(--brick);}
-  .who-badge.group{background:var(--gold-deep);}
-  .lane-head span.role{font-size:12.5px; color:var(--ink-faint);}
-  .lane-rows{margin-top:6px;}
-  .next-row{display:grid; grid-template-columns:32px 1fr auto; gap:14px; align-items:baseline; padding:13px 0; border-top:1px solid var(--line-soft);}
-  .next-row .n{font-family:'IBM Plex Mono',monospace; color:var(--brick); font-size:13px;}
-  .next-row p{margin:0; font-size:15px; color:var(--ink);}
+  .who-badge.hackney, .who-badge.islington{background:var(--ink); border-color:var(--ink); color:var(--paper);}
+  .lane-head span.role{font-size:14px; color:var(--ink-faint);}
+  .lane-rows{margin-top:8px;}
+  .next-row{display:grid; grid-template-columns:36px 1fr auto; gap:16px; align-items:baseline; padding:14px 0; border-top:1px solid var(--line);}
+  .next-row .n{color:var(--ink-faint); font-size:14px; font-variant-numeric:tabular-nums;}
+  .next-row p{margin:0; font-size:16px; line-height:1.55; color:var(--ink); max-width:var(--fai-measure);}
   .next-row .status{
-    font-family:'IBM Plex Mono',monospace; font-size:10.5px; text-transform:uppercase; letter-spacing:0.05em;
-    color:var(--ink-faint); border:1px solid var(--line); padding:4px 9px; border-radius:2px; white-space:nowrap;
+    font-size:13px; line-height:1.2; color:var(--ink-soft);
+    border:1px solid var(--line-strong); padding:4px 10px; border-radius:999px; white-space:nowrap;
+  }
+  @media (max-width:560px){
+    .next-row{grid-template-columns:28px 1fr; row-gap:8px;}
+    .next-row .status{grid-column:2; justify-self:start;}
   }
 
-  .callout{margin-top:16px; padding:14px 16px; background:var(--paper); border-left:3px solid var(--brick); font-size:13.5px; color:var(--ink);}
-  .callout b{color:var(--brick);}
+  .callout{margin-top:16px; padding:18px 20px; background:var(--paper-2); font-size:16px; line-height:1.55; color:var(--ink); max-width:var(--fai-measure);}
+  .callout b{color:var(--ink); font-weight:600;}
 
-  footer{background:var(--green-deep); color:#B9C0A8; padding:44px 0; font-size:13px;}
-  footer a{color:#DCE4D3;}
-  footer .wrap{display:flex; justify-content:space-between; flex-wrap:wrap; gap:24px;}
-  footer .col h4{color:#F1ECDE; font-size:15px;}
-  footer .col a{display:block; margin-top:8px; font-size:13px;}
-  footer .footer-bottom{margin-top:0; padding-top:0;}
-  footer .credit{font-size:12px; color:#7C8878; margin-top:24px; border-top:1px solid rgba(255,255,255,0.1); padding-top:20px;}
+  /* Footer */
+  footer{background:var(--paper); color:var(--ink-soft); padding:56px 0 48px; font-size:14px; line-height:1.5; border-top:1px solid var(--line);}
+  footer a{color:var(--ink-soft); text-decoration:none;}
+  footer .col a:hover{color:var(--ink); text-decoration:underline; text-decoration-color:var(--accent); text-underline-offset:3px;}
+  footer .wrap{display:flex; justify-content:space-between; flex-wrap:wrap; gap:32px;}
+  footer .col h4{color:var(--ink); font-size:15px; font-weight:600;}
+  footer .col a{display:block; margin-top:8px; font-size:14px;}
+  footer .col-about{max-width:340px;}
+  footer .col-about p{color:var(--ink-soft); font-size:14px; line-height:1.55; margin:8px 0 0;}
+  footer .footer-bottom{display:block; margin-top:0; padding-top:0;}
+  footer .credit{font-size:14px; line-height:1.55; color:var(--ink-faint); margin-top:32px; border-top:1px solid var(--line); padding-top:20px; max-width:none;}
 </style>
 <!-- fai:head -->
 <link rel="icon" href="assets/fai/favicon.svg" type="image/svg+xml">
@@ -186,38 +184,39 @@
 <header class="site-nav">
   <div class="nav-inner">
     <div class="nav-mark">
-      <strong>HACKNEY FOOD HUB</strong>
-      <span>Working Group · Food as Infrastructure</span>
+      <strong>Hackney Food Hub</strong>
+      <span>Hubs &amp; Markets Working Group</span>
     </div>
     <nav class="nav-links">
       <a href="#now">Where Hackney is now</a>
       <a href="#lessons">What the group already found</a>
       <a href="#next">What's next</a>
-      <a href="hubs-and-markets-working-group.html">Full working group ↗</a>
+      <a href="hubs-and-markets-working-group.html">Full working group</a>
     </nav>
   </div>
 </header>
 
 <div class="status-strip">
   <div class="wrap">
-    <span class="status-dot" aria-hidden="true"></span>
-    <p><strong>Draft — new to the process.</strong> Hackney is the newest borough working through this — this page holds what a recent session surfaced, checked against what Lambeth, Newham, Tower Hamlets and Camden + Islington already learned.</p>
-    <span class="status-date">DRAFT · WORKING NOTE · SEPT 2026</span>
+    <div class="status-note">
+      <p><strong>Draft, new to the process.</strong> Hackney is the newest borough working through this — this page holds what a recent session surfaced, checked against what Lambeth, Newham, Tower Hamlets and Camden + Islington already learned.</p>
+      <span class="status-date">Working note, September 2026</span>
+    </div>
   </div>
 </div>
 
 <main id="main">
 
   <!-- HERO -->
-  <section class="hero" style="border-bottom:1px solid var(--line); padding-bottom:0;">
+  <section class="hero">
     <div class="wrap">
-      <div class="lot-number">DRAFT — WORKING GROUP NOTE — HACKNEY, 2026</div>
+      <div class="lot-number">A working group note on Hackney, 2026</div>
       <h1>Hackney doesn’t have to <em>start from zero.</em></h1>
       <p class="lede">Four other boroughs have already built, or are building, a version of what Hackney is now working out from scratch. This page holds the honest state of Hackney’s own effort, checked directly against what the rest of this working group already learned the hard way — and sets out the concrete next steps, not another open-ended conversation.</p>
       <div class="cta-row">
-        <a class="btn primary" href="#next">See what’s next ↓</a>
-        <a class="btn" href="hackney-food-partnership.html" target="_blank" rel="noopener">Read the shareable overview ↗</a>
-        <a class="btn" href="hubs-and-markets-working-group.html" target="_blank" rel="noopener">Open the full working group ↗</a>
+        <a class="btn primary" href="#next">See what’s next</a>
+        <a class="btn" href="hackney-food-partnership.html" target="_blank" rel="noopener">Read the shareable overview</a>
+        <a class="btn" href="hubs-and-markets-working-group.html" target="_blank" rel="noopener">Open the full working group</a>
       </div>
       <div class="hero-strip">
         <div class="stat"><b>4</b><span>Hubs already live or forming, to learn from</span></div>
@@ -271,35 +270,35 @@
       </div>
       <div class="tie-grid">
         <div class="tie-card">
-          <div class="num">HACKNEY'S QUESTION: NO CLEAR LEAD</div>
+          <div class="num">Hackney's question: no clear lead</div>
           <h4>Camden + Islington's hub runs on one accountable operator, not a committee</h4>
           <p>The Regis Road hub works because a single commercial wholesaler operates it day to day, co-located with the redistribution partner, while the boroughs provide investment rather than run it themselves — a maximum of £400,000 over two years, on the expectation the hub becomes financially independent after that, for around 15 tonnes of food a week (roughly £1.5m/year in value) reaching an estimated 50 organisations with substantial new volume. The group's own "Learning from outside the room" findings go further: hub failure risk sits in operator skillset, not good intentions — a past programme incubating regional hubs found many well-intentioned suppliers simply lacked the commercial background to run one as a business.</p>
           <p class="lesson"><b>The lesson to carry over:</b> Hackney's structuring session should treat "who operates this" as the first decision, not a detail to settle later — and the answer doesn't have to be a new organisation built from scratch.</p>
-          <a href="hubs-and-markets-working-group.html#network">See the full finding ↗</a>
+          <a href="hubs-and-markets-working-group.html#network">See the full finding</a>
         </div>
         <div class="tie-card">
-          <div class="num">HACKNEY'S QUESTION: NO DEDICATED SITE YET</div>
+          <div class="num">Hackney's question: no dedicated site yet</div>
           <h4>Tower Hamlets has run for years on a meanwhile site, not a permanent one</h4>
           <p>Tower Hamlets' hub still doesn't have chilled or frozen capacity — that remains its binding constraint — but it has operated for years on a meanwhile site with a long rent-free term, while longer-term tenure is explored in parallel. Camden + Islington's own hub is a three-year meanwhile site too.</p>
           <p class="lesson"><b>The lesson to carry over:</b> a permanent, purpose-built site isn't the precondition for starting. Hackney's small-scale grocer-warehouse option can begin now, in parallel with the longer site search, not instead of it.</p>
-          <a href="hubs-and-markets-working-group.html#anatomy">See the hub anatomy ↗</a>
+          <a href="hubs-and-markets-working-group.html#anatomy">See the hub anatomy</a>
         </div>
         <div class="tie-card">
-          <div class="num">HACKNEY'S QUESTION: SURPLUS, BUYING, OR BOTH?</div>
+          <div class="num">Hackney's question: surplus, buying, or both?</div>
           <h4>A hub doesn't have to choose one market over the other</h4>
           <p>The group's outside-learning session raised an open design question directly relevant here: a hub built with the right governance could serve both nutrient-dense organic supply and surplus redistribution from the same infrastructure, rather than treating them as separate systems. Newham's hub already shows one version of "more than one job" — it doubles as a public-health distribution point, though the social value that creates is genuinely hard to price for funders.</p>
           <p class="lesson"><b>The lesson to carry over:</b> design the Stamford Hill pilot to be able to hold both a collective-buying model and a surplus-redistribution role, even if it starts doing only one — retrofitting that later is harder than building it in from day one.</p>
-          <a href="hubs-and-markets-working-group.html#network">See the full finding ↗</a>
+          <a href="hubs-and-markets-working-group.html#network">See the full finding</a>
         </div>
         <div class="tie-card">
-          <div class="num">HACKNEY'S QUESTION: WHO PAYS FOR WHAT?</div>
+          <div class="num">Hackney's question: who pays for what?</div>
           <h4>Space economics need to be stated plainly, early</h4>
           <p>At the Camden food hub, the commercial partner pays real (if discounted) rent while the redistribution partner pays nothing for space — not preferential treatment, just a landlord charging different tenants differently. Camden + Islington also show that a co-located commercial wholesaler can absorb much of a hub's running cost, rather than the council carrying all of it.</p>
           <p class="lesson"><b>The lesson to carry over:</b> get clear, early, on what the Stamford Hill grocer is actually being asked to give free versus what he needs paying for — labour and delivery support especially — rather than letting the arrangement default into an assumption either side later resents.</p>
-          <a href="hubs-and-markets-working-group.html#network">See the full finding ↗</a>
+          <a href="hubs-and-markets-working-group.html#network">See the full finding</a>
         </div>
         <div class="tie-card">
-          <div class="num">HACKNEY'S QUESTION: WILL INSTITUTIONS ACTUALLY TAKE THE FOOD?</div>
+          <div class="num">Hackney's question: will institutions actually take the food?</div>
           <h4>Newham's own attempt to push surplus into school catering ran into fixed menus</h4>
           <p>Newham tried routing surplus food into its school catering system and the chefs simply couldn't use it — menus are set in advance, and there was no built-in flexibility to adapt on short notice. The food was good; the format wasn't ready for it. It's a live warning for any procurement-side ambition, not just Hackney's: institutional catering has to be designed for flexibility from the outset, not asked to absorb it after the fact.</p>
           <p class="lesson"><b>The lesson to carry over:</b> if Hackney's collective-buying work ever reaches school or public-sector catering, build menu flexibility into the agreement itself — don't assume goodwill will bridge a fixed-menu system.</p>
@@ -331,7 +330,7 @@
           <div class="next-row">
             <span class="n">02</span>
             <p>Call round every Hackney community food organisation directly to find out real monthly food spend — replacing the earlier written survey, which got almost no responses — to establish the group's actual collective buying power.</p>
-            <span class="status">Agreed — starting now</span>
+            <span class="status">Agreed, starting now</span>
           </div>
           <div class="next-row">
             <span class="n">03</span>
@@ -408,9 +407,9 @@
 
 <footer>
   <div class="wrap">
-    <div class="col" style="max-width:340px;">
+    <div class="col col-about">
       <h4>Hackney Food Hub</h4>
-      <p style="color:#AAB6A4; font-size:13.5px; line-height:1.6;">A working note for the newest borough joining the London Hubs &amp; Markets Working Group, part of Dark Matter Labs’ Food as Infrastructure portfolio.</p>
+      <p>A working note for the newest borough joining the London Hubs &amp; Markets Working Group, part of Dark Matter Labs’ Food as Infrastructure portfolio.</p>
     </div>
     <div class="col">
       <h4>This page</h4>
@@ -420,9 +419,9 @@
     </div>
     <div class="col">
       <h4>Wider portfolio</h4>
-      <a href="hubs-and-markets-working-group.html" target="_blank" rel="noopener">Hubs &amp; Markets Working Group ↗</a>
-      <a href="index.html" target="_blank" rel="noopener">Food as Infrastructure ↗</a>
-      <a href="pathways-to-civic-food-system.html" target="_blank" rel="noopener">Six Pathways to a Civic Food System ↗</a>
+      <a href="hubs-and-markets-working-group.html" target="_blank" rel="noopener">Hubs &amp; Markets Working Group</a>
+      <a href="index.html" target="_blank" rel="noopener">Food as Infrastructure</a>
+      <a href="pathways-to-civic-food-system.html" target="_blank" rel="noopener">Six Pathways to a Civic Food System</a>
     </div>
   </div>
   <div class="wrap footer-bottom">

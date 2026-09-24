@@ -8,26 +8,26 @@
 
   /* ===================== TOKENS ===================== */
   :root{
-    --ink:#101010;
-    --ink-2:#171717;
-    --surface:#1a1a1a;
-    --paper:#f5f5f2;
-    --paper-dim:#a3a39c;
-    --line: rgba(245,245,242,0.14);
-    --line-strong: rgba(245,245,242,0.26);
+    --ink:#111112;
+    --ink-2:#212121;
+    --surface:#252424;
+    --paper:#FFFFFF;
+    --paper-dim:#A8A8A8;
+    --line: rgba(255,255,255,0.14);
+    --line-strong: rgba(255,255,255,0.26);
 
-    --supply:#c98a3b;   /* ochre — Supply track  */
-    --hub:#2e7d6b;      /* teal  — Hub track     */
-    --demand:#ff5a1f;   /* signal orange — Camden, the subject */
+    --supply:#D19A4E;   /* ochre — Supply track  */
+    --hub:#5FB39C;      /* teal  — Hub track     */
+    --demand:#D4719B;   /* signal orange — Camden, the subject */
     --alert:#ef4a34;    /* red — crisis, and only crisis */
 
-    --supply-dim: rgba(201,138,59,0.14);
-    --hub-dim: rgba(46,125,107,0.16);
-    --demand-dim: rgba(255,90,31,0.14);
+    --supply-dim: rgba(209,154,78,0.14);
+    --hub-dim: rgba(95,179,156,0.16);
+    --demand-dim: rgba(212,113,155,0.14);
 
-    --display: "Poppins", sans-serif;
-    --body: "Poppins", sans-serif;
-    --mono: "IBM Plex Mono", monospace;
+    --display: var(--fai-sans);
+    --body: var(--fai-sans);
+    --mono: var(--fai-sans);
 
     --maxw: 1180px;
   }
@@ -100,7 +100,7 @@
   }
   .hero-scrim{
     position:absolute; inset:0; z-index:1;
-    background:linear-gradient(180deg, rgba(16,16,16,0.72) 0%, rgba(16,16,16,0.55) 45%, rgba(16,16,16,0.88) 100%);
+    background:linear-gradient(180deg, rgba(17,17,18,0.72) 0%, rgba(17,17,18,0.55) 45%, rgba(17,17,18,0.88) 100%);
   }
   .hero-content{position:relative; z-index:2; width:100%;}
   .hero h1{
@@ -146,7 +146,7 @@
   }
   .section-head p{color:var(--paper-dim); font-size:16.5px; margin-top:14px;}
   .plain-summary{
-    background: rgba(245,245,242,0.06); border-left:3px solid var(--paper-dim);
+    background: rgba(255,255,255,0.06); border-left:3px solid var(--paper-dim);
     padding:16px 20px; margin:18px 0 6px; max-width:680px;
   }
   .plain-summary .ps-label{
@@ -178,8 +178,8 @@
   .axo2-glow{
     position:absolute; inset:-60px 0 auto 0; height:1500px; z-index:0; pointer-events:none;
     background:
-      radial-gradient(ellipse 60% 34% at 60% 46%, rgba(245,245,242,0.05), transparent 62%),
-      radial-gradient(ellipse 55% 30% at 55% 86%, rgba(245,245,242,0.04), transparent 62%);
+      radial-gradient(ellipse 60% 34% at 60% 46%, rgba(255,255,255,0.05), transparent 62%),
+      radial-gradient(ellipse 55% 30% at 55% 86%, rgba(255,255,255,0.04), transparent 62%);
     filter:blur(6px);
   }
   /* the planes hold the centre column so the four of them stack down one
@@ -210,9 +210,9 @@
   .axo2-text p{font-size:15.5px; color:var(--paper-dim); max-width:440px; margin:0 0 0 auto;}
   .axo2-row.flip .axo2-text p{margin:0 auto 0 0;}
   @media (max-width:860px){ .axo2-text p, .axo2-row.flip .axo2-text p{margin:0;} }
-  .axo2-text .actor-farmer{color:#cfe4fa;}
-  .axo2-text .actor-business{color:#8fb8e8;}
-  .axo2-text .actor-civic{color:#5f93d6;}
+  .axo2-text .actor-farmer{color:#DDE0EC;}
+  .axo2-text .actor-business{color:#B3B9D4;}
+  .axo2-text .actor-civic{color:#737EA5;}
   .axo2-graphic{display:flex; justify-content:center; perspective:1100px;}
   .axo2-plane-wrap{position:relative; width:100%; max-width:360px;}
   /* the UK relief map's real aspect (~0.68) is much taller-than-wide than
@@ -236,11 +236,11 @@
   /* actors lifted off the plane: a shadow where they stand, a stem, and the dot
      raised along the plane's own axis so the tilt reads as height */
   .actor-shadow{fill:rgba(0,0,0,0.5); opacity:0.75;}
-  .actor-stem{fill:none; stroke:rgba(245,245,242,0.2); stroke-width:1.2;}
+  .actor-stem{fill:none; stroke:rgba(255,255,255,0.2); stroke-width:1.2;}
   .axo2-dots .aloft{filter:drop-shadow(0 0 7px rgba(0,0,0,0.55));}
-  .axo2-dots .farmer{fill:#cfe4fa;}
-  .axo2-dots .business{fill:#8fb8e8;}
-  .axo2-dots .civic{fill:#5f93d6;}
+  .axo2-dots .farmer{fill:#DDE0EC;}
+  .axo2-dots .business{fill:#B3B9D4;}
+  .axo2-dots .civic{fill:#737EA5;}
 
   /* a live network, not scattered points: a pulsing mesh between nearby actors,
      civic organisations acting as the connective hubs, plus a few travelling
@@ -266,7 +266,7 @@
   .mesh-signal[data-path="4"]{offset-path:url(#meshLine4); animation:meshTravel 3.6s linear infinite; animation-delay:1.8s;}
   @keyframes meshTravel{ from{offset-distance:0%;} to{offset-distance:100%;} }
 
-  #planeCamden svg path{fill:rgba(74,132,208,0.9); stroke:var(--ink); stroke-width:1.6;}
+  #planeCamden svg path{fill:rgba(115,126,165,0.9); stroke:var(--ink); stroke-width:1.6;}
 
   /* Every borough is shaded, warmest at Camden and cooling outward, and breathes
      on its own phase. The per-borough colour and --d come from the real geometry
@@ -277,7 +277,7 @@
     animation-delay:calc(var(--d, 0) * -3.4s);
   }
   @keyframes boroughBreathe{ 0%,100%{fill-opacity:0.72;} 50%{fill-opacity:1;} }
-  #planeLondonContext svg #Camden{fill:#7ab3ef; animation-duration:5.5s;}
+  #planeLondonContext svg #Camden{fill:#A3ABCB; animation-duration:5.5s;}
   @media (prefers-reduced-motion:reduce){
     #planeLondonContext svg path{animation:none; fill-opacity:0.9;}
   }
@@ -291,17 +291,17 @@
   /* the roads and their traffic are generated in the loader -- there are too many
      to keep by hand, and each dot's offset-path is set inline from its own road */
   .inflow-line{
-    fill:none; stroke:rgba(122,179,239,0.34); stroke-width:1.8; stroke-dasharray:6 7;
+    fill:none; stroke:rgba(163,171,203,0.34); stroke-width:1.8; stroke-dasharray:6 7;
     stroke-linejoin:round; opacity:0;
   }
   .axo2-row.pre.in .inflow-line, .axo2-row.in .inflow-line{animation:inflowFadeIn 0.7s ease forwards;}
-  .inflow-dot{fill:#cfe4fa; opacity:0;}
+  .inflow-dot{fill:#DDE0EC; opacity:0;}
   .axo2-row.pre.in .inflow-dot, .axo2-row.in .inflow-dot{
     animation:inflowFadeIn 0.4s ease forwards, inflowTravel 5.4s linear infinite;
   }
   @keyframes inflowTravel{ from{offset-distance:0%;} to{offset-distance:100%;} }
 
-  #planeLondonGrey svg path{fill:#1c222b; stroke:var(--line); stroke-width:0.7;}
+  #planeLondonGrey svg path{fill:#1E1E20; stroke:var(--line); stroke-width:0.7;}
 
   /* uk-relief.svg wraps a real SRTM-derived hillshade (Wikimedia Commons,
      CC BY-SA 3.0), cropped to Great Britain and re-toned for the dark theme --
@@ -309,10 +309,10 @@
   /* It takes the stack's blue through a filter rather than a blended overlay:
      the hillshade is transparent outside the coastline, and a blend would have
      painted that whole box blue. Tuned against the image's own mid grey, which
-     lands on hsl(214, 61%) -- the borough ramp's blue. */
+     lands near DM periwinkle #737EA5, the borough ramp. */
   #planeUk svg image{
     opacity:0.92;
-    filter:sepia(1) saturate(3) hue-rotate(174deg) brightness(0.96);
+    filter:sepia(1) saturate(1.2) hue-rotate(188deg) brightness(0.95);
   }
 
   /* ---- The ask, after the stack: its own held screen, and the same ball in
@@ -445,7 +445,7 @@
      chart -- once they stack underneath it would just spill off the screen */
   @media (max-width:760px){ .cg-ext{display:none;} }
   .cg-ext-line{fill:none; stroke-width:2.2; stroke-dasharray:2 7; stroke-linecap:round; opacity:0.9;}
-  .cg-ext-fert{stroke:#8f8fe8;}
+  .cg-ext-fert{stroke:#A28CC6;}
   .cg-ext-crude{stroke:var(--paper);}
   .cg-ext-maize{stroke:var(--supply);}
   /* the chart draws itself once it is scrolled into view: the three series
@@ -534,7 +534,7 @@
   .cg-bands rect{fill:rgba(239,74,52,0.14); stroke:rgba(239,74,52,0.34); stroke-width:1;}
   .cg-xaxis text{font-family:var(--mono); font-size:11px; fill:var(--paper-dim);}
   .cg-line{fill:none; stroke-width:2.2; stroke-linejoin:round; stroke-linecap:round;}
-  .cg-fertiliser{stroke:#8f8fe8;}
+  .cg-fertiliser{stroke:#A28CC6;}
   .cg-crude{stroke:var(--paper);}
   .cg-maize{stroke:var(--supply);}
   .crisis-legend{display:flex; gap:22px; flex-wrap:wrap; margin:14px 0 4px;}
@@ -657,7 +657,7 @@
   @media (max-width:860px){ .rp-hit{display:none;} }
   /* hovering either side of the pairing lights the other, so it is legible
      which text belongs to which wave */
-  .rp-fnd:hover, .rp-fnd.is-hot{background:rgba(245,245,242,0.045);}
+  .rp-fnd:hover, .rp-fnd.is-hot{background:rgba(255,255,255,0.045);}
   .rp-canvas canvas{display:block;}
   /* the per-pathway waves are a narrow-screen thing only: on a wide screen
      the four bands are read together in the one canvas */
@@ -676,7 +676,7 @@
   .pf-pill{
     position:absolute; transform:translate(-50%,-50%); pointer-events:auto;
     font-family:var(--mono); font-size:9px; letter-spacing:0; line-height:1.15;
-    color:var(--tk); background:rgba(20,18,15,0.86); border:1px solid var(--tk);
+    color:var(--tk); background:rgba(17,17,18,0.86); border:1px solid var(--tk);
     border-radius:999px; padding:4px 9px; white-space:nowrap; cursor:default;
     transition:background .15s ease, color .15s ease;
   }
@@ -715,10 +715,10 @@
   .rp-labels.is-tight .rp-fnd p{
     display:-webkit-box; -webkit-box-orient:vertical; -webkit-line-clamp:var(--lines, 4); overflow:hidden;
   }
-  .rp-fnd-01 .code, .rp-fnd-01 h4{color:#e7964b;}
-  .rp-fnd-03 .code, .rp-fnd-03 h4{color:#4fb488;}
+  .rp-fnd-01 .code, .rp-fnd-01 h4{color:#D19A4E;}
+  .rp-fnd-03 .code, .rp-fnd-03 h4{color:#5FB39C;}
   .rp-fnd-04 .code, .rp-fnd-04 h4{color:#c9ced3;}
-  .rp-fnd-02 .code, .rp-fnd-02 h4{color:#a98cf5;}
+  .rp-fnd-02 .code, .rp-fnd-02 h4{color:#A28CC6;}
   .rp-info{
     position:relative; display:inline-grid; place-items:center; vertical-align:middle;
     width:16px; height:16px; margin-left:7px; margin-bottom:2px; padding:0;
@@ -753,7 +753,7 @@
   .rp-note:hover, .rp-note:focus-visible{color:var(--paper); border-color:var(--paper-dim);}
   .rp-note:focus{outline:none;}
   .rp-note:focus-visible{outline:1px dashed var(--line-strong); outline-offset:3px;}
-  .rp-note-no{color:#e05a3d;}
+  .rp-note-no{color:#E0604F;}
   .rp-note-yes{color:var(--hub);}
   .rp-note .rp-info-pop{
     width:320px; max-width:min(78vw,340px);
@@ -829,8 +829,8 @@
     content:''; position:absolute; top:13px; left:8%;
     border-left:5px solid currentColor; border-top:3.5px solid transparent; border-bottom:3.5px solid transparent; opacity:0.6;
   }
-  .rp-flow-outer-top .rp-step{color:#e7964b;}
-  .rp-flow-outer-bottom .rp-step{color:#4fb488;}
+  .rp-flow-outer-top .rp-step{color:#D19A4E;}
+  .rp-flow-outer-bottom .rp-step{color:#5FB39C;}
   @media (max-width:860px){
     .rp-flow-outer{width:100%; margin:0; grid-template-columns:1fr; gap:26px; text-align:left;}
     .rp-flow-outer .rp-step{text-align:left; display:flex; align-items:flex-start; gap:12px;}
@@ -973,7 +973,7 @@
   @media (max-width:560px){.compare{grid-template-columns:1fr;}}
   .compare .col{border:1px solid var(--line); padding:18px 18px;}
   .compare .col h4{font-family:var(--mono); font-size:12px; letter-spacing:0.06em; text-transform:uppercase; color:var(--paper-dim); margin-bottom:8px;}
-  .compare .col.no h4{color:#e05a3d;}
+  .compare .col.no h4{color:#E0604F;}
   .compare .col.yes h4{color:var(--hub);}
   .compare .col p{font-size:14.5px; margin:0; color:var(--paper-dim);}
   /* ===================== TRACKS ===================== */
@@ -984,10 +984,10 @@
   @media (max-width:1180px){ .tracks{grid-template-columns:repeat(2,1fr);} }
   @media (max-width:700px){ .tracks{grid-template-columns:1fr;} }
   /* each track takes the colour of the wave its items ride */
-  .track.pw-01{--tk:#e7964b;}
-  .track.pw-02{--tk:#a98cf5;}
+  .track.pw-01{--tk:#D19A4E;}
+  .track.pw-02{--tk:#A28CC6;}
   .track.pw-03{--tk:#c9ced3;}
-  .track.pw-04{--tk:#4fb488;}
+  .track.pw-04{--tk:#5FB39C;}
   .track .swatch{background:var(--tk);}
   .track .node-title::before{content:"— "; color:var(--tk);}
   .track-pw{
@@ -997,7 +997,7 @@
   .track .track-head{width:100%;}
   /* a row lights its dot on the wave above, so it gets a hover state to match */
   .node[data-dot]{transition:background .18s ease;}
-  .node[data-dot]:hover{background:rgba(245,245,242,0.035);}
+  .node[data-dot]:hover{background:rgba(255,255,255,0.035);}
   .node[data-dot]:hover .node-title{color:var(--tk);}
 
   /* ---- the portfolio, sitting under the waves its items ride ---- */
@@ -1047,7 +1047,7 @@
     font-family:var(--display); font-weight:700; color:var(--paper);
     font-size:clamp(17px,1.9vw,22px); line-height:1.35;
     max-width:720px; margin:18px 0 0; padding-left:18px;
-    border-left:2px solid rgba(122,179,239,0.75);
+    border-left:2px solid rgba(163,171,203,0.75);
   }
 
   /* ---- This section is the opening stack walked a second time: the same
@@ -1065,18 +1065,18 @@
   .gov-note{font-family:var(--mono); font-size:9.5px; letter-spacing:0.03em; fill:var(--paper-dim);}
   .gov-note-faint{opacity:0.62;}
   .gov-share{font-family:var(--mono); font-size:10px; letter-spacing:0.05em; fill:var(--paper);}
-  .gov-ring{fill:rgba(16,16,16,0.9); stroke:var(--paper-dim); stroke-width:1.2;}
+  .gov-ring{fill:rgba(17,17,18,0.9); stroke:var(--paper-dim); stroke-width:1.2;}
   .gov-ring-label{font-family:var(--display); font-weight:700; font-size:11px; fill:var(--paper);}
-  .gov-foot{fill:none; stroke:rgba(245,245,242,0.26); stroke-width:1; stroke-dasharray:3 4;}
-  .gov-stem{fill:none; stroke:rgba(245,245,242,0.3); stroke-width:1; stroke-dasharray:2 4;}
-  .gov-seat{fill:#7ab3ef;}
+  .gov-foot{fill:none; stroke:rgba(255,255,255,0.26); stroke-width:1; stroke-dasharray:3 4;}
+  .gov-stem{fill:none; stroke:rgba(255,255,255,0.3); stroke-width:1; stroke-dasharray:2 4;}
+  .gov-seat{fill:#A3ABCB;}
   /* whatever is held above a plane lifts off it as the row arrives */
   .axo2-row .gov-rise{opacity:0; transform:translateY(20px);}
   .axo2-row.in .gov-rise{
     opacity:1; transform:none;
     transition:opacity .8s ease .2s, transform 1.1s cubic-bezier(.2,.75,.2,1) .2s;
   }
-  .gov-sat{fill:rgba(245,245,242,0.45); opacity:0;}
+  .gov-sat{fill:rgba(255,255,255,0.45); opacity:0;}
   .axo2-row.in .gov-sat{opacity:1; transition:opacity .5s ease;}
   .axo2-row.in .gov-sat-1{transition-delay:1.0s;}
   .axo2-row.in .gov-sat-2{transition-delay:1.2s;}
@@ -1084,12 +1084,12 @@
   .axo2-row.in .gov-sat-4{transition-delay:1.7s;}
 
   /* Tier 1: a circle leaves the borough and stands on its own */
-  #govPlaneBorough svg path{fill:rgba(74,132,208,0.82); stroke:var(--ink); stroke-width:1.6;}
+  #govPlaneBorough svg path{fill:rgba(115,126,165,0.82); stroke:var(--ink); stroke-width:1.6;}
 
   /* Tier 2: boroughs that stood apart, all one grey, closing up and buying
      together -- the offsets come from each borough's own geometry */
   #govPlaneLondon svg path{
-    fill:rgba(245,245,242,0.1); stroke:rgba(245,245,242,0.24); stroke-width:0.8;
+    fill:rgba(255,255,255,0.1); stroke:rgba(255,255,255,0.24); stroke-width:0.8;
     transform:translate(var(--ox, 0px), var(--oy, 0px));
     transition:transform 1.6s cubic-bezier(.2,.75,.2,1) .2s, fill 1s ease 1.5s, stroke 1s ease 1.5s;
   }
@@ -1097,41 +1097,41 @@
   /* every borough lights as it joins, on its own delay, so the coalition
      spreads out of Camden instead of switching on in one block */
   .axo2-row.in #govPlaneLondon svg path.is-joining{
-    fill:rgba(122,179,239,0.26); stroke:rgba(122,179,239,0.44);
+    fill:rgba(163,171,203,0.26); stroke:rgba(163,171,203,0.44);
     transition:transform 1.6s cubic-bezier(.2,.75,.2,1) .2s,
                fill .9s ease var(--jd, 1s), stroke .9s ease var(--jd, 1s);
   }
   .axo2-row.in #govPlaneLondon svg path.is-founding{
-    fill:rgba(122,179,239,0.44); stroke:rgba(122,179,239,0.68);
+    fill:rgba(163,171,203,0.44); stroke:rgba(163,171,203,0.68);
     transition:transform 1.6s cubic-bezier(.2,.75,.2,1) .2s,
                fill .9s ease var(--jd, .9s), stroke .9s ease var(--jd, .9s);
   }
   .axo2-row.in #govPlaneLondon svg #Camden{
-    fill:rgba(122,179,239,0.72); stroke:rgba(176,214,248,0.9);
+    fill:rgba(163,171,203,0.72); stroke:rgba(213,217,232,0.9);
   }
 
   /* The actor layer: the two halves are drawn on the ground the actors stand
      on, and the asset they hold between them is lifted off it */
-  #govPlaneActors svg path{fill:rgba(74,132,208,0.13); stroke:rgba(245,245,242,0.15); stroke-width:0.8;}
+  #govPlaneActors svg path{fill:rgba(115,126,165,0.13); stroke:rgba(255,255,255,0.15); stroke-width:0.8;}
   .gov-half{fill:none; stroke-width:3; stroke-dasharray:10 10;}
-  .gov-half-local{stroke:rgba(122,179,239,0.55);}
-  .gov-half-wide{stroke:rgba(143,176,255,0.45);}
-  .gov-actor-dots circle{fill:rgba(122,179,239,0.85);}
-  .gov-member-dots circle{fill:rgba(143,176,255,0.55);}
+  .gov-half-local{stroke:rgba(163,171,203,0.55);}
+  .gov-half-wide{stroke:rgba(162,140,198,0.45);}
+  .gov-actor-dots circle{fill:rgba(163,171,203,0.85);}
+  .gov-member-dots circle{fill:rgba(162,140,198,0.55);}
   /* the two keys are the whole point of the row, so they carry more weight
      than the other connectors */
-  .gov-key{fill:none; stroke:rgba(245,245,242,0.38); stroke-width:1.5;}
+  .gov-key{fill:none; stroke:rgba(255,255,255,0.38); stroke-width:1.5;}
   .gov-fund-link{fill:none; stroke:var(--line-strong); stroke-width:1; stroke-dasharray:3 5; opacity:0.75;}
-  .gov-fund{fill:rgba(122,179,239,0.26); stroke:rgba(122,179,239,0.68); stroke-width:1;}
+  .gov-fund{fill:rgba(163,171,203,0.26); stroke:rgba(163,171,203,0.68); stroke-width:1;}
 
   /* Tier 3: local proof up to the centre, permission back down to everyone */
-  #govPlaneNation svg path{fill:rgba(74,132,208,0.17); stroke:rgba(245,245,242,0.2); stroke-width:1.4;}
-  .gov-nat-up{fill:none; stroke:rgba(122,179,239,0.5); stroke-width:4; stroke-dasharray:9 11;}
-  .gov-nat-down{fill:none; stroke:rgba(245,245,242,0.32); stroke-width:4; stroke-dasharray:6 14;}
-  .gov-nat-local{fill:rgba(122,179,239,0.9);}
-  .gov-nat-hub{fill:var(--paper); stroke:rgba(245,245,242,0.22); stroke-width:10;}
+  #govPlaneNation svg path{fill:rgba(115,126,165,0.17); stroke:rgba(255,255,255,0.2); stroke-width:1.4;}
+  .gov-nat-up{fill:none; stroke:rgba(163,171,203,0.5); stroke-width:4; stroke-dasharray:9 11;}
+  .gov-nat-down{fill:none; stroke:rgba(255,255,255,0.32); stroke-width:4; stroke-dasharray:6 14;}
+  .gov-nat-local{fill:rgba(163,171,203,0.9);}
+  .gov-nat-hub{fill:var(--paper); stroke:rgba(255,255,255,0.22); stroke-width:10;}
   @keyframes govTravel{ from{offset-distance:0%;} to{offset-distance:100%;} }
-  .gov-nat-signal{fill:#cfe4fa; animation:govTravel 3.6s linear infinite;}
+  .gov-nat-signal{fill:#DDE0EC; animation:govTravel 3.6s linear infinite;}
   .gov-nat-signal-down{fill:var(--paper); animation:govTravel 4.4s linear infinite reverse;}
   @media (prefers-reduced-motion: reduce){
     .gov-nat-signal, .gov-nat-signal-down{animation:none;}
@@ -1173,15 +1173,15 @@
      opening reads in the bands above and below the row */
   .horizons{position:relative; padding:clamp(34px,5vw,62px) 0;}
   .hz-cone{position:absolute; inset:0; width:100%; height:100%; z-index:0; pointer-events:none;}
-  .hz-edge{fill:none; stroke:rgba(245,245,242,0.2); stroke-width:1;}
-  .hz-axis{fill:none; stroke:rgba(245,245,242,0.13); stroke-width:1; stroke-dasharray:4 7;}
+  .hz-edge{fill:none; stroke:rgba(255,255,255,0.2); stroke-width:1;}
+  .hz-axis{fill:none; stroke:rgba(255,255,255,0.13); stroke-width:1; stroke-dasharray:4 7;}
   .hz-row{
     position:relative; z-index:1;
     display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(12px,1.4vw,20px);
   }
   .horizon{
     padding:22px 20px; border:1px solid var(--line-strong);
-    background:rgba(16,16,16,0.86);
+    background:rgba(17,17,18,0.86);
   }
   @media (max-width:860px){
     .hz-row{grid-template-columns:1fr;}
@@ -1254,6 +1254,30 @@
   .reveal{opacity:1; transform:none;}
   .reveal.pre{opacity:0; transform:translateY(14px);}
   .reveal.pre.in{opacity:1; transform:translateY(0); transition:opacity .6s ease, transform .6s ease;}
+
+  html:root{--fai-focus:var(--fai-lavender);}
+  /* ===================== FOOD AS INFRASTRUCTURE PASS =====================
+     Brings the portfolio onto STYLE.md: DM canvas, one face, labels as
+     sentences, quiet headlines, no scroll-reveal. */
+  h1,h2{font-weight:500;}
+  h3,h4{font-weight:600;}
+  .hero h1{font-weight:500; line-height:1.0;}
+  .section-head h2{font-size:clamp(30px,3.6vw,44px); line-height:1.08;}
+  .eyebrow{font-size:14px; gap:0; color:var(--paper-dim);}
+  .eyebrow::before{content:none; display:none;}
+  .navlinks{font-size:14px; gap:22px;}
+  .brand{font-size:15px; font-weight:600;}
+  .btn{font-size:15px; font-weight:500; padding:12px 18px; border-radius:3px;}
+  .btn.solid{font-weight:500;}
+  .btn.solid:hover{filter:none; background:var(--fai-lavender); border-color:var(--fai-lavender); color:var(--ink);}
+  .hero .meta{font-size:14px; line-height:1.55; max-width:62ch;}
+  .footage-credit{font-size:13px;}
+  .plain-summary .ps-tag, .quote-attr, .crisis-legend span, .rp-pop-tag,
+  .horizon .htag, .foot-social, .foot-bottom, .crisis-voices-eyebrow,
+  .compare .col h4, .res-col h4, .reading-col h4, .foot-col h5{font-size:13.5px;}
+  .cg-grid text, .cg-xaxis text, .cg-band-labels text{font-size:12px;}
+  .reveal, .reveal.pre, .reveal.pre.in{opacity:1 !important; transform:none !important; transition:none !important;}
+  .foot-lineage{font-size:13.5px !important;}
 </style>
 <script type="importmap">
 {
@@ -1284,9 +1308,7 @@
 
 <header>
   <nav>
-    <a class="brand" href="https://darkmatterlabs.org/" target="_blank" rel="noopener">
-      FOOD MISSION
-    </a>
+    <a class="brand" href="#top">Food System as Infrastructure</a>
     <div class="navlinks">
       <a href="#audience">For You</a>
       <a href="#foundations">Pathways</a>
@@ -1309,15 +1331,15 @@
   </video>
   <div class="hero-scrim"></div>
   <div class="wrap hero-content">
-    <div class="eyebrow">A COORDINATION FRAMEWORK — COUNCILS · NATIONAL GOVERNMENT · THE FRONTLINE</div>
-    <h1>Food System as <span class="accent">Infrastructure</span></h1>
+    <div class="eyebrow">A coordination framework for councils, national government and the people on the frontline</div>
+    <h1>Food System as Infrastructure</h1>
     <p class="lede">Food is back on the front page, and every level of government is being asked what it’s going to do about it. This portfolio is the shared answer — a common set of foundations that council leaders, national government and the people running food projects on the ground can build on together, instead of 32 boroughs improvising 32 different pilots.</p>
     <div class="cta-row">
-      <a class="btn solid" href="#foundations">Read the pathways ↓</a>
-      <a class="btn" href="#tools">Open the working tools ↗</a>
+      <a class="btn solid" href="#foundations">Read the pathways</a>
+      <a class="btn" href="#tools">Open the working tools</a>
     </div>
-    <div class="meta">ORIGIN — Borough-level food missions &amp; food partnerships across London · MATRIX — sits alongside Regen Nutrition (RN) &amp; Nature as Infrastructure (NI) · CARRIER — a portfolio of interventions + a shared toolset, not a single project</div>
-    <div class="footage-credit">Footage — Future Food dinner &amp; workshop, Calthorpe Community Garden &amp; The Crowndale Centre</div>
+    <div class="meta">It grew out of borough food missions and food partnerships across London, and sits alongside Dark Matter Labs’ Regen Nutrition and Nature as Infrastructure work. It is a portfolio of interventions and a shared toolset, not a single project.</div>
+    <div class="footage-credit">Footage from the Future Food dinner and workshop at Calthorpe Community Garden and the Crowndale Centre, Camden.</div>
   </div>
 </section>
 
@@ -1327,7 +1349,7 @@
 <section id="audience">
   <div class="wrap">
     <div class="section-head reveal">
-      <div class="eyebrow">WHO THIS IS FOR</div>
+      <div class="eyebrow">Who this is for</div>
       <h2>City-wide Mobilisation</h2>
       <p>Food systems resilience is built across multiple different scales. A coordinated effort across food actors and London boroughs has been identified as the most crucial element of a shared transition (be it in buying power of more resilient supply, distribution, local processing capacity or reserve). This call-to-all gathers actors to:</p>
     </div>
@@ -1338,7 +1360,7 @@
 
     <div class="wrap axo2-row reveal">
       <div class="axo2-text">
-        <span class="a-tag">COUNCIL LEADERS</span>
+        <span class="a-tag">Council leaders</span>
         <h3>Use the most powerful local policy levers</h3>
         <p>Boroughs hold the most direct levers — public meals, procurement, land, local partnerships. This initiative aims to map the tools already within boroughs’ mandate and show how they connect to food resilience and preparedness.</p>
       </div>
@@ -1351,7 +1373,7 @@
 
     <div class="wrap axo2-row flip reveal">
       <div class="axo2-text">
-        <span class="a-tag">LONDON — REGIONAL LEVEL</span>
+        <span class="a-tag">London, regional level</span>
         <h3>Pool buying power across London boroughs</h3>
         <p>Working across boroughs, in public health, regional development or infrastructure — this is about coordinating what boroughs are doing on the ground, and pooling the buying power no single borough has alone. The Greater London Authority and the NHS sit here too.</p>
       </div>
@@ -1361,8 +1383,8 @@
           <svg class="axo2-inflow" viewBox="90.5 68.6 1280 982.5" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
             <defs>
               <radialGradient id="camdenGlow" cx="50%" cy="50%" r="50%">
-                <stop offset="0%" stop-color="#7ab3ef" stop-opacity="0.34"/>
-                <stop offset="100%" stop-color="#7ab3ef" stop-opacity="0"/>
+                <stop offset="0%" stop-color="#A3ABCB" stop-opacity="0.34"/>
+                <stop offset="100%" stop-color="#A3ABCB" stop-opacity="0"/>
               </radialGradient>
             </defs>
             <circle class="inflow-glow" cx="622" cy="322" r="224" fill="url(#camdenGlow)"/>
@@ -1375,7 +1397,7 @@
 
     <div class="wrap axo2-row reveal">
       <div class="axo2-text">
-        <span class="a-tag">PRODUCERS, FOOD HUBS, CIVIC ORGANISATIONS</span>
+        <span class="a-tag">Producers, food hubs, civic organisations</span>
         <h3>Scale and accelerate work already happening on the ground</h3>
         <p><span class="actor-farmer">Growers</span>, <span class="actor-business">grocers</span>, <span class="actor-civic">community kitchens, food partnerships</span> — this maps the policy environment that could support your work and the economic circuits you could become part of. The governance and financing case is being built around what you’re already doing, not instead of it.</p>
       </div>
@@ -1476,7 +1498,7 @@
 
     <div class="wrap axo2-row flip reveal">
       <div class="axo2-text">
-        <span class="a-tag">NATIONAL GOVERNMENT</span>
+        <span class="a-tag">National government</span>
         <h3>Build local proofs to encode new food economics</h3>
         <p>The enabling infrastructure — the frameworks and fiscal instruments that make local and regional action scalable — sits at this level. We aim to strengthen existing and build new coalitions to influence national policy.</p>
       </div>
@@ -1491,70 +1513,7 @@
   <div class="wrap">
     <div class="cta-dive reveal">
       <p class="cta-dive-lead">Whether you lead a council, think about a cross-borough coalition, work in national government, you’re already doing this work on the ground, or want to help develop financing and economic infrastructure around it — tell us where you fit, and how you’d want to be part of the next phase.</p>
-      <!-- the same ball, the same water: at rest it floats and bobs, and it
-           dives when you reach for it -->
-      <a class="cta-ball" href="https://form.typeform.com/to/wh0nI0m0" target="_blank" rel="noopener" aria-label="Tell us where you fit — opens a short form">
-        <svg class="cta-ball-svg" viewBox="0 0 260 260" aria-hidden="true">
-          <defs>
-            <filter id="ctaBlur" x="-40%" y="-40%" width="180%" height="180%">
-              <feGaussianBlur stdDeviation="6"/>
-            </filter>
-            <path id="ctaWave" d="M-130,176 q16.25,-3.5 32.5,0 q16.25,3.5 32.5,0 q16.25,-3.5 32.5,0 q16.25,3.5 32.5,0 q16.25,-3.5 32.5,0 q16.25,3.5 32.5,0 q16.25,-3.5 32.5,0 q16.25,3.5 32.5,0 q16.25,-3.5 32.5,0 q16.25,3.5 32.5,0 q16.25,-3.5 32.5,0 q16.25,3.5 32.5,0 q16.25,-3.5 32.5,0 q16.25,3.5 32.5,0 q16.25,-3.5 32.5,0 q16.25,3.5 32.5,0"/>
-            <clipPath id="ctaAbove"><path d="M-130,176 q16.25,-3.5 32.5,0 q16.25,3.5 32.5,0 q16.25,-3.5 32.5,0 q16.25,3.5 32.5,0 q16.25,-3.5 32.5,0 q16.25,3.5 32.5,0 q16.25,-3.5 32.5,0 q16.25,3.5 32.5,0 q16.25,-3.5 32.5,0 q16.25,3.5 32.5,0 q16.25,-3.5 32.5,0 q16.25,3.5 32.5,0 q16.25,-3.5 32.5,0 q16.25,3.5 32.5,0 q16.25,-3.5 32.5,0 q16.25,3.5 32.5,0 L390,-80 L-130,-80 Z"/></clipPath>
-            <clipPath id="ctaBelow"><path d="M-130,176 q16.25,-3.5 32.5,0 q16.25,3.5 32.5,0 q16.25,-3.5 32.5,0 q16.25,3.5 32.5,0 q16.25,-3.5 32.5,0 q16.25,3.5 32.5,0 q16.25,-3.5 32.5,0 q16.25,3.5 32.5,0 q16.25,-3.5 32.5,0 q16.25,3.5 32.5,0 q16.25,-3.5 32.5,0 q16.25,3.5 32.5,0 q16.25,-3.5 32.5,0 q16.25,3.5 32.5,0 q16.25,-3.5 32.5,0 q16.25,3.5 32.5,0 L390,360 L-130,360 Z"/></clipPath>
-            <clipPath id="ctaFrame"><rect x="0" y="0" width="260" height="260"/></clipPath>
-            <radialGradient id="ctaSheen" cx="38%" cy="26%" r="80%">
-              <stop offset="0" stop-color="#ffffff" stop-opacity="0.16"/>
-              <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
-            </radialGradient>
-            <!-- radial rather than a vertical band: a rectangle of water
-                 shows its own corners against anything but flat black -->
-            <radialGradient id="ctaWater" cx="50%" cy="6%" r="96%">
-              <stop offset="0" stop-color="#f5f5f2" stop-opacity="0.14"/>
-              <stop offset="0.45" stop-color="#f5f5f2" stop-opacity="0.05"/>
-              <!-- reaches nothing before the shape's own edge, so the water has
-                   no boundary of its own to show -->
-              <stop offset="0.82" stop-color="#f5f5f2" stop-opacity="0"/>
-            </radialGradient>
-            <!-- and the surface fades out at both ends rather than stopping at
-                 the edge of its own box -->
-            <linearGradient id="ctaEnds" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="260" y2="0">
-              <stop offset="0" stop-color="#f5f5f2" stop-opacity="0"/>
-              <stop offset="0.26" stop-color="#f5f5f2" stop-opacity="1"/>
-              <stop offset="0.74" stop-color="#f5f5f2" stop-opacity="1"/>
-              <stop offset="1" stop-color="#f5f5f2" stop-opacity="0"/>
-            </linearGradient>
-          </defs>
-          <g clip-path="url(#ctaFrame)">
-            <g clip-path="url(#ctaBelow)">
-              <ellipse cx="130" cy="176" rx="130" ry="92" fill="url(#ctaWater)"/>
-            </g>
-            <!-- the submerged part: the waterline holds still, the ball moves -->
-            <g clip-path="url(#ctaBelow)" filter="url(#ctaBlur)">
-              <g class="cta-dip cta-dip-deep">
-                <g class="cta-bob cta-bob-deep">
-                  <circle class="cta-sub" cx="130" cy="112" r="78"/>
-                </g>
-              </g>
-            </g>
-            <g clip-path="url(#ctaBelow)">
-              <use class="cta-surface cta-surface-back" href="#ctaWave"/>
-            </g>
-            <g clip-path="url(#ctaAbove)">
-              <g class="cta-dip">
-                <g class="cta-bob">
-                  <circle class="cta-top" cx="130" cy="112" r="78"/>
-                  <circle class="cta-sheen" cx="130" cy="112" r="78" fill="url(#ctaSheen)"/>
-                </g>
-              </g>
-            </g>
-            <ellipse class="cta-ripple" cx="130" cy="177" rx="62" ry="9"/>
-            <ellipse class="cta-ripple cta-ripple-2" cx="130" cy="177" rx="62" ry="9"/>
-            <use class="cta-surface cta-surface-front" href="#ctaWave"/>
-          </g>
-        </svg>
-        <span class="cta-ball-label"><span class="cta-ball-label-in">Tell us<br>where you fit <span class="cta-ball-arrow">↗</span></span></span>
-      </a>
+      <a class="btn solid" href="https://form.typeform.com/to/wh0nI0m0" target="_blank" rel="noopener">Tell us where you fit ↗</a>
     </div>
   </div>
 </section>
@@ -1563,7 +1522,7 @@
 <section class="tight" style="background:var(--surface); border-top:1px solid var(--line); border-bottom:1px solid var(--line);">
   <div class="wrap why-now-grid">
     <div class="reveal">
-      <div class="eyebrow">WHY NOW</div>
+      <div class="eyebrow">Why now</div>
       <h2 style="font-size:clamp(28px,3.4vw,42px); margin-top:14px;">The food crisis is finally getting attention.<button type="button" class="rp-info" aria-label="What's driving the recent attention"><span aria-hidden="true">i</span><span class="rp-info-pop" role="tooltip">An unpublished UK intelligence assessment on ecosystem collapse named food security a national-security threat (The Guardian, 8 July 2026); Tesco and Sainsbury’s backed a 100+ organisation letter urging a Good Food Bill (Food Foundation); Tim Lang’s National Preparedness Commission review, <em>Just in Case</em>, made the same case in February 2025.</span></button></h2>
     </div>
     <div class="reveal" style="color:var(--paper-dim); font-size:15.5px;">
@@ -1574,7 +1533,7 @@
       <div>
         <h3 class="crisis-chart-title">Food commodity and input prices, 2010–2026</h3>
         <div class="crisis-legend">
-          <span><i style="background:#8f8fe8;"></i>Fertiliser</span>
+          <span><i style="background:#A28CC6;"></i>Fertiliser</span>
           <span><i style="background:var(--paper);"></i>Crude oil</span>
           <span><i style="background:var(--supply);"></i>Maize</span>
         </div>
@@ -1696,7 +1655,7 @@
 <section id="foundations">
   <div class="wrap">
     <div class="section-head reveal">
-      <div class="eyebrow">PATHWAYS</div>
+      <div class="eyebrow">Pathways</div>
       <h2>Four pathways that build food system resilience and preparedness<span class="h2-sub">through connecting the demand and supply</span></h2>
       <p>There are multiple plausible ways to transform the food systems. The pathways below set direction, organise interventions, and actors around resilience, health, environmental, economic vitality, and equity &amp; fairness outcomes — each one makes the next possible, and skipping one is usually why a pilot doesn’t survive contact with scale.</p>
     </div>
@@ -1733,28 +1692,28 @@
         <div class="rp-labels">
           <div class="rp-fnd rp-fnd-01" data-k="top" tabindex="0">
           <canvas class="rp-band" data-band="top" aria-hidden="true"></canvas>
-            <div class="code">PATHWAY 01</div>
+            <div class="code">Pathway 1</div>
             <h4>Civic-led delivery, civic resilience and preparedness</h4>
             <p>Procurement protocols and buying coalitions don’t feed anyone on their own. Grocers, dinners, workshops and community-run hubs are the layer that turn food into fresh meals someone can buy or receive.</p>
           </div>
 
           <div class="rp-fnd rp-fnd-02" data-k="fin" tabindex="0">
           <canvas class="rp-band" data-band="buy" aria-hidden="true"></canvas>
-            <div class="code">PATHWAY 02</div>
+            <div class="code">Pathway 2</div>
             <h4>Coordinated, collective buying power of organic, resilient supply<button type="button" class="rp-info" aria-label="Why this is a resilience bet, not just a fairness one"><span aria-hidden="true">i</span><span class="rp-info-pop" role="tooltip">Rodale Institute’s 40-year side-by-side trial found organic corn yielding 31% more than conventional corn in drought years, with 15–20% more water moving through the soil and roughly 45% less fossil-fuel energy going in to grow it. That’s the difference between land that holds through a dry summer and land that doesn’t — and between a farm exposed to every fertiliser price spike out of a blocked strait and one that isn’t.</span></button></h4>
             <p>No single borough’s contract is big enough to move a farmer’s decision. A buying coalition of London boroughs and businesses is — turning committed public and commercial demand into the confidence a grower needs to convert land.</p>
           </div>
 
           <div class="rp-fnd rp-fnd-04" data-k="port" tabindex="0">
           <canvas class="rp-band" data-band="mid" aria-hidden="true"></canvas>
-            <div class="code">PATHWAY 03</div>
+            <div class="code">Pathway 3</div>
             <h4>New Food Economics</h4>
             <p>New economics of food through policy, economic, accounting, financing, and monetary instruments. Sounds complex — plenty of best practice to learn from.</p>
           </div>
 
           <div class="rp-fnd rp-fnd-03" data-k="region" tabindex="0">
           <canvas class="rp-band" data-band="bot" aria-hidden="true"></canvas>
-            <div class="code">PATHWAY 04</div>
+            <div class="code">Pathway 4</div>
             <h4>Nutrient density is the target, not calories<button type="button" class="rp-info" aria-label="Why this is a resilience bet, not just a fairness one"><span aria-hidden="true">i</span><span class="rp-info-pop" role="tooltip">Rodale Institute’s 40-year side-by-side trial found organic corn yielding 31% more than conventional corn in drought years, with 15–20% more water moving through the soil and roughly 45% less fossil-fuel energy going in to grow it. That’s the difference between land that holds through a dry summer and land that doesn’t — and between a farm exposed to every fertiliser price spike out of a blocked strait and one that isn’t.</span></button></h4>
             <p>The baseline shifts from “enough food” to genuinely nourishing food — because a system that only solves for calories quietly manufactures the next public-health crisis while claiming to have solved the last one.</p>
           </div>
@@ -1827,7 +1786,7 @@
     <div class="pf-portfolio" id="tracks">
     <div class="pf-portfolio-head reveal">
       <div>
-        <div class="eyebrow">THE PORTFOLIO</div>
+        <div class="eyebrow">The portfolio</div>
         <h3 class="pf-portfolio-title">What rides on each pathway</h3>
         <p class="pf-portfolio-lede">Every item below sits on one of the four waves above — hover a row to find its point on the wave. <strong>Demand</strong> makes healthy food easier to choose. <strong>Hub</strong> is the shops, pharmacies and services people actually walk into. <strong>New Food Economics</strong> is the instruments that make the other three payable. <strong>Supply</strong> makes sure enough good food is being grown in the first place.</p>
       </div>
@@ -1879,7 +1838,7 @@
 <section class="tight" style="background:var(--surface); border-top:1px solid var(--line); border-bottom:1px solid var(--line);">
   <div class="wrap reframe">
     <div class="reveal">
-      <div class="eyebrow">WHY ADJUSTMENT ISN’T ENOUGH</div>
+      <div class="eyebrow">Why adjustment isn’t enough</div>
       <div class="big-quote" style="margin-top:16px;">
         <p>What if the market-based food system we’ve relied on has already failed<span class="bq-quiet">— and a fairer model, one that works for growers and nourishes communities, is what comes next?</span></p>
       </div>    </div>
@@ -1920,15 +1879,15 @@
                corners, and reaching nothing before its own edge means the pool
                has no boundary to give itself away -->
           <radialGradient id="condWater" cx="50%" cy="6%" r="96%">
-            <stop offset="0" stop-color="#f5f5f2" stop-opacity="0.13"/>
-            <stop offset="0.45" stop-color="#f5f5f2" stop-opacity="0.05"/>
-            <stop offset="0.82" stop-color="#f5f5f2" stop-opacity="0"/>
+            <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.13"/>
+            <stop offset="0.45" stop-color="#FFFFFF" stop-opacity="0.05"/>
+            <stop offset="0.82" stop-color="#FFFFFF" stop-opacity="0"/>
           </radialGradient>
           <linearGradient id="condEnds" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="320" y2="0">
-            <stop offset="0" stop-color="#f5f5f2" stop-opacity="0"/>
-            <stop offset="0.24" stop-color="#f5f5f2" stop-opacity="1"/>
-            <stop offset="0.76" stop-color="#f5f5f2" stop-opacity="1"/>
-            <stop offset="1" stop-color="#f5f5f2" stop-opacity="0"/>
+            <stop offset="0" stop-color="#FFFFFF" stop-opacity="0"/>
+            <stop offset="0.24" stop-color="#FFFFFF" stop-opacity="1"/>
+            <stop offset="0.76" stop-color="#FFFFFF" stop-opacity="1"/>
+            <stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/>
           </linearGradient>
         </defs>
         <g clip-path="url(#condFrame)">
@@ -1974,7 +1933,7 @@
 <section id="governance">
   <div class="wrap">
     <div class="section-head reveal">
-      <div class="eyebrow">WHO HOLDS THE LINE</div>
+      <div class="eyebrow">Who holds the line</div>
       <h2>Governance that can’t be voted back onto the market</h2>
       <p>We need rules that stop this work being sold off or quietly undone later — similar to how some housing co-ops are set up so no single vote can ever put the building back on the speculative market (<em>Mietshäuser Syndikat</em>). The question is then:</p>
       <p class="gov-question">Can food infrastructure be governed in a way that stays “with the people” and scales at the same time?</p>
@@ -1987,7 +1946,7 @@
        object being governed at four sizes. -->
   <div class="wrap axo2-row reveal">
     <div class="axo2-text">
-      <span class="a-tag">TIER 1 — BOROUGH</span>
+      <span class="a-tag">Tier 1, borough</span>
       <h3>An independent Food Partnership</h3>
       <p>The Council keeps a seat at the table — funding, convening, advertising the work — without holding the steering wheel. A declared, public work programme replaces “come and collaborate.”</p>
     </div>
@@ -2017,7 +1976,7 @@
 
   <div class="wrap axo2-row flip reveal">
     <div class="axo2-text">
-      <span class="a-tag">TIER 2 — LONDON</span>
+      <span class="a-tag">Tier 2, London</span>
       <h3>A coalition of boroughs</h3>
       <p>Peer boroughs — starting with a founding group of neighbours — take on shared standards, collective buying, and a common protocol, so the model compounds rather than repeats from zero each time.</p>
       <p style="margin-top:12px;">The Future Food Dinner — an experiential, cross-sector convening format already tested in Camden — is the concrete mechanism for building that coalition one peer group at a time, not just its stated ambition.</p>
@@ -2031,7 +1990,7 @@
 
   <div class="wrap axo2-row reveal">
     <div class="axo2-text">
-      <span class="a-tag">GOVERNANCE</span>
+      <span class="a-tag">Governance</span>
       <h3>Distributed Governance</h3>
       <p>Distributed governance consisting of multiple self-supporting nodes, where ownership, stewardship, and voting rights are distributed so the structure prevents speculation and keeps it in the hands of the community.</p>
     </div>
@@ -2080,7 +2039,7 @@
 
   <div class="wrap axo2-row flip reveal">
     <div class="axo2-text">
-      <span class="a-tag">TIER 3 — POLICY</span>
+      <span class="a-tag">Tier 3, policy</span>
       <h3>Local evidence building National Policy</h3>
       <p>A policy briefing routed through leading experts and universities to national government, timed to a six-month window, arguing for the deregulation that lets already-brilliant local actors build without red tape.</p>
     </div>
@@ -2120,7 +2079,7 @@
 <section id="resilience">
   <div class="wrap">
     <div class="section-head reveal">
-      <div class="eyebrow">A CONCRETE FIRST MOVE</div>
+      <div class="eyebrow">A concrete first move</div>
       <h2>Set up a Local Food Resilience Committee — before the law requires it</h2>
       <div class="plain-summary">
         <span class="ps-label">In plain terms</span>
@@ -2196,7 +2155,7 @@
 <section id="horizons" class="tight" style="background:var(--surface); border-top:1px solid var(--line); border-bottom:1px solid var(--line);">
   <div class="wrap">
     <div class="section-head reveal">
-      <div class="eyebrow">SEQUENCING THE RESPONSE</div>
+      <div class="eyebrow">Sequencing the response</div>
       <h2>Three horizons, not one deadline</h2>
       <p>The portfolio is built to be true at three different speeds at once — because the people in the room for this work are living in different horizons already.</p>
     </div>
@@ -2206,9 +2165,9 @@
       <svg class="hz-cone" viewBox="0 0 1200 420" preserveAspectRatio="none" aria-hidden="true">
         <defs>
           <linearGradient id="hzFade" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0" stop-color="#f5f5f2" stop-opacity="0.15"/>
-            <stop offset="0.5" stop-color="#f5f5f2" stop-opacity="0.06"/>
-            <stop offset="1" stop-color="#f5f5f2" stop-opacity="0"/>
+            <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.15"/>
+            <stop offset="0.5" stop-color="#FFFFFF" stop-opacity="0.06"/>
+            <stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/>
           </linearGradient>
         </defs>
         <path d="M0,210 L1200,6 L1200,414 Z" fill="url(#hzFade)"/>
@@ -2241,7 +2200,7 @@
 <section id="tools">
   <div class="wrap">
     <div class="section-head reveal">
-      <div class="eyebrow">LIVE, NOT SLIDES</div>
+      <div class="eyebrow">Live tools, not slides</div>
       <h2>The tools and work developing behind the argument</h2>
       <p>Each of these is a real, evolving model rather than a static deck — built to be interrogated, forked, and carried into the next room.</p>
     </div>
@@ -2262,77 +2221,77 @@
         <div>
           <div class="tool-top">
             <h3>An Implementation Pathway</h3>
-            <span class="tool-code">PATH</span>
+            <span class="tool-code">Pathway</span>
           </div>
           <p>A breakdown of the pathway to actually implement the portfolio — from idea to intervention, in sequence.</p>
         </div>
         <div class="tool-link">Open the pathway <span class="arrow">↗</span></div>
       </a>
 
-      <a class="tool-card" href="nutrition-cascade-model.html" target="_blank" rel="noopener">
+      <a class="tool-card" href="nutrition-cascade-model.html">
         <div>
           <div class="tool-top">
             <h3>Nutrition Cascade Model</h3>
-            <span class="tool-code">CASCADE</span>
+            <span class="tool-code">Cascade</span>
           </div>
           <p>A working model of how a single food-system shock fans out across many pathways at once — not one line, but a system moving together.</p>
         </div>
-        <div class="tool-link">Run the model <span class="arrow">↗</span></div>
+        <div class="tool-link">Run the model</div>
       </a>
 
-      <a class="tool-card" href="nutrition-supply-map.html" target="_blank" rel="noopener">
+      <a class="tool-card" href="nutrition-supply-map.html">
         <div>
           <div class="tool-top">
             <h3>Nutrition Supply Map</h3>
-            <span class="tool-code">SUPPLY</span>
+            <span class="tool-code">Supply</span>
           </div>
           <p>Where the food actually comes from — and the shocks that travel home with it along the same routes.</p>
         </div>
-        <div class="tool-link">Trace the supply lines <span class="arrow">↗</span></div>
+        <div class="tool-link">Trace the supply lines</div>
       </a>
 
       <a class="tool-card wide" href="https://camden-map.vercel.app/" target="_blank" rel="noopener">
         <div>
           <div class="tool-top">
             <h3>The Live Map — with audio briefing</h3>
-            <span class="tool-code">LIVE MAP</span>
+            <span class="tool-code">Live map</span>
           </div>
           <p>A dynamic map bringing together the existing food system across London — hubs, retailers, growers, and routes in one place, with a built-in audio update for anyone who’d rather listen than read.</p>
         </div>
         <div class="tool-link">Open the live map <span class="arrow">↗</span></div>
       </a>
 
-      <a class="tool-card wide" href="sovereign-food-system.html" target="_blank" rel="noopener">
+      <a class="tool-card wide" href="sovereign-food-system.html">
         <div>
           <div class="tool-top">
             <h3>A Sovereign Food System</h3>
-            <span class="tool-code">MONEY &amp; POLICY</span>
+            <span class="tool-code">Money &amp; policy</span>
           </div>
           <p>A portfolio of economic and monetary instruments for food-system transformation — from municipal procurement and local currencies to a national investment bank. Built for, and developing on the ground in, Sweden — with lessons that carry directly to other contexts, the UK included.</p>
         </div>
-        <div class="tool-link">Explore the portfolio <span class="arrow">↗</span></div>
+        <div class="tool-link">Explore the portfolio</div>
       </a>
 
-      <a class="tool-card wide" href="hubs-and-markets-working-group.html" target="_blank" rel="noopener">
+      <a class="tool-card wide" href="hubs-and-markets-working-group.html">
         <div>
           <div class="tool-top">
             <h3>Hubs and Markets Working Group</h3>
-            <span class="tool-code">HUBS &amp; MARKETS</span>
+            <span class="tool-code">Hubs &amp; markets</span>
           </div>
           <p>Where existing food hubs, markets and civic spaces get mapped, matched and coordinated with each other — the working group carrying that forward.</p>
         </div>
-        <div class="tool-link">Open the working group <span class="arrow">↗</span></div>
+        <div class="tool-link">Open the working group</div>
       </a>
 
-      <a class="tool-card wide" href="pathways-to-civic-food-system.html" target="_blank" rel="noopener">
+      <a class="tool-card wide" href="pathways-to-civic-food-system.html">
         <div>
           <div class="tool-top">
             <h3>Six Pathways to a Civic Food System</h3>
-            <span class="tool-code">PATHWAYS</span>
+            <span class="tool-code">Pathways</span>
           </div>
           <p>Six distinct levers for moving London's collective buying power behind organic and regenerative farms, nutrient-dense food, shock resilience, and civic-led ownership — set out side by side, with an honest read on where the portfolio already has traction and where the gaps are.</p>
         </div>
-        <div class="tool-link">Explore the pathways <span class="arrow">↗</span></div>
+        <div class="tool-link">Explore the pathways</div>
       </a>
     </div>
   </div>
@@ -2342,7 +2301,7 @@
 <section class="tight" id="reading" style="background:var(--surface); border-top:1px solid var(--line); border-bottom:1px solid var(--line);">
   <div class="wrap">
     <div class="section-head reveal">
-      <div class="eyebrow">NEW TO THIS?</div>
+      <div class="eyebrow">New to this?</div>
       <h2>Start here</h2>
       <p>This page makes a lot of claims. These are the primary sources behind them — useful whether you’re a council officer checking the evidence or a community group looking for who else is already working on this.</p>
     </div>
@@ -2383,8 +2342,7 @@
 <footer>
   <div class="wrap">
     <div class="foot-top">
-      <a href="https://darkmatterlabs.org/" target="_blank" rel="noopener">
-        </a>
+      <a href="https://darkmatterlabs.org/" target="_blank" rel="noopener"><img src="assets/brand/dm-logo-v1-white.svg" alt="Dark Matter Labs" class="foot-logo" width="132" height="26"></a>
       <div class="foot-social">
         <a href="https://www.linkedin.com/company/darkmatterlabs" target="_blank" rel="noopener">LinkedIn</a>
         <a href="https://provocations.darkmatterlabs.org/" target="_blank" rel="noopener">Provocations ↗</a>
@@ -2431,8 +2389,8 @@
       <p style="margin:0;">Licensed <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">CC BY-SA 4.0</a> — copy, adapt and build on this with credit. If you contributed to this work and aren't yet credited, or would like your attribution corrected, <a href="https://darkmatterlabs.org/contact" target="_blank" rel="noopener">get in touch</a>.</p>
     </div>
     <div class="foot-bottom">
-      <span>A LONDON-WIDE PORTFOLIO, 2026</span>
-      <span>FOOD AS INFRASTRUCTURE — WORKING DRAFT · DARK MATTER LABS</span>
+      <span>A London-wide portfolio, 2026</span>
+      <span>Food as Infrastructure is a working draft by Dark Matter Labs.</span>
       <span class="foot-credit">National relief base: <a href="https://commons.wikimedia.org/wiki/File:United_Kingdom_relief_location_map.png" target="_blank" rel="noopener">Wikimedia Commons</a>, CC BY-SA 3.0</span>
     </div>
   </div>
@@ -2867,10 +2825,10 @@
 
       var SPAN = 0.62, INNER = SPAN / 3;
       var BANDS = [
-        {sel:'.track.pw-01', key:'top', y: SPAN,  tk:'#e7964b'},
-        {sel:'.track.pw-02', key:'buy', y: INNER, tk:'#a98cf5'},
+        {sel:'.track.pw-01', key:'top', y: SPAN,  tk:'#D19A4E'},
+        {sel:'.track.pw-02', key:'buy', y: INNER, tk:'#A28CC6'},
         {sel:'.track.pw-03', key:'mid', y:-INNER, tk:'#c9ced3'},
-        {sel:'.track.pw-04', key:'bot', y:-SPAN,  tk:'#4fb488'}
+        {sel:'.track.pw-04', key:'bot', y:-SPAN,  tk:'#5FB39C'}
       ];
 
       var narrow = window.matchMedia('(max-width:860px)');
@@ -3116,7 +3074,7 @@
 
   });
 </script>
-<script type="module" src="assets/foundations/wave.js?v=20"></script>
+<script type="module" src="assets/foundations/wave.js?v=21"></script>
 
 </body>
 </html>

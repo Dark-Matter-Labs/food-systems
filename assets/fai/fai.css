@@ -22,6 +22,7 @@
   --fai-beet:#8B2252;        /* the one food accent, 8.6:1 on paper */
   --fai-beet-tint:#F4E6EC;
   --fai-lavender-tint:#ECE7F4;
+  --fai-focus:#8B2252;       /* focus ring: beet on paper (8.6:1). Canvas pages override with html:root{--fai-focus:var(--fai-lavender)}. */
 
   /* ---- Canvas-side text (instruments) ---- */
   --fai-on-canvas:#FFFFFF;
@@ -67,12 +68,12 @@ html body{
 }
 html body h1, html body h2, html body h3{ text-wrap:balance; }
 html body p, html body li{ text-wrap:pretty; }
-html body table, html body .tnum{ font-variant-numeric:tabular-nums; }
+html body .tnum, html body td.num, html body th.num{ font-variant-numeric:tabular-nums; }
 
 ::selection{ background:var(--fai-lavender); color:var(--fai-canvas); }
 
 :focus-visible{
-  outline:2px solid var(--fai-lavender) !important;
+  outline:2px solid var(--fai-focus) !important;
   outline-offset:2px !important;
 }
 
@@ -103,6 +104,7 @@ html body table, html body .tnum{ font-variant-numeric:tabular-nums; }
   align-items:center;
   gap:18px;
 }
+.fai-bar{ --fai-focus:var(--fai-lavender); }
 .fai-bar a{ color:inherit; text-decoration:none; }
 .fai-bar__dm{ display:flex; align-items:center; flex:none; }
 .fai-bar__dm img{ height:20px; width:auto; display:block; }

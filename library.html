@@ -1,162 +1,166 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-GB">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Library — Food as Infrastructure</title>
-<meta name="description" content="Every page built across the London food-systems portfolio, how they link together, which belong to Camden, and a PDF of each.">
+<meta name="description" content="Every page built across the Food as Infrastructure portfolio, how they link together, which belong to Camden, and a PDF snapshot of each.">
 <style>
-
-  :root{
-    --bg:#FFFFFF;
-    --surface:#F6F5F1;
-    --text:#131310;
-    --text-dim:#666358;
-    --line: rgba(19,19,16,0.10);
-    --line-strong: rgba(19,19,16,0.20);
-
-    --supply:#c98a3b;
-    --hub:#2e7d6b;
-    --demand:#ff5a1f;
-    --alert:#ef4a34;
-
-    --supply-dim: rgba(201,138,59,0.14);
-    --hub-dim: rgba(46,125,107,0.16);
-    --demand-dim: rgba(255,90,31,0.14);
-
-    --display: "Poppins", sans-serif;
-    --body: "Poppins", sans-serif;
-    --mono: "IBM Plex Mono", monospace;
-
-    --maxw: 1180px;
-    --gutter: 32px;
-  }
-
-  *{box-sizing:border-box;}
-  html{scroll-behavior:smooth;}
+  :root{ --gutter:32px; }
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
   body{
     margin:0;
-    background:var(--bg);
-    color:var(--text);
-    font-family:var(--body);
+    background:var(--fai-paper);
+    color:var(--fai-ink);
     font-size:17px;
     line-height:1.6;
-    -webkit-font-smoothing:antialiased;
   }
-  @media (prefers-reduced-motion: reduce){
-    html{scroll-behavior:auto;}
-    *{animation:none !important; transition:none !important;}
-  }
+  a{ color:inherit; }
+  .wrap{ max-width:var(--fai-container); margin:0 auto; padding:0 var(--gutter); }
+  @media (max-width:760px){ :root{ --gutter:16px; } }
 
-  h1,h2,h3,h4{font-family:var(--display); margin:0; font-weight:600; letter-spacing:-0.01em;}
-  a{color:inherit;}
-  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 var(--gutter);}
-  .mono{font-family:var(--mono);}
-
-  /* ===================== NAV ===================== */
-  header{
-    position:sticky; top:0; z-index:50;
-    background:rgba(255,255,255,0.88); backdrop-filter:blur(8px);
-    border-bottom:1px solid var(--line);
-  }
-  nav{
-    display:flex; align-items:center; justify-content:space-between;
-    max-width:var(--maxw); margin:0 auto; padding:16px var(--gutter);
-  }
-  .brand{
-    display:flex; align-items:center; gap:10px; font-family:var(--mono); font-size:13px;
-    letter-spacing:0.04em; text-decoration:none; text-transform:uppercase;
-  }
-  .dm-logo{height:26px; width:auto; display:block; border-radius:3px; box-shadow:0 0 0 1px var(--line-strong);}
-  .brand-div{color:var(--line-strong); font-weight:400;}
-  .navlinks{display:flex; gap:26px; font-family:var(--mono); font-size:12.5px; letter-spacing:0.05em;}
-  .navlinks a{text-decoration:none; color:var(--text-dim); text-transform:uppercase; transition:color .2s;}
-  .navlinks a:hover{color:var(--text);}
-  @media (max-width:800px){ .navlinks{display:none;} }
-
-  /* ===================== HERO ===================== */
-  .hero{padding:64px 0 40px;}
-  .eyebrow{
-    font-family:var(--mono); text-transform:uppercase; letter-spacing:0.14em;
-    font-size:12px; color:var(--text-dim); display:flex; align-items:center; gap:10px; margin-bottom:18px;
-  }
-  .eyebrow::before{content:""; width:16px; height:2px; background:var(--text-dim); display:inline-block;}
-  .hero h1{font-size:clamp(34px,5.4vw,58px); line-height:1.05; max-width:16ch;}
-  .hero p.lede{
-    font-size:17px; line-height:1.55; color:var(--text-dim); max-width:62ch; margin-top:20px;
-  }
-  .stat-row{display:flex; flex-wrap:wrap; gap:10px; margin-top:26px;}
-  .stat{
-    font-family:var(--mono); font-size:12.5px; letter-spacing:0.02em;
-    border:1px solid var(--line-strong); border-radius:999px; padding:8px 15px; color:var(--text-dim);
-  }
-  .stat b{color:var(--text); font-weight:600;}
-  .legend{display:flex; flex-wrap:wrap; gap:22px; margin-top:22px;}
-  .legend-item{display:flex; align-items:center; gap:8px; font-size:13.5px; color:var(--text-dim);}
-  .dot{width:10px; height:10px; border-radius:50%; flex:none;}
-  .dot.demand{background:var(--demand);}
-  .dot.hub{background:var(--hub);}
-  .dot.orphan{background:transparent; border:1.5px dashed var(--text-dim);}
-
-  .roadline{
-    height:1px; background-image:repeating-linear-gradient(90deg, var(--line-strong) 0 22px, transparent 22px 40px);
+  /* ---------- Hero ---------- */
+  .hero{ padding-block:88px 56px; }
+  .hero h1{
+    font-size:clamp(48px, 8vw, 112px);
+    font-weight:500;
+    line-height:.95;
     margin:0;
   }
+  .lede{
+    font-size:clamp(19px, 2vw, 22px);
+    line-height:1.45;
+    color:var(--fai-ink-2);
+    max-width:40ch;
+    margin:28px 0 0;
+  }
+  .key{
+    display:flex; flex-wrap:wrap; gap:12px 28px;
+    margin:36px 0 0; padding:0; list-style:none;
+    font-size:14px; color:var(--fai-ink-2);
+  }
+  .key li{ display:flex; align-items:center; gap:10px; }
+  .key .fai-el{ --el-size:22px; }
 
-  /* ===================== SECTIONS ===================== */
-  section{padding:64px 0;}
+  /* ---------- The table ---------- */
+  .table{ padding-bottom:96px; }
+  .period{
+    display:grid;
+    grid-template-columns:160px 1fr;
+    gap:24px;
+    padding:20px 0;
+    border-top:1px solid var(--fai-rule);
+  }
+  .period:last-child{ border-bottom:1px solid var(--fai-rule); }
+  .period__name{
+    font-size:15px; font-weight:600; margin:0; padding-top:6px;
+  }
+  .period__tiles{ display:flex; flex-wrap:wrap; gap:10px; }
+
+  .tile{
+    --tile:132px;
+    position:relative;
+    width:var(--tile); height:var(--tile);
+    padding:12px;
+    display:flex; flex-direction:column; justify-content:space-between;
+    background:var(--fai-ink); color:var(--fai-paper);
+    text-decoration:none;
+    transition:background var(--fai-ease);
+  }
+  .tile i{
+    position:absolute; top:11px; right:12px;
+    font-style:normal; font-size:13px; font-variant-numeric:tabular-nums;
+  }
+  .tile span{
+    order:-1;
+    font-size:13px; line-height:1.25;
+    max-width:calc(100% - 24px);
+  }
+  .tile b{
+    font-size:54px; font-weight:500; line-height:.8;
+    letter-spacing:-0.03em !important;
+  }
+  .tile:hover{ background:var(--fai-beet); }
+  .tile--camden{ background:var(--fai-beet); }
+  .tile--camden:hover{ background:var(--fai-ink); }
+  .tile--draft{
+    background:transparent; color:var(--fai-ink);
+    box-shadow:inset 0 0 0 1.5px var(--fai-ink);
+  }
+  .tile--draft:hover{ background:var(--fai-field); }
+
   @media (max-width:760px){
-    :root{--gutter:20px;}
-    section{padding:44px 0;}
-    .hero{padding:44px 0 28px;}
+    .period{ grid-template-columns:1fr; gap:12px; }
+    .period__name{ padding-top:0; }
+    .tile{ --tile:calc((100vw - 32px - 20px) / 3); padding:9px; }
+    .tile b{ font-size:clamp(30px, 10vw, 44px); }
+    .tile span{ font-size:12px; }
+    .tile i{ top:8px; right:9px; font-size:12px; }
   }
-  .section-head{display:flex; align-items:baseline; justify-content:space-between; gap:16px; flex-wrap:wrap; margin-bottom:14px;}
-  .section-head h2{font-size:clamp(24px,3vw,32px);}
-  .section-head .count{font-family:var(--mono); font-size:12px; color:var(--text-dim);}
-  .section-note{font-size:15px; color:var(--text-dim); max-width:70ch; margin:0 0 28px; line-height:1.55;}
 
-  /* ===================== DIAGRAM ===================== */
-  .diagram-shell{border:1px solid var(--line); background:var(--surface); border-radius:2px; padding:20px 20px 8px;}
-  .diagram-scroll{overflow-x:auto;}
-  .diagram-scroll svg{display:block; min-width:760px; width:100%; height:auto;}
-  .diagram-caption{font-size:13px; color:var(--text-dim); padding:16px 4px 4px; line-height:1.55; border-top:1px solid var(--line); margin-top:14px;}
+  /* ---------- Sections ---------- */
+  section.block{ padding:88px 0; border-top:1px solid var(--fai-rule); }
+  @media (max-width:760px){ section.block{ padding:56px 0; } .hero{ padding-block:56px 40px; } }
+  .block__head{
+    display:grid; grid-template-columns:minmax(0, 5fr) minmax(0, 7fr); gap:32px;
+    margin-bottom:40px;
+  }
+  .block__head h2{
+    font-size:clamp(28px, 3.4vw, 40px); font-weight:500; line-height:1.1; margin:0;
+  }
+  .block__head p{ margin:4px 0 0; color:var(--fai-ink-2); max-width:var(--fai-measure); }
+  @media (max-width:760px){ .block__head{ grid-template-columns:1fr; gap:14px; } }
 
-  /* ===================== CARDS ===================== */
-  .grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(270px,1fr)); gap:16px;}
-  .card{
-    border:1px solid var(--line); background:var(--surface);
-    padding:22px; display:flex; flex-direction:column; gap:12px;
+  /* ---------- Diagram ---------- */
+  .diagram{ background:var(--fai-field); padding:24px; margin:0; }
+  .diagram__scroll{ overflow-x:auto; }
+  .diagram svg{ display:block; min-width:780px; width:100%; height:auto; }
+  .diagram figcaption{
+    font-size:14px; color:var(--fai-ink-3); line-height:1.5;
+    margin-top:16px; max-width:var(--fai-measure);
   }
-  .card.demand{border-top:3px solid var(--demand);}
-  .card.hub{border-top:3px solid var(--hub);}
-  .card-file{font-family:var(--mono); font-size:11px; color:var(--text-dim); word-break:break-all;}
-  .card h3{font-size:17px; line-height:1.3; font-weight:600;}
-  .card p{font-size:13.5px; line-height:1.55; color:var(--text-dim); margin:0; flex:1;}
-  .tags{display:flex; flex-wrap:wrap; gap:6px;}
-  .lib-tag{
-    font-family:var(--mono); font-size:10.5px; letter-spacing:0.03em; text-transform:uppercase;
-    padding:5px 10px; border-radius:999px; border:1px solid var(--line-strong); color:var(--text-dim);
-  }
-  .lib-tag.demand{background:var(--demand-dim); color:#B8460F; border-color:transparent;}
-  .lib-tag.orphan{border-style:dashed;}
-  .actions{display:flex; align-items:center; gap:10px; margin-top:4px; flex-wrap:wrap;}
-  .btn{
-    font-family:var(--mono); font-size:11.5px; text-transform:uppercase; letter-spacing:0.05em;
-    padding:10px 14px; border:1px solid var(--line-strong); text-decoration:none;
-    display:inline-flex; align-items:center; gap:6px; transition:all .2s; color:var(--text);
-  }
-  .btn.solid{background:var(--text); border-color:var(--text); color:var(--bg); font-weight:600;}
-  .btn:hover{border-color:var(--text); color:var(--text);}
-  .btn.solid:hover{filter:brightness(0.92); color:var(--bg);}
-  .card.demand .btn.solid{background:var(--demand); border-color:var(--demand); color:#1a0a03;}
-  .card.demand .btn.solid:hover{filter:brightness(1.08); color:#1a0a03;}
-  .pdf-size{font-family:var(--mono); font-size:11px; color:var(--text-dim);}
+  @media (max-width:760px){ .diagram{ padding:14px; margin:0 calc(var(--gutter) * -1); } }
 
-  footer{
-    padding:36px 0 64px; border-top:1px solid var(--line);
-    font-size:13px; color:var(--text-dim); line-height:1.6;
+  /* ---------- Page list ---------- */
+  .group + .group{ margin-top:56px; }
+  .group__head{ display:flex; flex-wrap:wrap; align-items:baseline; gap:6px 16px; margin-bottom:8px; }
+  .group__head h3{ font-size:22px; font-weight:600; margin:0; }
+  .group__head p{ margin:0; font-size:15px; color:var(--fai-ink-3); }
+  .entries{ list-style:none; margin:0; padding:0; }
+  .entry{
+    display:grid;
+    grid-template-columns:44px minmax(0, 1fr) auto;
+    gap:20px;
+    align-items:start;
+    padding:20px 0;
+    border-bottom:1px solid var(--fai-rule);
   }
-  footer .wrap{max-width:820px;}
+  .entry__body h4{ font-size:18px; font-weight:600; line-height:1.3; margin:0; }
+  .entry__body h4 a{ text-decoration:none; }
+  .entry__body h4 a:hover{ color:var(--fai-beet); text-decoration:underline; text-underline-offset:3px; }
+  .entry__draft{
+    display:inline-block; margin-left:10px; vertical-align:2px;
+    font-size:13px; font-weight:400; color:var(--fai-ink-3);
+    border:1px solid var(--fai-rule-strong); border-radius:999px; padding:1px 9px;
+  }
+  .entry__body p{ margin:6px 0 0; font-size:15.5px; line-height:1.55; color:var(--fai-ink-2); max-width:var(--fai-measure); }
+  .entry__links{ padding-top:2px; white-space:nowrap; }
+  .entry__pdf{
+    font-size:14px; color:var(--fai-ink-2);
+    text-decoration:underline; text-decoration-color:var(--fai-rule-strong); text-underline-offset:3px;
+  }
+  .entry__pdf:hover{ color:var(--fai-beet); text-decoration-color:var(--fai-beet); }
+  @media (max-width:760px){
+    .entry{ grid-template-columns:44px minmax(0, 1fr); gap:14px; }
+    .entry__links{ grid-column:2; padding-top:0; }
+  }
+
+  /* ---------- Footer ---------- */
+  footer{ border-top:1px solid var(--fai-rule); padding:40px 0 72px; }
+  footer .wrap{ display:flex; gap:32px; align-items:flex-start; flex-wrap:wrap; }
+  footer img{ height:22px; width:auto; display:block; margin-top:2px; }
+  footer p{ margin:0; font-size:14px; line-height:1.55; color:var(--fai-ink-3); max-width:64ch; }
 </style>
 <!-- fai:head -->
 <link rel="icon" href="assets/fai/favicon.svg" type="image/svg+xml">
@@ -179,330 +183,303 @@
 </div>
 <!-- /fai:bar -->
 
-<header>
-  <nav>
-    <a class="brand" href="index.html">
-      FOOD MISSION<span class="brand-div">/</span>LIBRARY
-    </a>
-    <div class="navlinks">
-      <a href="index.html">Portfolio hub</a>
-      <a href="#map">How it fits together</a>
-      <a href="#camden">Camden-specific</a>
-      <a href="#other">Cross-borough</a>
-    </div>
-  </nav>
-</header>
+<main>
+  <header class="hero wrap">
+    <h1>Library</h1>
+    <p class="lede">All <span data-fai="count">13</span> pages in the portfolio, set out as a table of elements. Open any of them live, or take a PDF snapshot to share offline.</p>
+    <ul class="key" aria-label="How to read the tiles">
+      <li><span class="fai-el" aria-hidden="true"><b>Fd</b></span>Shared across London</li>
+      <li><span class="fai-el fai-el--camden" aria-hidden="true"><b>Nc</b></span>Belongs to Camden</li>
+      <li><span class="fai-el fai-el--draft" aria-hidden="true"><b>Sv</b></span>Draft, still changing</li>
+    </ul>
+  </header>
 
-<div class="hero wrap">
-  <div class="eyebrow">Food Mission — Regen Food Systems</div>
-  <h1>Library</h1>
-  <p class="lede">Every live page built across the portfolio, in one place — how they link to each other, which ones belong to Camden outright, and an open or downloadable copy of each.</p>
-  <div class="stat-row">
-    <div class="stat"><b>13</b> assets</div>
-    <div class="stat"><b>4</b> Camden-specific</div>
-    <div class="stat"><b>9</b> cross-borough / London-wide</div>
-    <div class="stat">food.darkmatterlabs.org</div>
+  <div class="table wrap" aria-label="Table of pages">
+    <!-- fai:library-table -->
+    <div class="period">
+      <h3 class="period__name">London-wide</h3>
+      <div class="period__tiles">
+        <a class="tile" href="index.html" aria-label="Food as Infrastructure"><i>1</i><b>Fd</b><span>Portfolio</span></a>
+        <a class="tile" href="hubs-and-markets-working-group.html" aria-label="London Hubs &amp; Markets Working Group"><i>2</i><b>Hm</b><span>Hubs &amp; Markets</span></a>
+        <a class="tile" href="pathways-to-civic-food-system.html" aria-label="Six Pathways to a Civic Food System"><i>3</i><b>Pw</b><span>Six Pathways</span></a>
+        <a class="tile tile--draft" href="sovereign-food-system.html" aria-label="Draft. A Sovereign Food System"><i>4</i><b>Sv</b><span>Sovereign Food System</span></a>
+        <a class="tile tile--draft" href="media-and-inspiration.html" aria-label="Draft. Media &amp; Inspiration"><i>13</i><b>Md</b><span>Media &amp; Inspiration</span></a>
+      </div>
+    </div>
+    <div class="period">
+      <h3 class="period__name">Camden</h3>
+      <div class="period__tiles">
+        <a class="tile tile--camden" href="nutrition-supply-map.html" aria-label="Where Camden&#x27;s Food Comes From"><i>5</i><b>Ns</b><span>Supply Map</span></a>
+        <a class="tile tile--camden" href="nutrition-cascade-model.html" aria-label="The Nutrition Cascade"><i>6</i><b>Nc</b><span>Nutrition Cascade</span></a>
+        <a class="tile tile--camden" href="wheres-the-energy.html" aria-label="Where&#x27;s the Energy?"><i>7</i><b>En</b><span>Where&#x27;s the Energy?</span></a>
+        <a class="tile tile--camden" href="camden-health-and-wellbeing.html" aria-label="Healthy Weight Acceleration Plan"><i>8</i><b>Hw</b><span>Healthy Weight</span></a>
+      </div>
+    </div>
+    <div class="period">
+      <h3 class="period__name">Islington</h3>
+      <div class="period__tiles">
+        <a class="tile tile--draft" href="islington-food-partnership.html" aria-label="Draft. Islington Food Partnership"><i>9</i><b>Ip</b><span>Islington Food Partnership</span></a>
+        <a class="tile tile--draft" href="islington-food-hub.html" aria-label="Draft. Islington: what&#x27;s next"><i>10</i><b>In</b><span>Islington: what&#x27;s next</span></a>
+      </div>
+    </div>
+    <div class="period">
+      <h3 class="period__name">Hackney</h3>
+      <div class="period__tiles">
+        <a class="tile tile--draft" href="hackney-food-partnership.html" aria-label="Draft. Hackney Food Hub"><i>11</i><b>Hp</b><span>Hackney Food Hub</span></a>
+        <a class="tile tile--draft" href="hackney-food-hub.html" aria-label="Draft. Hackney: what&#x27;s next"><i>12</i><b>Hn</b><span>Hackney: what&#x27;s next</span></a>
+      </div>
+    </div>
+    <!-- /fai:library-table -->
   </div>
-  <div class="legend">
-    <div class="legend-item"><span class="dot demand"></span> Camden-specific — belongs to Camden</div>
-    <div class="legend-item"><span class="dot hub"></span> Cross-borough / London-wide</div>
-    <div class="legend-item"><span class="dot orphan"></span> Not yet linked from site navigation</div>
-  </div>
-</div>
 
-<div class="roadline"></div>
+  <section class="block" id="map" aria-labelledby="map-h">
+    <div class="wrap">
+      <div class="block__head">
+        <h2 id="map-h">How the pages link</h2>
+        <p>The portfolio opens onto five London-wide frameworks and tools. The Working Group and the Six Pathways are, in turn, the way into the borough and Camden pages beneath them. Two pages are live but not yet linked from any of the others.</p>
+      </div>
+      <figure class="diagram">
+        <div class="diagram__scroll">
+          <svg viewBox="0 0 1160 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="map-title">
+            <title id="map-title">Which page links to which, from the portfolio down to the borough pages</title>
+            <defs>
+              <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M0,0 L10,5 L0,10 z" fill="#6E6F68"></path>
+              </marker>
+              <style>
+                .n-label{ font-size:12px; fill:#6E6F68; }
+                .n-name{ font-size:14px; font-weight:600; fill:#111112; }
+                .n-london{ fill:#FFFFFF; stroke:#111112; stroke-width:1.5; }
+                .n-camden{ fill:#F4E6EC; stroke:#8B2252; stroke-width:1.5; }
+                .n-draft{ stroke-dasharray:5 4; }
+                .n-camden-label{ fill:#8B2252; }
+              </style>
+            </defs>
 
-<section id="map">
-  <div class="wrap">
-    <div class="section-head">
-      <h2>How it fits together</h2>
-      <span class="count">hub → framework → borough → hub-specific page</span>
+            <g stroke="#B9BAB2" stroke-width="1.5" fill="none" marker-end="url(#arrow)">
+              <path d="M580,84 L105,140"></path>
+              <path d="M580,84 L342.5,140"></path>
+              <path d="M580,84 L580,140"></path>
+              <path d="M580,84 L817.5,140"></path>
+              <path d="M580,84 L1055,140"></path>
+              <path d="M105,198 L105,250"></path>
+              <path d="M105,198 L295,250"></path>
+              <path d="M342.5,198 L515,250"></path>
+              <path d="M105,308 L105,360"></path>
+              <path d="M295,308 L295,360"></path>
+            </g>
+
+            <rect x="495" y="26" width="170" height="58" fill="#111112"></rect>
+            <text x="580" y="50" text-anchor="middle" class="n-label" style="fill:#A8A8A8">Portfolio</text>
+            <text x="580" y="70" text-anchor="middle" class="n-name" style="fill:#FFFFFF">Food as Infrastructure</text>
+
+            <rect x="20" y="140" width="170" height="58" class="n-london"></rect>
+            <text x="105" y="164" text-anchor="middle" class="n-label">Coordination</text>
+            <text x="105" y="184" text-anchor="middle" class="n-name">Hubs &amp; Markets</text>
+
+            <rect x="257.5" y="140" width="170" height="58" class="n-london"></rect>
+            <text x="342.5" y="164" text-anchor="middle" class="n-label">Framework</text>
+            <text x="342.5" y="184" text-anchor="middle" class="n-name">Six Pathways</text>
+
+            <rect x="495" y="140" width="170" height="58" class="n-london n-draft"></rect>
+            <text x="580" y="164" text-anchor="middle" class="n-label">Framework, draft</text>
+            <text x="580" y="184" text-anchor="middle" class="n-name">Sovereign Food System</text>
+
+            <rect x="732.5" y="140" width="170" height="58" class="n-camden"></rect>
+            <text x="817.5" y="164" text-anchor="middle" class="n-label n-camden-label">Camden</text>
+            <text x="817.5" y="184" text-anchor="middle" class="n-name">Nutrition Cascade</text>
+
+            <rect x="970" y="140" width="170" height="58" class="n-camden"></rect>
+            <text x="1055" y="164" text-anchor="middle" class="n-label n-camden-label">Camden</text>
+            <text x="1055" y="184" text-anchor="middle" class="n-name">Supply Map</text>
+
+            <rect x="20" y="250" width="170" height="58" class="n-london n-draft"></rect>
+            <text x="105" y="274" text-anchor="middle" class="n-label">Islington</text>
+            <text x="105" y="294" text-anchor="middle" class="n-name">Food Partnership</text>
+
+            <rect x="210" y="250" width="170" height="58" class="n-london n-draft"></rect>
+            <text x="295" y="274" text-anchor="middle" class="n-label">Hackney</text>
+            <text x="295" y="294" text-anchor="middle" class="n-name">Food Hub</text>
+
+            <rect x="430" y="250" width="170" height="58" class="n-camden"></rect>
+            <text x="515" y="274" text-anchor="middle" class="n-label n-camden-label">Camden</text>
+            <text x="515" y="294" text-anchor="middle" class="n-name">Where's the Energy?</text>
+
+            <rect x="20" y="360" width="170" height="58" class="n-london n-draft"></rect>
+            <text x="105" y="384" text-anchor="middle" class="n-label">Islington</text>
+            <text x="105" y="404" text-anchor="middle" class="n-name">What's next</text>
+
+            <rect x="210" y="360" width="170" height="58" class="n-london n-draft"></rect>
+            <text x="295" y="384" text-anchor="middle" class="n-label">Hackney</text>
+            <text x="295" y="404" text-anchor="middle" class="n-name">What's next</text>
+
+            <rect x="740" y="296" width="400" height="140" fill="#FFFFFF"></rect>
+            <text x="760" y="324" class="n-label">Live, but not yet linked from any other page</text>
+            <rect x="760" y="346" width="170" height="58" class="n-camden"></rect>
+            <text x="845" y="370" text-anchor="middle" class="n-label n-camden-label">Camden</text>
+            <text x="845" y="390" text-anchor="middle" class="n-name">Healthy Weight</text>
+            <rect x="950" y="346" width="170" height="58" class="n-london n-draft"></rect>
+            <text x="1035" y="370" text-anchor="middle" class="n-label">Reference, draft</text>
+            <text x="1035" y="390" text-anchor="middle" class="n-name">Media &amp; Inspiration</text>
+          </svg>
+        </div>
+        <figcaption>Read from the top down. Solid outlines are live, dashed outlines are drafts, and pink fills mark work that belongs to Camden.</figcaption>
+      </figure>
     </div>
-    <p class="section-note">The portfolio hub links out to the five London-wide frameworks; the Working Group and the Pathways page are, in turn, the doorway into the borough-level and Camden-specific pages beneath them. Two reference pages sit outside this structure — built, live, but not yet linked in from anywhere.</p>
-    <div class="diagram-shell">
-      <div class="diagram-scroll">
-        <svg viewBox="0 0 1160 610" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Site relationship map">
-          <defs>
-            <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-              <path d="M0,0 L10,5 L0,10 z" fill="var(--text-dim)"></path>
-            </marker>
-          </defs>
+  </section>
 
-          <g stroke="var(--line-strong)" stroke-width="2" fill="none" marker-end="url(#arrow)">
-            <path d="M580,96 L105,150"></path>
-            <path d="M580,96 L342.5,150"></path>
-            <path d="M580,96 L580,150"></path>
-            <path d="M580,96 L817.5,150"></path>
-            <path d="M580,96 L1055,150"></path>
-
-            <path d="M105,206 L105,260"></path>
-            <path d="M105,206 L295,260"></path>
-            <path d="M342.5,206 L515,260"></path>
-
-            <path d="M105,316 L105,370"></path>
-            <path d="M295,316 L295,370"></path>
-          </g>
-
-          <g>
-            <rect x="495" y="40" width="170" height="56" rx="2" fill="var(--hub)" stroke="var(--hub)"></rect>
-            <text x="580" y="63" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" fill="#fff" opacity=".85">PORTFOLIO HUB</text>
-            <text x="580" y="80" text-anchor="middle" font-family="Poppins, sans-serif" font-size="13.5" font-weight="600" fill="#fff">index.html</text>
-          </g>
-
-          <g>
-            <rect x="20" y="150" width="170" height="56" rx="2" fill="var(--hub-dim)" stroke="var(--hub)"></rect>
-            <text x="105" y="173" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--text-dim)">COORDINATION</text>
-            <text x="105" y="190" text-anchor="middle" font-family="Poppins, sans-serif" font-size="12" font-weight="600" fill="var(--text)">Hubs &amp; Markets WG</text>
-
-            <rect x="257.5" y="150" width="170" height="56" rx="2" fill="var(--hub-dim)" stroke="var(--hub)"></rect>
-            <text x="342.5" y="173" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--text-dim)">FRAMEWORK</text>
-            <text x="342.5" y="190" text-anchor="middle" font-family="Poppins, sans-serif" font-size="12" font-weight="600" fill="var(--text)">Six Pathways</text>
-
-            <rect x="495" y="150" width="170" height="56" rx="2" fill="var(--hub-dim)" stroke="var(--hub)"></rect>
-            <text x="580" y="173" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--text-dim)">FRAMEWORK — DRAFT</text>
-            <text x="580" y="190" text-anchor="middle" font-family="Poppins, sans-serif" font-size="12" font-weight="600" fill="var(--text)">Sovereign Food System</text>
-
-            <rect x="732.5" y="150" width="170" height="56" rx="2" fill="var(--demand-dim)" stroke="var(--demand)"></rect>
-            <text x="817.5" y="173" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="#B8460F">CAMDEN</text>
-            <text x="817.5" y="190" text-anchor="middle" font-family="Poppins, sans-serif" font-size="12" font-weight="600" fill="var(--text)">Nutrition Cascade Model</text>
-
-            <rect x="970" y="150" width="170" height="56" rx="2" fill="var(--demand-dim)" stroke="var(--demand)"></rect>
-            <text x="1055" y="173" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="#B8460F">CAMDEN</text>
-            <text x="1055" y="190" text-anchor="middle" font-family="Poppins, sans-serif" font-size="12" font-weight="600" fill="var(--text)">Food Supply Map</text>
-          </g>
-
-          <g>
-            <rect x="20" y="260" width="170" height="56" rx="2" fill="var(--surface)" stroke="var(--hub)"></rect>
-            <text x="105" y="283" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--text-dim)">ISLINGTON</text>
-            <text x="105" y="300" text-anchor="middle" font-family="Poppins, sans-serif" font-size="12" font-weight="600" fill="var(--text)">Food Partnership</text>
-
-            <rect x="210" y="260" width="170" height="56" rx="2" fill="var(--surface)" stroke="var(--hub)"></rect>
-            <text x="295" y="283" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--text-dim)">HACKNEY</text>
-            <text x="295" y="300" text-anchor="middle" font-family="Poppins, sans-serif" font-size="12" font-weight="600" fill="var(--text)">Food Hub (overview)</text>
-
-            <rect x="430" y="260" width="170" height="56" rx="2" fill="var(--demand-dim)" stroke="var(--demand)"></rect>
-            <text x="515" y="283" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="#B8460F">CAMDEN</text>
-            <text x="515" y="300" text-anchor="middle" font-family="Poppins, sans-serif" font-size="12" font-weight="600" fill="var(--text)">Where's the Energy?</text>
-          </g>
-
-          <g>
-            <rect x="20" y="370" width="170" height="56" rx="2" fill="var(--surface)" stroke="var(--hub)"></rect>
-            <text x="105" y="393" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--text-dim)">ISLINGTON</text>
-            <text x="105" y="410" text-anchor="middle" font-family="Poppins, sans-serif" font-size="12" font-weight="600" fill="var(--text)">What's Next</text>
-
-            <rect x="210" y="370" width="170" height="56" rx="2" fill="var(--surface)" stroke="var(--hub)"></rect>
-            <text x="295" y="393" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--text-dim)">HACKNEY</text>
-            <text x="295" y="410" text-anchor="middle" font-family="Poppins, sans-serif" font-size="12" font-weight="600" fill="var(--text)">What's Next</text>
-          </g>
-
-          <g>
-            <rect x="740" y="330" width="400" height="130" rx="4" fill="none" stroke="var(--text-dim)" stroke-width="1.5" stroke-dasharray="5 5"></rect>
-            <text x="758" y="352" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--text-dim)">NOT LINKED FROM SITE NAVIGATION</text>
-
-            <rect x="758" y="368" width="170" height="56" rx="2" fill="var(--demand-dim)" stroke="var(--demand)" stroke-dasharray="4 3"></rect>
-            <text x="843" y="391" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="#B8460F">CAMDEN</text>
-            <text x="843" y="408" text-anchor="middle" font-family="Poppins, sans-serif" font-size="12" font-weight="600" fill="var(--text)">Health &amp; Wellbeing</text>
-
-            <rect x="958" y="368" width="170" height="56" rx="2" fill="var(--surface)" stroke="var(--hub)" stroke-dasharray="4 3"></rect>
-            <text x="1043" y="391" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--text-dim)">GENERAL</text>
-            <text x="1043" y="408" text-anchor="middle" font-family="Poppins, sans-serif" font-size="12" font-weight="600" fill="var(--text)">Media &amp; Inspiration</text>
-          </g>
-        </svg>
+  <section class="block" id="pages" aria-labelledby="pages-h">
+    <div class="wrap">
+      <div class="block__head">
+        <h2 id="pages-h">Every page</h2>
+        <p>Grouped by who the work belongs to. Under the IP position agreed with the Camden Food Partnership, everything is open except the tools built for Camden alone.</p>
       </div>
-      <p class="diagram-caption">Read top to bottom: the portfolio hub (<span class="mono">index.html</span>) opens onto five frameworks; the Working Group and Pathways pages are the doorway into the borough and Camden pages beneath them. The dashed box on the right holds two pages that are built and live but have no inbound link yet.</p>
+      <!-- fai:library-list -->
+    <section class="group" id="london" aria-labelledby="london-h">
+      <div class="group__head">
+        <h3 id="london-h">London-wide</h3>
+        <p>Shared across the alliance under the open-IP position.</p>
+      </div>
+      <ul class="entries">
+        <li class="entry">
+          <span class="fai-el" style="--el-size:44px" aria-hidden="true"><b>Fd</b><i>1</i></span>
+          <div class="entry__body">
+            <h4><a href="index.html">Food as Infrastructure</a></h4>
+            <p>The London-wide portfolio. It ties the frameworks, the Hubs &amp; Markets Working Group and the borough pages into one entry point.</p>
+          </div>
+          <div class="entry__links"><a class="entry__pdf" href="assets/library-pdfs/index.pdf">PDF snapshot, 837 KB</a></div>
+        </li>
+        <li class="entry">
+          <span class="fai-el" style="--el-size:44px" aria-hidden="true"><b>Hm</b><i>2</i></span>
+          <div class="entry__body">
+            <h4><a href="hubs-and-markets-working-group.html">London Hubs &amp; Markets Working Group</a></h4>
+            <p>The coordination layer for the cross-borough working group: the anatomy of a hub, the shared network view, and notes from each meeting.</p>
+          </div>
+          <div class="entry__links"><a class="entry__pdf" href="assets/library-pdfs/hubs-and-markets-working-group.pdf">PDF snapshot, 985 KB</a></div>
+        </li>
+        <li class="entry">
+          <span class="fai-el" style="--el-size:44px" aria-hidden="true"><b>Pw</b><i>3</i></span>
+          <div class="entry__body">
+            <h4><a href="pathways-to-civic-food-system.html">Six Pathways to a Civic Food System</a></h4>
+            <p>The shared framework the borough and Camden work sits inside: six pathways to a civic, regenerative food system.</p>
+          </div>
+          <div class="entry__links"><a class="entry__pdf" href="assets/library-pdfs/pathways-to-civic-food-system.pdf">PDF snapshot, 94 KB</a></div>
+        </li>
+        <li class="entry">
+          <span class="fai-el fai-el--draft" style="--el-size:44px" aria-hidden="true"><b>Sv</b><i>4</i></span>
+          <div class="entry__body">
+            <h4><a href="sovereign-food-system.html">A Sovereign Food System</a><span class="entry__draft">Draft</span></h4>
+            <p>A draft framework for the economic and policy foundations underneath the wider portfolio.</p>
+          </div>
+          <div class="entry__links"><a class="entry__pdf" href="assets/library-pdfs/sovereign-food-system.pdf">PDF snapshot, 178 KB</a></div>
+        </li>
+        <li class="entry">
+          <span class="fai-el fai-el--draft" style="--el-size:44px" aria-hidden="true"><b>Md</b><i>13</i></span>
+          <div class="entry__body">
+            <h4><a href="media-and-inspiration.html">Media &amp; Inspiration</a><span class="entry__draft">Draft</span></h4>
+            <p>Podcasts, posts and pieces that shaped the thinking here. Gathered, but not yet linked from the portfolio pages.</p>
+          </div>
+          <div class="entry__links"><a class="entry__pdf" href="assets/library-pdfs/media-and-inspiration.pdf">PDF snapshot, 124 KB</a></div>
+        </li>
+      </ul>
+    </section>
+    <section class="group" id="camden" aria-labelledby="camden-h">
+      <div class="group__head">
+        <h3 id="camden-h">Camden</h3>
+        <p>Built for Camden alone. These belong to Camden outright.</p>
+      </div>
+      <ul class="entries">
+        <li class="entry">
+          <span class="fai-el fai-el--camden" style="--el-size:44px" aria-hidden="true"><b>Ns</b><i>5</i></span>
+          <div class="entry__body">
+            <h4><a href="nutrition-supply-map.html">Where Camden&#x27;s Food Comes From</a></h4>
+            <p>An interactive map of the global systems Camden&#x27;s calories, protein and micronutrients depend on, and how their disruption reaches UK shelves.</p>
+          </div>
+          <div class="entry__links"><a class="entry__pdf" href="assets/library-pdfs/nutrition-supply-map.pdf">PDF snapshot, 398 KB</a></div>
+        </li>
+        <li class="entry">
+          <span class="fai-el fai-el--camden" style="--el-size:44px" aria-hidden="true"><b>Nc</b><i>6</i></span>
+          <div class="entry__body">
+            <h4><a href="nutrition-cascade-model.html">The Nutrition Cascade</a></h4>
+            <p>An interactive model of how one food-system shock cascades, across four volatility windows, into social and financial risk for the borough.</p>
+          </div>
+          <div class="entry__links"><a class="entry__pdf" href="assets/library-pdfs/nutrition-cascade-model.pdf">PDF snapshot, 273 KB</a></div>
+        </li>
+        <li class="entry">
+          <span class="fai-el fai-el--camden" style="--el-size:44px" aria-hidden="true"><b>En</b><i>7</i></span>
+          <div class="entry__body">
+            <h4><a href="wheres-the-energy.html">Where&#x27;s the Energy?</a></h4>
+            <p>What was raised, and by whom, across the Camden Food Partnership: where energy already exists and where it still needs building.</p>
+          </div>
+          <div class="entry__links"><a class="entry__pdf" href="assets/library-pdfs/wheres-the-energy.pdf">PDF snapshot, 107 KB</a></div>
+        </li>
+        <li class="entry">
+          <span class="fai-el fai-el--camden" style="--el-size:44px" aria-hidden="true"><b>Hw</b><i>8</i></span>
+          <div class="entry__body">
+            <h4><a href="camden-health-and-wellbeing.html">Healthy Weight Acceleration Plan</a></h4>
+            <p>Reference material from Camden&#x27;s Health &amp; Wellbeing Department, held here to cross-reference against the food mission work.</p>
+          </div>
+          <div class="entry__links"><a class="entry__pdf" href="assets/library-pdfs/camden-health-and-wellbeing.pdf">PDF snapshot, 187 KB</a></div>
+        </li>
+      </ul>
+    </section>
+    <section class="group" id="islington" aria-labelledby="islington-h">
+      <div class="group__head">
+        <h3 id="islington-h">Islington</h3>
+        <p>The borough's own pages, built inside the working group.</p>
+      </div>
+      <ul class="entries">
+        <li class="entry">
+          <span class="fai-el fai-el--draft" style="--el-size:44px" aria-hidden="true"><b>Ip</b><i>9</i></span>
+          <div class="entry__body">
+            <h4><a href="islington-food-partnership.html">Islington Food Partnership</a><span class="entry__draft">Draft</span></h4>
+            <p>Overview and ambition for Islington&#x27;s food partnership, including the diabetes food-prescribing pilot running at scale.</p>
+          </div>
+          <div class="entry__links"><a class="entry__pdf" href="assets/library-pdfs/islington-food-partnership.pdf">PDF snapshot, 135 KB</a></div>
+        </li>
+        <li class="entry">
+          <span class="fai-el fai-el--draft" style="--el-size:44px" aria-hidden="true"><b>In</b><i>10</i></span>
+          <div class="entry__body">
+            <h4><a href="islington-food-hub.html">Islington: what&#x27;s next</a><span class="entry__draft">Draft</span></h4>
+            <p>Islington&#x27;s hub and logistics thinking, developed within the Hubs &amp; Markets Working Group.</p>
+          </div>
+          <div class="entry__links"><a class="entry__pdf" href="assets/library-pdfs/islington-food-hub.pdf">PDF snapshot, 247 KB</a></div>
+        </li>
+      </ul>
+    </section>
+    <section class="group" id="hackney" aria-labelledby="hackney-h">
+      <div class="group__head">
+        <h3 id="hackney-h">Hackney</h3>
+        <p>The borough's own pages, built inside the working group.</p>
+      </div>
+      <ul class="entries">
+        <li class="entry">
+          <span class="fai-el fai-el--draft" style="--el-size:44px" aria-hidden="true"><b>Hp</b><i>11</i></span>
+          <div class="entry__body">
+            <h4><a href="hackney-food-partnership.html">Hackney Food Hub</a><span class="entry__draft">Draft</span></h4>
+            <p>Overview and ambition for Hackney&#x27;s food hub, starting from the logistics-capacity question that opened the borough&#x27;s thinking.</p>
+          </div>
+          <div class="entry__links"><a class="entry__pdf" href="assets/library-pdfs/hackney-food-partnership.pdf">PDF snapshot, 135 KB</a></div>
+        </li>
+        <li class="entry">
+          <span class="fai-el fai-el--draft" style="--el-size:44px" aria-hidden="true"><b>Hn</b><i>12</i></span>
+          <div class="entry__body">
+            <h4><a href="hackney-food-hub.html">Hackney: what&#x27;s next</a><span class="entry__draft">Draft</span></h4>
+            <p>Hackney&#x27;s hub and logistics thinking, developed within the Hubs &amp; Markets Working Group.</p>
+          </div>
+          <div class="entry__links"><a class="entry__pdf" href="assets/library-pdfs/hackney-food-hub.pdf">PDF snapshot, 251 KB</a></div>
+        </li>
+      </ul>
+    </section>
+    <!-- /fai:library-list -->
     </div>
-  </div>
-</section>
-
-<div class="roadline"></div>
-
-<section id="camden">
-  <div class="wrap">
-    <div class="section-head">
-      <h2>Camden-specific</h2>
-      <span class="count">4 assets · belong to Camden</span>
-    </div>
-    <p class="section-note">Built for and about Camden specifically — under the open-IP position agreed with the Partnership, these are Camden's to use outright and can inspire a shared portfolio of tools.</p>
-    <div class="grid">
-
-      <div class="card demand">
-        <div class="card-file mono">nutrition-supply-map.html</div>
-        <h3>Where Camden's Food Comes From</h3>
-        <p>An interactive transmission map of the global systems Camden's calories, protein and micronutrients depend on — breadbaskets, fertiliser producers and chokepoints — and how their disruption cascades onto UK shelves.</p>
-        <div class="tags"><span class="lib-tag demand">Camden</span><span class="lib-tag">Supply-risk map</span></div>
-        <div class="actions">
-          <a class="btn solid" href="nutrition-supply-map.html" target="_blank" rel="noopener">Open live page ↗</a>
-          <a class="btn" href="assets/library-pdfs/nutrition-supply-map.pdf" target="_blank" rel="noopener">Open PDF</a>
-          <span class="pdf-size">398 KB</span>
-        </div>
-      </div>
-
-      <div class="card demand">
-        <div class="card-file mono">nutrition-cascade-model.html</div>
-        <h3>The Nutrition Cascade — Camden Risk Model</h3>
-        <p>An interactive, qualitative model of how food-system shocks cascade through granular pathways — across four volatility windows — to social-contract and financial-stability risk for the borough.</p>
-        <div class="tags"><span class="lib-tag demand">Camden</span><span class="lib-tag">Cascade risk model</span></div>
-        <div class="actions">
-          <a class="btn solid" href="nutrition-cascade-model.html" target="_blank" rel="noopener">Open live page ↗</a>
-          <a class="btn" href="assets/library-pdfs/nutrition-cascade-model.pdf" target="_blank" rel="noopener">Open PDF</a>
-          <span class="pdf-size">273 KB</span>
-        </div>
-      </div>
-
-      <div class="card demand">
-        <div class="card-file mono">wheres-the-energy.html</div>
-        <h3>Where's the Energy?</h3>
-        <p>Mapping momentum and organising capacity across the Camden Food Partnership — where energy already exists in the system, and where it still needs building.</p>
-        <div class="tags"><span class="lib-tag demand">Camden</span><span class="lib-tag">Food Partnership</span></div>
-        <div class="actions">
-          <a class="btn solid" href="wheres-the-energy.html" target="_blank" rel="noopener">Open live page ↗</a>
-          <a class="btn" href="assets/library-pdfs/wheres-the-energy.pdf" target="_blank" rel="noopener">Open PDF</a>
-          <span class="pdf-size">107 KB</span>
-        </div>
-      </div>
-
-      <div class="card demand">
-        <div class="card-file mono">camden-health-and-wellbeing.html</div>
-        <h3>Healthy Weight Acceleration Plan</h3>
-        <p>Reference material from Camden's Health &amp; Wellbeing Department — the borough's own healthy-weight plan, held here for cross-reference against the food mission work.</p>
-        <div class="tags"><span class="lib-tag demand">Camden</span><span class="lib-tag orphan">Not yet linked</span></div>
-        <div class="actions">
-          <a class="btn solid" href="camden-health-and-wellbeing.html" target="_blank" rel="noopener">Open live page ↗</a>
-          <a class="btn" href="assets/library-pdfs/camden-health-and-wellbeing.pdf" target="_blank" rel="noopener">Open PDF</a>
-          <span class="pdf-size">187 KB</span>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<div class="roadline"></div>
-
-<section id="other">
-  <div class="wrap">
-    <div class="section-head">
-      <h2>Cross-borough &amp; London-wide</h2>
-      <span class="count">9 assets · open IP, shared portfolio</span>
-    </div>
-    <p class="section-note">The portfolio hub, the shared frameworks, and the other boroughs' own pages — built under the standard open-IP position, for the whole alliance to reuse.</p>
-    <div class="grid">
-
-      <div class="card hub">
-        <div class="card-file mono">index.html</div>
-        <h3>Food as Infrastructure — Portfolio Hub</h3>
-        <p>The London-wide portfolio hub — ties the frameworks, the Hubs &amp; Markets Working Group and the borough pages together into one entry point.</p>
-        <div class="tags"><span class="lib-tag">Portfolio hub</span><span class="lib-tag">London-wide</span></div>
-        <div class="actions">
-          <a class="btn solid" href="index.html" target="_blank" rel="noopener">Open live page ↗</a>
-          <a class="btn" href="assets/library-pdfs/index.pdf" target="_blank" rel="noopener">Open PDF</a>
-          <span class="pdf-size">837 KB</span>
-        </div>
-      </div>
-
-      <div class="card hub">
-        <div class="card-file mono">hubs-and-markets-working-group.html</div>
-        <h3>London Hubs &amp; Markets Working Group</h3>
-        <p>Coordination layer for the cross-borough working group — the anatomy of a hub, the shared network view, and notes from each convening.</p>
-        <div class="tags"><span class="lib-tag">Coordination</span><span class="lib-tag">London-wide</span></div>
-        <div class="actions">
-          <a class="btn solid" href="hubs-and-markets-working-group.html" target="_blank" rel="noopener">Open live page ↗</a>
-          <a class="btn" href="assets/library-pdfs/hubs-and-markets-working-group.pdf" target="_blank" rel="noopener">Open PDF</a>
-          <span class="pdf-size">985 KB</span>
-        </div>
-      </div>
-
-      <div class="card hub">
-        <div class="card-file mono">pathways-to-civic-food-system.html</div>
-        <h3>Six Pathways to a Civic Food System</h3>
-        <p>The shared framework the borough and Camden-specific work sits inside — six pathways to a civic, regenerative food system.</p>
-        <div class="tags"><span class="lib-tag">Framework</span><span class="lib-tag">London-wide</span></div>
-        <div class="actions">
-          <a class="btn solid" href="pathways-to-civic-food-system.html" target="_blank" rel="noopener">Open live page ↗</a>
-          <a class="btn" href="assets/library-pdfs/pathways-to-civic-food-system.pdf" target="_blank" rel="noopener">Open PDF</a>
-          <span class="pdf-size">94 KB</span>
-        </div>
-      </div>
-
-      <div class="card hub">
-        <div class="card-file mono">sovereign-food-system.html</div>
-        <h3>A Sovereign Food System <span class="mono" style="opacity:.6">(draft)</span></h3>
-        <p>Draft framework for a sovereign food system — the economic and policy foundations underneath the wider portfolio.</p>
-        <div class="tags"><span class="lib-tag">Framework · draft</span><span class="lib-tag">London-wide</span></div>
-        <div class="actions">
-          <a class="btn solid" href="sovereign-food-system.html" target="_blank" rel="noopener">Open live page ↗</a>
-          <a class="btn" href="assets/library-pdfs/sovereign-food-system.pdf" target="_blank" rel="noopener">Open PDF</a>
-          <span class="pdf-size">178 KB</span>
-        </div>
-      </div>
-
-      <div class="card hub">
-        <div class="card-file mono">islington-food-partnership.html</div>
-        <h3>Islington Food Partnership</h3>
-        <p>Overview and ambition for Islington's own food partnership — including the diabetes food-prescribing pilot running at scale.</p>
-        <div class="tags"><span class="lib-tag">Islington</span></div>
-        <div class="actions">
-          <a class="btn solid" href="islington-food-partnership.html" target="_blank" rel="noopener">Open live page ↗</a>
-          <a class="btn" href="assets/library-pdfs/islington-food-partnership.pdf" target="_blank" rel="noopener">Open PDF</a>
-          <span class="pdf-size">135 KB</span>
-        </div>
-      </div>
-
-      <div class="card hub">
-        <div class="card-file mono">islington-food-hub.html</div>
-        <h3>Islington: What's Next</h3>
-        <p>The borough's hub-and-logistics thinking, developed within the Hubs &amp; Markets Working Group.</p>
-        <div class="tags"><span class="lib-tag">Islington</span></div>
-        <div class="actions">
-          <a class="btn solid" href="islington-food-hub.html" target="_blank" rel="noopener">Open live page ↗</a>
-          <a class="btn" href="assets/library-pdfs/islington-food-hub.pdf" target="_blank" rel="noopener">Open PDF</a>
-          <span class="pdf-size">247 KB</span>
-        </div>
-      </div>
-
-      <div class="card hub">
-        <div class="card-file mono">hackney-food-partnership.html</div>
-        <h3>Hackney Food Hub — Overview &amp; Ambition</h3>
-        <p>Overview and ambition for Hackney's food hub work — the logistics-capacity question that opened the borough's thinking.</p>
-        <div class="tags"><span class="lib-tag">Hackney</span></div>
-        <div class="actions">
-          <a class="btn solid" href="hackney-food-partnership.html" target="_blank" rel="noopener">Open live page ↗</a>
-          <a class="btn" href="assets/library-pdfs/hackney-food-partnership.pdf" target="_blank" rel="noopener">Open PDF</a>
-          <span class="pdf-size">135 KB</span>
-        </div>
-      </div>
-
-      <div class="card hub">
-        <div class="card-file mono">hackney-food-hub.html</div>
-        <h3>Hackney: What's Next</h3>
-        <p>The borough's hub-and-logistics thinking, developed within the Hubs &amp; Markets Working Group.</p>
-        <div class="tags"><span class="lib-tag">Hackney</span></div>
-        <div class="actions">
-          <a class="btn solid" href="hackney-food-hub.html" target="_blank" rel="noopener">Open live page ↗</a>
-          <a class="btn" href="assets/library-pdfs/hackney-food-hub.pdf" target="_blank" rel="noopener">Open PDF</a>
-          <span class="pdf-size">251 KB</span>
-        </div>
-      </div>
-
-      <div class="card hub">
-        <div class="card-file mono">media-and-inspiration.html</div>
-        <h3>Media &amp; Inspiration <span class="mono" style="opacity:.6">(draft)</span></h3>
-        <p>Where this movement shows up in the world — press, references and inspiration material, gathered but not yet linked into the main site.</p>
-        <div class="tags"><span class="lib-tag">Reference · draft</span><span class="lib-tag orphan">Not yet linked</span></div>
-        <div class="actions">
-          <a class="btn solid" href="media-and-inspiration.html" target="_blank" rel="noopener">Open live page ↗</a>
-          <a class="btn" href="assets/library-pdfs/media-and-inspiration.pdf" target="_blank" rel="noopener">Open PDF</a>
-          <span class="pdf-size">124 KB</span>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
+  </section>
+</main>
 
 <footer>
   <div class="wrap">
-    Built from the live pages at <span class="mono">food.darkmatterlabs.org</span> — PDFs are static snapshots generated from those pages, so they'll drift from the live site as it's updated. Camden-specific classification follows the IP position agreed with the Camden Food Partnership: everything is open IP except the tools built for Camden alone.
+    <img src="assets/brand/dm-logo-v1-black.svg" alt="Dark Matter Labs" width="112" height="22">
+    <p>PDFs are snapshots of the live pages, so they drift as the site is updated. Built and maintained by Dark Matter Labs with the partners named on each page.</p>
   </div>
 </footer>
 

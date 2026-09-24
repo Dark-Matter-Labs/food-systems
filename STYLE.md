@@ -10,7 +10,7 @@ Every page is a working document from the field, not a product launch. It should
 
 ## Five rules
 
-1. **Documents on paper, instruments on canvas.** Pages you read (notes, frameworks, borough pages) sit on white `#FFFFFF`. Pages you operate (maps, models, simulators) sit on DM canvas `#111112`. A page is one or the other. The only exception is a photographic hero band.
+1. **Documents on paper, instruments on canvas.** Pages you read (notes, frameworks, borough pages) sit on white `#FFFFFF`. Pages you operate (maps, models, simulators) sit on DM canvas `#111112`, and so does the portfolio front page (`index.html`), which speaks for Dark Matter Labs the way darkmatterlabs.org does. A page is one or the other. A photographic hero band is the only exception.
 2. **One accent: beetroot `#8B2252`.** It marks Camden-owned work, key figures and the active state. Data colours live only inside charts and maps.
 3. **One typeface: Schibsted Grotesk.** Headlines are large and quiet (weight 500). No monospace, no serif, no second display face.
 4. **Labels are sentences.** Sentence case, same face, no letter-spacing, no small caps. Never uppercase via CSS.
@@ -31,13 +31,16 @@ All tokens live in `assets/fai/fai.css`. Link it last in `<head>` and use the va
 | `--fai-rule-strong` | `#B9BAB2` | Control borders |
 | `--fai-beet` | `#8B2252` | The accent, 8.6:1 on paper |
 | `--fai-beet-tint` | `#F4E6EC` | Beet background tint |
-| `--fai-lavender` | `#A28CC6` | DM signature: focus ring and text selection only |
+| `--fai-lavender` | `#A28CC6` | DM signature: text selection, and the focus ring on canvas |
 | `--fai-canvas` | `#111112` | Instrument background, site bar |
 | `--fai-canvas-raised` | `#252424` | Panels on canvas |
 | `--fai-on-canvas` / `-2` | `#FFFFFF` / `#A8A8A8` | Text on canvas |
 
 **Data colours** are for charts, maps and diagrams only, never for UI chrome:
 supply ochre `#A86A1F`, hub teal `#2E7D6B`, Camden beet `#8B2252`, crisis red `#C23A2B` (crisis only), neutral `#8A8B84`.
+On canvas, use the lighter set so marks stay at least 3:1: ochre `#D19A4E`, teal `#5FB39C`, beet `#D4719B`, crisis red `#E0604F`, lavender `#A28CC6`, periwinkle `#737EA5` (maps), neutral `#C9CED3`.
+
+The focus ring is beet on paper. Canvas pages set `html:root{--fai-focus:var(--fai-lavender)}`.
 
 ## Type
 
@@ -52,7 +55,7 @@ Schibsted Grotesk, loaded from Google Fonts by `tools/apply_identity.py`.
 | Body | 17px | 400 | 1.6, max 68ch |
 | Small, captions, meta | 14px | 400 | 1.45, colour `--fai-ink-3` |
 
-Headline tracking is slightly tight (the stylesheet handles it). Everything else is untracked. Use `font-variant-numeric: tabular-nums` for figures in tables.
+Headline tracking is slightly tight (the stylesheet handles it). Everything else is untracked. Put `class="num"` on table cells that hold figures (or `.tnum` anywhere) for tabular numerals. Don't apply it to whole tables: it spaces out punctuation in text cells.
 
 ## The element tile
 
