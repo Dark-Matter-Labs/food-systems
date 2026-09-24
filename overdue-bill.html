@@ -102,6 +102,21 @@
   .cat-head h2 .cat-no{color:var(--ink-faint); margin-right:.35em;}
   .cat-head .cat-sub{font-size:14px; color:var(--ink-faint);}
 
+  /* ===================== Pullquote ===================== */
+  .pullquote{background:var(--surface); padding:28px 30px; margin:22px 0;}
+  @media (max-width:600px){ .pullquote{padding:22px 20px;} }
+  .pullquote p{font-size:clamp(19px,2.4vw,24px); font-weight:500; line-height:1.4; color:var(--ink); max-width:58ch;}
+  .pullquote cite{display:block; margin-top:14px; font-size:14px; color:var(--ink-faint); font-style:normal;}
+  .pullquote-stats{display:flex; flex-wrap:wrap; gap:8px 28px; margin-top:18px; padding-top:16px; border-top:1px solid var(--paper-line);}
+  .pullquote-stats div{font-size:14px; color:var(--ink-soft);}
+  .pullquote-stats b{display:block; font-size:18px; font-weight:600; color:var(--ink);}
+
+  /* ===================== Surge row ===================== */
+  .surge-row{display:flex; flex-wrap:wrap; gap:1px; background:var(--paper-line); margin-top:16px;}
+  .surge-cell{flex:1; min-width:160px; background:var(--surface); padding:16px 18px;}
+  .surge-cell .sl{font-size:14px; color:var(--ink-faint);}
+  .surge-cell .sn{font-size:22px; font-weight:600; color:var(--ink); margin-top:6px;}
+
   /* ===================== Line items ===================== */
   .line-item{
     display:grid; grid-template-columns:1fr auto; gap:18px; align-items:start;
@@ -246,7 +261,7 @@
 
 <div class="draft-banner" role="note">
   <b>Draft, not for general circulation.</b>
-  <span>Shared by direct link only. Not linked from site navigation or search. The figures in sections 01 to 04 come from named public sources. Section 05 is our own illustrative model, not a verified forecast; see "Show the working".</span>
+  <span>Shared by direct link only. Not linked from site navigation or search. The figures in sections 01 to 05 come from named public sources. Section 06 is our own illustrative model, not a verified forecast; see "Show the working".</span>
 </div>
 
 <div class="masthead">
@@ -393,6 +408,24 @@
     </div>
     <div class="amount">+£1.1bn</div>
   </div>
+
+  <div class="line-item">
+    <div class="desc">
+      <h3>Farmers keep less than 1p in every £1 of profit on the food they grow</h3>
+      <p>A cereal farmer spends 9.03p growing the wheat for a standard loaf that sells for £1.14, and keeps 0.09p of profit from it. Dairy farmers fare little better, taking home around 2% of the profit retailers make on a block of cheddar.</p>
+      <span class="src">Sustain, Unpicking Food Prices, Jan 2023</span>
+    </div>
+    <div class="amount small">Under 1% of profit</div>
+  </div>
+
+  <div class="line-item">
+    <div class="desc">
+      <h3>Half of British farmers are weighing whether to give up altogether</h3>
+      <p>51% of farmers surveyed are considering leaving the industry, and 95% expect family farms to decline over the next decade if nothing changes. 61% say the work is actively harming their wellbeing.</p>
+      <span class="src">NFU / McCain, UK Farmdex report, 2025</span>
+    </div>
+    <div class="amount">51% considering leaving</div>
+  </div>
 </div>
 
 <hr class="rule-heavy">
@@ -410,6 +443,26 @@
       <span class="src">ONS / Food Foundation, Food Prices Tracker</span>
     </div>
     <div class="amount">19.2%</div>
+  </div>
+
+  <div class="line-item">
+    <div class="desc">
+      <h3>Prices never really came back down</h3>
+      <p>UK food prices rose 38.6% in the five years to November 2025, against just 4.6% in the five years before that. Almost all of that increase happened in one 18-month window and simply stayed.</p>
+      <span class="src">House of Commons Library, the impact of food inflation on the cost of living</span>
+    </div>
+    <div class="amount">38.6% in 5 years</div>
+  </div>
+
+  <div class="pullquote">
+    <p>"Analysis of more than thirty years of UK food price data points to a clear structural pattern: food prices rise rapidly during shocks but reverse only slowly and partially afterwards. In other words, food prices shoot up like rockets but drift down like feathers."</p>
+    <cite>Energy &amp; Climate Intelligence Unit, 2026</cite>
+    <div class="pullquote-stats">
+      <div><b>1%</b>unwound after 6 months</div>
+      <div><b>5%</b>unwound after 1 year</div>
+      <div><b>7%</b>unwound after 2 years</div>
+      <div><b>+50%</b>on track by Nov 2026, against mid-2021</div>
+    </div>
   </div>
 
   <div class="line-item">
@@ -435,7 +488,53 @@
 
 <div class="wrap">
   <div class="cat-head">
-    <h2><span class="cat-no">05</span>Modelling the alternative</h2>
+    <h2><span class="cat-no">05</span>What it costs beyond our borders</h2>
+    <div class="cat-sub">Global interdependence and contagion</div>
+  </div>
+  <p style="font-size:16px; color:var(--ink-soft); max-width:68ch; margin:-8px 0 8px;">None of this happens in isolation. The UK's food system is one node in a small, tightly wired global network, which is exactly what makes it fragile.</p>
+
+  <div class="line-item">
+    <div class="desc">
+      <h3>Just 15 countries grow 70% of the world's food, and most of them export it too</h3>
+      <p>11 of those 15 producer nations are also among the top 15 exporters, together accounting for more than 60% of global food exports. Even so, none of them score above 80 out of 100 on global resilience. The "anchor" countries the whole system leans on average just 70.07.</p>
+      <span class="src">Economist Impact / Cargill, Resilient Food Systems Index, Global Report</span>
+    </div>
+    <div class="amount small">15 countries, 70%</div>
+  </div>
+
+  <div class="line-item">
+    <div class="desc">
+      <h3>Food system fragility doesn't stay in the food system</h3>
+      <p>A joint report from the Institute and Faculty of Actuaries and Anglia Ruskin University warns that nature loss, climate shocks and geopolitical conflict in the food system are a systemic financial risk, capable of hitting inflation, investment portfolios, public finances and social stability directly, not as a side effect.</p>
+      <span class="src">IFoA / ARU, Planetary Solvency: Tipping into the Wild Unknown</span>
+    </div>
+    <div class="amount small">Systemic, not isolated</div>
+  </div>
+
+  <div class="line-item">
+    <div class="desc">
+      <h3>More than half the global economy leans on an ecosystem it isn't paying for</h3>
+      <p>55% of global GDP, $58tn, up from $44tn in 2020, is moderately or highly dependent on nature. Over half the market value of listed companies on the world's major stock exchanges carries the same exposure, largely hidden in their supply chains.</p>
+      <span class="src">PwC, nature risk analysis</span>
+    </div>
+    <div class="amount">55% of global GDP</div>
+  </div>
+
+  <div class="line-item">
+    <div class="desc">
+      <h3>A single, declining species group underwrites hundreds of billions in food production</h3>
+      <p>Between $235bn and $577bn of global food production every year depends directly on pollinators, a category of dependency that has grown 300% in 50 years even as the crops relying on it show less stable yields than crops that don't.</p>
+      <span class="src">University of Cambridge, global pollinator risk index</span>
+    </div>
+    <div class="amount">Up to $577bn/yr</div>
+  </div>
+</div>
+
+<hr class="rule-heavy">
+
+<div class="wrap">
+  <div class="cat-head">
+    <h2><span class="cat-no">06</span>Modelling the alternative</h2>
     <div class="cat-sub">Illustrative, methodology shown</div>
   </div>
 
@@ -507,7 +606,14 @@
       <h3>What it buys when the next shock lands</h3>
       <div class="cat-sub">COVID as the precedent</div>
     </div>
-    <p class="shock-intro" style="margin-top:6px;">COVID is the live precedent for what a food-and-health shock actually does here. Obese patients were around <b>twice as likely to be hospitalised</b> with COVID-19 than patients at a healthy weight — and in the same crisis, emergency food parcels handed out by Trussell Trust food banks rose <b>81%</b> in the opening weeks, <b>122%</b> for children. A healthier, more food-secure population doesn't prevent the next shock. It changes how hard the shock lands.</p>
+    <p class="shock-intro" style="margin-top:6px;">COVID is the live precedent for what a food-and-health shock actually does here. Obese patients were around <b>twice as likely to be hospitalised</b> with COVID-19 than patients at a healthy weight, and in the same crisis, emergency food parcels handed out by Trussell Trust food banks rose <b>81%</b> in the opening weeks, <b>122%</b> for children. A healthier, more food-secure population doesn't prevent the next shock. It changes how hard the shock lands.</p>
+
+    <div class="surge-row">
+      <div class="surge-cell"><div class="sl">Felix Project, London, 2019</div><div class="sn">About 6m meals</div></div>
+      <div class="surge-cell"><div class="sl">2020</div><div class="sn">21.1m meals</div></div>
+      <div class="surge-cell"><div class="sl">2021</div><div class="sn">30m meals</div></div>
+    </div>
+    <p style="font-size:14px; color:var(--ink-faint); margin-top:8px;">One London food-redistribution charity, five-fold in two years: the shape of demand under an active shock, not a projection.</p>
 
     <div class="shock-block">
       <div class="shock-card">
@@ -586,11 +692,22 @@
     <li>Trussell Trust, COVID-19 impact on food banks — <a href="https://www.trussell.org.uk/news-and-research/publications/report/lockdown-lifelines-and-the-long-haul-ahead-the-impact-of" target="_blank" rel="noopener">Trussell Trust</a></li>
     <li>Health Survey for England 2024, adult obesity — <a href="https://natcen.ac.uk/health-survey-for-england-report-part1" target="_blank" rel="noopener">NatCen</a></li>
     <li>Primary school pupil numbers, England — <a href="https://explore-education-statistics.service.gov.uk/find-statistics/school-pupils-and-their-characteristics/2025-26" target="_blank" rel="noopener">Explore Education Statistics</a></li>
+    <li>Sustain, Unpicking Food Prices, Jan 2023 — <a href="https://www.sustainweb.org/reports/dec22-unpicking-food-prices/" target="_blank" rel="noopener">Sustain</a></li>
+    <li>UK farmers left with less than 1% profit, reporting — <a href="https://www.grocerygazette.co.uk/2022/12/02/uk-farmers-profit-produce/" target="_blank" rel="noopener">Grocery Gazette</a></li>
+    <li>NFU / McCain, UK Farmdex report — <a href="https://www.nfuonline.com/news/uk-farmdex-report/" target="_blank" rel="noopener">NFU</a></li>
+    <li>House of Commons Library, the impact of food inflation on the cost of living — <a href="https://commonslibrary.parliament.uk/research-briefings/cdp-2026-0004/" target="_blank" rel="noopener">Commons Library</a></li>
+    <li>ECIU, "rockets and feathers" food price analysis — <a href="https://eciu.net/media/press-releases/food-prices-wont-come-back-down-new-analysis-suggests-shocks-drive-up-food-prices-indefinitely" target="_blank" rel="noopener">ECIU</a></li>
+    <li>Economist Impact / Cargill, Resilient Food Systems Index, Global Report — <a href="https://assets.ctfassets.net/9crgcb5vlu43/4owmZlUX8hThA5C0CGw05O/3926a860219671c045a00b26bf752f4b/Resilient_Food_Systems_Index_Global_Report.pdf" target="_blank" rel="noopener">Economist Impact</a></li>
+    <li>Resilient Food Systems Index, key insights — <a href="https://insights.economistenterprise.com/energy-environment/resilient-food-systems-index" target="_blank" rel="noopener">Economist Impact</a></li>
+    <li>IFoA / Anglia Ruskin University, Planetary Solvency: Tipping into the Wild Unknown — <a href="https://actuaries.org.uk/media-release/new-report-warns-urgent-intervention-needed-to-address-food-security/" target="_blank" rel="noopener">Institute and Faculty of Actuaries</a></li>
+    <li>PwC, more than half of global GDP exposed to material nature risk — <a href="https://www.pwc.co.uk/press-room/press-releases/corporate-news/more-than-half-of-global-gdp-is-exposed-to-material-nature-risk-.html" target="_blank" rel="noopener">PwC</a></li>
+    <li>University of Cambridge, first global pollinator risk index — <a href="https://www.cam.ac.uk/stories/pollinatorsriskindex" target="_blank" rel="noopener">University of Cambridge</a></li>
+    <li>The Felix Project, annual meal redistribution figures — <a href="https://relondon.gov.uk/resources/case-study-the-felix-project-tackling-food-poverty-and-waste-one-meal-at-a-time" target="_blank" rel="noopener">ReLondon case study</a></li>
   </ul>
 </div>
 
 <footer>
-  Working draft between Adam and Claude, part of the London food-systems portfolio. Every figure in sections 01 to 04 is drawn from a public, named source, listed above, and is not modelled or estimated by us. The interactive model in section 05 is our own illustrative calculation, built transparently from those sources — see "Show the working" — not a peer-reviewed forecast. Published by direct link only — not linked from the main site.
+  Working draft between Adam and Claude, part of the London food-systems portfolio. Every figure in sections 01 to 05 is drawn from a public, named source, listed above, and is not modelled or estimated by us. The interactive model in section 06 is our own illustrative calculation, built transparently from those sources, see "Show the working", not a peer-reviewed forecast. Published by direct link only, not linked from the main site.
 </footer>
 
 </div>
