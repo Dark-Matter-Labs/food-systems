@@ -1,0 +1,20 @@
+{
+  "_comment": "One entry per page. n = position in the library table, sym = two-letter element symbol, scope = camden | london | islington | hackney, status = live | draft, listed = shown in the library.",
+  "pages": [
+    {"n": 1,  "sym": "Fd", "file": "index.html",                         "name": "Portfolio",                   "scope": "london",    "status": "live",  "listed": true},
+    {"n": 2,  "sym": "Hm", "file": "hubs-and-markets-working-group.html", "name": "Hubs & Markets Working Group", "scope": "london",    "status": "live",  "listed": true},
+    {"n": 3,  "sym": "Pw", "file": "pathways-to-civic-food-system.html",  "name": "Six Pathways",                "scope": "london",    "status": "live",  "listed": true},
+    {"n": 4,  "sym": "Sv", "file": "sovereign-food-system.html",          "name": "Sovereign Food System",       "scope": "london",    "status": "draft", "listed": true},
+    {"n": 5,  "sym": "Ns", "file": "nutrition-supply-map.html",           "name": "Supply Map",                  "scope": "camden",    "status": "live",  "listed": true},
+    {"n": 6,  "sym": "Nc", "file": "nutrition-cascade-model.html",        "name": "Nutrition Cascade",           "scope": "camden",    "status": "live",  "listed": true},
+    {"n": 7,  "sym": "En", "file": "wheres-the-energy.html",              "name": "Where's the Energy?",         "scope": "camden",    "status": "live",  "listed": true},
+    {"n": 8,  "sym": "Hw", "file": "camden-health-and-wellbeing.html",    "name": "Healthy Weight",              "scope": "camden",    "status": "live",  "listed": true},
+    {"n": 9,  "sym": "Ip", "file": "islington-food-partnership.html",     "name": "Islington Food Partnership",  "scope": "islington", "status": "draft", "listed": true},
+    {"n": 10, "sym": "In", "file": "islington-food-hub.html",             "name": "Islington: what's next",      "scope": "islington", "status": "draft", "listed": true},
+    {"n": 11, "sym": "Hp", "file": "hackney-food-partnership.html",       "name": "Hackney Food Hub",            "scope": "hackney",   "status": "draft", "listed": true},
+    {"n": 12, "sym": "Hn", "file": "hackney-food-hub.html",               "name": "Hackney: what's next",        "scope": "hackney",   "status": "draft", "listed": true},
+    {"n": 13, "sym": "Md", "file": "media-and-inspiration.html",          "name": "Media & Inspiration",         "scope": "london",    "status": "draft", "listed": true},
+    {"n": 14, "sym": "Lb", "file": "library.html",                        "name": "Library",                     "scope": "london",    "status": "live",  "listed": false},
+    {"n": 15, "sym": "Ob", "file": "overdue-bill.html",                   "name": "The Overdue Bill",            "scope": "london",    "status": "draft", "listed": false}
+  ]
+}

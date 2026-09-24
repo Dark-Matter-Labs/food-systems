@@ -1,0 +1,177 @@
+/* =====================================================================
+   Food as Infrastructure: shared identity layer
+   An element of Dark Matter Labs. See STYLE.md for the rules.
+
+   Load this AFTER a page's own <style> block so it wins:
+     <link rel="stylesheet" href="assets/fai/fai.css">
+   ===================================================================== */
+
+:root{
+  /* ---- Core: inherited from Dark Matter Labs ---- */
+  --fai-canvas:#111112;      /* DM canvas: instruments, the site bar */
+  --fai-paper:#FFFFFF;       /* documents */
+  --fai-lavender:#A28CC6;    /* DM signature: highlight + selection only */
+
+  /* ---- Food's own ---- */
+  --fai-field:#F2F3EF;       /* raised surface on paper */
+  --fai-ink:#111112;         /* text on paper */
+  --fai-ink-2:#4F504A;       /* secondary text, 8.1:1 on paper */
+  --fai-ink-3:#6E6F68;       /* tertiary text, 5.1:1 on paper */
+  --fai-rule:#DCDDD7;        /* hairlines */
+  --fai-rule-strong:#B9BAB2;
+  --fai-beet:#8B2252;        /* the one food accent, 8.6:1 on paper */
+  --fai-beet-tint:#F4E6EC;
+  --fai-lavender-tint:#ECE7F4;
+
+  /* ---- Canvas-side text (instruments) ---- */
+  --fai-on-canvas:#FFFFFF;
+  --fai-on-canvas-2:#A8A8A8;
+  --fai-canvas-raised:#252424;
+  --fai-canvas-rule:#333333;
+
+  /* ---- Type ---- */
+  --fai-sans:"Schibsted Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  /* ---- Layout (DM matrix) ---- */
+  --fai-container:1200px;
+  --fai-measure:68ch;
+  --fai-ease:.3s ease-in-out;
+}
+
+/* ---------------------------------------------------------------------
+   1. Normalisation. Every page shares one voice regardless of the
+      CSS it was generated with.
+   --------------------------------------------------------------------- */
+
+html body,
+html body *:not(code):not(pre):not(kbd){
+  font-family:var(--fai-sans) !important;
+}
+/* SVG text: CSS beats presentation attributes */
+html body svg text,
+html body svg tspan{ font-family:var(--fai-sans) !important; }
+
+/* No tracked-out capitals. Labels are sentences in the same face. */
+html body *{
+  text-transform:none !important;
+  letter-spacing:normal !important;
+}
+html body h1{ letter-spacing:-0.022em !important; }
+html body h2{ letter-spacing:-0.015em !important; }
+html body h3{ letter-spacing:-0.005em !important; }
+
+html body{
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+  font-kerning:normal;
+}
+html body h1, html body h2, html body h3{ text-wrap:balance; }
+html body p, html body li{ text-wrap:pretty; }
+html body table, html body .tnum{ font-variant-numeric:tabular-nums; }
+
+::selection{ background:var(--fai-lavender); color:var(--fai-canvas); }
+
+:focus-visible{
+  outline:2px solid var(--fai-lavender) !important;
+  outline-offset:2px !important;
+}
+
+@media (prefers-reduced-motion: reduce){
+  html{ scroll-behavior:auto !important; }
+  *, *::before, *::after{ animation:none !important; transition:none !important; }
+}
+
+/* ---------------------------------------------------------------------
+   2. Site bar: the same on every page. It says where you are in the
+      portfolio. The page's own nav below it says where you are in the page.
+   --------------------------------------------------------------------- */
+
+.fai-bar{
+  background:var(--fai-canvas);
+  color:var(--fai-on-canvas);
+  font-size:14px;
+  line-height:1;
+  position:relative;
+  z-index:60;
+}
+.fai-bar__inner{
+  max-width:var(--fai-container);
+  margin:0 auto;
+  padding:0 32px;
+  min-height:44px;
+  display:flex;
+  align-items:center;
+  gap:18px;
+}
+.fai-bar a{ color:inherit; text-decoration:none; }
+.fai-bar__dm{ display:flex; align-items:center; flex:none; }
+.fai-bar__dm img{ height:20px; width:auto; display:block; }
+.fai-bar__sep{
+  width:1px; height:18px; background:var(--fai-canvas-rule); flex:none;
+}
+.fai-bar__mission{ font-weight:500; white-space:nowrap; }
+.fai-bar__here{
+  display:flex; align-items:center; gap:9px;
+  color:var(--fai-on-canvas-2);
+  min-width:0;
+}
+.fai-bar__here span:last-child{
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+.fai-bar__links{
+  margin-left:auto; display:flex; gap:22px; flex:none;
+}
+.fai-bar__links a{ color:var(--fai-on-canvas-2); transition:color var(--fai-ease); }
+.fai-bar__links a:hover,
+.fai-bar__links a[aria-current="page"]{ color:var(--fai-on-canvas); }
+
+@media (max-width:760px){
+  .fai-bar__inner{ padding:0 16px; gap:12px; }
+  .fai-bar__dm img{ height:15px; }
+  .fai-bar__here{ display:none; }
+  .fai-bar__links{ gap:16px; }
+}
+@media (max-width:420px){
+  .fai-bar__mission{ display:none; }
+  .fai-bar__dm + .fai-bar__sep{ display:none; }
+}
+@media print{ .fai-bar{ display:none; } }
+
+/* ---------------------------------------------------------------------
+   3. Element tile: the Food as Infrastructure stamp.
+      Derived from the Dm stamp: a solid square, a two-letter symbol,
+      an index top-right. Filled = live. Outlined = draft.
+      Beet = belongs to Camden. Ink = shared across London.
+   --------------------------------------------------------------------- */
+
+.fai-el{
+  --el-bg:var(--fai-ink);
+  --el-fg:var(--fai-paper);
+  position:relative;
+  display:inline-grid;
+  place-items:center;
+  width:var(--el-size, 28px);
+  height:var(--el-size, 28px);
+  background:var(--el-bg);
+  color:var(--el-fg);
+  font-weight:500;
+  font-size:calc(var(--el-size, 28px) * .44);
+  line-height:1;
+  flex:none;
+  font-variant-numeric:tabular-nums;
+}
+.fai-el b{ font-weight:500; transform:translate(-4%, 8%); }
+.fai-el i{
+  position:absolute; top:10%; right:10%;
+  font-style:normal; font-weight:400;
+  font-size:calc(var(--el-size, 28px) * .19);
+}
+.fai-el--camden{ --el-bg:var(--fai-beet); }
+.fai-el--draft{
+  background:transparent;
+  color:currentColor;
+  box-shadow:inset 0 0 0 1.5px currentColor;
+}
+.fai-bar .fai-el{ --el-size:24px; --el-bg:var(--fai-paper); --el-fg:var(--fai-canvas); }
+.fai-bar .fai-el--camden{ --el-bg:var(--fai-beet); --el-fg:var(--fai-paper); }
+.fai-bar .fai-el--draft{ color:var(--fai-on-canvas-2); }

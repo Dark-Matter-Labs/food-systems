@@ -4,7 +4,7 @@
     {
       "name": "food-systems",
       "runtimeExecutable": "npx",
-      "runtimeArgs": ["--yes", "http-server", "-p", "5959", "."],
+      "runtimeArgs": ["--yes", "http-server", "-c-1", "-p", "5959", "."],
       "port": 5959
     }
   ]
