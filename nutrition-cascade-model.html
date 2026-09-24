@@ -129,6 +129,9 @@
     .panel2 .stages .sn{font-weight:500;color:var(--text);}
     .panel2 .stages .sm{display:block;font-size:13px;margin-top:2px;color:var(--text-2);}
     .panel2 .stages .sm .lg{color:var(--text);}
+    .panel2 .topokey{list-style:none;margin:6px 0 0;padding:0;font-size:13px;line-height:1.45;color:var(--text-2);}
+    .panel2 .topokey li{margin:0 0 6px;font-size:13px;line-height:1.45;color:var(--text-2);}
+    .panel2 .topokey .sn{font-weight:500;color:var(--text);}
     .panel2 .p2note{font-size:14px;line-height:1.5;color:var(--text-2);}
     .gauges{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px;}
     @media (max-width:760px){.gauges{grid-template-columns:1fr;}}
@@ -489,6 +492,25 @@
       renderPanel();
     }
 
+    /* Cascade topologies: the shape of each stage's transmission */
+    var TOPO={
+      T1:["chain","one step passes the pressure on to the next"],
+      T2:["fan-out","one pressure splits into several at once"],
+      T3:["chokepoint","many flows depend on a single passage"],
+      T4:["loop","the effect feeds back and amplifies its own cause"],
+      T5:["bridge","a shock crosses from one system into another, such as energy into food through inputs"],
+      T6:["threshold","little changes until a tipping point, then a step change"],
+      T7:["synchronisation","several places fail in the same season"],
+      T8:["ratchet","easy to push up, slow or impossible to reverse"]
+    };
+    function topoCode(t){return String(t).split(" ")[0];}
+    function topoLabel(t){var k=topoCode(t);return TOPO[k]?k+" "+TOPO[k][0]:t;}
+    function topoKey(stages){
+      var seen=[];stages.forEach(function(st){var k=topoCode(st[3]);if(TOPO[k]&&seen.indexOf(k)<0)seen.push(k);});
+      seen.sort();
+      return seen.length?'<p class="lh">What the topology codes mean</p><ul class="topokey">'+seen.map(function(k){return '<li><span class="sn">'+k+' '+TOPO[k][0]+'</span>: '+TOPO[k][1]+'.</li>';}).join("")+'</ul>':'';
+    }
+
     function renderPanel(){
       var p=document.getElementById("panel");
       if(state.sel&&state.sel.type==="node"){
@@ -511,8 +533,9 @@
           +'<p class="p2kicker">Cascade '+c.id+', '+esc(c.sub)+'</p><h3 class="p2title">'+esc(c.name)+'</h3>'
           +'<span class="badge term">'+esc(tl)+'</span>'
           +'<p class="lh">Stages, with lag and topology</p><ul class="stages">'
-          +c.stages.map(function(st,i){return '<li class="'+(i===c.stages.length-1?"landfall":"")+'"><span class="sn">'+esc(N[st[0]]?N[st[0]].l:st[0])+'</span>'+(st[1]?' — '+esc(st[1]):'')+'<span class="sm"><span class="lg">'+esc(st[2])+'</span>, '+esc(st[3])+'</span></li>';}).join("")
+          +c.stages.map(function(st,i){return '<li class="'+(i===c.stages.length-1?"landfall":"")+'"><span class="sn">'+esc(N[st[0]]?N[st[0]].l:st[0])+'</span>'+(st[1]?' — '+esc(st[1]):'')+'<span class="sm"><span class="lg">'+esc(st[2])+'</span>, '+esc(topoLabel(st[3]))+'</span></li>';}).join("")
           +'</ul>'
+          +topoKey(c.stages)
           +'<p class="lh">Early-warning signal</p><p class="p2note">'+esc(c.ews)+'</p>'
           +'<p class="lh">Interrupted by</p><div class="datum">'+esc(c.fix)+'</div>';
         document.getElementById("pback").onclick=function(){state.sel=null;render();};

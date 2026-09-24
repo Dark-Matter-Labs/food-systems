@@ -182,6 +182,8 @@ html body .tnum, html body td.num, html body th.num{ font-variant-numeric:tabula
   color:currentColor;
   box-shadow:inset 0 0 0 1.5px currentColor;
 }
+.fai-el--camden.fai-el--draft{ color:var(--fai-beet); }
 .fai-bar .fai-el{ --el-size:24px; --el-bg:var(--fai-paper); --el-fg:var(--fai-canvas); }
 .fai-bar .fai-el--camden{ --el-bg:var(--fai-beet); --el-fg:var(--fai-paper); }
 .fai-bar .fai-el--draft{ color:var(--fai-on-canvas-2); }
+.fai-bar .fai-el--camden.fai-el--draft{ background:transparent; color:#D4719B; }

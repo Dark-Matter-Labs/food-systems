@@ -94,10 +94,10 @@
   .media-link{font-size:15px; font-weight:500; color:var(--paper); text-decoration:underline; text-decoration-color:var(--fai-beet); text-decoration-thickness:1px; text-underline-offset:3px; transition:color .2s;}
   a.media-card:hover .media-link{color:var(--fai-beet);}
 
-  /* placeholder slots: outlined, like a draft tile */
-  .media-card.is-pending{cursor:default; background:transparent; box-shadow:inset 0 0 0 1px var(--line-strong);}
+  /* empty slots: outlined, like a draft tile, and an invitation to suggest something */
+  .media-card.is-pending{background:transparent; box-shadow:inset 0 0 0 1px var(--line-strong);}
   .media-card.is-pending h3{color:var(--paper-dim);}
-  .media-card.is-pending .media-link{color:var(--paper-faint); font-weight:400; text-decoration:none;}
+  .media-card.is-pending:hover{box-shadow:inset 0 0 0 1px var(--paper);}
 
   /* footer */
   footer{border-top:1px solid var(--line); padding:48px 0 32px; font-size:14px; color:var(--paper-faint);}
@@ -145,7 +145,7 @@
 <!-- ===================== HERO ===================== -->
 <section class="hero" id="top">
   <div class="wrap">
-    <p class="status-note">Draft. A living feed, not yet linked from the main site.</p>
+    <p class="status-note">Draft. A living feed, listed in the Library but not yet linked from the portfolio homepage.</p>
     <p class="eyebrow">Podcasts, posts, and pieces that shaped the thinking here</p>
     <h1>Where this movement shows up in the world.</h1>
     <p class="lede">Every so often someone asks where they can actually see or hear this work happening, beyond a deck or a webpage. This is that answer — a running, hand-picked shelf of podcasts, social posts from people on the ground, and writing that’s shaped how we think about food as infrastructure. No live embeds, no algorithm feeding it — just links worth your time, added by hand.</p>
@@ -187,14 +187,14 @@
       <p>Episodes and series that dig into food systems, resilience, and the economics underneath them — added as they’re found, not as a comprehensive archive.</p>
     </div>
     <div class="media-grid">
-      <div class="media-card is-pending">
+      <a class="media-card is-pending" href="https://darkmatterlabs.org/contact" target="_blank" rel="noopener">
         <div>
-          <div class="media-tag podcast">Add a podcast</div>
-          <h3>Episode name, show &amp; host</h3>
-          <p>One line on why it’s worth listening to — then swap this card out for the real thing.</p>
+          <div class="media-tag podcast">Podcasts</div>
+          <h3>Nothing here yet</h3>
+          <p>Know an episode that belongs here? Send it to Dark Matter Labs and we’ll add it.</p>
         </div>
-        <div class="media-link">Link to be added</div>
-      </div>
+        <div class="media-link">Suggest one <span class="arrow" aria-hidden="true">↗</span></div>
+      </a>
     </div>
   </div>
 </section>
@@ -213,19 +213,19 @@
       <a class="media-card" href="https://www.instagram.com/reel/Db6cYfpsmsQ/" target="_blank" rel="noopener">
         <div>
           <div class="media-tag social">Instagram reel</div>
-          <h3>Add a one-line caption here</h3>
-          <p><em>Link is live — swap this text for your own caption when you’re ready.</em></p>
+          <h3>A reel from the field</h3>
+          <p>Watch it on Instagram.</p>
         </div>
         <div class="media-link">View the reel <span class="arrow" aria-hidden="true">↗</span></div>
       </a>
-      <div class="media-card is-pending">
+      <a class="media-card is-pending" href="https://darkmatterlabs.org/contact" target="_blank" rel="noopener">
         <div>
-          <div class="media-tag social">Add a post</div>
-          <h3>Platform, who posted it &amp; what it shows</h3>
-          <p>One line on why it belongs here — then swap this card out for the real thing.</p>
+          <div class="media-tag social">Posts</div>
+          <h3>Nothing here yet</h3>
+          <p>Know a post from someone doing this work that belongs here? Send it to Dark Matter Labs and we’ll add it.</p>
         </div>
-        <div class="media-link">Link to be added</div>
-      </div>
+        <div class="media-link">Suggest one <span class="arrow" aria-hidden="true">↗</span></div>
+      </a>
     </div>
   </div>
 </section>
@@ -257,14 +257,14 @@
         </div>
         <div class="media-link">Explore it <span class="arrow" aria-hidden="true">↗</span></div>
       </a>
-      <div class="media-card is-pending">
+      <a class="media-card is-pending" href="https://darkmatterlabs.org/contact" target="_blank" rel="noopener">
         <div>
-          <div class="media-tag reading">Add a piece</div>
-          <h3>Title, author &amp; where it’s from</h3>
-          <p>One line on why it belongs here — then swap this card out for the real thing.</p>
+          <div class="media-tag reading">Reading</div>
+          <h3>Nothing here yet</h3>
+          <p>Know a piece of writing that belongs here? Send it to Dark Matter Labs and we’ll add it.</p>
         </div>
-        <div class="media-link">Link to be added</div>
-      </div>
+        <div class="media-link">Suggest one <span class="arrow" aria-hidden="true">↗</span></div>
+      </a>
     </div>
   </div>
 </section>
@@ -277,7 +277,7 @@
         <strong>Media &amp; Inspiration</strong>
         A running, hand-curated shelf of podcasts, social posts and writing connected to the Food as Infrastructure portfolio — built to make it easy to point someone toward the human side of this work, not just the plans.
         <br><br>
-        This page is a working draft, not yet linked from the main portfolio homepage. Add or swap cards by editing this file directly.
+        This page is a working draft, listed in the Library but not yet linked from the portfolio homepage.
         <br><br>
         Parts of this page were drafted with AI assistance (Claude). Licensed CC BY-SA 4.0 — see the <a href="index.html">homepage</a> for full credit and lineage.
       </div>

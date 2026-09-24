@@ -63,7 +63,7 @@ A solid square with a two-letter symbol and an index in the top-right corner. It
 
 - **Filled ink** means live and shared across London.
 - **Filled beet** means it belongs to Camden (the IP position agreed with the Camden Food Partnership).
-- **Outlined** means draft.
+- **Outlined** means draft. A Camden draft is outlined in beet.
 
 ```html
 <span class="fai-el fai-el--camden" style="--el-size:56px"><b>Nc</b><i>6</i></span>

@@ -89,6 +89,8 @@
     box-shadow:inset 0 0 0 1.5px var(--fai-ink);
   }
   .tile--draft:hover{ background:var(--fai-field); }
+  .tile--camden.tile--draft{ color:var(--fai-beet); box-shadow:inset 0 0 0 1.5px var(--fai-beet); }
+  .tile--camden.tile--draft:hover{ background:var(--fai-beet-tint); }
 
   @media (max-width:760px){
     .period{ grid-template-columns:1fr; gap:12px; }
@@ -212,7 +214,7 @@
         <a class="tile tile--camden" href="nutrition-supply-map.html" aria-label="Where Camden&#x27;s Food Comes From"><i>5</i><b>Ns</b><span>Supply Map</span></a>
         <a class="tile tile--camden" href="nutrition-cascade-model.html" aria-label="The Nutrition Cascade"><i>6</i><b>Nc</b><span>Nutrition Cascade</span></a>
         <a class="tile tile--camden" href="wheres-the-energy.html" aria-label="Where&#x27;s the Energy?"><i>7</i><b>En</b><span>Where&#x27;s the Energy?</span></a>
-        <a class="tile tile--camden" href="camden-health-and-wellbeing.html" aria-label="Healthy Weight Acceleration Plan"><i>8</i><b>Hw</b><span>Healthy Weight</span></a>
+        <a class="tile tile--camden tile--draft" href="camden-health-and-wellbeing.html" aria-label="Draft. Healthy Weight Acceleration Plan"><i>8</i><b>Hw</b><span>Healthy Weight</span></a>
       </div>
     </div>
     <div class="period">
@@ -236,7 +238,7 @@
     <div class="wrap">
       <div class="block__head">
         <h2 id="map-h">How the pages link</h2>
-        <p>The portfolio opens onto five London-wide frameworks and tools. The Working Group and the Six Pathways are, in turn, the way into the borough and Camden pages beneath them. Two pages are live but not yet linked from any of the others.</p>
+        <p>The portfolio opens onto five London-wide frameworks and tools. The Working Group and the Six Pathways are, in turn, the way into the borough and Camden pages beneath them. Two pages are so far only reachable from this Library.</p>
       </div>
       <figure class="diagram">
         <div class="diagram__scroll">
@@ -314,9 +316,9 @@
             <text x="295" y="404" text-anchor="middle" class="n-name">What's next</text>
 
             <rect x="740" y="296" width="400" height="140" fill="#FFFFFF"></rect>
-            <text x="760" y="324" class="n-label">Live, but not yet linked from any other page</text>
-            <rect x="760" y="346" width="170" height="58" class="n-camden"></rect>
-            <text x="845" y="370" text-anchor="middle" class="n-label n-camden-label">Camden</text>
+            <text x="760" y="324" class="n-label">Only reachable from this Library so far</text>
+            <rect x="760" y="346" width="170" height="58" class="n-camden n-draft"></rect>
+            <text x="845" y="370" text-anchor="middle" class="n-label n-camden-label">Camden, draft</text>
             <text x="845" y="390" text-anchor="middle" class="n-name">Healthy Weight</text>
             <rect x="950" y="346" width="170" height="58" class="n-london n-draft"></rect>
             <text x="1035" y="370" text-anchor="middle" class="n-label">Reference, draft</text>
@@ -377,9 +379,9 @@
           <span class="fai-el fai-el--draft" style="--el-size:44px" aria-hidden="true"><b>Md</b><i>13</i></span>
           <div class="entry__body">
             <h4><a href="media-and-inspiration.html">Media &amp; Inspiration</a><span class="entry__draft">Draft</span></h4>
-            <p>Podcasts, posts and pieces that shaped the thinking here. Gathered, but not yet linked from the portfolio pages.</p>
+            <p>Podcasts, posts and pieces that shaped the thinking here. Listed in the Library, but not yet linked from the portfolio homepage.</p>
           </div>
-          <div class="entry__links"><a class="entry__pdf" href="assets/library-pdfs/media-and-inspiration.pdf">PDF snapshot, 229 KB</a></div>
+          <div class="entry__links"><a class="entry__pdf" href="assets/library-pdfs/media-and-inspiration.pdf">PDF snapshot, 217 KB</a></div>
         </li>
       </ul>
     </section>
@@ -414,9 +416,9 @@
           <div class="entry__links"><a class="entry__pdf" href="assets/library-pdfs/wheres-the-energy.pdf">PDF snapshot, 540 KB</a></div>
         </li>
         <li class="entry">
-          <span class="fai-el fai-el--camden" style="--el-size:44px" aria-hidden="true"><b>Hw</b><i>8</i></span>
+          <span class="fai-el fai-el--camden fai-el--draft" style="--el-size:44px" aria-hidden="true"><b>Hw</b><i>8</i></span>
           <div class="entry__body">
-            <h4><a href="camden-health-and-wellbeing.html">Healthy Weight Acceleration Plan</a></h4>
+            <h4><a href="camden-health-and-wellbeing.html">Healthy Weight Acceleration Plan</a><span class="entry__draft">Draft</span></h4>
             <p>Reference material from Camden&#x27;s Health &amp; Wellbeing Department, held here to cross-reference against the food mission work.</p>
           </div>
           <div class="entry__links"><a class="entry__pdf" href="assets/library-pdfs/camden-health-and-wellbeing.pdf">PDF snapshot, 374 KB</a></div>
