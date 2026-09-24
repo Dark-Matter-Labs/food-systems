@@ -134,6 +134,7 @@ Voice is DM's: systems-minded, inquiry-led, quietly hopeful, plain words for rad
 ## Checklist before you publish
 
 - [ ] Page is in `assets/fai/pages.json` and `tools/apply_identity.py` has been run
+- [ ] Its `summary` reads well as a link preview (under 160 characters) and `tools/build_social.py` has rendered its sharing card
 - [ ] Paper or canvas, not both
 - [ ] One accent (beet), data colours only inside figures
 - [ ] No uppercase labels, no monospace, no `→` on buttons
