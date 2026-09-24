@@ -1,5 +1,5 @@
 {
-  "_comment": "One entry per page. n = position in the library table, sym = two-letter element symbol (unique), name = short name for the site bar, short = optional shorter name for the library tile, title/summary = library listing, scope = london | camden | islington | hackney, status = live | draft, listed = shown in the library, pdf = a snapshot exists in assets/library-pdfs/.",
+  "_comment": "One entry per page. n = position in the library table, sym = two-letter element symbol (unique), name = short name for the site bar, short = optional shorter name for the library tile, title/summary = library listing, scope = london | camden | islington | hackney, status = live | draft, listed = shown in the library, pdf = a snapshot exists in assets/library-pdfs/. surface = paper | canvas (STYLE.md rule 1). social_title and social_photo optionally override the sharing card. summary is also the page's meta description.",
   "pages": [
     {
       "n": 1,
@@ -11,7 +11,10 @@
       "listed": true,
       "title": "Food as Infrastructure",
       "summary": "The London-wide portfolio. It ties the frameworks, the Hubs & Markets Working Group and the borough pages into one entry point.",
-      "pdf": true
+      "pdf": true,
+      "surface": "canvas",
+      "social_title": "Food System as Infrastructure",
+      "social_photo": "assets/media/camden-hero-poster.jpg"
     },
     {
       "n": 2,
@@ -24,7 +27,8 @@
       "title": "London Hubs & Markets Working Group",
       "summary": "The coordination layer for the cross-borough working group: the anatomy of a hub, the shared network view, and notes from each meeting.",
       "pdf": true,
-      "short": "Hubs & Markets"
+      "short": "Hubs & Markets",
+      "surface": "paper"
     },
     {
       "n": 3,
@@ -36,7 +40,8 @@
       "listed": true,
       "title": "Six Pathways to a Civic Food System",
       "summary": "The shared framework the borough and Camden work sits inside: six pathways to a civic, regenerative food system.",
-      "pdf": true
+      "pdf": true,
+      "surface": "paper"
     },
     {
       "n": 4,
@@ -48,7 +53,8 @@
       "listed": true,
       "title": "A Sovereign Food System",
       "summary": "A draft framework for the economic and policy foundations underneath the wider portfolio.",
-      "pdf": true
+      "pdf": true,
+      "surface": "paper"
     },
     {
       "n": 5,
@@ -58,9 +64,10 @@
       "scope": "camden",
       "status": "live",
       "listed": true,
-      "title": "Where Camden's Food Comes From",
-      "summary": "An interactive map of the global systems Camden's calories, protein and micronutrients depend on, and how their disruption reaches UK shelves.",
-      "pdf": true
+      "title": "Where Camden’s Food Comes From",
+      "summary": "An interactive map of the global systems Camden’s calories, protein and micronutrients depend on, and how their disruption reaches UK shelves.",
+      "pdf": true,
+      "surface": "canvas"
     },
     {
       "n": 6,
@@ -72,19 +79,21 @@
       "listed": true,
       "title": "The Nutrition Cascade",
       "summary": "An interactive model of how one food-system shock cascades, across four volatility windows, into social and financial risk for the borough.",
-      "pdf": true
+      "pdf": true,
+      "surface": "canvas"
     },
     {
       "n": 7,
       "sym": "En",
       "file": "wheres-the-energy.html",
-      "name": "Where's the Energy?",
+      "name": "Where’s the Energy?",
       "scope": "camden",
       "status": "live",
       "listed": true,
-      "title": "Where's the Energy?",
+      "title": "Where’s the Energy?",
       "summary": "What was raised, and by whom, across the Camden Food Partnership: where energy already exists and where it still needs building.",
-      "pdf": true
+      "pdf": true,
+      "surface": "paper"
     },
     {
       "n": 8,
@@ -95,8 +104,9 @@
       "status": "draft",
       "listed": true,
       "title": "Healthy Weight Acceleration Plan",
-      "summary": "Reference material from Camden's Health & Wellbeing Department, held here to cross-reference against the food mission work.",
-      "pdf": true
+      "summary": "Reference material from Camden’s Health & Wellbeing Department, held here to cross-reference against the food mission work.",
+      "pdf": true,
+      "surface": "paper"
     },
     {
       "n": 9,
@@ -107,20 +117,22 @@
       "status": "draft",
       "listed": true,
       "title": "Islington Food Partnership",
-      "summary": "Overview and ambition for the Islington Food Partnership: funded to 2028, restructuring into four action groups, and recruiting an operator for the hub it shares with Camden.",
-      "pdf": true
+      "summary": "The Islington Food Partnership: funded to 2028, restructuring into four action groups, and recruiting an operator for the hub it shares with Camden.",
+      "pdf": true,
+      "surface": "paper"
     },
     {
       "n": 10,
       "sym": "In",
       "file": "islington-food-hub.html",
-      "name": "Islington: what's next",
+      "name": "Islington: what’s next",
       "scope": "islington",
       "status": "draft",
       "listed": true,
-      "title": "Islington: what's next",
-      "summary": "Islington's hub and logistics thinking, developed within the Hubs & Markets Working Group.",
-      "pdf": true
+      "title": "Islington: what’s next",
+      "summary": "Islington’s hub and logistics thinking, developed within the Hubs & Markets Working Group.",
+      "pdf": true,
+      "surface": "paper"
     },
     {
       "n": 11,
@@ -131,20 +143,22 @@
       "status": "draft",
       "listed": true,
       "title": "Hackney Food Hub",
-      "summary": "Overview and ambition for Hackney's food hub, starting from the logistics-capacity question that opened the borough's thinking.",
-      "pdf": true
+      "summary": "Overview and ambition for Hackney’s food hub, starting from the logistics-capacity question that opened the borough’s thinking.",
+      "pdf": true,
+      "surface": "paper"
     },
     {
       "n": 12,
       "sym": "Hn",
       "file": "hackney-food-hub.html",
-      "name": "Hackney: what's next",
+      "name": "Hackney: what’s next",
       "scope": "hackney",
       "status": "draft",
       "listed": true,
-      "title": "Hackney: what's next",
-      "summary": "Hackney's hub and logistics thinking, developed within the Hubs & Markets Working Group.",
-      "pdf": true
+      "title": "Hackney: what’s next",
+      "summary": "Hackney’s hub and logistics thinking, developed within the Hubs & Markets Working Group.",
+      "pdf": true,
+      "surface": "paper"
     },
     {
       "n": 13,
@@ -156,7 +170,8 @@
       "listed": true,
       "title": "Media & Inspiration",
       "summary": "Podcasts, posts and pieces that shaped the thinking here. Listed in the Library, but not yet linked from the portfolio homepage.",
-      "pdf": true
+      "pdf": true,
+      "surface": "paper"
     },
     {
       "n": 14,
@@ -167,8 +182,9 @@
       "status": "live",
       "listed": false,
       "title": "Library",
-      "summary": "Every page in the portfolio.",
-      "pdf": false
+      "summary": "Every page built across the Food as Infrastructure portfolio, how they link together, which belong to Camden, and a PDF snapshot of each.",
+      "pdf": false,
+      "surface": "paper"
     },
     {
       "n": 15,
@@ -179,8 +195,9 @@
       "status": "draft",
       "listed": false,
       "title": "The Overdue Bill",
-      "summary": "What the UK's food system already costs the country every year.",
-      "pdf": false
+      "summary": "What the UK’s broken food system already costs the country every year: itemised, sourced, and compounding while nothing changes.",
+      "pdf": false,
+      "surface": "paper"
     }
   ]
 }

@@ -47,7 +47,7 @@ Rules:
 - Write the copy first as plain text and show it to me before building.
 - Link assets/fai/fai.css and use its --fai-* tokens. Don't add fonts or colours.
 - Add the page to assets/fai/pages.json, then run tools/apply_identity.py,
-  tools/build_library.py and tools/check_links.py.
+  tools/build_library.py, tools/build_social.py and tools/check_links.py.
 - Screenshot it at 1280px and 375px and fix anything that breaks the checklist.
 ```
 
@@ -55,4 +55,4 @@ Rules:
 
 1. Add an entry to `assets/fai/pages.json` with a two-letter symbol nobody else has used.
 2. Build the page, linking `assets/fai/fai.css`.
-3. Run `python3 tools/apply_identity.py`, then `python3 tools/build_library.py`, then `python3 tools/check_links.py`.
+3. Run `python3 tools/apply_identity.py`, `python3 tools/build_library.py`, `python3 tools/build_social.py` and `python3 tools/check_links.py`.

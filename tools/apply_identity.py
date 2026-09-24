@@ -12,6 +12,9 @@ What it does per page:
   2. Adds the favicon and links assets/fai/fai.css last in <head>.
   3. Inserts the site bar straight after <body> (after a skip link if present).
   4. Removes the dead darkmatterlabs.org logo hotlink.
+  5. Writes the <title>, meta description, canonical URL and Open Graph /
+     Twitter sharing tags from pages.json. Run tools/build_social.py to
+     render the sharing images they point to.
 """
 import html
 import json
@@ -27,13 +30,78 @@ FONT_HREF = (
     "ital,wght@0,400..900;1,400..700&display=swap"
 )
 
-HEAD_BLOCK = f"""<!-- fai:head -->
+SITE_URL = "https://food.darkmatterlabs.org/"
+SITE_NAME = "Food as Infrastructure, Dark Matter Labs"
+SUFFIX = "Food as Infrastructure"
+
+
+def page_url(page):
+    return SITE_URL if page["file"] == "index.html" else SITE_URL + page["file"]
+
+
+def social_image(page):
+    """Same naming rule as tools/build_social.py: photo cards are JPEG."""
+    ext = "jpg" if page.get("social_photo") else "png"
+    return f"{SITE_URL}assets/fai/social/{Path(page['file']).stem}.{ext}"
+
+
+def document_title(page):
+    if page["file"] == "index.html":
+        return "Food as Infrastructure: a London-wide portfolio from Dark Matter Labs"
+    draft = " (draft)" if page["status"] == "draft" else ""
+    return f"{page['title']}{draft} — {SUFFIX}"
+
+
+def head_block(page):
+    a = lambda text: html.escape(text, quote=True)
+    title = page.get("social_title", page["title"])
+    summary = page["summary"]
+    url = page_url(page)
+    image = social_image(page)
+    alt = f"{title}. {SUFFIX}, Dark Matter Labs."
+    kind = "website" if page["file"] == "index.html" else "article"
+    return f"""<!-- fai:head -->
+<meta name="description" content="{a(summary)}">
+<link rel="canonical" href="{url}">
+<meta name="theme-color" content="#111112">
+<meta property="og:type" content="{kind}">
+<meta property="og:site_name" content="{a(SITE_NAME)}">
+<meta property="og:locale" content="en_GB">
+<meta property="og:url" content="{url}">
+<meta property="og:title" content="{a(title)}">
+<meta property="og:description" content="{a(summary)}">
+<meta property="og:image" content="{image}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="{a(alt)}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{a(title)}">
+<meta name="twitter:description" content="{a(summary)}">
+<meta name="twitter:image" content="{image}">
+<meta name="twitter:image:alt" content="{a(alt)}">
 <link rel="icon" href="assets/fai/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="{FONT_HREF}">
 <link rel="stylesheet" href="assets/fai/fai.css">
 <!-- /fai:head -->"""
+
+
+# Hand-written sharing tags are replaced by the generated set above.
+OLD_META = re.compile(
+    r'\s*<meta\s+(?:name="description"|property="og:[^"]*"|name="twitter:[^"]*")[^>]*>'
+    r'|\s*<link\s+rel="canonical"[^>]*>',
+    re.I,
+)
+HEAD_TITLE = re.compile(r"<title>.*?</title>", re.S)
+
+
+def set_title(src, page):
+    head_end = src.index("</head>")
+    head, rest = src[:head_end], src[head_end:]
+    head = HEAD_TITLE.sub(lambda _: f"<title>{html.escape(document_title(page), quote=False)}</title>", head, count=1)
+    return head + rest
+
 
 DEAD_LOGO = re.compile(
     r'<img[^>]*DmLogoFull[^>]*>\s*(<span class="brand-div">/</span>)?', re.I
@@ -109,7 +177,10 @@ def apply(page):
     out = GOOGLE_LINK.sub("", src)
     out = GOOGLE_IMPORT.sub("", out)
     out = DEAD_LOGO.sub("", out)
-    out = replace_or_insert(out, "fai:head", HEAD_BLOCK, insert_head)
+    head_end = out.index("</head>")
+    out = OLD_META.sub("", out[:head_end]) + out[head_end:]
+    out = set_title(out, page)
+    out = replace_or_insert(out, "fai:head", head_block(page), insert_head)
     out = replace_or_insert(out, "fai:bar", site_bar(page), insert_bar)
     if out != src:
         path.write_text(out, encoding="utf-8")

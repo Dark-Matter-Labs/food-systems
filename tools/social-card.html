@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<!-- Rendered at 1200×630 by tools/build_social.py. Reads its content from the query string. -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600&display=block">
+<link rel="stylesheet" href="../assets/fai/fai.css">
+<style>
+  html, body{ margin:0; width:1200px; height:630px; overflow:hidden; }
+  body{
+    --bg:var(--fai-paper); --fg:var(--fai-ink); --fg-2:var(--fai-ink-3); --rule:var(--fai-rule);
+    background:var(--bg); color:var(--fg);
+    position:relative;
+  }
+  body.canvas{ --bg:var(--fai-canvas); --fg:var(--fai-on-canvas); --fg-2:var(--fai-on-canvas-2); --rule:var(--fai-canvas-rule); }
+  body.photo{ --bg:var(--fai-canvas); --fg:#FFFFFF; --fg-2:rgba(255,255,255,.78); --rule:rgba(255,255,255,.28); }
+
+  .photo-bg{ position:absolute; inset:0; background-size:cover; background-position:center; }
+  .photo-bg::after{ content:""; position:absolute; inset:0; background:rgba(17,17,18,.66); }
+
+  .card{
+    position:absolute; inset:0;
+    padding:60px 64px 52px;
+    display:flex; flex-direction:column;
+  }
+  .card .fai-el{ --el-size:128px; }
+  body.canvas .card .fai-el:not(.fai-el--camden):not(.fai-el--draft),
+  body.photo .card .fai-el:not(.fai-el--camden):not(.fai-el--draft){ --el-bg:var(--fai-paper); --el-fg:var(--fai-canvas); }
+  body.canvas .card .fai-el--camden.fai-el--draft,
+  body.photo .card .fai-el--camden.fai-el--draft{ color:#D4719B; }
+
+  .scope{ margin-top:auto; font-size:26px; color:var(--fg-2); }
+  h1{
+    margin:10px 0 0;
+    font-size:var(--size, 72px); font-weight:500; line-height:1.02;
+    max-width:1000px;
+  }
+  .foot{
+    display:flex; align-items:center; justify-content:space-between;
+    margin-top:40px; padding-top:24px; border-top:1px solid var(--rule);
+    font-size:24px;
+  }
+  .foot b{ font-weight:500; }
+  .foot img{ height:34px; width:auto; display:block; }
+</style>
+</head>
+<body>
+<div class="photo-bg" hidden></div>
+<div class="card">
+  <span class="fai-el" id="tile"><b id="sym"></b><i id="n"></i></span>
+  <div class="scope" id="scope"></div>
+  <h1 id="title"></h1>
+  <div class="foot">
+    <b>Food as Infrastructure</b>
+    <img id="dm" src="../assets/brand/dm-logo-v1-black.svg" alt="Dark Matter Labs">
+  </div>
+</div>
+<script>
+  var q = new URLSearchParams(location.search);
+  var theme = q.get("theme") || "paper";
+  var scope = q.get("scope");
+  var draft = q.get("status") === "draft";
+  document.body.className = theme;
+  if (theme !== "paper") document.getElementById("dm").src = "../assets/brand/dm-logo-v1-white.svg";
+  if (theme === "photo") {
+    var bg = document.querySelector(".photo-bg");
+    bg.hidden = false;
+    bg.style.backgroundImage = "url('../" + q.get("photo") + "')";
+  }
+  var tile = document.getElementById("tile");
+  if (scope === "camden") tile.classList.add("fai-el--camden");
+  if (draft) tile.classList.add("fai-el--draft");
+  document.getElementById("sym").textContent = q.get("sym");
+  document.getElementById("n").textContent = q.get("n");
+
+  var names = { london: "London-wide", camden: "Camden", islington: "Islington", hackney: "Hackney" };
+  document.getElementById("scope").textContent = (names[scope] || "") + (draft ? ", draft" : "");
+
+  var title = q.get("title").replace(/'/g, "\u2019");
+  var h1 = document.getElementById("title");
+  h1.textContent = title;
+  // Longer titles step down so every card holds its title in three lines.
+  h1.style.setProperty("--size", title.length > 58 ? "56px" : title.length > 36 ? "64px" : "76px");
+</script>
+</body>
+</html>
