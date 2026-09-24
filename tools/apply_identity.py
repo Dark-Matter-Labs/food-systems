@@ -72,10 +72,10 @@ def site_bar(page):
     return f"""<!-- fai:bar -->
 <div class="fai-bar">
   <div class="fai-bar__inner">
-    <a class="fai-bar__dm" href="https://darkmatterlabs.org/"><img src="assets/brand/dm-logo-v1-white.svg" alt="Dark Matter Labs" width="102" height="20"></a>
+    <a class="fai-bar__dm" href="https://darkmatterlabs.org/"><img class="fai-bar__lockup" src="assets/brand/dm-logo-v1-white.svg" alt="Dark Matter Labs" width="102" height="20"><img class="fai-bar__stamp" src="assets/brand/dm-stamp-white.svg" alt="Dark Matter Labs" width="20" height="20"></a>
     <span class="fai-bar__sep" aria-hidden="true"></span>
     <a class="fai-bar__mission" href="index.html">Food as Infrastructure</a>{here}
-    <nav class="fai-bar__links" aria-label="Site">{link("index.html", "Portfolio")}{link("library.html", "Library")}</nav>
+    <div class="fai-bar__links" role="navigation" aria-label="Site">{link("index.html", "Portfolio")}{link("library.html", "Library")}</div>
   </div>
 </div>
 <!-- /fai:bar -->"""

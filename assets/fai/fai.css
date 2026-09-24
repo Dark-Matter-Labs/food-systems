@@ -95,7 +95,7 @@ html body .tnum, html body td.num, html body th.num{ font-variant-numeric:tabula
   position:relative;
   z-index:60;
 }
-.fai-bar__inner{
+.fai-bar .fai-bar__inner{
   max-width:var(--fai-container);
   margin:0 auto;
   padding:0 32px;
@@ -105,13 +105,22 @@ html body .tnum, html body td.num, html body th.num{ font-variant-numeric:tabula
   gap:18px;
 }
 .fai-bar{ --fai-focus:var(--fai-lavender); }
-.fai-bar a{ color:inherit; text-decoration:none; }
+/* Pages style bare a, nav and img elements in many ways. Nothing inside
+   the bar may inherit that. */
+.fai-bar, .fai-bar *{
+  box-sizing:border-box; margin:0; float:none;
+  background:none; border:0; box-shadow:none; border-radius:0;
+  font-size:14px; line-height:1; font-weight:400;
+}
+.fai-bar{ background:var(--fai-canvas) !important; }
+.fai-bar a{ color:inherit !important; text-decoration:none !important; padding:0 !important; }
 .fai-bar__dm{ display:flex; align-items:center; flex:none; }
-.fai-bar__dm img{ height:20px; width:auto; display:block; }
+.fai-bar__dm img{ height:20px; width:auto; max-width:none; display:block; }
+.fai-bar__stamp{ display:none !important; }
 .fai-bar__sep{
   width:1px; height:18px; background:var(--fai-canvas-rule); flex:none;
 }
-.fai-bar__mission{ font-weight:500; white-space:nowrap; }
+.fai-bar .fai-bar__mission{ font-weight:500; white-space:nowrap; }
 .fai-bar__here{
   display:flex; align-items:center; gap:9px;
   color:var(--fai-on-canvas-2);
@@ -120,22 +129,21 @@ html body .tnum, html body td.num, html body th.num{ font-variant-numeric:tabula
 .fai-bar__here span:last-child{
   white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
 }
-.fai-bar__links{
+.fai-bar .fai-bar__links{
   margin-left:auto; display:flex; gap:22px; flex:none;
 }
-.fai-bar__links a{ color:var(--fai-on-canvas-2); transition:color var(--fai-ease); }
-.fai-bar__links a:hover,
-.fai-bar__links a[aria-current="page"]{ color:var(--fai-on-canvas); }
+.fai-bar .fai-bar__links a{ color:var(--fai-on-canvas-2) !important; transition:color var(--fai-ease); }
+.fai-bar .fai-bar__links a:hover,
+.fai-bar .fai-bar__links a[aria-current="page"]{ color:var(--fai-on-canvas) !important; }
 
 @media (max-width:760px){
-  .fai-bar__inner{ padding:0 16px; gap:12px; }
-  .fai-bar__dm img{ height:15px; }
+  .fai-bar .fai-bar__inner{ padding:0 16px; gap:12px; }
   .fai-bar__here{ display:none; }
   .fai-bar__links{ gap:16px; }
 }
-@media (max-width:420px){
-  .fai-bar__mission{ display:none; }
-  .fai-bar__dm + .fai-bar__sep{ display:none; }
+@media (max-width:520px){
+  .fai-bar__lockup{ display:none !important; }
+  .fai-bar__stamp{ display:block !important; }
 }
 @media print{ .fai-bar{ display:none; } }
 
