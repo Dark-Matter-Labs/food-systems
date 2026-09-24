@@ -7,22 +7,22 @@
 <title>The Overdue Bill</title>
 <meta name="description" content="What the UK's broken food system already costs the country every year — itemised, sourced, and compounding while nothing changes.">
 <style>
+  /* A document on paper. Tokens come from assets/fai/fai.css (loaded after this block). */
   :root{
-    --paper:#F6F5F0;
-    --paper-line:#E4E1D6;
-    --ink:#141310;
-    --ink-soft:#5A574C;
-    --ink-faint:#96927F;
+    --paper:var(--fai-paper);
+    --paper-line:var(--fai-rule);
+    --ink:var(--fai-ink);
+    --ink-soft:var(--fai-ink-2);
+    --ink-faint:var(--fai-ink-3);
+    --surface:var(--fai-field);
+    /* Red is semantic here: overdue. It is used only for the total and the past-due stamp. */
     --red:#B3231C;
-    --red-dim:#F3E0DD;
-    --stamp:#B3231C;
-    --blue:#1C5CAB;
-    --blue-dim:#DCE6F3;
-    --surface:#FCFCFB;
-
-    --display:'Archivo', system-ui, sans-serif;
-    --body:'Source Sans 3', system-ui, sans-serif;
-    --mono:'IBM Plex Mono', ui-monospace, monospace;
+    /* Chart data colours: the current path in ink, the reform path in hub teal. */
+    --path-now:var(--fai-ink);
+    --path-reform:#2E7D6B;
+    --display:var(--fai-sans);
+    --body:var(--fai-sans);
+    --mono:var(--fai-sans);
     color-scheme: light;
   }
 
@@ -31,120 +31,117 @@
     margin:0;
     background:var(--paper);
     color:var(--ink);
-    font-family:var(--body);
-    font-size:16.5px;
+    font-size:17px;
     line-height:1.6;
-    padding-inline:20px;
-    padding-block:0 90px;
   }
-  h1,h2,h3{font-family:var(--display); margin:0; text-wrap:balance;}
+  .page{padding:0 32px 96px;}
+  @media (max-width:760px){ .page{padding:0 16px 56px;} }
+  h1,h2,h3{margin:0; text-wrap:balance;}
   p{margin:0;}
-  .mono{font-family:var(--mono); font-variant-numeric:tabular-nums;}
+  
   .wrap{max-width:880px; margin-inline:auto;}
   .wrap-wide{max-width:1080px; margin-inline:auto;}
+  a{color:var(--ink); text-decoration:underline; text-decoration-color:var(--fai-beet); text-decoration-thickness:1px; text-underline-offset:3px; transition:color var(--fai-ease);}
+  a:hover{color:var(--fai-beet);}
 
-  /* ===================== MASTHEAD ===================== */
+  /* ===================== Status note and masthead ===================== */
+  .draft-banner{
+    max-width:1080px; margin:24px auto 0; padding:14px 18px;
+    background:var(--fai-field); border-left:3px solid var(--fai-beet);
+    font-size:15px; line-height:1.5; color:var(--ink);
+  }
+  .draft-banner b{font-weight:600;}
+
   .masthead{
-    max-width:1080px; margin:0 auto; padding:22px 0 16px;
-    display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:10px;
+    max-width:1080px; margin:0 auto; padding:28px 0 14px;
+    display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:8px 16px;
     border-bottom:2px solid var(--ink);
   }
-  .masthead .brand{font-family:var(--mono); font-size:12px; letter-spacing:0.08em; text-transform:uppercase; color:var(--ink-soft);}
-  .masthead .ref{font-family:var(--mono); font-size:12px; color:var(--ink-faint);}
+  .masthead .brand{font-size:14px; color:var(--ink-soft);}
+  .masthead .ref{font-size:14px; color:var(--ink-faint);}
 
-  .draft-banner{
-    max-width:1080px; margin:16px auto 0; padding:12px 18px;
-    background:var(--red-dim); border:1px solid var(--red);
-    display:flex; align-items:center; gap:10px; flex-wrap:wrap;
-    font-family:var(--mono); font-size:12px; color:#6E170F; letter-spacing:0.01em;
-  }
-  .draft-banner b{text-transform:uppercase; letter-spacing:0.06em; color:var(--red);}
-
-  /* ===================== INVOICE HEADER ===================== */
+  /* ===================== Invoice header ===================== */
   .invoice-head{padding:48px 0 40px;}
   .invoice-meta{
-    display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-bottom:34px;
-    font-family:var(--mono); font-size:13px; color:var(--ink-soft);
+    display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-bottom:40px;
+    font-size:15px; color:var(--ink-soft);
   }
-  .invoice-meta .label{text-transform:uppercase; letter-spacing:0.06em; font-size:10.5px; color:var(--ink-faint); display:block; margin-bottom:4px;}
-  .invoice-meta .val{color:var(--ink); font-size:14px;}
-  @media (max-width:600px){ .invoice-meta{grid-template-columns:1fr;} }
+  .invoice-meta .label{font-size:14px; color:var(--ink-faint); display:block; margin-bottom:2px;}
+  .invoice-meta .val{color:var(--ink); font-size:17px;}
+  @media (max-width:600px){ .invoice-meta{grid-template-columns:1fr; gap:16px;} }
 
-  h1.big{
-    font-size:clamp(38px,7vw,68px); line-height:0.98; letter-spacing:-0.01em; font-weight:900;
-    text-transform:uppercase;
-  }
-  .dek{font-size:18.5px; line-height:1.5; color:var(--ink-soft); max-width:60ch; margin-top:20px;}
+  /* The one heavier display weight on the site: this page is an invoice. */
+  h1.big{font-size:clamp(44px,7vw,80px); line-height:1; font-weight:800;}
+  .dek{font-size:20px; line-height:1.45; color:var(--ink-soft); max-width:60ch; margin-top:24px;}
+  @media (max-width:760px){ .dek{font-size:18px;} }
 
   .total-box{
-    margin-top:40px; border:2px solid var(--ink); padding:26px 28px;
+    margin-top:40px; border:2px solid var(--ink); padding:24px 28px;
     display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;
-    background:#fff;
+    background:var(--paper);
   }
-  .total-box .tl{font-family:var(--mono); font-size:12px; text-transform:uppercase; letter-spacing:0.08em; color:var(--ink-soft);}
-  .total-box .tl small{display:block; font-size:11px; color:var(--ink-faint); text-transform:none; letter-spacing:0; margin-top:4px;}
-  .total-box .amt{font-family:var(--display); font-size:clamp(34px,6vw,54px); font-weight:900; color:var(--red); line-height:1;}
+  .total-box .tl{font-size:17px; font-weight:600; color:var(--ink);}
+  .total-box .tl small{display:block; font-size:14px; font-weight:400; color:var(--ink-faint); margin-top:4px; line-height:1.45;}
+  .total-box .amt{font-size:clamp(40px,6vw,60px); font-weight:800; color:var(--red); line-height:1;}
 
   .stamp{
     display:inline-block; border:3px solid var(--red); color:var(--red);
-    font-family:var(--mono); font-weight:700; font-size:13px; letter-spacing:0.12em; text-transform:uppercase;
-    padding:6px 14px; transform:rotate(-4deg); border-radius:4px; margin-top:22px;
+    font-weight:700; font-size:15px;
+    padding:6px 14px; transform:rotate(-3deg); margin-top:24px;
   }
 
-  /* ===================== SECTION SHELL ===================== */
+  /* ===================== Sections ===================== */
   section{padding:16px 0 8px;}
-  .rule-heavy{border:none; border-top:2px solid var(--ink); margin:36px 0 0;}
+  .rule-heavy{border:none; border-top:2px solid var(--ink); margin:48px auto 0; max-width:1080px;}
   .rule{border:none; border-top:1px solid var(--paper-line); margin:0;}
   .cat-head{
-    display:flex; justify-content:space-between; align-items:baseline; gap:16px; flex-wrap:wrap;
-    padding:30px 0 6px;
+    display:flex; justify-content:space-between; align-items:baseline; gap:8px 16px; flex-wrap:wrap;
+    padding:32px 0 8px;
   }
-  .cat-head h2{font-size:clamp(20px,2.6vw,25px); text-transform:uppercase; letter-spacing:0.01em;}
-  .cat-head .cat-sub{font-family:var(--mono); font-size:11.5px; color:var(--ink-faint); text-transform:uppercase; letter-spacing:0.05em;}
+  .cat-head h2{font-size:clamp(26px,3vw,34px); font-weight:500; line-height:1.15;}
+  .cat-head h2 .cat-no{color:var(--ink-faint); margin-right:.35em;}
+  .cat-head .cat-sub{font-size:14px; color:var(--ink-faint);}
 
-  /* ===================== LINE ITEMS ===================== */
+  /* ===================== Line items ===================== */
   .line-item{
     display:grid; grid-template-columns:1fr auto; gap:18px; align-items:start;
-    padding:20px 0; border-top:1px solid var(--paper-line);
+    padding:22px 0; border-top:1px solid var(--paper-line);
   }
-  .line-item .desc h3{font-size:16.5px; font-family:var(--body); font-weight:700; margin-bottom:6px; text-transform:none;}
-  .line-item .desc p{font-size:14.5px; color:var(--ink-soft); max-width:58ch;}
-  .line-item .desc .src{font-family:var(--mono); font-size:11px; color:var(--ink-faint); margin-top:8px; display:block;}
+  .line-item .desc h3{font-size:18px; font-weight:600; line-height:1.35; margin-bottom:6px;}
+  .line-item .desc p{font-size:16px; color:var(--ink-soft); max-width:58ch;}
+  .line-item .desc .src{font-size:14px; color:var(--ink-faint); margin-top:8px; display:block;}
   .line-item .amount{
-    font-family:var(--mono); font-weight:600; font-size:22px; white-space:nowrap; text-align:right; padding-top:2px;
+    font-weight:600; font-size:24px; white-space:nowrap; text-align:right; padding-top:2px;
   }
-  .line-item .amount.small{font-size:16px;}
+  .line-item .amount.small{font-size:17px;}
   @media (max-width:560px){
-    .line-item{grid-template-columns:1fr;}
-    .line-item .amount{text-align:left; font-size:26px;}
+    .line-item{grid-template-columns:1fr; gap:10px;}
+    .line-item .amount{text-align:left; font-size:26px; white-space:normal;}
   }
 
-  /* ===================== MODEL ===================== */
-  .model-panel{
-    border:2px solid var(--ink); background:var(--surface); padding:32px 30px;
-    margin-top:6px;
-  }
-  .model-intro p{font-size:15.5px; color:var(--ink-soft); max-width:70ch; line-height:1.6;}
+  /* ===================== Model ===================== */
+  .model-panel{background:var(--surface); padding:32px 30px; margin-top:8px;}
+  @media (max-width:600px){ .model-panel{padding:24px 18px;} }
+  .model-intro p{font-size:16px; color:var(--ink-soft); max-width:68ch; line-height:1.6;}
   .model-intro p+p{margin-top:10px;}
+  .model-intro b{color:var(--ink); font-weight:600;}
 
   .controls{
     display:flex; flex-wrap:wrap; gap:28px; align-items:flex-end;
-    margin-top:28px; padding:20px 20px; background:var(--paper); border:1px solid var(--paper-line);
+    margin-top:28px; padding:20px; background:var(--paper);
   }
   .control-block{flex:1; min-width:240px;}
   .control-block .clabel{
-    font-family:var(--mono); font-size:11px; text-transform:uppercase; letter-spacing:0.06em;
-    color:var(--ink-faint); display:flex; justify-content:space-between; margin-bottom:10px;
+    font-size:14px; color:var(--ink-soft);
+    display:flex; justify-content:space-between; gap:12px; margin-bottom:10px;
   }
-  .control-block .clabel b{color:var(--blue); font-size:14px; font-family:var(--mono);}
-  input[type=range]{
-    width:100%; accent-color:var(--blue); height:22px; cursor:pointer;
-  }
-  .range-scale{display:flex; justify-content:space-between; font-family:var(--mono); font-size:10px; color:var(--ink-faint); margin-top:2px;}
+  .control-block .clabel b{color:var(--path-reform); font-size:15px; font-weight:600;}
+  input[type=range]{width:100%; accent-color:var(--path-reform); height:22px; cursor:pointer;}
+  .range-scale{display:flex; justify-content:space-between; gap:8px; font-size:13px; color:var(--ink-faint); margin-top:2px;}
   .toggle-row{display:flex; gap:0; border:1px solid var(--ink); width:fit-content;}
   .toggle-btn{
-    font-family:var(--mono); font-size:12.5px; text-transform:uppercase; letter-spacing:0.04em;
-    padding:9px 18px; background:var(--paper); color:var(--ink-soft); border:none; cursor:pointer;
+    font-size:15px; font-weight:500;
+    padding:9px 18px; background:var(--paper); color:var(--ink); border:none; cursor:pointer;
   }
   .toggle-btn+.toggle-btn{border-left:1px solid var(--ink);}
   .toggle-btn.active{background:var(--ink); color:var(--paper);}
@@ -153,75 +150,76 @@
     display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--paper-line);
     border:1px solid var(--paper-line); margin-top:24px;
   }
-  .readout-cell{background:var(--surface); padding:20px 22px;}
-  .readout-cell .rl{font-family:var(--mono); font-size:11px; text-transform:uppercase; letter-spacing:0.05em; color:var(--ink-faint);}
-  .readout-cell .rv{font-family:var(--display); font-weight:900; font-size:clamp(24px,3.4vw,34px); margin-top:6px;}
-  .readout-cell.hero .rv{color:var(--blue);}
-  .readout-cell .rc{font-size:12.5px; color:var(--ink-soft); margin-top:6px;}
+  .readout-cell{background:var(--paper); padding:20px 22px;}
+  .readout-cell .rl{font-size:14px; color:var(--ink-faint);}
+  .readout-cell .rv{font-weight:600; font-size:clamp(26px,3.4vw,36px); margin-top:6px; line-height:1.15;}
+  .readout-cell.hero .rv{color:var(--path-reform);}
+  .readout-cell .rc{font-size:14px; color:var(--ink-soft); margin-top:6px; line-height:1.45;}
   @media (max-width:600px){ .model-readout{grid-template-columns:1fr;} }
 
   .chart-shell{margin-top:26px;}
-  .chart-scroll{overflow-x:auto;}
+  .chart-scroll{overflow-x:auto; background:var(--paper); padding:8px 4px 0;}
   .chart-scroll svg{display:block; min-width:640px; width:100%; height:auto;}
-  .legend-row{display:flex; gap:22px; margin-top:10px; flex-wrap:wrap;}
-  .legend-item{display:flex; align-items:center; gap:8px; font-size:12.5px; color:var(--ink-soft); font-family:var(--mono);}
-  .legend-swatch{width:16px; height:3px; border-radius:2px; flex:none;}
+  .legend-row{display:flex; gap:8px 22px; margin-top:12px; flex-wrap:wrap;}
+  .legend-item{display:flex; align-items:center; gap:8px; font-size:14px; color:var(--ink-soft);}
+  .legend-swatch{width:18px; height:3px; flex:none;}
 
   details.method{margin-top:24px; border-top:1px solid var(--paper-line); padding-top:16px;}
-  details.method summary{
-    cursor:pointer; font-family:var(--mono); font-size:12px; text-transform:uppercase;
-    letter-spacing:0.05em; color:var(--ink-soft);
-  }
-  details.method .method-body{margin-top:14px; font-size:13.5px; color:var(--ink-soft); line-height:1.65;}
+  details.method summary{cursor:pointer; font-size:15px; font-weight:600; color:var(--ink);}
+  details.method .method-body{margin-top:14px; font-size:15px; color:var(--ink-soft); line-height:1.6; max-width:68ch;}
+  details.method .method-body p+p{margin-top:10px;}
   details.method .method-body code{
-    font-family:var(--mono); background:var(--paper); padding:1px 5px; border-radius:2px; font-size:12.5px; color:var(--ink);
+    font-family:var(--fai-sans); background:var(--paper);
+    padding:1px 5px; font-size:14px; color:var(--ink); font-weight:500;
   }
   details.method ul{margin:10px 0 0; padding-left:18px;}
   details.method li{margin-bottom:6px;}
 
-  .shock-block{
-    margin-top:12px; display:grid; grid-template-columns:1fr 1fr; gap:20px;
-  }
-  @media (max-width:700px){ .shock-block{grid-template-columns:1fr;} }
-  .shock-card{border:1px solid var(--paper-line); background:var(--paper); padding:20px 22px;}
-  .shock-card .sk{font-family:var(--mono); font-size:11px; text-transform:uppercase; letter-spacing:0.05em; color:var(--ink-faint);}
-  .shock-card h4{font-family:var(--body); font-weight:700; font-size:15px; margin-top:8px; text-transform:none;}
-  .shock-card p{font-size:13.5px; color:var(--ink-soft); margin-top:8px; line-height:1.55;}
-  .shock-card .sv{font-family:var(--mono); font-weight:600; color:var(--red); font-size:20px; margin-top:10px;}
-  .shock-card.reform .sv{color:var(--blue);}
+  .persist{margin-top:28px; padding-top:20px; border-top:1px solid var(--paper-line);}
+  .persist p, .shock-intro{font-size:16px; color:var(--ink-soft); max-width:68ch; line-height:1.6;}
+  .persist b, .shock-intro b{color:var(--ink); font-weight:600;}
 
-  /* ===================== COMPOUND SECTION ===================== */
-  .compound{
-    margin:56px 0; padding:32px 28px; background:var(--ink); color:var(--paper);
-  }
-  .compound .sec-eyebrow{color:#D9A9A5; font-family:var(--mono); font-size:11.5px; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:12px;}
-  .compound h2{font-size:clamp(22px,3vw,28px); color:#fff; margin-bottom:16px;}
-  .compound p{font-size:15.5px; line-height:1.6; color:#D8D5C8; max-width:68ch; margin-bottom:14px;}
+  .shock-block{margin-top:16px; display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+  @media (max-width:700px){ .shock-block{grid-template-columns:1fr;} }
+  .shock-card{background:var(--surface); padding:20px 22px;}
+  .shock-card .sk{font-size:14px; color:var(--ink-faint);}
+  .shock-card h4{font-weight:600; font-size:17px; line-height:1.35; margin:8px 0 0;}
+  .shock-card p{font-size:15px; color:var(--ink-soft); margin-top:8px; line-height:1.5;}
+  .shock-card .sv{font-weight:600; color:var(--path-now); font-size:22px; margin-top:10px;}
+  .shock-card.reform .sv{color:var(--path-reform);}
+  .sub-head h3{font-size:22px; font-weight:600; line-height:1.25;}
+
+  /* ===================== Compounding ===================== */
+  .compound{max-width:1080px; margin:64px auto; padding:32px 28px; background:var(--surface);}
+  @media (max-width:600px){ .compound{padding:24px 18px;} }
+  .compound .sec-eyebrow{color:var(--ink-faint); font-size:14px; margin-bottom:10px;}
+  .compound h2{font-size:clamp(28px,3.4vw,40px); font-weight:500; line-height:1.1; margin-bottom:16px;}
+  .compound p{font-size:17px; line-height:1.6; color:var(--ink-soft); max-width:68ch; margin-bottom:14px;}
   .compound p:last-child{margin-bottom:0;}
-  .trend-row{display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:rgba(255,255,255,0.14); margin-top:24px; border:1px solid rgba(255,255,255,0.14);}
-  .trend-cell{background:#1D1C17; padding:18px 16px;}
-  .trend-cell .tag{font-family:var(--mono); font-size:10px; text-transform:uppercase; letter-spacing:0.05em; color:#B7B29A;}
-  .trend-cell .num{font-family:var(--display); font-size:26px; font-weight:900; color:#fff; margin-top:8px;}
-  .trend-cell .cap{font-size:12.5px; color:#B7B29A; margin-top:4px;}
+  .trend-row{display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--paper-line); margin-top:24px; border:1px solid var(--paper-line);}
+  .trend-cell{background:var(--paper); padding:18px 16px;}
+  .trend-cell .tag{font-size:14px; color:var(--ink-faint);}
+  .trend-cell .num{font-size:24px; font-weight:600; color:var(--ink); margin-top:6px;}
+  .trend-cell .cap{font-size:14px; color:var(--ink-soft); margin-top:4px; line-height:1.45;}
   @media (max-width:700px){ .trend-row{grid-template-columns:1fr;} }
 
-  /* ===================== CLOSE ===================== */
-  .close{padding:52px 0 20px;}
-  .close h2{font-size:clamp(24px,3.6vw,32px); max-width:20ch;}
-  .close p{font-size:16px; color:var(--ink-soft); max-width:62ch; margin-top:16px; line-height:1.6;}
-  .close p.signoff{font-family:var(--mono); font-size:12.5px; color:var(--ink-faint); margin-top:28px;}
+  /* ===================== Close ===================== */
+  .close{padding:40px 0 20px;}
+  .close h2{font-size:clamp(28px,3.4vw,40px); font-weight:500; line-height:1.1; max-width:20ch;}
+  .close p{font-size:17px; color:var(--ink-soft); max-width:62ch; margin-top:16px; line-height:1.6;}
+  .close p.signoff{font-size:14px; color:var(--ink-faint); margin-top:28px;}
 
-  /* ===================== SOURCES ===================== */
-  .sources{margin-top:44px; padding-top:20px; border-top:1px solid var(--paper-line);}
-  .sources h3{font-family:var(--mono); font-size:11px; text-transform:uppercase; letter-spacing:0.08em; color:var(--ink-faint); margin-bottom:14px; font-weight:500;}
-  .sources ul{columns:2; column-gap:32px; list-style:none; margin:0; padding:0; font-size:12.5px;}
-  .sources li{margin-bottom:8px; break-inside:avoid; color:var(--ink-soft);}
-  .sources a{color:var(--ink-soft);}
+  /* ===================== Sources ===================== */
+  .sources{margin-top:48px; padding-top:20px; border-top:1px solid var(--paper-line);}
+  .sources h3{font-size:20px; font-weight:600; color:var(--ink); margin-bottom:14px;}
+  .sources ul{columns:2; column-gap:32px; list-style:none; margin:0; padding:0; font-size:14px; line-height:1.45;}
+  .sources li{margin-bottom:10px; break-inside:avoid; color:var(--ink-soft);}
+  .sources a[href^="http"]::after{content:"\00a0↗";}
   @media (max-width:600px){ .sources ul{columns:1;} }
 
   footer{
-    max-width:1080px; margin:40px auto 0; padding-top:18px; border-top:1px solid var(--paper-line);
-    font-size:12px; color:var(--ink-faint); line-height:1.6;
+    max-width:1080px; margin:48px auto 0; padding-top:18px; border-top:1px solid var(--paper-line);
+    font-size:14px; color:var(--ink-faint); line-height:1.55;
   }
 </style>
 <!-- fai:head -->
@@ -236,23 +234,24 @@
 <!-- fai:bar -->
 <div class="fai-bar">
   <div class="fai-bar__inner">
-    <a class="fai-bar__dm" href="https://darkmatterlabs.org/"><img src="assets/brand/dm-logo-v1-white.svg" alt="Dark Matter Labs" width="102" height="20"></a>
+    <a class="fai-bar__dm" href="https://darkmatterlabs.org/"><img class="fai-bar__lockup" src="assets/brand/dm-logo-v1-white.svg" alt="Dark Matter Labs" width="102" height="20"><img class="fai-bar__stamp" src="assets/brand/dm-stamp-white.svg" alt="Dark Matter Labs" width="20" height="20"></a>
     <span class="fai-bar__sep" aria-hidden="true"></span>
     <a class="fai-bar__mission" href="index.html">Food as Infrastructure</a>
     <span class="fai-bar__here"><span class="fai-el fai-el--draft" aria-hidden="true"><b>Ob</b><i>15</i></span><span>The Overdue Bill</span></span>
-    <nav class="fai-bar__links" aria-label="Site"><a href="index.html">Portfolio</a><a href="library.html">Library</a></nav>
+    <div class="fai-bar__links" role="navigation" aria-label="Site"><a href="index.html">Portfolio</a><a href="library.html">Library</a></div>
   </div>
 </div>
 <!-- /fai:bar -->
+<div class="page">
 
-<div class="draft-banner">
-  <b>Draft — not for general circulation</b>
+<div class="draft-banner" role="note">
+  <b>Draft, not for general circulation.</b>
   <span>Shared by direct link only. Not linked from site navigation or search. Figures are our own illustrative modelling, not verified forecasts — see "Show the working" in Section 05.</span>
 </div>
 
 <div class="masthead">
-  <div class="brand">Food as Infrastructure — Discovery Series</div>
-  <div class="ref mono">Ref. UK/FOOD/001 — draft</div>
+  <div class="brand">Food as Infrastructure, discovery series</div>
+  <div class="ref">Ref. UK/FOOD/001, draft</div>
 </div>
 
 <div class="wrap">
@@ -275,7 +274,7 @@
       <div class="tl">Total due, this year alone<br><small>Food-attributable chronic disease — healthcare, social care, welfare and lost output</small></div>
       <div class="amt">£268bn</div>
     </div>
-    <div class="stamp">Past due — every year, compounding</div>
+    <div class="stamp">Past due, every year, compounding</div>
   </div>
 </div>
 
@@ -283,7 +282,7 @@
 
 <div class="wrap">
   <div class="cat-head">
-    <h2>01 — What it does to children</h2>
+    <h2><span class="cat-no">01</span>What it does to children</h2>
     <div class="cat-sub">NHS &amp; DfE data</div>
   </div>
 
@@ -291,7 +290,7 @@
     <div class="desc">
       <h3>A child's obesity risk more than doubles between Reception and Year 6</h3>
       <p>10.5% of children are living with obesity when they start primary school. By the time they leave it, six years later, that's 22.2% — more than double, on the government's own measurement programme.</p>
-      <span class="src mono">NHS/OHID, National Child Measurement Programme, 2024/25</span>
+      <span class="src">NHS/OHID, National Child Measurement Programme, 2024/25</span>
     </div>
     <div class="amount">10.5% → 22.2%</div>
   </div>
@@ -300,7 +299,7 @@
     <div class="desc">
       <h3>The poorer the area, the wider the gap — and it's widening</h3>
       <p>Obesity by Year 6 runs at 29.3% in the most deprived areas against 13.5% in the least deprived — more than double, and the gap has grown every year the programme has measured it.</p>
-      <span class="src mono">NHS/OHID, NCMP, 2024/25</span>
+      <span class="src">NHS/OHID, NCMP, 2024/25</span>
     </div>
     <div class="amount">29.3% vs 13.5%</div>
   </div>
@@ -309,7 +308,7 @@
     <div class="desc">
       <h3>On current trends, most of today's children will be overweight or obese adults</h3>
       <p>More than 80% of children born in 2022 who survive to 65 are projected to be overweight or obese, if nothing about the food environment they grow up in changes.</p>
-      <span class="src mono">The Food Foundation, The Broken Plate 2026</span>
+      <span class="src">The Food Foundation, The Broken Plate 2026</span>
     </div>
     <div class="amount">80%+</div>
   </div>
@@ -318,7 +317,7 @@
     <div class="desc">
       <h3>School dinners are funded below their own true cost</h3>
       <p>Government funds universal infant free school meals at £2.61 a head for 2025/26. An independent costing puts what a nutritious meal actually costs to make at £3.16. The gap gets made up in the food, not the invoice.</p>
-      <span class="src mono">DfE UIFSM grant conditions 2025/26; School Food Matters</span>
+      <span class="src">DfE UIFSM grant conditions 2025/26; School Food Matters</span>
     </div>
     <div class="amount">£2.61 <span style="color:var(--ink-faint); font-size:16px;">funded, vs</span> £3.16 <span style="color:var(--ink-faint); font-size:16px;">real cost</span></div>
   </div>
@@ -328,7 +327,7 @@
 
 <div class="wrap">
   <div class="cat-head">
-    <h2>02 — What it costs to treat</h2>
+    <h2><span class="cat-no">02</span>What it costs to treat</h2>
     <div class="cat-sub">NHS, social care, productivity</div>
   </div>
 
@@ -336,7 +335,7 @@
     <div class="desc">
       <h3>Obesity and excess weight alone, every single year</h3>
       <p>£71.4bn in healthy years of life lost, £30.8bn in lost productivity, £12.6bn in direct NHS treatment, £11.7bn in social care. Not a one-off — the annual run rate.</p>
-      <span class="src mono">Nesta / Frontier Economics, July 2025</span>
+      <span class="src">Nesta / Frontier Economics, July 2025</span>
     </div>
     <div class="amount">£126bn/yr</div>
   </div>
@@ -345,7 +344,7 @@
     <div class="desc">
       <h3>Healthy food costs more than twice as much, per calorie, as unhealthy food</h3>
       <p>The lowest-income fifth of households would need to spend 85% of their income to afford the government's own recommended healthy diet. It isn't a willpower problem. It's a pricing one.</p>
-      <span class="src mono">The Food Foundation, The Broken Plate</span>
+      <span class="src">The Food Foundation, The Broken Plate</span>
     </div>
     <div class="amount">85% of income</div>
   </div>
@@ -354,7 +353,7 @@
     <div class="desc">
       <h3>The people growing and serving the food are the worst paid in the economy</h3>
       <p>22% of food system workers earn the National Minimum Wage or below, against 8% across the wider economy. The system runs a wage deficit at both ends — the field and the till.</p>
-      <span class="src mono">The Food Foundation, The Broken Plate</span>
+      <span class="src">The Food Foundation, The Broken Plate</span>
     </div>
     <div class="amount">22% vs 8%</div>
   </div>
@@ -364,7 +363,7 @@
 
 <div class="wrap">
   <div class="cat-head">
-    <h2>03 — What it costs to grow it here</h2>
+    <h2><span class="cat-no">03</span>What it costs to grow it here</h2>
     <div class="cat-sub">Defra, farm income</div>
   </div>
 
@@ -372,7 +371,7 @@
     <div class="desc">
       <h3>Farm incomes are falling again, having only just recovered</h3>
       <p>Farm Business Income is forecast down across cereals, general cropping and mixed farms for 2025/26 — reversing most of the gains made the year before. Lower cereal prices, volatile yields, and a shrinking delinked payment are named causes.</p>
-      <span class="src mono">Defra, Farm Business Income forecasts, 2025/26</span>
+      <span class="src">Defra, Farm Business Income forecasts, 2025/26</span>
     </div>
     <div class="amount small">Falling again</div>
   </div>
@@ -381,7 +380,7 @@
     <div class="desc">
       <h3>Fresh vegetable self-sufficiency is the lowest it's ever been recorded</h3>
       <p>53% of the fresh vegetables eaten in the UK are grown here — the lowest figure since records began in 1988. The rest is a supply chain nobody in this country controls.</p>
-      <span class="src mono">Defra, Agriculture in the UK 2025</span>
+      <span class="src">Defra, Agriculture in the UK 2025</span>
     </div>
     <div class="amount">53%</div>
   </div>
@@ -390,7 +389,7 @@
     <div class="desc">
       <h3>One year of input-price shock cost UK farms an extra half a billion in fertiliser alone</h3>
       <p>Fertiliser costs for UK farms rose from £1.5bn to £2bn in a single year, 2021 to 2022 — the opening act of the food inflation spike that followed.</p>
-      <span class="src mono">UK food inflation reporting, 2022–23</span>
+      <span class="src">UK food inflation reporting, 2022–23</span>
     </div>
     <div class="amount">+£0.5bn/yr</div>
   </div>
@@ -400,7 +399,7 @@
 
 <div class="wrap">
   <div class="cat-head">
-    <h2>04 — What it costs when it breaks</h2>
+    <h2><span class="cat-no">04</span>What it costs when it breaks</h2>
     <div class="cat-sub">Resilience &amp; exposure</div>
   </div>
 
@@ -408,7 +407,7 @@
     <div class="desc">
       <h3>Food inflation hit its highest rate since 1977</h3>
       <p>19.1% at its March 2023 peak — the price the UK paid for depending so heavily on imported energy, fertiliser and grain the moment global supply was disrupted.</p>
-      <span class="src mono">ONS / Food Foundation, Food Prices Tracker</span>
+      <span class="src">ONS / Food Foundation, Food Prices Tracker</span>
     </div>
     <div class="amount">19.1%</div>
   </div>
@@ -417,7 +416,7 @@
     <div class="desc">
       <h3>Self-sufficiency is falling, not holding steady</h3>
       <p>By value, the UK produced 60% of the food it consumed in 2025, down from 65% the year before. On an actual-consumption basis it's closer to 54%. The trade gap that fills the difference has widened to £42.1bn.</p>
-      <span class="src mono">Defra, Agriculture in the UK 2025</span>
+      <span class="src">Defra, Agriculture in the UK 2025</span>
     </div>
     <div class="amount">65% → 60%</div>
   </div>
@@ -426,7 +425,7 @@
     <div class="desc">
       <h3>Four retailers still hold roughly two-thirds of the market that decides what farmers are offered</h3>
       <p>Tesco, Sainsbury's, Asda and Morrisons hold around 60–65% of UK grocery retail between them. Discounters are gaining ground — but the buying power that sets the price a farm is offered is still concentrated in a handful of hands.</p>
-      <span class="src mono">Grocery market share reporting, 2025–26</span>
+      <span class="src">Grocery market share reporting, 2025–26</span>
     </div>
     <div class="amount">~60–65%</div>
   </div>
@@ -436,7 +435,7 @@
 
 <div class="wrap">
   <div class="cat-head">
-    <h2>05 — Modelling the alternative</h2>
+    <h2><span class="cat-no">05</span>Modelling the alternative</h2>
     <div class="cat-sub">Illustrative, methodology shown</div>
   </div>
 
@@ -449,21 +448,21 @@
     <div class="controls">
       <div class="control-block">
         <div class="clabel">Assumed effect of school food reform on Year 6 obesity <b id="rVal">−20%</b></div>
-        <input type="range" id="rSlider" min="0" max="40" value="20" step="1">
+        <input type="range" id="rSlider" aria-label="Assumed effect of school food reform on Year 6 obesity" min="0" max="40" value="20" step="1">
         <div class="range-scale"><span>No effect</span><span>Small, evidenced</span><span>IPPR's "halved" scenario</span></div>
       </div>
       <div class="control-block" style="flex:0 0 auto;">
         <div class="clabel">Horizon</div>
         <div class="toggle-row">
-          <button class="toggle-btn" id="btn10">10 years</button>
-          <button class="toggle-btn active" id="btn20">20 years</button>
+          <button class="toggle-btn" id="btn10" aria-pressed="false">10 years</button>
+          <button class="toggle-btn active" id="btn20" aria-pressed="true">20 years</button>
         </div>
       </div>
     </div>
 
     <div class="model-readout">
       <div class="readout-cell hero">
-        <div class="rl">NHS cost avoided, school years only<span id="hzLabel"> · 20yr</span></div>
+        <div class="rl">NHS cost avoided, school years only<span id="hzLabel">, 20 years</span></div>
         <div class="rv" id="savingOut">£127m</div>
         <div class="rc">Our calculation — see methodology</div>
       </div>
@@ -479,8 +478,8 @@
         <svg id="chartSvg" viewBox="0 0 920 380" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Children living with obesity in England's primary schools, current path vs with school food reform"></svg>
       </div>
       <div class="legend-row">
-        <div class="legend-item"><span class="legend-swatch" style="background:var(--red);"></span>Current path — unchanged school food</div>
-        <div class="legend-item"><span class="legend-swatch" style="background:var(--blue);"></span>With school food reform</div>
+        <div class="legend-item"><span class="legend-swatch" style="background:var(--path-now);"></span>Current path, unchanged school food</div>
+        <div class="legend-item"><span class="legend-swatch" style="background:var(--path-reform);"></span>With school food reform</div>
       </div>
     </div>
 
@@ -498,17 +497,17 @@
       </div>
     </details>
 
-    <div style="margin-top:28px; padding-top:20px; border-top:1px solid var(--paper-line);">
-      <p style="font-size:14.5px; color:var(--ink-soft); max-width:70ch; line-height:1.6;">And that's before persistence compounds it. Around <b style="color:var(--ink);">70% of obese adolescents remain obese as adults</b> — so the children this model spares don't just have healthier school years, a meaningful share of them avoid a lifetime of it. IPPR's own independent modelling of halving childhood obesity puts the NHS saving over that generation's <i>lifetime</i> at <b style="color:var(--ink);">£37bn</b>, and the combined NHS-and-economy saving at <b style="color:var(--ink);">£425bn</b> — figures this page cites, not recalculates.</p>
+    <div class="persist">
+      <p>And that's before persistence compounds it. Around <b>70% of obese adolescents remain obese as adults</b> — so the children this model spares don't just have healthier school years, a meaningful share of them avoid a lifetime of it. IPPR's own independent modelling of halving childhood obesity puts the NHS saving over that generation's <i>lifetime</i> at <b>£37bn</b>, and the combined NHS-and-economy saving at <b>£425bn</b> — figures this page cites, not recalculates.</p>
     </div>
   </div>
 
   <div style="margin-top:40px;">
-    <div class="cat-head" style="padding-top:0;">
-      <h3 style="font-family:var(--display); font-size:19px; text-transform:uppercase;">What it buys when the next shock lands</h3>
+    <div class="cat-head sub-head" style="padding-top:0;">
+      <h3>What it buys when the next shock lands</h3>
       <div class="cat-sub">COVID as the precedent</div>
     </div>
-    <p style="font-size:14.5px; color:var(--ink-soft); max-width:70ch; margin-top:6px; line-height:1.6;">COVID is the live precedent for what a food-and-health shock actually does here. Obese patients were around <b style="color:var(--ink);">twice as likely to be hospitalised</b> with COVID-19 than patients at a healthy weight — and in the same crisis, emergency food parcels handed out by Trussell Trust food banks rose <b style="color:var(--ink);">81%</b> in the opening weeks, <b style="color:var(--ink);">122%</b> for children. A healthier, more food-secure population doesn't prevent the next shock. It changes how hard the shock lands.</p>
+    <p class="shock-intro" style="margin-top:6px;">COVID is the live precedent for what a food-and-health shock actually does here. Obese patients were around <b>twice as likely to be hospitalised</b> with COVID-19 than patients at a healthy weight — and in the same crisis, emergency food parcels handed out by Trussell Trust food banks rose <b>81%</b> in the opening weeks, <b>122%</b> for children. A healthier, more food-secure population doesn't prevent the next shock. It changes how hard the shock lands.</p>
 
     <div class="shock-block">
       <div class="shock-card">
@@ -553,7 +552,7 @@
 <div class="wrap close">
   <h2>None of this is the cost of acting. It's the cost of not.</h2>
   <p>Every figure on this page is what the current food system already costs, doing nothing differently. It is not a forecast of what reform might cost — it's the bill for the status quo, sourced from government's own data and the researchers government itself commissions. The question worth putting in front of Treasury isn't "can we afford to fix this" — it's how much more of this bill they're willing to keep paying before they do.</p>
-  <p class="signoff">Working draft — Dark Matter Labs, Food as Infrastructure. Not yet public.</p>
+  <p class="signoff">Working draft from Dark Matter Labs, Food as Infrastructure. Not yet public.</p>
 </div>
 
 <div class="wrap sources">
@@ -592,6 +591,8 @@
 <footer>
   Working draft between Adam and Claude, part of the London food-systems portfolio. Every figure above is drawn from a public, named source — see above — not modelled or estimated by us. The interactive model in Section 05 is our own illustrative calculation, built transparently from those sources — see "Show the working" — not a peer-reviewed forecast. Published by direct link only — not linked from the main site.
 </footer>
+
+</div>
 
 <script>
 (function(){
@@ -649,6 +650,13 @@
   var svg = document.getElementById('chartSvg');
   var horizon = 20;
 
+  // SVG attributes can't take var(), so resolve the page tokens once.
+  var cs = getComputedStyle(document.documentElement);
+  function tok(n){ return cs.getPropertyValue(n).trim(); }
+  var C = { grid: tok('--fai-rule'), axis: tok('--fai-rule-strong'), label: tok('--fai-ink-3'), ink: tok('--fai-ink'),
+            now: tok('--fai-ink'), reform: tok('--path-reform') };
+  var FONT = 'Schibsted Grotesk, sans-serif';
+
   function drawChart(r, H){
     var W = 920, Ht = 380, padL = 70, padR = 30, padT = 24, padB = 44;
     var plotW = W - padL - padR, plotH = Ht - padT - padB;
@@ -676,43 +684,43 @@
     for (var i = 0; i <= steps; i++){
       var v = minY + (maxY - minY) * i / steps;
       var gy = y(v);
-      svg.appendChild(el('line', {x1: padL, x2: W - padR, y1: gy, y2: gy, stroke: '#E4E1D6', 'stroke-width': 1}));
-      var lbl = el('text', {x: padL - 10, y: gy + 4, 'text-anchor': 'end', 'font-family': 'IBM Plex Mono, monospace', 'font-size': 11, fill: '#96927F'});
+      svg.appendChild(el('line', {x1: padL, x2: W - padR, y1: gy, y2: gy, stroke: C.grid, 'stroke-width': 1}));
+      var lbl = el('text', {x: padL - 10, y: gy + 4, 'text-anchor': 'end', 'font-family': FONT, 'font-size': 13, fill: C.label});
       lbl.textContent = Math.round(v/1000) + 'k';
       svg.appendChild(lbl);
     }
     // x axis labels
     var xticks = H === 20 ? [0,5,10,15,20] : [0,2,4,6,8,10];
     xticks.forEach(function(t){
-      var lbl = el('text', {x: x(t), y: Ht - padB + 22, 'text-anchor': 'middle', 'font-family': 'IBM Plex Mono, monospace', 'font-size': 11, fill: '#96927F'});
+      var lbl = el('text', {x: x(t), y: Ht - padB + 22, 'text-anchor': 'middle', 'font-family': FONT, 'font-size': 13, fill: C.label});
       lbl.textContent = 'Yr ' + t;
       svg.appendChild(lbl);
     });
-    svg.appendChild(el('line', {x1: padL, x2: W - padR, y1: Ht - padB, y2: Ht - padB, stroke: '#C3C2B7', 'stroke-width': 1}));
+    svg.appendChild(el('line', {x1: padL, x2: W - padR, y1: Ht - padB, y2: Ht - padB, stroke: C.axis, 'stroke-width': 1}));
 
     function pathFor(key){
       var d = pts.map(function(p, i){ return (i === 0 ? 'M' : 'L') + x(i) + ',' + y(p[key]); }).join(' ');
       return d;
     }
-    svg.appendChild(el('path', {d: pathFor('base'), fill: 'none', stroke: '#B3231C', 'stroke-width': 2.5, 'stroke-linecap': 'round'}));
-    svg.appendChild(el('path', {d: pathFor('reformed'), fill: 'none', stroke: '#1C5CAB', 'stroke-width': 2.5, 'stroke-linecap': 'round'}));
+    svg.appendChild(el('path', {d: pathFor('base'), fill: 'none', stroke: C.now, 'stroke-width': 2.5, 'stroke-linecap': 'round'}));
+    svg.appendChild(el('path', {d: pathFor('reformed'), fill: 'none', stroke: C.reform, 'stroke-width': 2.5, 'stroke-linecap': 'round'}));
 
     // end markers + direct labels
     var lastBase = pts[pts.length-1].base, lastReformed = pts[pts.length-1].reformed;
-    svg.appendChild(el('circle', {cx: x(H), cy: y(lastBase), r: 4.5, fill: '#B3231C'}));
-    svg.appendChild(el('circle', {cx: x(H), cy: y(lastReformed), r: 4.5, fill: '#1C5CAB'}));
+    svg.appendChild(el('circle', {cx: x(H), cy: y(lastBase), r: 4.5, fill: C.now}));
+    svg.appendChild(el('circle', {cx: x(H), cy: y(lastReformed), r: 4.5, fill: C.reform}));
 
-    var baseLbl = el('text', {x: x(H) - 8, y: y(lastBase) - 10, 'text-anchor': 'end', 'font-family': 'IBM Plex Mono, monospace', 'font-size': 11.5, fill: '#B3231C', 'font-weight': 600});
+    var baseLbl = el('text', {x: x(H) - 8, y: y(lastBase) - 10, 'text-anchor': 'end', 'font-family': FONT, 'font-size': 13, fill: C.now, 'font-weight': 600});
     baseLbl.textContent = fmtInt(lastBase);
     svg.appendChild(baseLbl);
-    var refLbl = el('text', {x: x(H) - 8, y: y(lastReformed) + 16, 'text-anchor': 'end', 'font-family': 'IBM Plex Mono, monospace', 'font-size': 11.5, fill: '#1C5CAB', 'font-weight': 600});
+    var refLbl = el('text', {x: x(H) - 8, y: y(lastReformed) + 16, 'text-anchor': 'end', 'font-family': FONT, 'font-size': 13, fill: C.reform, 'font-weight': 600});
     refLbl.textContent = fmtInt(lastReformed);
     svg.appendChild(refLbl);
 
     // hover crosshair
-    var hoverLine = el('line', {x1:0, x2:0, y1: padT, y2: Ht - padB, stroke: '#96927F', 'stroke-width': 1, 'stroke-dasharray': '3,3', visibility: 'hidden'});
+    var hoverLine = el('line', {x1:0, x2:0, y1: padT, y2: Ht - padB, stroke: C.label, 'stroke-width': 1, 'stroke-dasharray': '3,3', visibility: 'hidden'});
     svg.appendChild(hoverLine);
-    var hoverText = el('text', {x:0, y: padT - 6, 'text-anchor': 'middle', 'font-family': 'IBM Plex Mono, monospace', 'font-size': 11, fill: '#141310', visibility: 'hidden'});
+    var hoverText = el('text', {x:0, y: padT - 6, 'text-anchor': 'middle', 'font-family': FONT, 'font-size': 13, fill: C.ink, visibility: 'hidden'});
     svg.appendChild(hoverText);
     var hitArea = el('rect', {x: padL, y: padT, width: plotW, height: plotH, fill: 'transparent'});
     svg.appendChild(hitArea);
@@ -736,7 +744,7 @@
   function update(){
     var r = (+slider.value) / 100;
     rVal.textContent = '−' + slider.value + '%';
-    hzLabel.textContent = ' · ' + horizon + 'yr';
+    hzLabel.textContent = ', ' + horizon + ' years';
 
     var saving = cumulativeSavings(horizon, r);
     savingOut.textContent = fmtGBP(saving);
@@ -753,8 +761,8 @@
   }
 
   slider.addEventListener('input', update);
-  btn10.addEventListener('click', function(){ horizon = 10; btn10.classList.add('active'); btn20.classList.remove('active'); update(); });
-  btn20.addEventListener('click', function(){ horizon = 20; btn20.classList.add('active'); btn10.classList.remove('active'); update(); });
+  btn10.addEventListener('click', function(){ horizon = 10; btn10.classList.add('active'); btn20.classList.remove('active'); btn10.setAttribute('aria-pressed','true'); btn20.setAttribute('aria-pressed','false'); update(); });
+  btn20.addEventListener('click', function(){ horizon = 20; btn20.classList.add('active'); btn10.classList.remove('active'); btn20.setAttribute('aria-pressed','true'); btn10.setAttribute('aria-pressed','false'); update(); });
 
   document.getElementById('shockBase').textContent = ADULT_OBESITY_BASE.toFixed(1) + '% of adults';
   update();

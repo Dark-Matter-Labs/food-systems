@@ -5,89 +5,109 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Media &amp; Inspiration (Draft)</title>
 <style>
+  /* Document on paper (STYLE.md rule 1). Variable names kept from the old
+     dark template: --ink* / --surface are backgrounds, --paper* are text. */
   :root{
-    --ink:#101010; --ink-2:#171717; --surface:#1a1a1a;
-    --paper:#f5f5f2; --paper-dim:#a3a39c;
-    --line: rgba(245,245,242,0.14); --line-strong: rgba(245,245,242,0.26);
-    --supply:#c98a3b; --hub:#2e7d6b; --demand:#ff5a1f;
-    --display:"Poppins", sans-serif; --body:"Poppins", sans-serif; --mono:"IBM Plex Mono", monospace;
-    --maxw:1180px;
+    --ink:var(--fai-paper); --ink-2:var(--fai-field); --surface:var(--fai-field);
+    --paper:var(--fai-ink); --paper-dim:var(--fai-ink-2); --paper-faint:var(--fai-ink-3);
+    --line:var(--fai-rule); --line-strong:var(--fai-rule-strong);
+    --supply:#A86A1F; --hub:#2E7D6B; --demand:var(--fai-beet); --demand-dim:var(--fai-beet-tint); --alert:#C23A2B;
+    --display:var(--fai-sans); --body:var(--fai-sans); --mono:var(--fai-sans);
+    --maxw:1200px;
   }
   *{box-sizing:border-box;}
   html{scroll-behavior:smooth;}
   body{margin:0; background:var(--ink); color:var(--paper); font-family:var(--body); font-size:17px; line-height:1.6; -webkit-font-smoothing:antialiased;}
   @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto;} }
-  h1,h2,h3,h4{font-family:var(--display); margin:0; font-weight:600; letter-spacing:-0.01em;}
+  h1,h2,h3,h4{font-family:var(--display); margin:0; font-weight:600;}
   a{color:inherit;}
   .wrap{max-width:var(--maxw); margin:0 auto; padding:0 32px;}
-  .eyebrow{font-family:var(--mono); text-transform:uppercase; letter-spacing:0.14em; font-size:12px; color:var(--paper-dim); display:flex; align-items:center; gap:10px;}
-  .eyebrow::before{content:""; width:16px; height:2px; background:var(--paper-dim); display:inline-block;}
-  .roadline{height:1px; background-image:repeating-linear-gradient(90deg, var(--line-strong) 0 22px, transparent 22px 40px);}
+  @media (max-width:720px){ .wrap{padding:0 16px;} }
+  .eyebrow{font-size:14px; line-height:1.45; color:var(--paper-faint);}
+  .roadline{height:1px; background:var(--line);}
+  .roadline.road{background:none; background-image:repeating-linear-gradient(90deg, var(--line-strong) 0 22px, transparent 22px 40px);}
 
-  header{position:sticky; top:0; z-index:50; background:rgba(16,16,16,0.9); backdrop-filter:blur(8px); border-bottom:1px solid var(--line);}
-  nav{display:flex; align-items:center; justify-content:space-between; max-width:var(--maxw); margin:0 auto; padding:16px 32px;}
-  .brand{display:flex; align-items:center; gap:10px; font-family:var(--mono); font-size:13px; letter-spacing:0.04em; text-decoration:none; text-transform:uppercase;}
-  .dm-logo{height:22px; width:auto; display:block; border-radius:3px;}
-  .brand-div{color:var(--line-strong); font-weight:400;}
-  .navlinks{display:flex; gap:22px; font-family:var(--mono); font-size:12px; letter-spacing:0.05em;}
-  .navlinks a{text-decoration:none; color:var(--paper-dim); text-transform:uppercase; transition:color .2s;}
+  /* prose links: ink, 1px beet underline */
+  .section-head p a, .foot-brand a, .foot-bottom a, .credit-line a, .crossover, .acc-body a{
+    color:var(--paper); text-decoration:underline; text-decoration-color:var(--fai-beet);
+    text-decoration-thickness:1px; text-underline-offset:3px; transition:color .2s;
+  }
+  .section-head p a:hover, .foot-brand a:hover, .foot-bottom a:hover, .credit-line a:hover, .crossover:hover, .acc-body a:hover{color:var(--fai-beet);}
+
+  /* page nav */
+  header{position:sticky; top:0; z-index:50; background:var(--fai-paper); border-bottom:1px solid var(--line);}
+  nav{display:flex; align-items:center; justify-content:space-between; gap:12px 28px; max-width:var(--maxw); margin:0 auto; padding:14px 32px;}
+  .brand{font-size:15px; font-weight:600; line-height:1.3; color:var(--paper); text-decoration:none; flex:none;}
+  .brand:hover{color:var(--fai-beet);}
+  .navlinks{display:flex; flex-wrap:wrap; justify-content:flex-end; gap:6px 20px; font-size:14px; line-height:1.4;}
+  .navlinks a{text-decoration:none; color:var(--paper-dim); transition:color .2s;}
   .navlinks a:hover{color:var(--paper);}
   @media (max-width:900px){ .navlinks{display:none;} }
+  @media (max-width:720px){ nav{padding:12px 16px;} }
 
-  .hero{padding:88px 0 56px;}
-  .hero h1{font-size:clamp(34px, 5vw, 58px); line-height:1.06; margin:16px 0 6px; max-width:20ch;}
-  .hero .subtitle{font-family:var(--mono); font-size:13px; letter-spacing:0.04em; color:var(--paper-dim); text-transform:uppercase; margin:0 0 18px;}
-  .hero p.lede{font-size:18px; max-width:680px; margin:0 0 24px; opacity:0.94;}
-  .hero .meta{font-family:var(--mono); font-size:12.5px; color:var(--paper-dim); border-top:1px solid var(--line); padding-top:14px; max-width:780px;}
-  .btn{font-family:var(--mono); font-size:12.5px; text-transform:uppercase; letter-spacing:0.07em; padding:12px 18px; border:1px solid var(--line-strong); text-decoration:none; display:inline-flex; align-items:center; gap:8px; transition:all .2s; color:var(--paper);}
-  .btn.solid{background:var(--paper); border-color:var(--paper); color:var(--ink); font-weight:600;}
-  .btn:hover{border-color:var(--paper); color:var(--paper);}
-  .cta-row{display:flex; gap:14px; flex-wrap:wrap; margin:22px 0 0;}
+  /* hero */
+  .hero{padding:64px 0 48px;}
+  .status-note{background:var(--fai-field); border-left:3px solid var(--fai-beet); padding:13px 18px; font-size:15px; line-height:1.5; color:var(--paper); width:fit-content; max-width:min(100%, 780px); margin:0 0 44px;}
+  .status-note.live{border-left-color:var(--fai-ink);}
+  .hero .eyebrow{margin:0 0 14px;}
+  .hero h1{font-size:clamp(40px, 6vw, 76px); font-weight:500; line-height:1.02; margin:0 0 24px; max-width:18ch;}
+  .hero p.lede{font-size:20px; line-height:1.45; color:var(--paper-dim); max-width:68ch; margin:0 0 28px;}
+  .hero .meta{margin:36px 0 0; padding-top:16px; border-top:1px solid var(--line); max-width:780px; display:grid; grid-template-columns:max-content 1fr; gap:6px 20px; font-size:14px; line-height:1.45; color:var(--paper-faint);}
+  .hero .meta dt{color:var(--paper); font-weight:500;}
+  .hero .meta dd{margin:0;}
+  @media (max-width:600px){ .hero .meta{grid-template-columns:1fr; gap:2px;} .hero .meta dd{margin-bottom:8px;} }
+  .hero .credit-line{font-size:14px; line-height:1.5; color:var(--paper-faint); max-width:780px; margin-top:14px;}
+  @media (max-width:720px){ .hero{padding:40px 0 28px;} .status-note{margin-bottom:32px;} .hero p.lede{font-size:18px;} }
 
-  section{padding:72px 0;}
-  section.tight{padding:52px 0;}
-  .section-head{max-width:720px; margin-bottom:36px;}
-  .section-head h2{font-size:clamp(26px,3vw,36px); margin-top:12px;}
-  .section-head p{color:var(--paper-dim); font-size:15.5px; margin-top:12px;}
+  /* buttons */
+  .btn{font-size:15px; font-weight:500; line-height:1.2; padding:12px 18px; border:1px solid var(--line-strong); border-radius:3px; background:transparent; color:var(--paper); text-decoration:none; display:inline-flex; align-items:center; gap:8px; transition:background-color .2s, border-color .2s, color .2s;}
+  .btn:hover{border-color:var(--paper);}
+  .btn.solid{background:var(--fai-ink); border-color:var(--fai-ink); color:var(--fai-paper);}
+  .btn.solid:hover{background:var(--fai-beet); border-color:var(--fai-beet);}
+  .cta-row{display:flex; gap:12px; flex-wrap:wrap; margin:0;}
 
-  .plain-summary{background: rgba(245,245,242,0.06); border-left:3px solid var(--paper-dim); padding:16px 20px; margin:16px 0 6px; max-width:680px;}
-  .plain-summary .ps-label{font-family:var(--mono); font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:var(--paper-dim); display:block; margin-bottom:8px;}
-  .plain-summary p{font-size:15px; line-height:1.55; margin:0; color:var(--paper); opacity:0.95;}
+  /* sections */
+  /* 96px between sections (48 + 48), 56px on phones */
+  section{padding:48px 0;}
+  section.tight{padding:40px 0;}
+  section.band{padding:64px 0; margin:48px 0;}
+  @media (max-width:720px){ section{padding:28px 0;} section.tight{padding:24px 0;} section.band{padding:40px 0; margin:28px 0;} }
+  .section-head{max-width:68ch; margin-bottom:40px;}
+  .section-head:last-child{margin-bottom:0;}
+  .section-head h2{font-size:clamp(28px, 3.4vw, 40px); font-weight:500; line-height:1.1; margin-top:10px;}
+  .section-head p{color:var(--paper-dim); font-size:17px; margin:14px 0 0;}
 
-  /* ===================== MEDIA CARDS ===================== */
-  .media-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:18px;}
+  .plain-summary{background:var(--fai-field); border-left:3px solid var(--line-strong); padding:16px 20px; margin:20px 0 0; max-width:68ch;}
+  .plain-summary .ps-label{font-size:14px; font-weight:600; color:var(--paper); display:block; margin-bottom:6px;}
+  .plain-summary p{font-size:16px; line-height:1.55; margin:0; color:var(--paper);}
+
+  /* media cards: field surface, no border, no lift */
+  .media-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:16px;}
   @media (max-width:1000px){ .media-grid{grid-template-columns:repeat(2,1fr);} }
   @media (max-width:640px){ .media-grid{grid-template-columns:1fr;} }
-  .media-card{
-    display:flex; flex-direction:column; justify-content:space-between;
-    border:1px solid var(--line); background:var(--surface); padding:22px 20px 20px;
-    min-height:190px; text-decoration:none; color:inherit; transition:border-color .2s, transform .2s;
-  }
-  .media-card:hover{border-color:var(--paper-dim); transform:translateY(-2px);}
-  .media-tag{font-family:var(--mono); font-size:10.5px; letter-spacing:0.07em; color:var(--paper-dim); text-transform:uppercase; margin-bottom:12px;}
-  .media-tag.podcast{color:var(--supply);}
-  .media-tag.social{color:var(--demand);}
-  .media-tag.reading{color:var(--hub);}
-  .media-card h3{font-size:17px; line-height:1.28; margin-bottom:8px;}
-  .media-card p{font-size:13.5px; color:var(--paper-dim); margin:0 0 14px;}
+  .media-card{display:flex; flex-direction:column; justify-content:space-between; gap:18px; background:var(--surface); padding:22px 20px 20px; min-height:190px; text-decoration:none; color:inherit; transition:box-shadow .2s;}
+  a.media-card:hover{box-shadow:inset 0 0 0 1px var(--line-strong);}
+  .media-tag{font-size:14px; line-height:1.4; color:var(--paper-faint); margin-bottom:10px;}
+  .media-card h3{font-size:20px; line-height:1.25; margin-bottom:8px;}
+  .media-card p{font-size:15px; line-height:1.55; color:var(--paper-dim); margin:0 0 14px;}
   .media-card p:last-of-type{margin-bottom:0;}
-  .media-link{font-family:var(--mono); font-size:11.5px; text-transform:uppercase; letter-spacing:0.06em; display:flex; align-items:center; gap:8px; color:var(--paper);}
-  .media-link .arrow{transition:transform .2s;}
-  .media-card:hover .arrow{transform:translate(3px,-3px);}
+  .media-link{font-size:15px; font-weight:500; color:var(--paper); text-decoration:underline; text-decoration-color:var(--fai-beet); text-decoration-thickness:1px; text-underline-offset:3px; transition:color .2s;}
+  a.media-card:hover .media-link{color:var(--fai-beet);}
 
-  .media-card.is-pending{cursor:default; opacity:0.65; border-style:dashed;}
-  .media-card.is-pending:hover{transform:none; border-color:var(--line-strong);}
-  .media-card.is-pending .media-tag{color:var(--paper-dim); border:1px solid var(--line-strong); display:inline-block; padding:3px 8px;}
-  .media-card.is-pending .media-link{color:var(--paper-dim);}
+  /* placeholder slots: outlined, like a draft tile */
+  .media-card.is-pending{cursor:default; background:transparent; box-shadow:inset 0 0 0 1px var(--line-strong);}
+  .media-card.is-pending h3{color:var(--paper-dim);}
+  .media-card.is-pending .media-link{color:var(--paper-faint); font-weight:400; text-decoration:none;}
 
-  footer{border-top:1px solid var(--line); padding:44px 0 32px;}
+  /* footer */
+  footer{border-top:1px solid var(--line); padding:48px 0 32px; font-size:14px; color:var(--paper-faint);}
   .foot-grid{display:flex; justify-content:space-between; gap:32px; flex-wrap:wrap;}
-  .foot-brand{font-family:var(--mono); font-size:12.5px; max-width:460px; color:var(--paper-dim); line-height:1.6;}
-  .foot-brand strong{color:var(--paper); font-family:var(--display); display:block; font-size:15px; margin-bottom:8px;}
-  .foot-col h5{font-family:var(--mono); font-size:11px; text-transform:uppercase; letter-spacing:0.06em; color:var(--paper-dim); margin-bottom:10px;}
-  .foot-col a{display:block; font-size:13.5px; margin-bottom:7px; text-decoration:none; color:var(--paper); opacity:0.85;}
-  .foot-col a:hover{color:var(--paper); opacity:1;}
-  .foot-bottom{margin-top:32px; padding-top:16px; border-top:1px solid var(--line); font-family:var(--mono); font-size:11px; color:var(--paper-dim); display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;}
+  .foot-brand{font-size:14px; max-width:520px; color:var(--paper-faint); line-height:1.55;}
+  .foot-brand strong{color:var(--paper); display:block; font-size:15px; font-weight:600; margin-bottom:8px;}
+  .foot-col h5{font-size:14px; font-weight:600; color:var(--paper); margin:0 0 10px;}
+  .foot-col a{display:block; font-size:14px; margin-bottom:6px; text-decoration:none; color:var(--paper-dim); transition:color .2s;}
+  .foot-col a:hover{color:var(--fai-beet);}
+  .foot-bottom{margin-top:32px; padding-top:16px; border-top:1px solid var(--line); font-size:14px; color:var(--paper-faint); display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px 24px;}
 </style>
 <!-- fai:head -->
 <link rel="icon" href="assets/fai/favicon.svg" type="image/svg+xml">
@@ -101,51 +121,52 @@
 <!-- fai:bar -->
 <div class="fai-bar">
   <div class="fai-bar__inner">
-    <a class="fai-bar__dm" href="https://darkmatterlabs.org/"><img src="assets/brand/dm-logo-v1-white.svg" alt="Dark Matter Labs" width="102" height="20"></a>
+    <a class="fai-bar__dm" href="https://darkmatterlabs.org/"><img class="fai-bar__lockup" src="assets/brand/dm-logo-v1-white.svg" alt="Dark Matter Labs" width="102" height="20"><img class="fai-bar__stamp" src="assets/brand/dm-stamp-white.svg" alt="Dark Matter Labs" width="20" height="20"></a>
     <span class="fai-bar__sep" aria-hidden="true"></span>
     <a class="fai-bar__mission" href="index.html">Food as Infrastructure</a>
     <span class="fai-bar__here"><span class="fai-el fai-el--draft" aria-hidden="true"><b>Md</b><i>13</i></span><span>Media &amp; Inspiration</span></span>
-    <nav class="fai-bar__links" aria-label="Site"><a href="index.html">Portfolio</a><a href="library.html">Library</a></nav>
+    <div class="fai-bar__links" role="navigation" aria-label="Site"><a href="index.html">Portfolio</a><a href="library.html">Library</a></div>
   </div>
 </div>
 <!-- /fai:bar -->
 
 <header>
   <nav>
-    <a class="brand" href="https://darkmatterlabs.org/" target="_blank" rel="noopener">
-      MEDIA &amp; INSPIRATION
-    </a>
+    <a class="brand" href="#top">Media &amp; Inspiration</a>
     <div class="navlinks">
       <a href="#podcasts">Podcasts</a>
       <a href="#social">Social</a>
       <a href="#reading">Reading</a>
-      <a href="#about">Why This Exists</a>
+      <a href="#about">Why this exists</a>
     </div>
   </nav>
 </header>
 
 <!-- ===================== HERO ===================== -->
-<section class="hero">
+<section class="hero" id="top">
   <div class="wrap">
-    <div class="eyebrow">A LIVING FEED — DRAFT, NOT YET LINKED FROM THE MAIN SITE</div>
+    <p class="status-note">Draft. A living feed, not yet linked from the main site.</p>
+    <p class="eyebrow">Podcasts, posts, and pieces that shaped the thinking here</p>
     <h1>Where this movement shows up in the world.</h1>
-    <p class="subtitle">Podcasts, posts, and pieces that shaped the thinking here</p>
     <p class="lede">Every so often someone asks where they can actually see or hear this work happening, beyond a deck or a webpage. This is that answer — a running, hand-picked shelf of podcasts, social posts from people on the ground, and writing that’s shaped how we think about food as infrastructure. No live embeds, no algorithm feeding it — just links worth your time, added by hand.</p>
     <div class="cta-row">
-      <a class="btn solid" href="#podcasts">Start listening ↓</a>
-      <a class="btn" href="index.html">← Food as Infrastructure</a>
+      <a class="btn solid" href="#podcasts">Start listening</a>
+      <a class="btn" href="index.html">Back to Food as Infrastructure</a>
     </div>
-    <div class="meta">STATUS — draft, not yet linked from the main portfolio · FORMAT — simple cards, no third-party embeds · UPKEEP — added by hand as things come in, not automated</div>
+    <dl class="meta">
+      <dt>Format</dt><dd>Simple cards, no third-party embeds</dd>
+      <dt>Upkeep</dt><dd>Added by hand as things come in, not automated</dd>
+    </dl>
   </div>
 </section>
 
-<div class="wrap"><div class="roadline"></div></div>
+<div class="wrap"><div class="roadline road"></div></div>
 
 <!-- ===================== WHY THIS EXISTS ===================== -->
 <section class="tight" id="about">
   <div class="wrap">
     <div class="section-head">
-      <div class="eyebrow">WHY THIS EXISTS</div>
+      <div class="eyebrow">Why this exists</div>
       <h2>A shelf, not a feed</h2>
       <div class="plain-summary">
         <span class="ps-label">In plain terms</span>
@@ -161,7 +182,7 @@
 <section id="podcasts">
   <div class="wrap">
     <div class="section-head">
-      <div class="eyebrow">PODCASTS</div>
+      <div class="eyebrow">Podcasts</div>
       <h2>Worth your commute</h2>
       <p>Episodes and series that dig into food systems, resilience, and the economics underneath them — added as they’re found, not as a comprehensive archive.</p>
     </div>
@@ -184,7 +205,7 @@
 <section id="social">
   <div class="wrap">
     <div class="section-head">
-      <div class="eyebrow">SOCIAL &amp; ON THE GROUND</div>
+      <div class="eyebrow">Social &amp; on the ground</div>
       <h2>The edges of the movement, in their own words</h2>
       <p>Dinners, workshops, growers and grocers already testing pieces of this system — shared as simple links, not embedded widgets, so the page stays fast and looks like the rest of the site.</p>
     </div>
@@ -195,7 +216,7 @@
           <h3>Add a one-line caption here</h3>
           <p><em>Link is live — swap this text for your own caption when you’re ready.</em></p>
         </div>
-        <div class="media-link">View the reel <span class="arrow">↗</span></div>
+        <div class="media-link">View the reel <span class="arrow" aria-hidden="true">↗</span></div>
       </a>
       <div class="media-card is-pending">
         <div>
@@ -215,9 +236,9 @@
 <section id="reading">
   <div class="wrap">
     <div class="section-head">
-      <div class="eyebrow">READING &amp; INSPIRATION</div>
+      <div class="eyebrow">Reading &amp; inspiration</div>
       <h2>Writing that shaped how we think about this</h2>
-      <p>Not the primary evidence base — that lives on the <a href="index.html#reading" style="text-decoration:underline;">homepage’s Further Reading</a> — but the pieces that shifted how we frame the problem, or made the case better than we could.</p>
+      <p>Not the primary evidence base — that lives on the <a href="index.html#reading">homepage’s Further Reading</a> — but the pieces that shifted how we frame the problem, or made the case better than we could.</p>
     </div>
     <div class="media-grid">
       <a class="media-card" href="https://www.nesta.org.uk/report/nourishing-britain/" target="_blank" rel="noopener">
@@ -226,7 +247,7 @@
           <h3>Nourishing Britain</h3>
           <p>Dr Dolly van Tulleken, on why UK food policy struggles to stick.</p>
         </div>
-        <div class="media-link">Read it <span class="arrow">↗</span></div>
+        <div class="media-link">Read it <span class="arrow" aria-hidden="true">↗</span></div>
       </a>
       <a class="media-card" href="https://www.biteback2030.com/" target="_blank" rel="noopener">
         <div>
@@ -234,7 +255,7 @@
           <h3>Bite Back 2030</h3>
           <p>A youth-led campaign taking on food marketing — a reminder of who this system is actually failing.</p>
         </div>
-        <div class="media-link">Explore it <span class="arrow">↗</span></div>
+        <div class="media-link">Explore it <span class="arrow" aria-hidden="true">↗</span></div>
       </a>
       <div class="media-card is-pending">
         <div>
@@ -269,8 +290,8 @@
       </div>
     </div>
     <div class="foot-bottom">
-      <span><a href="index.html" style="text-decoration:underline;">← Food as Infrastructure</a> · MEDIA &amp; INSPIRATION</span>
-      <span>A WORKING DRAFT</span>
+      <span>Media &amp; Inspiration. Back to <a href="index.html">Food as Infrastructure</a></span>
+      <span>A working draft</span>
     </div>
   </div>
 </footer>
