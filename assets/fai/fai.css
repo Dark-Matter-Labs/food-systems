@@ -120,7 +120,13 @@ html body .tnum, html body td.num, html body th.num{ font-variant-numeric:tabula
 .fai-bar__sep{
   width:1px; height:18px; background:var(--fai-canvas-rule); flex:none;
 }
-.fai-bar .fai-bar__mission{ font-weight:500; white-space:nowrap; }
+.fai-bar .fai-bar__mission{
+  font-weight:500; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; min-width:0;
+}
+.fai-bar__xco{
+  color:var(--fai-on-canvas-2) !important; white-space:nowrap; flex:none;
+}
+.fai-bar__xco:hover{ color:var(--fai-on-canvas) !important; }
 .fai-bar__here{
   display:flex; align-items:center; gap:9px;
   color:var(--fai-on-canvas-2);
@@ -139,6 +145,7 @@ html body .tnum, html body td.num, html body th.num{ font-variant-numeric:tabula
 @media (max-width:760px){
   .fai-bar .fai-bar__inner{ padding:0 16px; gap:12px; }
   .fai-bar__here{ display:none; }
+  .fai-bar__xco{ display:none; }
   .fai-bar__links{ gap:16px; }
 }
 @media (max-width:520px){
@@ -146,6 +153,29 @@ html body .tnum, html body td.num, html body th.num{ font-variant-numeric:tabula
   .fai-bar__stamp{ display:block !important; }
 }
 @media print{ .fai-bar{ display:none; } }
+
+/* ---------------------------------------------------------------------
+   2b. Site footer: the same on every page. A canvas-coloured bookend
+       matching the site bar, closing the page.
+   --------------------------------------------------------------------- */
+
+.fai-footer{
+  background:var(--fai-canvas);
+  color:var(--fai-on-canvas-2);
+  font-size:14px;
+  line-height:1.45;
+}
+.fai-footer .fai-footer__inner{
+  max-width:var(--fai-container);
+  margin:0 auto;
+  padding:20px 32px;
+}
+.fai-footer a{ color:var(--fai-on-canvas) !important; text-decoration:underline; text-decoration-color:var(--fai-lavender); text-decoration-thickness:1px; text-underline-offset:3px; }
+.fai-footer a:hover{ color:var(--fai-lavender) !important; }
+@media (max-width:760px){
+  .fai-footer .fai-footer__inner{ padding:16px; }
+}
+@media print{ .fai-footer{ display:none; } }
 
 /* ---------------------------------------------------------------------
    3. Element tile: the Food as Infrastructure stamp.

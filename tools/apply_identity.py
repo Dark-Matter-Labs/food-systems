@@ -10,7 +10,10 @@ rather than duplicated.
 What it does per page:
   1. Swaps any Google Fonts <link>/@import for Schibsted Grotesk.
   2. Adds the favicon and links assets/fai/fai.css last in <head>.
-  3. Inserts the site bar straight after <body> (after a skip link if present).
+  3. Inserts the site bar straight after <body> (after a skip link if present),
+     and the matching site footer straight before </body>. Both carry a link
+     to the xCO portfolio (optionality.darkmatterlabs.org) this site sits
+     within.
   4. Removes the dead darkmatterlabs.org logo hotlink.
   5. Writes the <title>, meta description, canonical URL and Open Graph /
      Twitter sharing tags from pages.json. Run tools/build_social.py to
@@ -33,6 +36,7 @@ FONT_HREF = (
 SITE_URL = "https://food.darkmatterlabs.org/"
 SITE_NAME = "Food as Infrastructure, Dark Matter Labs"
 SUFFIX = "Food as Infrastructure"
+XCO_URL = "https://optionality.darkmatterlabs.org/"
 
 
 def page_url(page):
@@ -143,10 +147,21 @@ def site_bar(page):
     <a class="fai-bar__dm" href="https://darkmatterlabs.org/"><img class="fai-bar__lockup" src="assets/brand/dm-logo-v1-white.svg" alt="Dark Matter Labs" width="102" height="20"><img class="fai-bar__stamp" src="assets/brand/dm-stamp-white.svg" alt="Dark Matter Labs" width="20" height="20"></a>
     <span class="fai-bar__sep" aria-hidden="true"></span>
     <a class="fai-bar__mission" href="index.html">Food as Infrastructure</a>{here}
+    <a class="fai-bar__xco" href="{XCO_URL}" target="_blank" rel="noopener" title="Dark Matter Labs' Expanding Civilizational Optionality portfolio">xCO portfolio<span aria-hidden="true"> ↗</span></a>
     <div class="fai-bar__links" role="navigation" aria-label="Site">{link("index.html", "Portfolio")}{link("library.html", "Library")}</div>
   </div>
 </div>
 <!-- /fai:bar -->"""
+
+
+def site_footer(page):
+    return f"""<!-- fai:footer -->
+<footer class="fai-footer">
+  <div class="fai-footer__inner">
+    <span>Part of Dark Matter Labs' <a href="{XCO_URL}" target="_blank" rel="noopener">xCO portfolio<span aria-hidden="true"> ↗</span></a>, expanding civilizational optionality.</span>
+  </div>
+</footer>
+<!-- /fai:footer -->"""
 
 
 def replace_or_insert(src, marker, block, insert):
@@ -171,6 +186,11 @@ def insert_bar(src, block):
     return f"{src[:pos]}\n{block}{src[pos:]}"
 
 
+def insert_footer(src, block):
+    pos = src.rindex("</body>")
+    return f"{src[:pos]}{block}\n{src[pos:]}"
+
+
 def apply(page):
     path = ROOT / page["file"]
     src = path.read_text(encoding="utf-8")
@@ -182,6 +202,7 @@ def apply(page):
     out = set_title(out, page)
     out = replace_or_insert(out, "fai:head", head_block(page), insert_head)
     out = replace_or_insert(out, "fai:bar", site_bar(page), insert_bar)
+    out = replace_or_insert(out, "fai:footer", site_footer(page), insert_footer)
     if out != src:
         path.write_text(out, encoding="utf-8")
         return "updated"
