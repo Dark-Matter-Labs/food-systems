@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kilburn High Street (draft) — Food as Infrastructure</title>
+<style>
+  :root{
+    --paper:var(--fai-paper);
+    --paper-2:var(--fai-field);
+    --ink:var(--fai-ink);
+    --ink-soft:var(--fai-ink-2);
+    --ink-faint:var(--fai-ink-3);
+    --accent:var(--fai-beet);
+    --line:var(--fai-rule);
+    --line-soft:var(--fai-rule);
+    --line-strong:var(--fai-rule-strong);
+    --maxw:var(--fai-container);
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0; background:var(--paper); color:var(--ink);
+    font-family:var(--fai-sans); font-size:17px; line-height:1.6;
+  }
+  h1,h2,h3,h4{font-weight:500; color:var(--ink); margin:0;}
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 32px;}
+  @media (max-width:720px){ .wrap{padding:0 16px;} }
+  a{color:var(--ink);}
+  main p a, footer .credit a{
+    color:var(--ink); text-decoration:underline; text-decoration-color:var(--accent);
+    text-decoration-thickness:1px; text-underline-offset:3px;
+  }
+  main p a:hover, footer .credit a:hover{color:var(--accent);}
+
+  .eyebrow{font-size:14px; line-height:1.45; color:var(--ink-faint);}
+
+  header.site-nav{
+    position:sticky; top:0; z-index:50; background:var(--paper);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{
+    max-width:var(--maxw); margin:0 auto; padding:14px 32px;
+    display:flex; align-items:center; justify-content:space-between; gap:24px; flex-wrap:wrap;
+  }
+  @media (max-width:720px){ .nav-inner{padding:12px 16px;} }
+  .nav-mark{display:flex; align-items:baseline; gap:12px; flex-wrap:wrap; line-height:1.3;}
+  .nav-mark strong{font-size:15px; font-weight:600; color:var(--ink);}
+  .nav-mark span{font-size:14px; color:var(--ink-faint);}
+  nav.nav-links{display:flex; gap:22px; flex-wrap:wrap;}
+  nav.nav-links a{font-size:14px; color:var(--ink-soft); text-decoration:none;}
+  nav.nav-links a:hover{color:var(--ink); text-decoration:underline; text-decoration-color:var(--accent); text-underline-offset:3px;}
+  @media (max-width:760px){ nav.nav-links, .nav-mark span{display:none;} }
+
+  .status-strip{padding:32px 0 0;}
+  .status-note{
+    background:var(--paper-2); border-left:3px solid var(--accent);
+    padding:14px 18px; font-size:15px; line-height:1.5; color:var(--ink-soft); max-width:var(--fai-measure);
+  }
+  .status-note p{margin:0;}
+  .status-note strong{color:var(--ink); font-weight:600;}
+  .status-note .status-date{display:block; margin-top:6px; font-size:14px; color:var(--ink-faint);}
+
+  .hero{padding:56px 0 64px; border-bottom:1px solid var(--line);}
+  .hero .lot-number{font-size:14px; color:var(--ink-faint); margin-bottom:16px;}
+  .hero h1{font-size:clamp(40px, 6vw, 76px); line-height:1.02; font-weight:500; max-width:20ch;}
+  .hero h1 em{font-style:normal; color:inherit; font-weight:inherit;}
+  .hero .lede{max-width:var(--fai-measure); margin:24px 0 0; font-size:21px; color:var(--ink-soft); line-height:1.45;}
+  .hero .cta-row{margin-top:32px; display:flex; gap:12px; flex-wrap:wrap; align-items:center;}
+  .btn{
+    font-size:15px; font-weight:500; line-height:1.2;
+    padding:12px 18px; border:1px solid var(--line-strong); border-radius:3px; color:var(--ink); background:transparent;
+    display:inline-flex; align-items:center; gap:8px; cursor:pointer; text-decoration:none;
+    transition:background var(--fai-ease), border-color var(--fai-ease), color var(--fai-ease);
+  }
+  .btn:hover{border-color:var(--ink);}
+  .btn.primary{background:var(--ink); border-color:var(--ink); color:var(--paper);}
+  .btn.primary:hover{background:var(--accent); border-color:var(--accent);}
+
+  .hero-strip{margin-top:56px; padding-top:24px; border-top:1px solid var(--line); display:grid; grid-template-columns:repeat(4,1fr); gap:24px;}
+  @media (max-width:860px){ .hero-strip{grid-template-columns:repeat(2,1fr);} }
+  .hero-strip .stat b{display:block; font-size:32px; line-height:1.1; font-weight:500; color:var(--accent); font-variant-numeric:tabular-nums;}
+  .hero-strip .stat span{display:block; margin-top:6px; font-size:14px; line-height:1.45; color:var(--ink-faint);}
+
+  section{padding:96px 0; border-bottom:1px solid var(--line);}
+  main > section:last-child{border-bottom:none;}
+  @media (max-width:720px){ section{padding:56px 0;} .hero{padding:40px 0 48px;} .hero .lede{font-size:19px;} }
+
+  .section-head{max-width:760px; margin-bottom:40px;}
+  .section-head h2{font-size:clamp(28px,3.4vw,40px); line-height:1.1; font-weight:500; margin-top:10px;}
+  .section-head p.sub{color:var(--ink-soft); margin-top:16px; font-size:17px; max-width:var(--fai-measure);}
+
+  .objective-block{display:grid; grid-template-columns:1.05fr 0.95fr; gap:56px; align-items:start;}
+  @media (max-width:860px){ .objective-block{grid-template-columns:1fr; gap:40px;} }
+  .objective-block .lede-text{font-size:17px; line-height:1.6; color:var(--ink); max-width:var(--fai-measure);}
+  .objective-block .lede-text p{margin:0;}
+  .objective-block .lede-text p + p{margin-top:16px;}
+
+  .roll{border-top:1px solid var(--ink);}
+  .roll-title{font-size:14px; font-weight:600; color:var(--ink); padding:14px 0 10px;}
+  .roll-item{display:flex; justify-content:space-between; gap:16px; padding:12px 0; border-top:1px solid var(--line); font-size:15px; line-height:1.45;}
+  .roll-item .who{color:var(--ink); font-weight:600; flex:none; max-width:40%;}
+  .roll-item .org{color:var(--ink-soft); text-align:right; font-size:14px; max-width:60%;}
+
+  .tie-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:16px;}
+  @media (max-width:860px){ .tie-grid{grid-template-columns:1fr;} }
+  .tie-card{background:var(--paper-2); padding:28px;}
+  @media (max-width:720px){ .tie-card{padding:22px 20px;} }
+  .tie-card .num{font-size:14px; line-height:1.45; color:var(--ink-faint);}
+  .tie-card h4{font-size:21px; line-height:1.25; font-weight:600; margin-top:8px; color:var(--ink);}
+  .tie-card p{font-size:16px; line-height:1.6; color:var(--ink-soft); margin:12px 0 0;}
+  .tie-card p.lesson{color:var(--ink); margin-top:16px; padding-top:14px; border-top:1px solid var(--line-strong);}
+  .tie-card p.lesson b{color:var(--ink); font-weight:600;}
+  .tie-card a{
+    font-size:15px; display:inline-block; margin-top:16px; color:var(--ink);
+    text-decoration:underline; text-decoration-color:var(--accent); text-decoration-thickness:1px; text-underline-offset:3px;
+  }
+  .tie-card a:hover{color:var(--accent);}
+
+  .lane{margin-bottom:48px;}
+  .lane-head{display:flex; align-items:center; gap:12px; margin-bottom:8px; flex-wrap:wrap;}
+  .lane-head .who-badge{
+    font-size:13px; line-height:1.2; color:var(--ink); padding:4px 11px; border-radius:999px;
+    border:1px solid var(--line-strong);
+  }
+  .who-badge.kilburn{background:var(--ink); border-color:var(--ink); color:var(--paper);}
+  .lane-head span.role{font-size:14px; color:var(--ink-faint);}
+  .lane-rows{margin-top:8px;}
+  .next-row{display:grid; grid-template-columns:36px 1fr auto; gap:16px; align-items:baseline; padding:14px 0; border-top:1px solid var(--line);}
+  .next-row .n{color:var(--ink-faint); font-size:14px; font-variant-numeric:tabular-nums;}
+  .next-row p{margin:0; font-size:16px; line-height:1.55; color:var(--ink); max-width:var(--fai-measure);}
+  .next-row .status{
+    font-size:13px; line-height:1.2; color:var(--ink-soft);
+    border:1px solid var(--line-strong); padding:4px 10px; border-radius:999px; white-space:nowrap;
+  }
+  @media (max-width:560px){
+    .next-row{grid-template-columns:28px 1fr; row-gap:8px;}
+    .next-row .status{grid-column:2; justify-self:start;}
+  }
+
+  .callout{margin-top:16px; padding:18px 20px; background:var(--paper-2); font-size:16px; line-height:1.55; color:var(--ink); max-width:var(--fai-measure);}
+  .callout b{color:var(--ink); font-weight:600;}
+
+  .sources{padding:56px 0;}
+  .sources h3{font-size:18px; font-weight:600; margin-bottom:16px;}
+  .sources ul{margin:0; padding:0; list-style:none; max-width:var(--fai-measure);}
+  .sources li{font-size:14px; line-height:1.7; color:var(--ink-soft); padding:8px 0; border-top:1px solid var(--line);}
+  .sources a{color:var(--ink-soft); text-decoration:underline; text-decoration-color:var(--line-strong); text-underline-offset:3px;}
+  .sources a:hover{color:var(--ink); text-decoration-color:var(--accent);}
+
+  footer{background:var(--paper); color:var(--ink-soft); padding:56px 0 48px; font-size:14px; line-height:1.5; border-top:1px solid var(--line);}
+  footer a{color:var(--ink-soft); text-decoration:none;}
+  footer .col a:hover{color:var(--ink); text-decoration:underline; text-decoration-color:var(--accent); text-underline-offset:3px;}
+  footer .wrap{display:flex; justify-content:space-between; flex-wrap:wrap; gap:32px;}
+  footer .col h4{color:var(--ink); font-size:15px; font-weight:600;}
+  footer .col a{display:block; margin-top:8px; font-size:14px;}
+  footer .col-about{max-width:340px;}
+  footer .col-about p{color:var(--ink-soft); font-size:14px; line-height:1.55; margin:8px 0 0;}
+  footer .footer-bottom{display:block; margin-top:0; padding-top:0;}
+  footer .credit{font-size:14px; line-height:1.55; color:var(--ink-faint); margin-top:32px; border-top:1px solid var(--line); padding-top:20px; max-width:none;}
+</style>
+<!-- fai:head -->
+<meta name="description" content="A starting proposal for bringing Kilburn High Street’s community to life through its food system, working with the businesses and organisations already on the ground.">
+<link rel="canonical" href="https://food.darkmatterlabs.org/kilburn-high-street.html">
+<meta name="theme-color" content="#111112">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Food as Infrastructure, Dark Matter Labs">
+<meta property="og:locale" content="en_GB">
+<meta property="og:url" content="https://food.darkmatterlabs.org/kilburn-high-street.html">
+<meta property="og:title" content="Kilburn High Street">
+<meta property="og:description" content="A starting proposal for bringing Kilburn High Street’s community to life through its food system, working with the businesses and organisations already on the ground.">
+<meta property="og:image" content="https://food.darkmatterlabs.org/assets/fai/social/kilburn-high-street.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Kilburn High Street. Food as Infrastructure, Dark Matter Labs.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Kilburn High Street">
+<meta name="twitter:description" content="A starting proposal for bringing Kilburn High Street’s community to life through its food system, working with the businesses and organisations already on the ground.">
+<meta name="twitter:image" content="https://food.darkmatterlabs.org/assets/fai/social/kilburn-high-street.png">
+<meta name="twitter:image:alt" content="Kilburn High Street. Food as Infrastructure, Dark Matter Labs.">
+<link rel="icon" href="assets/fai/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400..900;1,400..700&display=swap">
+<link rel="stylesheet" href="assets/fai/fai.css">
+<!-- /fai:head -->
+</head>
+<body>
+<!-- fai:bar -->
+<div class="fai-bar">
+  <div class="fai-bar__inner">
+    <a class="fai-bar__dm" href="https://darkmatterlabs.org/"><img class="fai-bar__lockup" src="assets/brand/dm-logo-v1-white.svg" alt="Dark Matter Labs" width="102" height="20"><img class="fai-bar__stamp" src="assets/brand/dm-stamp-white.svg" alt="Dark Matter Labs" width="20" height="20"></a>
+    <span class="fai-bar__sep" aria-hidden="true"></span>
+    <a class="fai-bar__mission" href="index.html">Food as Infrastructure</a>
+    <span class="fai-bar__here"><span class="fai-el fai-el--camden fai-el--draft" aria-hidden="true"><b>Kb</b><i>16</i></span><span>Kilburn High Street</span></span>
+    <a class="fai-bar__xco" href="https://optionality.darkmatterlabs.org/" target="_blank" rel="noopener" title="Dark Matter Labs' Expanding Civilizational Optionality portfolio">xCO portfolio<span aria-hidden="true"> ↗</span></a>
+    <div class="fai-bar__links" role="navigation" aria-label="Site"><a href="index.html">Portfolio</a><a href="library.html">Library</a></div>
+  </div>
+</div>
+<!-- /fai:bar -->
+
+<header class="site-nav">
+  <div class="nav-inner">
+    <div class="nav-mark">
+      <strong>Kilburn High Street</strong>
+      <span>A starting proposal, Camden and Brent</span>
+    </div>
+    <nav class="nav-links">
+      <a href="#why-here">Why here</a>
+      <a href="#whats-here">What's already here</a>
+      <a href="#approach">How we'd approach it</a>
+      <a href="#next">What's next</a>
+    </nav>
+  </div>
+</header>
+
+<div class="status-strip">
+  <div class="wrap">
+    <div class="status-note">
+      <p><strong>Draft. Nothing here has been discussed with Kilburn's businesses or organisations yet.</strong> This is a starting proposal for how that conversation could begin, written before it happens — not a report on engagement that's already taken place. Every organisation named below is named because it already exists and already does this work, not because it has agreed to be part of anything.</p>
+      <span class="status-date">Working note, September 2026</span>
+    </div>
+  </div>
+</div>
+
+<main id="main">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap">
+      <div class="lot-number">A side exploration within the wider Camden work, 2026</div>
+      <h1>One street, <em>two boroughs</em>, hundreds of independent businesses already doing the work.</h1>
+      <p class="lede">Kilburn High Street isn't a blank site for a new food-system intervention. It's a working high street with its own market, its own growers, its own community kitchen, and a community-led partnership already trying to hold it together. The question this page starts to answer isn't "what should we build here" — it's "what's already here, and how does the wider portfolio's thinking actually help it."</p>
+      <div class="cta-row">
+        <a class="btn primary" href="#approach">See the proposed approach</a>
+        <a class="btn" href="index.html">Back to Food as Infrastructure</a>
+        <a class="btn" href="hubs-and-markets-working-group.html">Open the Hubs &amp; Markets Working Group</a>
+      </div>
+      <div class="hero-strip">
+        <div class="stat"><b>~400</b><span>Shops on Kilburn High Road, roughly three-quarters independent</span></div>
+        <div class="stat"><b>2</b><span>Boroughs sharing one street — Camden on one side, Brent on the other</span></div>
+        <div class="stat"><b>£12m+</b><span>Already committed to the street's public realm by both councils and TfL</span></div>
+        <div class="stat"><b>0</b><span>Conversations with local businesses and organisations had so far — deliberately, this is where it starts</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY HERE -->
+  <section id="why-here">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">Not a Camden pilot site — a genuinely shared street</div>
+        <h2>Why Kilburn High Street, specifically</h2>
+        <p class="sub">Most of this portfolio's place-based work sits inside one borough at a time. Kilburn High Street can't — and that's exactly what makes it worth exploring.</p>
+      </div>
+      <div class="objective-block">
+        <div class="lede-text">
+          <p>Kilburn High Road is the boundary. Camden holds one side of the street, Brent holds the other, following the old line of Watling Street — so anything built to serve "Kilburn" has to work across a council line by definition, not as an ambitious extra step taken later. The two councils already know this: they've been working together on the street since 2021, and have jointly spent over £1.5m upgrading paving, lighting and street furniture in the upper section alone, with a further £8m from TfL and £4m of their own money now committed to widening pavements, adding protected cycle crossings and pocket parks through the heart of Kilburn.</p>
+          <p>More importantly, the street already has a working model of cross-boundary, community-led governance to plug into: <strong>One Kilburn</strong>, a Community Improvement District piloted by Camden with funding from Power to Change and the GLA. Unlike a conventional Business Improvement District, a CID is built to give residents and community organisations a say over the high street's direction alongside businesses — which is precisely the governance shape a civic-led food-system effort needs, and precisely the kind of structure this portfolio has been arguing London boroughs should be building anyway.</p>
+          <p>There's also a live "Healthy Town Centre" consultation getting under way for the whole of Kilburn, and a cross-boundary Kilburn Neighbourhood Forum already drafting a Neighbourhood Plan covering both sides of the street. None of this needs to be invented. It needs to be found, understood, and asked whether food belongs inside it.</p>
+        </div>
+        <div>
+          <div class="roll">
+            <div class="roll-title">What's structurally different about this street</div>
+            <div class="roll-item"><span class="who">Boundary</span><span class="org">Runs down the middle of the street itself, Camden / Brent</span></div>
+            <div class="roll-item"><span class="who">Existing partnership</span><span class="org">One Kilburn Community Improvement District</span></div>
+            <div class="roll-item"><span class="who">Existing planning body</span><span class="org">Kilburn Neighbourhood Forum, cross-boundary</span></div>
+            <div class="roll-item"><span class="who">Live consultation</span><span class="org">Camden's Healthy Town Centre process for all of Kilburn</span></div>
+            <div class="roll-item"><span class="who">Funding route already open</span><span class="org">Camden's Future High Streets Crowdfund, match-funded</span></div>
+            <div class="roll-item"><span class="who">Shop mix</span><span class="org">~400 shops, roughly a quarter national chains</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT'S ALREADY HERE -->
+  <section id="whats-here">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">Building with what exists, not around it</div>
+        <h2>What's already here, worth knowing before proposing anything</h2>
+        <p class="sub">The instinct in this portfolio's other work has been to look for what's already operating before suggesting something new. Kilburn already has more than most streets.</p>
+      </div>
+      <div class="tie-grid">
+        <div class="tie-card">
+          <div class="num">Already growing, and already civic</div>
+          <h4>Granville Community Kitchen's farm hub, South Kilburn</h4>
+          <p>A community farm and kitchen explicitly built to belong to the people of South Kilburn, not to a landlord or a council department — the closest thing on this street to the "civic infrastructure" language the rest of this portfolio uses. Any food-system proposal for Kilburn should start by understanding what this organisation has already learned, not by proposing something that duplicates it.</p>
+        </div>
+        <div class="tie-card">
+          <div class="num">Already trading, already independent</div>
+          <h4>Kilburn Square Market and specialist independents</h4>
+          <p>A working market at Kilburn Square alongside the high street itself, plus long-standing specialist independents — an independent fishmonger among them. This is the existing food economy any collective-buying or shortened-supply-chain thinking would need to serve, not compete with.</p>
+        </div>
+        <div class="tie-card">
+          <div class="num">Coming soon, worth watching</div>
+          <h4>Kilburn Community Garden, Kilburn Grange Park</h4>
+          <p>A new community growing space planned for Kilburn Grange Park, alongside wider community-growing support from Brent, Camden and Groundwork London across the area. Another natural early conversation, and one that sits on the Camden side of the boundary already.</p>
+        </div>
+        <div class="tie-card">
+          <div class="num">A signal worth reading correctly</div>
+          <h4>Private capital is already moving into food here</h4>
+          <p>A new 14-unit food court, Food District, is opening on Kilburn High Road — real evidence that commercial investors see food and hospitality as the street's growth story right now. That's not a threat to work around; it's confirmation of the underlying premise elsewhere in this portfolio, that there's real money in food. The question worth asking is whether any of that momentum can be shaped to benefit the street's existing independent food economy, rather than only the new entrant.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- APPROACH -->
+  <section id="approach">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">Starting with listening, not a proposal</div>
+        <h2>How we'd actually approach this</h2>
+        <p class="sub">The rest of this portfolio's place-based pages report on conversations that have already happened. This one doesn't have that yet — so instead of manufacturing findings, here's the proposed order of operations.</p>
+      </div>
+      <div class="objective-block">
+        <div class="lede-text">
+          <p><strong>First, join the structure that already exists.</strong> One Kilburn's whole purpose is giving local people and organisations a say over the street's direction — the honest first move is to understand how it works and ask whether food belongs on its agenda, rather than starting a parallel conversation.</p>
+          <p><strong>Second, talk to the organisations already doing this work, on their terms.</strong> Granville Community Kitchen has real, lived experience of building food-related civic infrastructure in this exact place. The Kilburn Square Market traders and the street's independent food retailers understand the street's actual economics better than any outside proposal could. Listening to what they need — not what a portfolio framework assumes they need — comes before any design work.</p>
+          <p><strong>Third, understand the two-borough mechanics properly.</strong> Camden and Brent have already built one working example of joint governance here (One Kilburn) and one joint planning process (the Neighbourhood Forum). Whatever gets proposed needs to work inside that existing cross-boundary machinery, not require a new one.</p>
+          <p><strong>Fourth, only then ask what's missing.</strong> Once the picture above is actually filled in — not assumed — it becomes possible to ask honestly whether Kilburn needs anything closer to a hub, a collective-buying arrangement, a school-food procurement link, or simply better-connected support for what already exists. That answer isn't known yet, deliberately.</p>
+        </div>
+        <div>
+          <div class="roll">
+            <div class="roll-title">Open questions, not yet answered</div>
+            <div class="roll-item"><span class="who">Governance</span><span class="org">Does food belong on One Kilburn's own agenda, or does it need its own strand?</span></div>
+            <div class="roll-item"><span class="who">Duplication risk</span><span class="org">What has Granville Community Kitchen already tried, and what did it learn?</span></div>
+            <div class="roll-item"><span class="who">Scale</span><span class="org">Is this a street-level question, or does it only make sense at South Kilburn / whole-Kilburn scale?</span></div>
+            <div class="roll-item"><span class="who">Two councils</span><span class="org">Which side of the boundary, if either, actually needs to hold any new investment?</span></div>
+            <div class="roll-item"><span class="who">The new food court</span><span class="org">Ally, ignore, or engage — not yet decided</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONNECTS TO THE WIDER PORTFOLIO -->
+  <section id="connects">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">Where this sits</div>
+        <h2>How this connects to the wider work</h2>
+        <p class="sub">Kilburn isn't a detour from the rest of this portfolio — it's the same questions, at street scale, with the cross-borough problem already built into the geography.</p>
+      </div>
+      <div class="tie-grid">
+        <div class="tie-card">
+          <div class="num">Portfolio ambition</div>
+          <h4>A coalition of boroughs, tested at street level</h4>
+          <p>The portfolio's wider "coalition of boroughs" thinking usually means Camden's neighbours coordinating rather than repeating work from zero. Kilburn forces that same coordination at a much smaller scale — a single street where it isn't optional.</p>
+          <a href="index.html#tracks">See the Supply / Hub / Demand portfolio</a>
+        </div>
+        <div class="tie-card">
+          <div class="num">Working group</div>
+          <h4>The Hubs &amp; Markets Working Group's own findings apply directly</h4>
+          <p>The working group has already found that hub failure risk sits in operating skillset, not good intentions, and that space economics need to be stated plainly, early. Both apply directly here, if a hub-shaped idea ever gets proposed for Kilburn.</p>
+          <a href="hubs-and-markets-working-group.html#network">Read the working group's findings</a>
+        </div>
+        <div class="tie-card">
+          <div class="num">Economic framing</div>
+          <h4>The same "fat middle" argument, at high-street scale</h4>
+          <p>The portfolio's economic case elsewhere is about shortening the distance between growers and the people who cook — cutting out an inefficient, expensive middle. Kilburn's own independent food retailers already sit at exactly that point in the chain.</p>
+          <a href="sovereign-food-system.html#local">See the local-level instruments</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT'S NEXT -->
+  <section id="next">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">Honest, not aspirational</div>
+        <h2>What's next</h2>
+        <p class="sub">No commitments have been made to anyone named on this page. These are the concrete first steps for finding out whether there's something worth building together.</p>
+      </div>
+
+      <div class="lane">
+        <div class="lane-head">
+          <span class="who-badge kilburn">First moves</span>
+          <span class="role">Before any proposal takes shape</span>
+        </div>
+        <div class="lane-rows">
+          <div class="next-row">
+            <span class="n">01</span>
+            <p>Find out how to engage with One Kilburn directly, and understand what's already on its agenda.</p>
+            <span class="status">Open</span>
+          </div>
+          <div class="next-row">
+            <span class="n">02</span>
+            <p>Have a first, listening-only conversation with Granville Community Kitchen about what they've already tried and what they'd want help with, if anything.</p>
+            <span class="status">Open</span>
+          </div>
+          <div class="next-row">
+            <span class="n">03</span>
+            <p>Talk to a handful of Kilburn Square Market and high street independent food traders directly, rather than assuming their needs from outside.</p>
+            <span class="status">Open</span>
+          </div>
+          <div class="next-row">
+            <span class="n">04</span>
+            <p>Read the Kilburn Neighbourhood Plan and the Healthy Town Centre consultation material in full, to see whether food is already on the table or genuinely missing.</p>
+            <span class="status">Open</span>
+          </div>
+          <div class="next-row">
+            <span class="n">05</span>
+            <p>Only after 01–04: decide whether this becomes its own strand of work, folds into an existing Camden or borough effort, or turns out not to need anything new at all.</p>
+            <span class="status">Not yet due</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout"><b>The point of this page:</b> to have somewhere honest to start from — what's already true about this street, what already exists to build with, and what hasn't been asked yet. Nothing here is a commitment on behalf of Camden, Brent, or anyone named above.</div>
+    </div>
+  </section>
+
+</main>
+
+<div class="wrap sources">
+  <h3>Sources</h3>
+  <ul>
+    <li>Brent Council, Improve Kilburn High Road — <a href="https://www.brent.gov.uk/business/regeneration/revitalising-our-high-streets/improve-kilburn-high-road" target="_blank" rel="noopener">brent.gov.uk</a></li>
+    <li>Camden News, Camden partner with Brent on scheme to revitalise Kilburn High Road — <a href="https://news.camden.gov.uk/camden-partner-with-brent-on-scheme-to-revitalise-kilburn-high-road/" target="_blank" rel="noopener">news.camden.gov.uk</a></li>
+    <li>Camden News, new funding secured for Kilburn High Road improvements — <a href="https://news.camden.gov.uk/new-funding-secured-for-kilburn-high-road-improvements" target="_blank" rel="noopener">news.camden.gov.uk</a></li>
+    <li>Cooperative Councils Innovation Network, piloting a Community Improvement District in Kilburn — <a href="https://www.councils.coop/case-study/community-improvement-district-power-to-change/" target="_blank" rel="noopener">councils.coop</a></li>
+    <li>Kilburn Neighbourhood Plan Forum — <a href="https://kilburnforum.london/" target="_blank" rel="noopener">kilburnforum.london</a></li>
+    <li>Camden, Kilburn Neighbourhood Area and Forum applications — <a href="https://news.camden.gov.uk/kilburn-neighbourhood-area-and-forum-applications-submitted/" target="_blank" rel="noopener">news.camden.gov.uk</a></li>
+    <li>Wikipedia, Kilburn, London — <a href="https://en.wikipedia.org/wiki/Kilburn,_London" target="_blank" rel="noopener">en.wikipedia.org</a></li>
+    <li>National Park City London, Granville Community Farm Hub — <a href="https://nationalparkcity.london/growing-belonging-a-visit-to-granville-community-farm-hub" target="_blank" rel="noopener">nationalparkcity.london</a></li>
+    <li>Brent &amp; Kilburn Times, Kilburn High Road new food court Food District to open — <a href="https://www.kilburntimes.co.uk/news/25919874.kilburn-high-road-new-food-court-food-district-open/" target="_blank" rel="noopener">kilburntimes.co.uk</a></li>
+    <li>Wikipedia, Kilburn Grange Park — <a href="https://en.wikipedia.org/wiki/Kilburn_Grange_Park" target="_blank" rel="noopener">en.wikipedia.org</a></li>
+  </ul>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="col col-about">
+      <h4>Kilburn High Street</h4>
+      <p>A starting proposal for a specific stretch of Camden and Brent, part of Dark Matter Labs' Food as Infrastructure portfolio.</p>
+    </div>
+    <div class="col">
+      <h4>This page</h4>
+      <a href="#why-here">Why here</a>
+      <a href="#whats-here">What's already here</a>
+      <a href="#approach">How we'd approach it</a>
+      <a href="#next">What's next</a>
+    </div>
+    <div class="col">
+      <h4>Wider portfolio</h4>
+      <a href="hubs-and-markets-working-group.html">Hubs &amp; Markets Working Group</a>
+      <a href="index.html">Food as Infrastructure</a>
+      <a href="sovereign-food-system.html">A Sovereign Food System</a>
+    </div>
+  </div>
+  <div class="wrap footer-bottom">
+    <div class="credit">This page draws only on publicly available information about Kilburn High Street, listed in Sources above — no organisation named on this page has been contacted yet, and nothing here should be read as representing their views.<br><br>Parts of this page were drafted with AI assistance (Claude). Licensed CC BY-SA 4.0 — see the <a href="index.html">homepage</a> for full credit and lineage.</div>
+  </div>
+</footer>
+
+<!-- fai:footer -->
+<footer class="fai-footer">
+  <div class="fai-footer__inner">
+    <span>Part of Dark Matter Labs' <a href="https://optionality.darkmatterlabs.org/" target="_blank" rel="noopener">xCO portfolio<span aria-hidden="true"> ↗</span></a>, expanding civilizational optionality.</span>
+  </div>
+</footer>
+<!-- /fai:footer -->
+</body>
+</html>

@@ -198,6 +198,19 @@
       "summary": "What the UK’s broken food system already costs the country every year: itemised, sourced, and compounding while nothing changes.",
       "pdf": false,
       "surface": "paper"
+    },
+    {
+      "n": 16,
+      "sym": "Kb",
+      "file": "kilburn-high-street.html",
+      "name": "Kilburn High Street",
+      "scope": "camden",
+      "status": "draft",
+      "listed": true,
+      "title": "Kilburn High Street",
+      "summary": "A starting proposal for bringing Kilburn High Street’s community to life through its food system, working with the businesses and organisations already on the ground.",
+      "pdf": false,
+      "surface": "paper"
     }
   ]
 }
