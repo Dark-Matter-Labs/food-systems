@@ -198,6 +198,19 @@
       "summary": "What the UK’s broken food system already costs the country every year: itemised, sourced, and compounding while nothing changes.",
       "pdf": false,
       "surface": "paper"
+    },
+    {
+      "n": 16,
+      "sym": "Ft",
+      "file": "hackney-2040.html",
+      "name": "Hackney 2040",
+      "scope": "hackney",
+      "status": "draft",
+      "listed": false,
+      "title": "Hackney 2040",
+      "summary": "A working note on foresight with Hackney: what we heard, how scenarios can test today’s plans, and how the work could run.",
+      "pdf": false,
+      "surface": "paper"
     }
   ]
 }

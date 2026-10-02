@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hackney 2040 (draft) — Food as Infrastructure</title>
+<style>
+  :root{
+    --paper:var(--fai-paper);
+    --paper-2:var(--fai-field);
+    --ink:var(--fai-ink);
+    --ink-soft:var(--fai-ink-2);
+    --ink-faint:var(--fai-ink-3);
+    --accent:var(--fai-beet);
+    --accent-tint:var(--fai-beet-tint);
+    --line:var(--fai-rule);
+    --line-strong:var(--fai-rule-strong);
+    --maxw:var(--fai-container);
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0; background:var(--paper); color:var(--ink);
+    font-family:var(--fai-sans); font-size:17px; line-height:1.6;
+  }
+  h1,h2,h3,h4{font-weight:500; color:var(--ink); margin:0;}
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 32px;}
+  @media (max-width:720px){ .wrap{padding:0 16px;} }
+  a{color:var(--ink);}
+  main p a, main li a, footer .credit a{
+    color:var(--ink); text-decoration:underline; text-decoration-color:var(--accent);
+    text-decoration-thickness:1px; text-underline-offset:3px;
+  }
+  main p a:hover, main li a:hover, footer .credit a:hover{color:var(--accent);}
+  .eyebrow{font-size:14px; line-height:1.45; color:var(--ink-faint);}
+
+  /* Page nav */
+  header.site-nav{position:sticky; top:0; z-index:50; background:var(--paper); border-bottom:1px solid var(--line);}
+  .nav-inner{
+    max-width:var(--maxw); margin:0 auto; padding:14px 32px;
+    display:flex; align-items:center; justify-content:space-between; gap:24px; flex-wrap:wrap;
+  }
+  @media (max-width:720px){ .nav-inner{padding:12px 16px;} }
+  .nav-mark{display:flex; align-items:baseline; gap:12px; flex-wrap:wrap; line-height:1.3;}
+  .nav-mark strong{font-size:15px; font-weight:600;}
+  .nav-mark span{font-size:14px; color:var(--ink-faint);}
+  nav.nav-links{display:flex; gap:22px; flex-wrap:wrap;}
+  nav.nav-links a{font-size:14px; color:var(--ink-soft); text-decoration:none;}
+  nav.nav-links a:hover{color:var(--ink); text-decoration:underline; text-decoration-color:var(--accent); text-underline-offset:3px;}
+  @media (max-width:860px){ nav.nav-links, .nav-mark span{display:none;} }
+
+  /* Status note */
+  .status-strip{padding:32px 0 0;}
+  .status-note{
+    background:var(--paper-2); border-left:3px solid var(--accent);
+    padding:14px 18px; font-size:15px; line-height:1.5; color:var(--ink-soft); max-width:var(--fai-measure);
+  }
+  .status-note p{margin:0;}
+  .status-note strong{color:var(--ink); font-weight:600;}
+  .status-note .status-date{display:block; margin-top:6px; font-size:14px; color:var(--ink-faint);}
+
+  /* Hero */
+  .hero{padding:56px 0 64px; border-bottom:1px solid var(--line);}
+  .hero-grid{display:grid; grid-template-columns:auto 1fr; gap:40px; align-items:start;}
+  @media (max-width:720px){ .hero-grid{grid-template-columns:1fr; gap:24px;} }
+  .hero .kicker{font-size:14px; color:var(--ink-faint); margin-bottom:16px;}
+  .hero h1{font-size:clamp(40px, 6vw, 76px); line-height:1.02; max-width:16ch;}
+  .hero .lede{max-width:var(--fai-measure); margin:24px 0 0; font-size:21px; color:var(--ink-soft); line-height:1.45;}
+  .hero .cta-row{margin-top:32px; display:flex; gap:12px; flex-wrap:wrap;}
+  .btn{
+    font-size:15px; font-weight:500; line-height:1.2; padding:12px 18px;
+    border:1px solid var(--line-strong); border-radius:3px; color:var(--ink); background:transparent;
+    display:inline-flex; align-items:center; gap:8px; text-decoration:none;
+    transition:background var(--fai-ease), border-color var(--fai-ease), color var(--fai-ease);
+  }
+  .btn:hover{border-color:var(--ink);}
+  .btn.primary{background:var(--ink); border-color:var(--ink); color:var(--paper);}
+  .btn.primary:hover{background:var(--accent); border-color:var(--accent);}
+  .hero-strip{margin-top:56px; padding-top:24px; border-top:1px solid var(--line); display:grid; grid-template-columns:repeat(4,1fr); gap:24px;}
+  @media (max-width:860px){ .hero-strip{grid-template-columns:repeat(2,1fr);} }
+  .hero-strip b{display:block; font-size:32px; line-height:1.1; font-weight:500; color:var(--accent); font-variant-numeric:tabular-nums;}
+  .hero-strip span{display:block; margin-top:6px; font-size:14px; line-height:1.45; color:var(--ink-faint);}
+
+  /* Sections */
+  section{padding:96px 0; border-bottom:1px solid var(--line);}
+  main > section:last-child{border-bottom:none;}
+  @media (max-width:720px){ section{padding:56px 0;} .hero{padding:40px 0 48px;} .hero .lede{font-size:19px;} }
+  .section-head{max-width:760px; margin-bottom:48px;}
+  .section-head h2{font-size:clamp(28px,3.4vw,40px); line-height:1.1; margin-top:10px;}
+  .section-head p.sub{color:var(--ink-soft); margin-top:16px; max-width:var(--fai-measure);}
+  .road{border:0; border-top:2px dashed var(--line-strong); margin:0;}
+
+  /* What we heard */
+  .heard-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:16px;}
+  @media (max-width:960px){ .heard-grid{grid-template-columns:repeat(2,1fr);} }
+  @media (max-width:620px){ .heard-grid{grid-template-columns:1fr;} }
+  .card{background:var(--paper-2); padding:28px;}
+  @media (max-width:720px){ .card{padding:22px 20px;} }
+  .card h3{font-size:21px; line-height:1.25; font-weight:600;}
+  .card p{font-size:16px; line-height:1.6; color:var(--ink-soft); margin:12px 0 0;}
+  .card .tag{font-size:14px; color:var(--ink-faint); margin-bottom:8px;}
+
+  /* Coherence figure */
+  .split{display:grid; grid-template-columns:0.9fr 1.1fr; gap:56px; align-items:start;}
+  @media (max-width:900px){ .split{grid-template-columns:1fr; gap:40px;} }
+  .prose p{margin:0; max-width:var(--fai-measure);}
+  .prose p + p{margin-top:16px;}
+  .figure-pair{display:grid; grid-template-columns:1fr; gap:16px;}
+  .figure-pair svg{max-width:520px;}
+  figure{margin:0;}
+  .figure-pair figure{background:var(--paper-2); padding:20px 16px 16px;}
+  .figure-pair svg{width:100%; height:auto; display:block;}
+  .fig .q{stroke:var(--fai-ink-3);}
+  .fig .qf{fill:var(--fai-ink-3);}
+  .fig .b{stroke:var(--fai-beet);}
+  .fig .bf{fill:var(--fai-beet);}
+  .fig .hub{fill:var(--fai-beet-tint); stroke:var(--fai-beet);}
+  .fig .lbl{fill:var(--fai-ink-2);}
+  .fig .ink{fill:var(--fai-ink);}
+  .fig .dot{fill:var(--fai-rule-strong);}
+  figcaption{font-size:14px; line-height:1.45; color:var(--ink-faint); margin-top:12px;}
+  .figure-pair figcaption b{color:var(--ink); font-weight:600; display:block;}
+  .not-list{margin:28px 0 0; padding:0; list-style:none; border-top:1px solid var(--ink); max-width:var(--fai-measure);}
+  .not-list li{display:grid; grid-template-columns:150px 1fr; gap:16px; padding:12px 0; border-bottom:1px solid var(--line); font-size:15px; line-height:1.5;}
+  .not-list li b{font-weight:600;}
+  .not-list li span{color:var(--ink-soft);}
+  @media (max-width:560px){ .not-list li{grid-template-columns:1fr; gap:4px;} }
+
+  /* Six-step chain */
+  .chain{list-style:none; margin:0; padding:0; display:grid; grid-template-columns:repeat(6,1fr); gap:0; counter-reset:step;}
+  .chain .phase{grid-row:1; font-size:14px; font-weight:600; color:var(--ink); padding:0 0 10px; border-bottom:2px solid var(--ink); margin-right:12px;}
+  .chain .phase.p1{grid-column:1 / 4;}
+  .chain .phase.p2{grid-column:4 / 6;}
+  .chain .phase.p3{grid-column:6 / 7; border-bottom-color:var(--accent); color:var(--accent);}
+  .chain li.step{grid-row:2; position:relative; padding:20px 20px 0 0; border-right:1px solid var(--line); margin-right:12px;}
+  .chain li.step:last-child{border-right:0;}
+  .chain li.step .n{font-size:14px; color:var(--ink-faint); font-variant-numeric:tabular-nums;}
+  .chain li.step h3{font-size:18px; line-height:1.3; font-weight:600; margin-top:6px;}
+  .chain li.step p{font-size:15px; line-height:1.55; color:var(--ink-soft); margin:10px 0 0;}
+  .chain li.step.key h3{color:var(--accent);}
+  .chain .ph-inline{display:none;}
+  @media (max-width:960px){
+    .chain{grid-template-columns:1fr;}
+    .chain .phase{display:none;}
+    .chain li.step{grid-row:auto; border-right:0; border-top:1px solid var(--line); padding:18px 0; margin:0; display:grid; grid-template-columns:44px 1fr; column-gap:12px;}
+    .chain li.step .n{grid-row:1 / 4;}
+    .chain .ph-inline{display:block; font-size:13px; color:var(--ink-faint);}
+  }
+
+  .example{margin-top:56px; border-top:1px solid var(--ink);}
+  .example-head{display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap; padding:14px 0 6px;}
+  .example-head b{font-size:15px; font-weight:600;}
+  .example-head span{font-size:14px; color:var(--ink-faint);}
+  .ex-row{display:grid; grid-template-columns:44px 220px 1fr; gap:16px; padding:14px 0; border-top:1px solid var(--line); align-items:baseline;}
+  .ex-row .n{font-size:14px; color:var(--ink-faint); font-variant-numeric:tabular-nums;}
+  .ex-row .k{font-size:15px; font-weight:600;}
+  .ex-row p{margin:0; font-size:16px; line-height:1.55; color:var(--ink-soft); max-width:var(--fai-measure);}
+  .ex-row.key p{color:var(--ink);}
+  .ex-row.key .k{color:var(--accent);}
+  @media (max-width:620px){ .ex-row{grid-template-columns:32px 1fr;} .ex-row p{grid-column:2;} }
+
+  /* Journey */
+  .journey{display:grid; grid-template-columns:repeat(4,1fr) 1.15fr; gap:12px;}
+  @media (max-width:1000px){ .journey{grid-template-columns:1fr 1fr;} }
+  @media (max-width:560px){ .journey{grid-template-columns:1fr;} }
+  .stage{background:var(--paper-2); padding:24px 22px; position:relative;}
+  .stage.key{background:var(--accent-tint);}
+  .stage .when{font-size:14px; color:var(--ink-faint);}
+  .stage h3{font-size:20px; line-height:1.25; font-weight:600; margin-top:6px;}
+  .stage.key h3{color:var(--accent);}
+  .stage p{font-size:15px; line-height:1.55; color:var(--ink-soft); margin:10px 0 0;}
+  .stage.theirs{background:transparent; border:1px solid var(--line-strong);}
+  .stage .out{margin-top:14px; padding-top:12px; border-top:1px solid var(--line-strong); font-size:14px; line-height:1.45; color:var(--ink);}
+  .journey-note{margin-top:20px; font-size:14px; color:var(--ink-faint); max-width:var(--fai-measure);}
+
+  /* Context */
+  .shock-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-bottom:64px;}
+  @media (max-width:960px){ .shock-grid{grid-template-columns:repeat(2,1fr);} }
+  @media (max-width:560px){ .shock-grid{grid-template-columns:1fr;} }
+  .shock{border-top:2px solid var(--ink); padding-top:16px;}
+  .shock h3{font-size:19px; line-height:1.3; font-weight:600;}
+  .shock p{font-size:15px; line-height:1.55; color:var(--ink-soft); margin:8px 0 0;}
+  .prec-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:16px;}
+  @media (max-width:960px){ .prec-grid{grid-template-columns:1fr;} }
+  .prec .lesson{color:var(--ink); margin-top:16px; padding-top:14px; border-top:1px solid var(--line-strong);}
+  .prec .lesson b{font-weight:600;}
+  .tri{display:grid; grid-template-columns:repeat(3,auto); gap:8px 16px; margin-top:16px; justify-content:start; align-items:baseline;}
+  .tri b{font-size:28px; line-height:1; font-weight:500; color:var(--accent); font-variant-numeric:tabular-nums;}
+  .tri span{font-size:14px; color:var(--ink-soft); grid-row:2;}
+  .card a.more{font-size:15px; display:inline-block; margin-top:16px; text-decoration:underline; text-decoration-color:var(--accent); text-underline-offset:3px;}
+  .card a.more:hover{color:var(--accent);}
+
+  /* Questions */
+  .questions{list-style:none; margin:0; padding:0; border-top:1px solid var(--ink);}
+  .questions li{padding:22px 0; border-bottom:1px solid var(--line); font-size:clamp(20px,2.2vw,26px); line-height:1.3; font-weight:500; max-width:32ch;}
+  .q-wrap{display:grid; grid-template-columns:1fr 1fr; gap:56px;}
+  @media (max-width:900px){ .q-wrap{grid-template-columns:1fr; gap:24px;} }
+
+  /* Footer */
+  footer{background:var(--paper); color:var(--ink-soft); padding:56px 0 48px; font-size:14px; line-height:1.5; border-top:1px solid var(--line);}
+  footer a{color:var(--ink-soft); text-decoration:none;}
+  footer .col a:hover{color:var(--ink); text-decoration:underline; text-decoration-color:var(--accent); text-underline-offset:3px;}
+  footer .wrap{display:flex; justify-content:space-between; flex-wrap:wrap; gap:32px;}
+  footer .col h4{color:var(--ink); font-size:15px; font-weight:600;}
+  footer .col a{display:block; margin-top:8px; font-size:14px;}
+  footer .col-about{max-width:340px;}
+  footer .col-about p{font-size:14px; line-height:1.55; margin:8px 0 0;}
+  footer .footer-bottom{display:block;}
+  footer .credit{font-size:14px; line-height:1.55; color:var(--ink-faint); margin-top:32px; border-top:1px solid var(--line); padding-top:20px;}
+</style>
+<!-- fai:head -->
+<meta name="description" content="A working note on foresight with Hackney: what we heard, how scenarios can test today’s plans, and how the work could run.">
+<link rel="canonical" href="https://food.darkmatterlabs.org/hackney-2040.html">
+<meta name="theme-color" content="#111112">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Food as Infrastructure, Dark Matter Labs">
+<meta property="og:locale" content="en_GB">
+<meta property="og:url" content="https://food.darkmatterlabs.org/hackney-2040.html">
+<meta property="og:title" content="Hackney 2040">
+<meta property="og:description" content="A working note on foresight with Hackney: what we heard, how scenarios can test today’s plans, and how the work could run.">
+<meta property="og:image" content="https://food.darkmatterlabs.org/assets/fai/social/hackney-2040.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Hackney 2040. Food as Infrastructure, Dark Matter Labs.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Hackney 2040">
+<meta name="twitter:description" content="A working note on foresight with Hackney: what we heard, how scenarios can test today’s plans, and how the work could run.">
+<meta name="twitter:image" content="https://food.darkmatterlabs.org/assets/fai/social/hackney-2040.png">
+<meta name="twitter:image:alt" content="Hackney 2040. Food as Infrastructure, Dark Matter Labs.">
+<link rel="icon" href="assets/fai/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400..900;1,400..700&display=swap">
+<link rel="stylesheet" href="assets/fai/fai.css">
+<!-- /fai:head -->
+</head>
+<body>
+<!-- fai:bar -->
+<div class="fai-bar">
+  <div class="fai-bar__inner">
+    <a class="fai-bar__dm" href="https://darkmatterlabs.org/"><img class="fai-bar__lockup" src="assets/brand/dm-logo-v1-white.svg" alt="Dark Matter Labs" width="102" height="20"><img class="fai-bar__stamp" src="assets/brand/dm-stamp-white.svg" alt="Dark Matter Labs" width="20" height="20"></a>
+    <span class="fai-bar__sep" aria-hidden="true"></span>
+    <a class="fai-bar__mission" href="index.html">Food as Infrastructure</a>
+    <span class="fai-bar__here"><span class="fai-el fai-el--draft" aria-hidden="true"><b>Ft</b><i>16</i></span><span>Hackney 2040</span></span>
+    <a class="fai-bar__xco" href="https://optionality.darkmatterlabs.org/" target="_blank" rel="noopener" title="Dark Matter Labs' Expanding Civilizational Optionality portfolio">xCO portfolio<span aria-hidden="true"> ↗</span></a>
+    <div class="fai-bar__links" role="navigation" aria-label="Site"><a href="index.html">Portfolio</a><a href="library.html">Library</a></div>
+  </div>
+</div>
+<!-- /fai:bar -->
+
+<header class="site-nav">
+  <div class="nav-inner">
+    <div class="nav-mark">
+      <strong>Hackney 2040</strong>
+      <span>A foresight working note</span>
+    </div>
+    <nav class="nav-links" aria-label="On this page">
+      <a href="#heard">What we heard</a>
+      <a href="#foresight">Why foresight</a>
+      <a href="#workflow">From tension to plan</a>
+      <a href="#journey">How it could run</a>
+      <a href="#context">Wider context</a>
+    </nav>
+  </div>
+</header>
+
+<div class="status-strip">
+  <div class="wrap">
+    <div class="status-note">
+      <p><strong>Draft.</strong> A working note from early conversations with Hackney Council about long-term foresight. It sets out how we understand the questions and how the work could run. It is not a council document, and nothing here is agreed policy.</p>
+      <span class="status-date">Working note, October 2026</span>
+    </div>
+  </div>
+</div>
+
+<main id="main">
+
+  <section class="hero">
+    <div class="wrap">
+      <div class="kicker">Dark Matter Labs, with Hackney, our home borough</div>
+      <h1>What could Hackney be in 2040?</h1>
+      <p class="lede">Hackney is starting to ask how the borough, and the council itself, can prepare for the next 13 years. Foresight can give leaders a shared language for that future and a way to test today’s plans against it. The vision stays Hackney’s own.</p>
+      <div class="cta-row">
+        <a class="btn primary" href="#workflow">See the workflow</a>
+        <a class="btn" href="#heard">Read what we heard</a>
+      </div>
+      <div class="hero-strip">
+        <div><b>2040</b><span>The horizon, looking on towards 2060</span></div>
+        <div><b>6 steps</b><span>From today’s tensions to implications for existing plans</span></div>
+        <div><b>3–4</b><span>Scenarios, each covering the borough and the council</span></div>
+        <div><b>1 room</b><span>Political and officer leadership working through them together</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="heard">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">Themes from our first conversations</div>
+        <h2>What we heard</h2>
+        <p class="sub">These are the threads that came up most often. They are in our words and are a starting point for listening, not conclusions.</p>
+      </div>
+      <div class="heard-grid">
+        <div class="card">
+          <div class="tag">Prosperity</div>
+          <h3>A strong economy that hasn’t brought poverty down</h3>
+          <p>Hackney’s economy has grown, but many residents haven’t shared in it. Growth and fairness feel like they are on separate tracks.</p>
+        </div>
+        <div class="card">
+          <div class="tag">Housing</div>
+          <h3>Housing costs shape who can stay</h3>
+          <p>The cost of a home is a main driver of hardship, and many people leave the borough as they get older. Who will still be able to live here in 2040 is an open question.</p>
+        </div>
+        <div class="card">
+          <div class="tag">Direction</div>
+          <h3>Many plans, looking for one north star</h3>
+          <p>Strategies across the council need a common thread, so that each team can see how its work connects to a shared long-term direction.</p>
+        </div>
+        <div class="card">
+          <div class="tag">Pressure</div>
+          <h3>Rising need, tighter resources</h3>
+          <p>Like every London borough, Hackney faces growing demand for services with less to meet it. Any long-term thinking has to help people prioritise, not add to their workload.</p>
+        </div>
+        <div class="card">
+          <div class="tag">Change ahead</div>
+          <h3>Climate, AI and work</h3>
+          <p>Hotter summers and flooding, and AI reshaping the entry-level office and creative jobs Hackney has many of, will change what residents and businesses need.</p>
+        </div>
+        <div class="card">
+          <div class="tag">Community</div>
+          <h3>Social fabric, culture and partnership</h3>
+          <p>Hackney’s strength is its communities and its voluntary sector. How the council works alongside them, and as one council, is part of the answer.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="foresight">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">Policy coherence, not prediction</div>
+        <h2>Why foresight, and what it is not</h2>
+      </div>
+      <div class="split">
+        <div class="prose">
+          <p>Across Europe, many councils find the biggest barrier to impact isn’t a lack of ambition. It is policy incoherence: long-term visions, spatial plans and sectoral strategies quietly pull in different directions.</p>
+          <p>Scenarios help by making a possible future concrete enough to react to. When leaders step into a plausible Hackney of 2040 together, the trade-offs between existing commitments become visible and discussable, rather than being found later in delivery.</p>
+          <ul class="not-list">
+            <li><b>A scenario is</b><span>a plausible, tangible future condition that people can test their thinking against</span></li>
+            <li><b>It is not</b><span>a forecast, a recommendation, or a vision written for Hackney</span></li>
+            <li><b>We bring</b><span>tools, method and a setting for the conversation, plus lessons from other places</span></li>
+            <li><b>Hackney brings</b><span>its own knowledge, its people, and the decisions about what the future should hold</span></li>
+          </ul>
+        </div>
+        <div class="figure-pair">
+          <figure>
+            <svg class="fig" viewBox="0 0 420 300" role="img" aria-label="Six plans pointing in different directions">
+              <defs>
+                <marker id="ar-q" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="qf" d="M0 0L10 5L0 10z"/></marker>
+              </defs>
+              <g class="q" stroke-width="1.6" fill="none" marker-end="url(#ar-q)">
+                <path d="M196 140 L104 70"/>
+                <path d="M222 138 L318 72"/>
+                <path d="M232 156 L352 186"/>
+                <path d="M214 170 L286 250"/>
+                <path d="M198 166 L112 236"/>
+                <path d="M188 150 L112 150"/>
+              </g>
+              <circle class="dot" cx="210" cy="153" r="5"/>
+              <g font-size="14" class="lbl">
+                <text x="96" y="58" text-anchor="end">Housing</text>
+                <text x="326" y="62">Economy</text>
+                <text x="360" y="190">Climate</text>
+                <text x="294" y="266">Health</text>
+                <text x="104" y="256" text-anchor="end">Food</text>
+                <text x="104" y="155" text-anchor="end">Local Plan</text>
+              </g>
+            </svg>
+            <figcaption><b>Without a shared horizon</b>Each plan is sound on its own, but they pull apart.</figcaption>
+          </figure>
+          <figure>
+            <svg class="fig" viewBox="0 0 420 300" role="img" aria-label="Six plans converging on a shared Hackney 2040 horizon">
+              <defs>
+                <marker id="ar-b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="bf" d="M0 0L10 5L0 10z"/></marker>
+              </defs>
+              <g class="b" stroke-width="1.6" fill="none" marker-end="url(#ar-b)">
+                <path d="M132 40 L278.4 126.6"/>
+                <path d="M132 84 L274.6 134.6"/>
+                <path d="M132 128 L272.3 144.6"/>
+                <path d="M132 172 L272.3 155.4"/>
+                <path d="M132 216 L274.6 165.4"/>
+                <path d="M132 260 L278.4 173.4"/>
+              </g>
+              <circle class="hub" cx="318" cy="150" r="40" stroke-width="1.6"/>
+              <text x="318" y="147" text-anchor="middle" font-size="14" font-weight="600" class="ink">Hackney</text>
+              <text x="318" y="164" text-anchor="middle" font-size="14" font-weight="600" class="ink">2040</text>
+              <g font-size="14" class="lbl" text-anchor="end">
+                <text x="122" y="45">Local Plan</text>
+                <text x="122" y="89">Housing</text>
+                <text x="122" y="133">Economy</text>
+                <text x="122" y="177">Climate</text>
+                <text x="122" y="221">Health</text>
+                <text x="122" y="265">Food</text>
+              </g>
+            </svg>
+            <figcaption><b>With a shared horizon</b>The same plans, tested against one picture of the future.</figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="workflow">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">Foresight that reaches decisions</div>
+        <h2>From today’s tensions to implications for existing plans</h2>
+        <p class="sub">Foresight is only useful if it changes what happens next. This chain builds that link in from the start, so each scenario ends in a test of the plans already in motion.</p>
+      </div>
+
+      <ol class="chain">
+        <li class="phase p1" aria-hidden="true">Before the session</li>
+        <li class="phase p2" aria-hidden="true">In the session</li>
+        <li class="phase p3" aria-hidden="true">After the session</li>
+        <li class="step"><span class="n">01</span><span class="ph-inline">Before the session</span><h3>Current context and tension</h3><p>What is already happening? Existing strategies, commitments and evidence, and where they pull against each other.</p></li>
+        <li class="step"><span class="n">02</span><span class="ph-inline">Before the session</span><h3>Strategic question</h3><p>Each tension becomes an open question to explore, without jumping to a solution.</p></li>
+        <li class="step"><span class="n">03</span><span class="ph-inline">Before the session</span><h3>Scenario for 2040</h3><p>The question is made concrete as a possible 2040 condition: tangible, plausible, and something to react to.</p></li>
+        <li class="step"><span class="n">04</span><span class="ph-inline">In the session</span><h3>What people discuss</h3><p>What would a good Hackney need in this future? What should be protected, changed or made possible?</p></li>
+        <li class="step"><span class="n">05</span><span class="ph-inline">In the session</span><h3>Vision ingredient</h3><p>The principle the conversation reveals: a building block for Hackney’s own vision.</p></li>
+        <li class="step key"><span class="n">06</span><span class="ph-inline">After the session</span><h3>Implication for existing plans</h3><p>What needs aligning, strengthening, changing or connecting in what Hackney is already doing?</p></li>
+      </ol>
+
+      <div class="example">
+        <div class="example-head"><b>A worked example: housing, affordability and growth</b><span>Illustrative only</span></div>
+        <div class="ex-row"><span class="n">01</span><span class="k">Tension</span><p>Hackney needs more and better homes, but affordability already drives hardship and displacement. Growth could meet need, or deepen inequality.</p></div>
+        <div class="ex-row"><span class="n">02</span><span class="k">Question</span><p>How might growth be directed so that it narrows inequality between neighbourhoods and stays robust to economic and climate shocks?</p></div>
+        <div class="ex-row"><span class="n">03</span><span class="k">Scenario</span><p>It is 2040. Hackney has kept growing, but land and housing costs have risen sharply. More lower- and middle-income households struggle to stay, and climate pressures make some homes more expensive to adapt.</p></div>
+        <div class="ex-row"><span class="n">04</span><span class="k">Discussion</span><p>Who should still be able to live here? What would successful growth actually mean? What should growth protect, not just produce?</p></div>
+        <div class="ex-row"><span class="n">05</span><span class="k">Ingredient</span><p>Hackney remains a place where people on different incomes can afford to live, belong and build a life.</p></div>
+        <div class="ex-row key"><span class="n">06</span><span class="k">Implication</span><p>Does the spatial plan support affordability and reduce displacement? Is the housing mix enough? How is public and community land used? Are homes being made resilient as well as low-carbon? Who benefits from growth, and who carries the costs?</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="journey">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">A short, focused piece of work</div>
+        <h2>How the work could run</h2>
+        <p class="sub">Four steps over autumn 2026, ending in a handover. From there, Hackney’s own team carries what was learned into its long-term planning.</p>
+      </div>
+      <div class="journey">
+        <div class="stage">
+          <div class="when">01, October</div>
+          <h3>Listen</h3>
+          <p>Read across existing plans and evidence for the tensions that matter most for 2040, and hold a small number of conversations with leaders across the council.</p>
+          <div class="out">Out: a map of tensions and a shortlist of provocations</div>
+        </div>
+        <div class="stage">
+          <div class="when">02, early November</div>
+          <h3>Build scenarios</h3>
+          <p>Three or four radical but plausible Hackney 2040 scenarios, each covering the borough and the council as an organisation.</p>
+          <div class="out">Out: scenario cards and a short pre-read</div>
+        </div>
+        <div class="stage key">
+          <div class="when">03, November</div>
+          <h3>Foresight session</h3>
+          <p>A shared meal, then a half-day session where political and officer leaders work through the scenarios together.</p>
+          <div class="out">Out: priorities, trade-offs and vision ingredients, in participants’ own words</div>
+        </div>
+        <div class="stage">
+          <div class="when">04, December</div>
+          <h3>Hand over</h3>
+          <p>A short write-up of what the session revealed, with the scenarios and tools, so Hackney can keep using them.</p>
+          <div class="out">Out: a findings note and a reusable toolkit</div>
+        </div>
+        <div class="stage theirs">
+          <div class="when">Then, led by Hackney</div>
+          <h3>Hackney’s own plans</h3>
+          <p>The council takes the findings into its leadership conversations and its long-term plan for the borough. The vision and the decisions are Hackney’s.</p>
+        </div>
+      </div>
+      <p class="journey-note">Timings are indicative and depend on the council’s own calendar.</p>
+    </div>
+  </section>
+
+  <hr class="road">
+
+  <section id="context">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">Why this matters beyond one plan</div>
+        <h2>The wider context</h2>
+        <p class="sub">The next decade will test every London borough. Planning for 2040 means planning for shocks as well as growth, and learning from places that have already started.</p>
+      </div>
+
+      <div class="shock-grid">
+        <div class="shock"><h3>Climate</h3><p>Heat, flooding and the cost of adapting homes and streets, alongside the transition to net zero.</p></div>
+        <div class="shock"><h3>Work and AI</h3><p>Automation is likely to hit entry-level office and creative roles first. Those are pathways many young Hackney residents rely on.</p></div>
+        <div class="shock"><h3>Food</h3><p>Supply shocks and rising prices reach households fastest through food. Local food infrastructure is part of a borough’s resilience.</p></div>
+        <div class="shock"><h3>Cost of living</h3><p>Housing and living costs decide who can stay, and so who Hackney is for in 2040.</p></div>
+      </div>
+
+      <div class="prec-grid">
+        <div class="card prec">
+          <div class="tag">Lund, Sweden</div>
+          <h3>Radical scenarios</h3>
+          <p>We worked with Lund on radical scenarios that made climate targets concrete, for example by connecting carbon budgets to housing and construction choices.</p>
+          <p class="lesson"><b>What we learned:</b> build in from the start how foresight feeds strategy, and how the organisation itself needs to change.</p>
+        </div>
+        <div class="card prec">
+          <div class="tag">Newham, London</div>
+          <h3>The Just Transition Plan</h3>
+          <p>The UK’s first just transition plan combined climate action with social justice. It was adopted by Cabinet and launched at COP in December 2023.</p>
+          <div class="tri"><b>3</b><b>6</b><b>5</b><span>principles</span><span>futures</span><span>enablers</span></div>
+          <p class="lesson"><b>What we learned:</b> make the plan a tool that helps people do their jobs, and work out the internal shifts needed alongside the futures.</p>
+        </div>
+        <div class="card prec">
+          <div class="tag">Across London</div>
+          <h3>Food as Infrastructure</h3>
+          <p>Boroughs including Camden, Islington and Hackney are working together on civic food infrastructure, sharing what they learn openly as they go.</p>
+          <p class="lesson"><b>Where it connects:</b> food is one of the clearest places to see housing, health, the economy and climate meet.</p>
+          <a class="more" href="hackney-food-partnership.html">Hackney’s food hub work</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="questions">
+    <div class="wrap">
+      <div class="q-wrap">
+        <div class="section-head">
+          <div class="eyebrow">Open, and Hackney’s to answer</div>
+          <h2>Questions we are holding</h2>
+          <p class="sub">None of these has a single right answer. The foresight work is a way of asking them together, with the people who will shape the answers.</p>
+        </div>
+        <ul class="questions">
+          <li>Who should still be able to live in Hackney in 2040?</li>
+          <li>What should growth protect, not just produce?</li>
+          <li>What will the council need to become to serve the borough well?</li>
+          <li>Where do food, housing, work, health and climate meet, and where do they pull apart?</li>
+          <li>What would make the next 13 years feel like one journey rather than many plans?</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="col col-about">
+      <h4>Hackney 2040</h4>
+      <p>A working note on long-term foresight with Hackney, Dark Matter Labs’ home borough, part of the Food as Infrastructure portfolio.</p>
+    </div>
+    <div class="col">
+      <h4>This page</h4>
+      <a href="#heard">What we heard</a>
+      <a href="#workflow">From tension to plan</a>
+      <a href="#journey">How it could run</a>
+    </div>
+    <div class="col">
+      <h4>Hackney on this site</h4>
+      <a href="hackney-food-partnership.html">Hackney Food Hub</a>
+      <a href="hackney-food-hub.html">Hackney: what’s next</a>
+      <a href="hubs-and-markets-working-group.html">Hubs &amp; Markets Working Group</a>
+    </div>
+  </div>
+  <div class="wrap footer-bottom">
+    <div class="credit">Drawn from early conversations with Hackney Council officers in autumn 2026, and from Dark Matter Labs’ work with Lund and Newham. Individuals aren’t named, and nothing here represents council policy. The worked example is illustrative.<br><br>Parts of this page were drafted with AI assistance (Claude). Licensed CC BY-SA 4.0. See the <a href="index.html">homepage</a> for full credit and lineage.</div>
+  </div>
+</footer>
+<!-- fai:footer -->
+<footer class="fai-footer">
+  <div class="fai-footer__inner">
+    <span>Part of Dark Matter Labs' <a href="https://optionality.darkmatterlabs.org/" target="_blank" rel="noopener">xCO portfolio<span aria-hidden="true"> ↗</span></a>, expanding civilizational optionality.</span>
+  </div>
+</footer>
+<!-- /fai:footer -->
+</body>
+</html>
