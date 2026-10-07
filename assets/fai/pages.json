@@ -198,6 +198,19 @@
       "summary": "What the UK’s broken food system already costs the country every year: itemised, sourced, and compounding while nothing changes.",
       "pdf": false,
       "surface": "paper"
+    },
+    {
+      "n": 16,
+      "sym": "Sr",
+      "file": "nutrition-continuity-exercise.html",
+      "name": "Nutrition Continuity Exercise",
+      "scope": "london",
+      "status": "draft",
+      "listed": false,
+      "title": "A first nutrition-continuity exercise",
+      "summary": "A discussion draft: a facilitated exercise in early 2027 tracing how a food shock spreads into inflation, insurance losses and public finances.",
+      "pdf": false,
+      "surface": "paper"
     }
   ]
 }

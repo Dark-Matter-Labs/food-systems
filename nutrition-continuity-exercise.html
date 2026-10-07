@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>A first nutrition-continuity exercise (draft) — Food as Infrastructure</title>
+<style>
+  /* A document on paper. Tokens come from assets/fai/fai.css (loaded after this block). */
+  *{box-sizing:border-box;}
+  body{margin:0; background:var(--fai-paper); color:var(--fai-ink); font-size:17px; line-height:1.6;}
+  .page{padding:0 32px 96px;}
+  @media (max-width:760px){ .page{padding:0 16px 56px;} }
+  .wrap{max-width:880px; margin-inline:auto;}
+  h1,h2,h3,p{margin:0;}
+  p,li{max-width:var(--fai-measure);}
+  p+p,ul+p,ol+p{margin-top:12px;}
+  a{color:var(--fai-ink); text-decoration:underline; text-decoration-color:var(--fai-beet); text-decoration-thickness:1px; text-underline-offset:3px; transition:color var(--fai-ease);}
+  a:hover{color:var(--fai-beet);}
+
+  .status{margin:24px 0 0; padding:14px 18px; background:var(--fai-field); border-left:3px solid var(--fai-beet); font-size:15px; line-height:1.5;}
+  .status b{font-weight:600;}
+
+  header.doc{padding:48px 0 8px;}
+  .kicker{font-size:14px; color:var(--fai-ink-3); margin-bottom:16px;}
+  h1{font-size:clamp(40px,6vw,76px); font-weight:500; line-height:1.02;}
+  .lede{font-size:21px; line-height:1.45; color:var(--fai-ink-2); margin-top:24px; max-width:60ch;}
+  @media (max-width:760px){ .lede{font-size:19px;} }
+  .meta{font-size:14px; color:var(--fai-ink-3); margin-top:20px; line-height:1.45;}
+
+  section{padding-top:64px;}
+  @media (max-width:760px){ section{padding-top:44px;} }
+  section.topic{border-top:1px solid var(--fai-rule); margin-top:64px;}
+  h2{font-size:clamp(28px,3.4vw,40px); font-weight:500; line-height:1.1; margin-bottom:20px;}
+  h3{font-size:20px; font-weight:600; line-height:1.25; margin:28px 0 8px;}
+  ul,ol{margin:12px 0 0; padding-left:22px;}
+  li+li{margin-top:6px;}
+  .road{border:none; border-top:2px dashed var(--fai-ink); margin:72px 0 0;}
+
+  .ask{background:var(--fai-field); padding:24px 26px; margin-top:24px;}
+  .ask p{font-size:18px; line-height:1.5;}
+  @media (max-width:600px){ .ask{padding:20px 18px;} }
+
+  .table-wrap{overflow-x:auto; margin-top:16px;}
+  table{border-collapse:collapse; width:100%; font-size:15px; line-height:1.45;}
+  th,td{text-align:left; vertical-align:top; padding:10px 12px; border-bottom:1px solid var(--fai-rule);}
+  thead th{background:var(--fai-field); font-weight:600;}
+  td.num,th.num{text-align:right; white-space:nowrap;}
+  tbody th{font-weight:600;}
+  .caption{font-size:14px; color:var(--fai-ink-3); margin-top:10px; line-height:1.45;}
+
+  .two{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:16px;}
+  @media (max-width:700px){ .two{grid-template-columns:1fr;} }
+  .card{background:var(--fai-field); padding:20px 22px;}
+  .card h3{margin-top:0;}
+  .card p,.card li{font-size:16px;}
+  .card .fig{font-size:22px; font-weight:600; margin:4px 0 10px;}
+
+  .sources{list-style:none; padding:0; font-size:15px; line-height:1.45;}
+  .sources li{margin-top:10px; color:var(--fai-ink-2);}
+  .sources li b{color:var(--fai-ink); font-weight:600;}
+
+  @media print{
+    .page{padding:0;}
+    section{padding-top:28px; break-inside:auto;}
+    section.topic{margin-top:28px;}
+    .road{margin-top:32px;}
+    header.doc{padding-top:8px;}
+    h1{font-size:40px;}
+    .annex{break-before:page;}
+  }
+</style>
+<!-- fai:head -->
+<meta name="description" content="A discussion draft: a facilitated exercise in early 2027 tracing how a food shock spreads into inflation, insurance losses and public finances.">
+<link rel="canonical" href="https://food.darkmatterlabs.org/nutrition-continuity-exercise.html">
+<meta name="theme-color" content="#111112">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Food as Infrastructure, Dark Matter Labs">
+<meta property="og:locale" content="en_GB">
+<meta property="og:url" content="https://food.darkmatterlabs.org/nutrition-continuity-exercise.html">
+<meta property="og:title" content="A first nutrition-continuity exercise">
+<meta property="og:description" content="A discussion draft: a facilitated exercise in early 2027 tracing how a food shock spreads into inflation, insurance losses and public finances.">
+<meta property="og:image" content="https://food.darkmatterlabs.org/assets/fai/social/nutrition-continuity-exercise.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="A first nutrition-continuity exercise. Food as Infrastructure, Dark Matter Labs.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="A first nutrition-continuity exercise">
+<meta name="twitter:description" content="A discussion draft: a facilitated exercise in early 2027 tracing how a food shock spreads into inflation, insurance losses and public finances.">
+<meta name="twitter:image" content="https://food.darkmatterlabs.org/assets/fai/social/nutrition-continuity-exercise.png">
+<meta name="twitter:image:alt" content="A first nutrition-continuity exercise. Food as Infrastructure, Dark Matter Labs.">
+<link rel="icon" href="assets/fai/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400..900;1,400..700&display=swap">
+<link rel="stylesheet" href="assets/fai/fai.css">
+<!-- /fai:head -->
+</head>
+<body>
+<!-- fai:bar -->
+<div class="fai-bar">
+  <div class="fai-bar__inner">
+    <a class="fai-bar__dm" href="https://darkmatterlabs.org/"><img class="fai-bar__lockup" src="assets/brand/dm-logo-v1-white.svg" alt="Dark Matter Labs" width="102" height="20"><img class="fai-bar__stamp" src="assets/brand/dm-stamp-white.svg" alt="Dark Matter Labs" width="20" height="20"></a>
+    <span class="fai-bar__sep" aria-hidden="true"></span>
+    <a class="fai-bar__mission" href="index.html">Food as Infrastructure</a>
+    <span class="fai-bar__here"><span class="fai-el fai-el--draft" aria-hidden="true"><b>Sr</b><i>16</i></span><span>Nutrition Continuity Exercise</span></span>
+    <a class="fai-bar__xco" href="https://optionality.darkmatterlabs.org/" target="_blank" rel="noopener" title="Dark Matter Labs' Expanding Civilizational Optionality portfolio">xCO portfolio<span aria-hidden="true"> ↗</span></a>
+    <div class="fai-bar__links" role="navigation" aria-label="Site"><a href="index.html">Portfolio</a><a href="library.html">Library</a></div>
+  </div>
+</div>
+<!-- /fai:bar -->
+<div class="page">
+<div class="wrap">
+
+<div class="status" role="note">
+  <b>Draft for discussion.</b>
+  Shared by direct link only, with Indy, Sandrine, Kirsten and the wider team. Figures for cost and time are indicative ranges, not supplier quotes.
+</div>
+
+<header class="doc">
+  <p class="kicker">Discussion document, nutrition continuity and financial stability</p>
+  <h1>A first exercise on how a food shock becomes a financial one</h1>
+  <p class="lede">We propose to run a facilitated exercise, in the first quarter of 2027, that puts financial institutions and food-system actors in one room with a single disruption scenario. They trace how it spreads into prices, insurance losses and public finances, find where today’s responses fall short, and leave with actions they own.</p>
+  <p class="meta">Drafted by Milan and Adam, 7 October 2026. For a funding decision at the Collaborative’s Berlin meeting in early December.</p>
+</header>
+
+<div class="ask">
+  <p><b>What we are asking for.</b> Agreement on the scenario and format below, introductions into the financial sector, and a funding proposal for Berlin: either a six-month pilot or seed funding for a small delivery capability. Either should pay for a first exercise and a second, improved one.</p>
+</div>
+
+<section class="topic" id="topic">
+  <h2>Topic and use case</h2>
+  <p>When food, water, energy and logistics come under pressure together, the question is whether people can keep eating well. If they can’t, the pressure doesn’t stay in the food system. It moves into sticky inflation that a central bank can’t treat, into claims and withdrawn cover for insurers, into weaker household and corporate balance sheets, and finally into public finances. Our <a href="nutrition-cascade-model.html">Nutrition Cascade</a> maps these pathways. It is qualitative, with illustrative weights and timings, and is a starting point for the exercise, not a forecast.</p>
+
+  <h3>A candidate shock sequence</h3>
+  <p>The sequence is still to be chosen. As a starting point, we suggest one drawn from the near-term outlook for September 2026 to March 2027 and three cascades already in the model:</p>
+  <ol>
+    <li>A winter energy squeeze, with a chokepoint such as the Strait of Hormuz repricing LNG, fertiliser and freight insurance.</li>
+    <li>Farmers cut nitrogen use ahead of spring planting, while a strong El Niño stresses several breadbaskets in the same season.</li>
+    <li>Import-dependent food prices rise months later, households trade protein for cheap calories, and food inflation stays high after energy prices ease.</li>
+  </ol>
+
+  <h3>Decisions participants would make</h3>
+  <ul>
+    <li>A central bank deciding whether to look through food inflation or tighten, knowing tightening falls hardest on the households already cutting protein.</li>
+    <li>Insurers and reinsurers deciding whether to reprice, exclude or keep covering crop, cargo and supply-chain risk.</li>
+    <li>Governments choosing between price support, reserve releases, export controls and protecting public food provision such as school meals.</li>
+    <li>Large food buyers, including public procurers, deciding whether to hold prices through forward contracts.</li>
+  </ul>
+
+  <h3>What the exercise should produce</h3>
+  <p>A shared map of the transmission pathways the group recognises, a list of gaps where no one currently acts, and a short set of interventions with a named institution willing to take each forward. The scenario, roles and debrief method should be reusable, so the second exercise costs less than the first.</p>
+</section>
+
+<section class="topic" id="audience">
+  <h2>Audience</h2>
+  <p>The financial sector is the way in. The capital team will test interest and ask what would make participation worth a senior person’s day. Candidates to test, none of them approached yet:</p>
+  <ul>
+    <li>Insurers and reinsurers with agricultural, cargo or food-supply exposure, and Lloyd’s market participants.</li>
+    <li>Central banks and financial-stability bodies, including the networks that already work on climate risk, such as the NGFS.</li>
+    <li>Development and public banks financing food and agricultural infrastructure.</li>
+  </ul>
+  <p>Around them sit the actors needed to make the scenario real: national food and agriculture ministries, a city or borough food partnership (the London work gives us Camden, Islington and Hackney), large retailers and public procurers, and logistics operators. Fifteen to forty people in total. Each should come with a decision they actually hold, not just a view.</p>
+</section>
+
+<section class="topic" id="format">
+  <h2>Format and delivery</h2>
+  <p>We suggest a structured tabletop: a facilitated half-day to two-day session that moves through the scenario at fixed decision points. It needs six to twelve weeks of preparation and is the cheapest serious format that still leaves participants with commitments. A short executive game could open it for senior financial participants. The other formats we reviewed are in the <a href="#annex">annex</a>.</p>
+  <p>We would not build this ourselves. We will scope it with an experienced partner and check what existing tools can be adapted: the Food Alert simulation partners, who are waiting on this document; ASRA’s STEER systemic-risk tool; and the Social Simulations portfolio, including the Mobility Transition exercise we worked on with them.</p>
+
+  <h3>Keeping it moving without a bottleneck</h3>
+  <p>A credible exercise needs senior input, but it shouldn’t wait on any one person’s diary. So we propose that decision rights sit with the people doing the work.</p>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th scope="col">Who</th><th scope="col">Decides</th><th scope="col">Contributes</th></tr></thead>
+    <tbody>
+      <tr><th scope="row">Operational lead</th><td>Schedule, participants, budget within the agreed envelope, what goes in the room</td><td>Day-to-day running, follow-through after the exercise</td></tr>
+      <tr><th scope="row">Delivery partner</th><td>Exercise design, facilitation method</td><td>Scenario build, facilitation, debrief</td></tr>
+      <tr><th scope="row">Senior advisers (Indy, Sandrine, Kirsten)</th><td>Nothing on the critical path</td><td>Comments at three set points, introductions, a role in the room if they choose</td></tr>
+      <tr><th scope="row">The Collaborative</th><td>Funding, once, in Berlin</td><td>Review at the end of the pilot</td></tr>
+      <tr><th scope="row">Participants</th><td>The actions they take away</td><td>Their decisions, data and judgement</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="caption">The three review points are the scenario draft, the participant list and the debrief. Each has a five-working-day window. If no comment comes, the work goes ahead.</p>
+  <p style="margin-top:16px">Introductions to financial institutions run through several people at once: the capital team, the delivery partner and the advisers. Drafts, the scenario and results live in one shared place, so anyone on the team can pick up the work. The plan should still run if any one of us is unavailable for a month.</p>
+
+  <h3>Timetable</h3>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th scope="col">When</th><th scope="col">What</th></tr></thead>
+    <tbody>
+      <tr><td>October 2026</td><td>Circulate this draft. Capital team soundings. First calls with Food Alert partners and ASRA.</td></tr>
+      <tr><td>November 2026</td><td>Choose the shock sequence and decisions. Partner scope and quote. Institutional shortlist.</td></tr>
+      <tr><td>Early December 2026</td><td>Funding decision at the Collaborative’s Berlin meeting.</td></tr>
+      <tr><td>December 2026 to February 2027</td><td>Recruit an operational lead. Design the exercise and invite participants.</td></tr>
+      <tr><td>March 2027</td><td>First exercise, five months from now.</td></tr>
+      <tr><td>April to June 2027</td><td>Publish the debrief. Run a second, revised exercise, ideally co-funded by a participating institution.</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<section class="topic" id="funding">
+  <h2>Funding for Berlin</h2>
+  <p>The longer-term aim is for financial institutions to pay for this work. Until then, we see two ways to start. Both are our working assumptions and will change once a partner quotes.</p>
+  <div class="two">
+    <div class="card">
+      <h3>A six-month pilot</h3>
+      <p class="fig tnum">€115–200k</p>
+      <ul>
+        <li>Partner design and facilitation of the first exercise, €40–80k</li>
+        <li>A second exercise reusing the format, €20–40k</li>
+        <li>Operational lead for six months, €45–60k</li>
+        <li>Venue, travel and write-up, €10–20k</li>
+      </ul>
+      <p style="margin-top:12px">Clear scope and end date. Stops after six months unless someone else pays.</p>
+    </div>
+    <div class="card">
+      <h3>Seed for a delivery capability</h3>
+      <p class="fig tnum">€150–250k over 12 months</p>
+      <ul>
+        <li>Operational lead and a part-time analyst</li>
+        <li>A retainer with the delivery partner</li>
+        <li>The first exercise funded in full, the second co-funded by an institution</li>
+      </ul>
+      <p style="margin-top:12px">Keeps a team in place long enough to win paying clients. Asks more of the Collaborative up front.</p>
+    </div>
+  </div>
+  <p class="caption">Adviser time is assumed to be in kind. Participant time, often the largest real cost, is excluded from both.</p>
+</section>
+
+<section class="topic" id="next">
+  <h2>What we need from the team now</h2>
+  <ul>
+    <li>Comments on this draft by 21 October, or we take it forward as it stands.</li>
+    <li>Two or three financial-sector introductions each, sent directly to the operational lead or to Milan until one is in post.</li>
+    <li>A view on the shock sequence: keep the candidate above, or start from the water or heat papers instead.</li>
+    <li>A preference between the pilot and the seed option, to shape the Berlin proposal.</li>
+  </ul>
+</section>
+
+<section class="topic" id="material">
+  <h2>Material to build from</h2>
+  <ul class="sources">
+    <li><b>Nutrition Continuity Situation Room.</b> The existing proposition linking nutritional continuity to central-bank and sovereign financial stability. It needs a short plain-language introduction to its method, purpose and ask, which this document starts to provide.</li>
+    <li><b><a href="https://dark-matter-labs.github.io/nutrition_continuity_xco_concept_paper/#nutrition-continuity" target="_blank" rel="noopener">Nutrition Continuity concept paper<span aria-hidden="true"> ↗</span></a>.</b> The framing paper that came before it.</li>
+    <li><b><a href="index.html">Food as Infrastructure</a>.</b> Our London work connecting procurement, nutrition, regenerative production and finance, including the <a href="nutrition-cascade-model.html">Nutrition Cascade</a> and the <a href="nutrition-supply-map.html">Supply Map</a>.</li>
+    <li><b>The STH website.</b> The European context: the resilience overview and risk map, Europe’s exposure to cascading risks, the risk outlook for September 2026 to March 2027, the overarching policy argument, and papers on food, water, energy, materials, and health and cooling.</li>
+    <li><b>Food Alert workshop.</b> The exercise Milan took part in, with working groups on crisis response, agriculture and production, and trade and finance.</li>
+  </ul>
+</section>
+
+<hr class="road">
+
+<section class="annex" id="annex">
+  <h2>Annex: six situation-room formats</h2>
+  <p>“Situation room” can mean a standing capability or a one-off exercise. These ranges are for a serious version of each format, excluding participant time.</p>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th scope="col">Format</th><th scope="col">What it involves</th><th scope="col">Preparation</th><th scope="col" class="num">Indicative cost</th><th scope="col">Session</th><th scope="col">Reuse</th></tr></thead>
+    <tbody>
+      <tr><th scope="row">Standing situation room</th><td>Staffed capability, shared operating picture, rapid convening</td><td>1–3 years</td><td class="num">€1–5m a year</td><td>Always on</td><td>Continuous</td></tr>
+      <tr><th scope="row">Full war game</th><td>Role-based teams respond to events from a control cell</td><td>4–8 months</td><td class="num">€150–500k+</td><td>2–5 days</td><td>Partial, with rework</td></tr>
+      <tr><th scope="row">Computational simulation</th><td>Participants interact with a purpose-built model</td><td>1–3 months</td><td class="num">€30–150k</td><td>1–3 hours a run</td><td>Model can be rerun</td></tr>
+      <tr><th scope="row">Policy exercise or tabletop</th><td>Facilitated scenario through defined decision points</td><td>6–12 weeks</td><td class="num">€30–100k</td><td>Half a day to 2 days</td><td>Format reusable, scenario adapted</td></tr>
+      <tr><th scope="row">Foresight workshop</th><td>Contrasting futures used to test strategy</td><td>2–8 weeks</td><td class="num">€15–60k</td><td>1–3 days</td><td>Scenarios reusable</td></tr>
+      <tr><th scope="row">Executive game</th><td>Compact role-based game under time pressure, with a debrief</td><td>3–6 weeks</td><td class="num">€10–40k</td><td>90 minutes to 2 hours</td><td>Mechanics reusable</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <h3>Questions for choosing</h3>
+  <ul>
+    <li>Are we preparing for a specific shock, testing a policy decision or building a recurring capability?</li>
+    <li>Which decisions should participants make during the session, and how much modelling do they need to make them?</li>
+    <li>What can an existing partner adapt, and what should be reusable afterwards?</li>
+    <li>Who owns preparation, facilitation and follow-through?</li>
+  </ul>
+</section>
+
+</div>
+</div>
+<!-- fai:footer -->
+<footer class="fai-footer">
+  <div class="fai-footer__inner">
+    <span>Part of Dark Matter Labs' <a href="https://optionality.darkmatterlabs.org/" target="_blank" rel="noopener">xCO portfolio<span aria-hidden="true"> ↗</span></a>, expanding civilizational optionality.</span>
+  </div>
+</footer>
+<!-- /fai:footer -->
+</body>
+</html>
