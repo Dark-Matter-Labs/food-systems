@@ -211,6 +211,19 @@
       "summary": "A discussion draft: a facilitated exercise in early 2027 tracing how a food shock spreads into inflation, insurance losses and public finances.",
       "pdf": false,
       "surface": "paper"
+    },
+    {
+      "n": 18,
+      "sym": "Oc",
+      "file": "options-for-camden.html",
+      "name": "Options for Camden",
+      "scope": "camden",
+      "status": "draft",
+      "listed": true,
+      "title": "Options for Camden",
+      "summary": "A short options paper: nine interventions from the Future Food Dinner and Workshop where a named person or organisation is already showing real energy, distilled from Where’s the Energy?",
+      "pdf": false,
+      "surface": "paper"
     }
   ]
 }
