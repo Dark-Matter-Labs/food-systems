@@ -211,6 +211,19 @@
       "summary": "A starting proposal for bringing Kilburn High Street’s community to life through its food system, working with the businesses and organisations already on the ground.",
       "pdf": true,
       "surface": "paper"
+    },
+    {
+      "n": 17,
+      "sym": "Sr",
+      "file": "nutrition-continuity-exercise.html",
+      "name": "Nutrition Continuity Exercise",
+      "scope": "london",
+      "status": "draft",
+      "listed": false,
+      "title": "A first nutrition-continuity exercise",
+      "summary": "A discussion draft: a facilitated exercise in early 2027 tracing how a food shock spreads into inflation, insurance losses and public finances.",
+      "pdf": false,
+      "surface": "paper"
     }
   ]
 }
