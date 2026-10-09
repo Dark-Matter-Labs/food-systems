@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How Camden and Dark Matter Labs Work Together (draft) — Food as Infrastructure</title>
+<style>
+  :root{
+    --paper:var(--fai-paper);
+    --paper-2:var(--fai-field);
+    --ink:var(--fai-ink);
+    --ink-soft:var(--fai-ink-2);
+    --ink-faint:var(--fai-ink-3);
+    --accent:var(--fai-beet);
+    --line:var(--fai-rule);
+    --line-soft:var(--fai-rule);
+    --line-strong:var(--fai-rule-strong);
+    --maxw:var(--fai-container);
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0; background:var(--paper); color:var(--ink);
+    font-family:var(--fai-sans); font-size:17px; line-height:1.6;
+  }
+  h1,h2,h3,h4{font-weight:500; color:var(--ink); margin:0;}
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 32px;}
+  @media (max-width:720px){ .wrap{padding:0 16px;} }
+  a{color:var(--ink);}
+  main p a, footer .credit a{
+    color:var(--ink); text-decoration:underline; text-decoration-color:var(--accent);
+    text-decoration-thickness:1px; text-underline-offset:3px;
+  }
+  main p a:hover, footer .credit a:hover{color:var(--accent);}
+
+  .eyebrow{font-size:14px; line-height:1.45; color:var(--ink-faint);}
+
+  header.site-nav{
+    position:sticky; top:0; z-index:50; background:var(--paper);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{
+    max-width:var(--maxw); margin:0 auto; padding:14px 32px;
+    display:flex; align-items:center; justify-content:space-between; gap:24px; flex-wrap:wrap;
+  }
+  @media (max-width:720px){ .nav-inner{padding:12px 16px;} }
+  .nav-mark{display:flex; align-items:baseline; gap:12px; flex-wrap:wrap; line-height:1.3;}
+  .nav-mark strong{font-size:15px; font-weight:600; color:var(--ink);}
+  .nav-mark span{font-size:14px; color:var(--ink-faint);}
+  nav.nav-links{display:flex; gap:22px; flex-wrap:wrap;}
+  nav.nav-links a{font-size:14px; color:var(--ink-soft); text-decoration:none;}
+  nav.nav-links a:hover{color:var(--ink); text-decoration:underline; text-decoration-color:var(--accent); text-underline-offset:3px;}
+  @media (max-width:900px){ nav.nav-links, .nav-mark span{display:none;} }
+
+  .status-strip{padding:32px 0 0;}
+  .status-note{
+    background:var(--paper-2); border-left:3px solid var(--accent);
+    padding:14px 18px; font-size:15px; line-height:1.5; color:var(--ink-soft); max-width:var(--fai-measure);
+  }
+  .status-note strong{color:var(--ink); font-weight:600;}
+  .status-note .status-date{display:block; margin-top:6px; font-size:14px; color:var(--ink-faint);}
+
+  .hero{padding:56px 0 64px; border-bottom:1px solid var(--line);}
+  .hero .lot-number{font-size:14px; color:var(--ink-faint); margin-bottom:16px;}
+  .hero h1{font-size:clamp(38px, 5.6vw, 68px); line-height:1.05; font-weight:500; max-width:21ch;}
+  .hero .lede{max-width:var(--fai-measure); margin:24px 0 0; font-size:21px; color:var(--ink-soft); line-height:1.45;}
+  .hero .cta-row{margin-top:32px; display:flex; gap:12px; flex-wrap:wrap; align-items:center;}
+  .btn{
+    font-size:15px; font-weight:500; line-height:1.2;
+    padding:12px 18px; border:1px solid var(--line-strong); border-radius:3px; color:var(--ink); background:transparent;
+    display:inline-flex; align-items:center; gap:8px; cursor:pointer; text-decoration:none;
+    transition:background var(--fai-ease), border-color var(--fai-ease), color var(--fai-ease);
+  }
+  .btn:hover{border-color:var(--ink);}
+  .btn.primary{background:var(--ink); border-color:var(--ink); color:var(--paper);}
+  .btn.primary:hover{background:var(--accent); border-color:var(--accent);}
+
+  section{padding:88px 0; border-bottom:1px solid var(--line);}
+  main > section:last-child{border-bottom:none;}
+  @media (max-width:720px){ section{padding:56px 0;} .hero{padding:40px 0 48px;} .hero .lede{font-size:19px;} }
+
+  .section-head{max-width:760px; margin-bottom:40px;}
+  .section-head h2{font-size:clamp(27px,3.2vw,38px); line-height:1.15; font-weight:500; margin-top:10px;}
+  .section-head p.sub{color:var(--ink-soft); margin-top:16px; font-size:17px; max-width:var(--fai-measure);}
+
+  .objective-block{display:grid; grid-template-columns:1.05fr 0.95fr; gap:56px; align-items:start;}
+  @media (max-width:860px){ .objective-block{grid-template-columns:1fr; gap:40px;} }
+  .objective-block .lede-text{font-size:17px; line-height:1.6; color:var(--ink); max-width:var(--fai-measure);}
+  .objective-block .lede-text p{margin:0;}
+  .objective-block .lede-text p + p{margin-top:16px;}
+
+  .roll{border-top:1px solid var(--ink);}
+  .roll-title{font-size:14px; font-weight:600; color:var(--ink); padding:14px 0 10px;}
+  .roll-item{display:flex; justify-content:space-between; gap:16px; padding:12px 0; border-top:1px solid var(--line); font-size:15px; line-height:1.45;}
+  .roll-item .who{color:var(--ink); font-weight:600; flex:none; max-width:42%;}
+  .roll-item .org{color:var(--ink-soft); text-align:right; font-size:14px; max-width:58%;}
+
+  .pullquote{
+    border-left:3px solid var(--accent); padding:4px 0 4px 24px; margin:32px 0;
+    max-width:var(--fai-measure);
+  }
+  .pullquote p{font-size:22px; line-height:1.45; font-weight:500; color:var(--ink); margin:0; font-style:normal;}
+  .pullquote cite{display:block; margin-top:12px; font-size:14px; font-style:normal; color:var(--ink-faint);}
+
+  .tie-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:16px;}
+  .tie-grid.two{grid-template-columns:repeat(2,1fr);}
+  @media (max-width:860px){ .tie-grid, .tie-grid.two{grid-template-columns:1fr;} }
+  .tie-card{background:var(--paper-2); padding:26px 24px;}
+  .tie-card .num{font-size:14px; line-height:1.45; color:var(--ink-faint);}
+  .tie-card h4{font-size:20px; line-height:1.25; font-weight:600; margin-top:8px; color:var(--ink);}
+  .tie-card p{font-size:16px; line-height:1.6; color:var(--ink-soft); margin:12px 0 0;}
+  .tie-card p.translate{color:var(--ink); margin-top:14px; padding-top:14px; border-top:1px solid var(--line-strong);}
+  .tie-card p.translate b{color:var(--ink); font-weight:600;}
+
+  .constraint-card h4{display:flex; align-items:center; gap:10px;}
+  .constraint-card .mark{
+    display:inline-flex; align-items:center; justify-content:center; width:24px; height:24px; border-radius:50%;
+    font-size:13px; font-weight:600; flex:none; background:var(--ink); color:var(--paper);
+  }
+  .constraint-card.dml .mark{background:var(--accent);}
+  .constraint-card ul{margin:14px 0 0; padding-left:20px; font-size:16px; line-height:1.6; color:var(--ink-soft);}
+  .constraint-card li{margin-bottom:10px;}
+
+  .callout{margin-top:16px; padding:18px 20px; background:var(--paper-2); font-size:16px; line-height:1.55; color:var(--ink); max-width:var(--fai-measure);}
+  .callout b{color:var(--ink); font-weight:600;}
+
+  footer{background:var(--paper); color:var(--ink-soft); padding:56px 0 48px; font-size:14px; line-height:1.5; border-top:1px solid var(--line);}
+  footer a{color:var(--ink-soft); text-decoration:none;}
+  footer .col a:hover{color:var(--ink); text-decoration:underline; text-decoration-color:var(--accent); text-underline-offset:3px;}
+  footer .wrap{display:flex; justify-content:space-between; flex-wrap:wrap; gap:32px;}
+  footer .col h4{color:var(--ink); font-size:15px; font-weight:600;}
+  footer .col a{display:block; margin-top:8px; font-size:14px;}
+  footer .col-about{max-width:360px;}
+  footer .col-about p{color:var(--ink-soft); font-size:14px; line-height:1.55; margin:8px 0 0;}
+  footer .footer-bottom{display:block; margin-top:0; padding-top:0;}
+  footer .credit{font-size:14px; line-height:1.55; color:var(--ink-faint); margin-top:32px; border-top:1px solid var(--line); padding-top:20px; max-width:none;}
+</style>
+<!-- fai:head -->
+<meta name="description" content="A governance draft rooted in shared authorship rather than one side holding power over the other — drawing on many-to-many contracting, Cornerstone Indicators and Indy Johar’s “The Energetics of Building.”">
+<link rel="canonical" href="https://food.darkmatterlabs.org/camden-dml-governance.html">
+<meta name="theme-color" content="#111112">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Food as Infrastructure, Dark Matter Labs">
+<meta property="og:locale" content="en_GB">
+<meta property="og:url" content="https://food.darkmatterlabs.org/camden-dml-governance.html">
+<meta property="og:title" content="How Camden and Dark Matter Labs Work Together">
+<meta property="og:description" content="A governance draft rooted in shared authorship rather than one side holding power over the other — drawing on many-to-many contracting, Cornerstone Indicators and Indy Johar’s “The Energetics of Building.”">
+<meta property="og:image" content="https://food.darkmatterlabs.org/assets/fai/social/camden-dml-governance.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="How Camden and Dark Matter Labs Work Together. Food as Infrastructure, Dark Matter Labs.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="How Camden and Dark Matter Labs Work Together">
+<meta name="twitter:description" content="A governance draft rooted in shared authorship rather than one side holding power over the other — drawing on many-to-many contracting, Cornerstone Indicators and Indy Johar’s “The Energetics of Building.”">
+<meta name="twitter:image" content="https://food.darkmatterlabs.org/assets/fai/social/camden-dml-governance.png">
+<meta name="twitter:image:alt" content="How Camden and Dark Matter Labs Work Together. Food as Infrastructure, Dark Matter Labs.">
+<link rel="icon" href="assets/fai/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400..900;1,400..700&display=swap">
+<link rel="stylesheet" href="assets/fai/fai.css">
+<!-- /fai:head -->
+</head>
+<body>
+<!-- fai:bar -->
+<div class="fai-bar">
+  <div class="fai-bar__inner">
+    <a class="fai-bar__dm" href="https://darkmatterlabs.org/"><img class="fai-bar__lockup" src="assets/brand/dm-logo-v1-white.svg" alt="Dark Matter Labs" width="102" height="20"><img class="fai-bar__stamp" src="assets/brand/dm-stamp-white.svg" alt="Dark Matter Labs" width="20" height="20"></a>
+    <span class="fai-bar__sep" aria-hidden="true"></span>
+    <a class="fai-bar__mission" href="index.html">Food as Infrastructure</a>
+    <span class="fai-bar__here"><span class="fai-el fai-el--camden fai-el--draft" aria-hidden="true"><b>Gv</b><i>19</i></span><span>Camden / DML Governance</span></span>
+    <a class="fai-bar__xco" href="https://optionality.darkmatterlabs.org/" target="_blank" rel="noopener" title="Dark Matter Labs' Expanding Civilizational Optionality portfolio">xCO portfolio<span aria-hidden="true"> ↗</span></a>
+    <div class="fai-bar__links" role="navigation" aria-label="Site"><a href="index.html">Portfolio</a><a href="library.html">Library</a></div>
+  </div>
+</div>
+<!-- /fai:bar -->
+
+<header class="site-nav">
+  <div class="nav-inner">
+    <div class="nav-mark">
+      <strong>How Camden and DML Work Together</strong>
+      <span>A governance draft, not a finished contract</span>
+    </div>
+    <nav class="nav-links">
+      <a href="#problem">The default is broken</a>
+      <a href="#principle">The principle</a>
+      <a href="#practice">In practice</a>
+      <a href="#methods">What this draws on</a>
+      <a href="#constraints">What neither gets to do</a>
+      <a href="#breakdown">When it breaks down</a>
+    </nav>
+  </div>
+</header>
+
+<div class="status-strip">
+  <div class="wrap">
+    <div class="status-note">
+      <p><strong>Draft, evolving, and meant to be co-edited.</strong> This sets out the governing principle and the practical mechanics of how Camden and Dark Matter Labs work together — building toward the short governance note due with the Food Mission team by the end of November 2026. Nothing here is a finished contract; it is written so it can be challenged and changed in the room, not handed down from one side to the other.</p>
+      <span class="status-date">Working draft, October 2026</span>
+    </div>
+  </div>
+</div>
+
+<main id="main">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap">
+      <div class="lot-number">Governance for the Camden / DML partnership, 2026</div>
+      <h1>Neither of us holds the steering wheel.</h1>
+      <p class="lede">Camden keeps a seat at the table — funding, convening, the democratic legitimacy to act. Dark Matter Labs brings systems capability, cross-London pattern-matching, and the capacity to move fast without council process constraints. Neither side's knowledge is sufficient alone, and this page sets out, concretely, what it means to hold that as a working principle rather than a slogan.</p>
+      <div class="cta-row">
+        <a class="btn primary" href="#practice">See how it actually works</a>
+        <a class="btn" href="index.html">Back to Food as Infrastructure</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- THE PROBLEM -->
+  <section id="problem">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">What most funder/delivery relationships default to</div>
+        <h2>Two failure modes, and why both miss almost all of the actual work</h2>
+        <p class="sub">Most partnerships between a council and an external partner default to one of two shapes. Neither holds up under real pressure.</p>
+      </div>
+      <div class="objective-block">
+        <div class="lede-text">
+          <p>The first failure mode is transactional oversight: the funder specifies deliverables, the delivery partner executes against them, and governance means checking the invoice matches the output. This produces exactly the "what are we getting for our money" energy that neither side actually wants, and it treats the relationship as adversarial by default, even when nobody involved feels that way personally.</p>
+          <p>The second is its opposite failure: a loose, trust-based arrangement with no explicit parameters, where accountability is assumed rather than stated. This looks collaborative, but it quietly concentrates risk and power with whoever has the least to lose if it goes wrong — and leaves both sides unable to say clearly, when something does go wrong, what was actually agreed.</p>
+          <p>Indy Johar's recent essay, <a href="#methods">"The Energetics of Building"</a>, names what both failure modes miss: the actions a contract can specify and record are a small fraction of the actual work. Most of what makes a partnership function is the continuous, often invisible labour of keeping its shared meaning alive between people — care in language, in how a room is held, in whether someone's doubt is treated as a threat to manage or a signal the whole partnership needs to hear. A governance model built only around deliverables and sign-off misses nearly all of that.</p>
+        </div>
+        <div>
+          <div class="roll">
+            <div class="roll-title">What this page is trying to avoid</div>
+            <div class="roll-item"><span class="who">Transactional oversight</span><span class="org">"What are we getting for our money" — treats the relationship as adversarial by default</span></div>
+            <div class="roll-item"><span class="who">Unstated trust</span><span class="org">Looks collaborative, quietly concentrates risk with whoever has least to lose</span></div>
+            <div class="roll-item"><span class="who">What's missed by both</span><span class="org">The relational labour that actually keeps shared work alive — Indy Johar's argument, below</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- THE PRINCIPLE -->
+  <section id="principle">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">Rooted in a real argument, not a value statement</div>
+        <h2>Shared meaning needs shared authorship</h2>
+        <p class="sub">Neither Camden nor DML holds the whole account of what this work needs. The situation changes as both act, and each side regularly encounters something the other can't see from where they sit.</p>
+      </div>
+      <div class="pullquote">
+        <p>"A collective needs enough coherence to act and enough openness to discover that its understanding is incomplete."</p>
+        <cite>Indy Johar, "The Energetics of Building," 6 October 2026</cite>
+      </div>
+      <div class="objective-block">
+        <div class="lede-text">
+          <p>Camden holds things DML structurally cannot: democratic legitimacy, direct accountability to residents, institutional memory of what's already been tried in the borough, and the standing to make a political judgement call. DML holds things Camden's own structure makes harder to hold: freedom to move fast without full council process, a cross-London vantage point that sees patterns no single borough can see from inside its own work, and systems-design capability built specifically for this kind of problem.</p>
+          <p>Treating either of those as the "real" authority and the other as an input to it breaks the partnership before it starts. The governing test, borrowed directly from Johar's essay, is whether this undertaking can keep renewing its own meaning without depending on either side's continuous, unchecked presence — whether Camden colleagues can question and reshape what DML proposes, and whether DML can surface something Camden's own structure makes it hard to see, without either move being treated as overstepping.</p>
+        </div>
+        <div>
+          <div class="roll">
+            <div class="roll-title">What each side holds that the other structurally can't</div>
+            <div class="roll-item"><span class="who">Camden holds</span><span class="org">Democratic legitimacy, resident accountability, institutional memory, political judgement</span></div>
+            <div class="roll-item"><span class="who">DML holds</span><span class="org">Freedom to move fast outside council process, cross-London pattern-matching, systems design</span></div>
+            <div class="roll-item"><span class="who">The test</span><span class="org">Can either side question the other's view without it reading as overstepping?</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- IN PRACTICE -->
+  <section id="practice">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">What this looks like week to week, not in principle</div>
+        <h2>The actual mechanics</h2>
+        <p class="sub">A principle that only lives in a document isn't one. Here's what it means in the working rhythm between Camden and DML.</p>
+      </div>
+      <div class="objective-block">
+        <div class="lede-text">
+          <p><strong>Parameters agreed up front, not permission sought every time.</strong> Camden and DML agree in advance what DML can do on Camden's behalf, and what needs a Food Mission sign-off or a political steer before DML acts. This is the direct answer to a real tension: Camden has asked for both the freedom to let DML move at pace, and the confidence that DML won't walk into something politically sensitive without warning. The answer is naming the boundary once, clearly, rather than Camden having to approve every step or discover a problem after the fact.</p>
+          <p><strong>Two levels of governance, kept explicit and separate.</strong> Within Camden, the Food Mission team decides Camden's own priorities — DML acts as an independent adviser and partner, not a representative of the council. Across the wider alliance of boroughs and partners DML convenes, each partner leads its own work and brings its own resources; DML coordinates that, and funds the coordination from its own contribution, not Camden's.</p>
+          <p><strong>Co-investment, not one-way funding.</strong> DML matches Camden's own funding, pound for pound. This isn't a gesture — it structurally changes the relationship from "Camden pays, DML delivers" to both sides having a genuine stake in the outcome, including the risk of it not working.</p>
+          <p><strong>Everything built for Camden belongs to Camden, outright.</strong> The tools, maps and models DML builds for Camden's own use are Camden's to keep, adapt and share freely, permanently, including after the partnership ends. The underlying methods are openly licensed so other boroughs can reuse them too. This is a structural check on power as much as a licensing choice: DML cannot hold Camden's own work hostage to DML's continued involvement.</p>
+          <p><strong>Fortnightly check-ins that run both ways.</strong> Not a reporting line where DML updates Camden on progress, but a standing two-way exchange — DML needs Camden's read on what's shifted internally as much as Camden needs DML's read on what's moving across London.</p>
+        </div>
+        <div>
+          <div class="roll">
+            <div class="roll-title">The mechanics, in short</div>
+            <div class="roll-item"><span class="who">Parameters</span><span class="org">Agreed once, up front — not re-sought for every action</span></div>
+            <div class="roll-item"><span class="who">Governance levels</span><span class="org">Camden's own priorities vs. the wider alliance, kept explicitly separate</span></div>
+            <div class="roll-item"><span class="who">Funding</span><span class="org">Matched 1:1 by DML — a stake, not a service fee</span></div>
+            <div class="roll-item"><span class="who">Ownership</span><span class="org">Camden-built tools belong to Camden outright, openly licensed beyond it</span></div>
+            <div class="roll-item"><span class="who">Rhythm</span><span class="org">Fortnightly, two-way — not a one-directional status report</span></div>
+            <div class="roll-item"><span class="who">Public communication</span><span class="org">Agreed with the Food Mission team in advance, including by DML's own named partners</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- METHODS -->
+  <section id="methods">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">Not invented for this partnership</div>
+        <h2>Three bodies of work this draws on</h2>
+        <p class="sub">None of this is bespoke to Camden. It's drawn from work Dark Matter Labs has developed across other partnerships, adapted here rather than built from scratch.</p>
+      </div>
+      <div class="tie-grid">
+        <div class="tie-card">
+          <div class="num">Funding relationships</div>
+          <h4>Many-to-many contracting</h4>
+          <p>A model for levelling the power that normally sits with whoever holds the money: instead of a funder specifying deliverables for a delivery partner to execute, time is spent up front jointly working out what the work actually is, with both sides' resources and expertise treated as equally necessary, before capital moves at all.</p>
+          <p class="translate"><b>For Camden:</b> the matched funding and the shared parameter-setting above are this model in practice, not a separate add-on.</p>
+        </div>
+        <div class="tie-card">
+          <div class="num">Measurement</div>
+          <h4>Cornerstone Indicators</h4>
+          <p>A method for generating the indicators that track success from inside the community or ecosystem actually doing the work, rather than having them specified from outside — so the people closest to the work own the measures and are the ones driving them, not reporting against someone else's definition of progress.</p>
+          <p class="translate"><b>For Camden:</b> the indicators behind this partnership should come from Camden's own theory of change and collective-intelligence work, not be handed to Camden from DML's side.</p>
+        </div>
+        <div class="tie-card">
+          <div class="num">Underlying philosophy</div>
+          <h4>Beyond the Rules</h4>
+          <p>DML's broader argument that rigid, rules-based governance structures can't flex fast enough for real, changing situations — that durable cooperation depends on relationships and shared judgement robust enough to hold ambiguity and disagreement, with rules as scaffolding around that, not a substitute for it.</p>
+          <p class="translate"><b>For Camden:</b> the parameters above are deliberately a small number of clear boundaries, not an exhaustive rulebook trying to anticipate every situation in advance.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONSTRAINTS -->
+  <section id="constraints">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">Made concrete and checkable, not just aspirational</div>
+        <h2>What neither of us gets to do</h2>
+        <p class="sub">"No one player has power over the other" means nothing unless it's falsifiable. Here's what that constrains on both sides.</p>
+      </div>
+      <div class="tie-grid two">
+        <div class="tie-card constraint-card">
+          <h4><span class="mark">C</span>Camden doesn't</h4>
+          <ul>
+            <li>Direct DML's work with other London boroughs, or claim ownership over the wider, London-wide tools and coordination DML funds itself.</li>
+            <li>Treat DML as a council officer or a representative of the council in any public or external setting.</li>
+            <li>Change the agreed parameters unilaterally without raising it in a fortnightly check-in first.</li>
+          </ul>
+        </div>
+        <div class="tie-card constraint-card dml">
+          <h4><span class="mark">D</span>DML doesn't</h4>
+          <ul>
+            <li>Act, speak publicly, or make commitments on Camden's behalf outside the agreed parameters without flagging it to the Food Mission team first — not after.</li>
+            <li>Hold Camden's own tools, data or outputs back from Camden, regardless of whether the wider partnership continues.</li>
+            <li>Let a partner's name or Camden's name be used in a public reference without the Food Mission team's agreement in advance.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHEN IT BREAKS DOWN -->
+  <section id="breakdown">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">Said openly, not discovered later</div>
+        <h2>When this breaks down, and how we'd know</h2>
+        <p class="sub">A structure doesn't run itself. Johar's essay is explicit that the labour of sustaining a shared undertaking needs continual renewal — it can quietly fail even where the structure on paper is sound.</p>
+      </div>
+      <div class="pullquote">
+        <p>"One test of leadership is therefore whether the undertaking gains the ability to renew its meaning beyond the leader's continuous presence."</p>
+        <cite>Indy Johar, "The Energetics of Building," 6 October 2026</cite>
+      </div>
+      <div class="objective-block">
+        <div class="lede-text">
+          <p>This breaks down quietly, not dramatically: check-ins that become one-way status updates instead of a real exchange; parameters that get reinterpreted after the fact instead of revisited together; either side starting to treat the other's questions as a threat to manage rather than something the partnership needs to hear. None of that shows up in a budget line.</p>
+          <p>The partnership review already committed as part of this phase's work is the mechanism for catching it — a facilitated, honest look at how the relationship is actually running, not just what it has delivered, with its findings shared openly between both sides rather than filed away.</p>
+        </div>
+        <div>
+          <div class="callout"><b>The point of naming this:</b> a partnership that can't admit when its own labour of staying aligned has lapsed will find out the hard way, usually at the worst moment. Saying so here, in writing, is itself part of the governance.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="col col-about">
+      <h4>How Camden and DML Work Together</h4>
+      <p>A governance draft for the Camden / Dark Matter Labs partnership, part of the Food as Infrastructure portfolio. Written to be co-edited, not handed down.</p>
+    </div>
+    <div class="col">
+      <h4>This page</h4>
+      <a href="#problem">The default is broken</a>
+      <a href="#principle">The principle</a>
+      <a href="#practice">In practice</a>
+      <a href="#methods">What this draws on</a>
+      <a href="#constraints">What neither gets to do</a>
+      <a href="#breakdown">When it breaks down</a>
+    </div>
+    <div class="col">
+      <h4>Wider portfolio</h4>
+      <a href="index.html">Food as Infrastructure</a>
+      <a href="hubs-and-markets-working-group.html">Hubs &amp; Markets Working Group</a>
+      <a href="options-for-camden.html">Options for Camden</a>
+    </div>
+  </div>
+  <div class="wrap footer-bottom">
+    <div class="credit">Draws on Indy Johar's "The Energetics of Building" (6 October 2026) and Dark Matter Labs' own work on many-to-many contracting, Cornerstone Indicators and Beyond the Rules. Written for the Camden Food Partnership and Dark Matter Labs specifically; not a general template.<br><br>Parts of this page were drafted with AI assistance (Claude). Licensed CC BY-SA 4.0 — see the <a href="index.html">homepage</a> for full credit and lineage.</div>
+  </div>
+</footer>
+
+<!-- fai:footer -->
+<footer class="fai-footer">
+  <div class="fai-footer__inner">
+    <span>Part of Dark Matter Labs' <a href="https://optionality.darkmatterlabs.org/" target="_blank" rel="noopener">xCO portfolio<span aria-hidden="true"> ↗</span></a>, expanding civilizational optionality.</span>
+  </div>
+</footer>
+<!-- /fai:footer -->
+</body>
+</html>
