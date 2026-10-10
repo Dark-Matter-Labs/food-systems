@@ -237,6 +237,19 @@
       "summary": "A governance draft rooted in shared authorship rather than one side holding power over the other — drawing on Dark Matter Labs’ Governing Together, many-to-many contracting and Cornerstone Indicators work, and Indy Johar’s “The Energetics of Building.”",
       "pdf": false,
       "surface": "paper"
+    },
+    {
+      "n": 20,
+      "sym": "Sb",
+      "file": "sweden-baltic-lessons-for-camden.html",
+      "name": "What Transfers to Camden",
+      "scope": "camden",
+      "status": "draft",
+      "listed": true,
+      "title": "What Transfers to Camden",
+      "summary": "A Camden-specific reading of Dark Matter Labs’ Sweden food-system work: which instruments transfer directly, where Camden’s institutions differ, and what’s still an early signal from the Baltic States.",
+      "pdf": false,
+      "surface": "paper"
     }
   ]
 }

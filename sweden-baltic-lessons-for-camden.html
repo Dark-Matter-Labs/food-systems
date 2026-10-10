@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>What Transfers to Camden (draft) — Food as Infrastructure</title>
+<style>
+  /* Document on paper (STYLE.md rule 1), matching sovereign-food-system.html's
+     dark template so the two pages read as one body of work. */
+  :root{
+    --ink:var(--fai-paper); --ink-2:var(--fai-field); --surface:var(--fai-field);
+    --paper:var(--fai-ink); --paper-dim:var(--fai-ink-2); --paper-faint:var(--fai-ink-3);
+    --line:var(--fai-rule); --line-strong:var(--fai-rule-strong);
+    --transfer:#2E7D6B; --partial:#A86A1F; --no-transfer:#C23A2B; --baltic:#8A8B84;
+    --display:var(--fai-sans); --body:var(--fai-sans); --mono:var(--fai-sans);
+    --maxw:1200px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0; background:var(--ink); color:var(--paper); font-family:var(--body); font-size:17px; line-height:1.6; -webkit-font-smoothing:antialiased;}
+  @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto;} }
+  h1,h2,h3,h4{font-family:var(--display); margin:0; font-weight:600;}
+  a{color:inherit;}
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 32px;}
+  @media (max-width:720px){ .wrap{padding:0 16px;} }
+  .eyebrow{font-size:14px; line-height:1.45; color:var(--paper-faint);}
+  .roadline{height:1px; background:var(--line);}
+  .roadline.road{background:none; background-image:repeating-linear-gradient(90deg, var(--line-strong) 0 22px, transparent 22px 40px);}
+
+  .section-head p a, .foot-brand a, .foot-bottom a, .credit-line a, .acc-body a{
+    color:var(--paper); text-decoration:underline; text-decoration-color:var(--fai-beet);
+    text-decoration-thickness:1px; text-underline-offset:3px; transition:color .2s;
+  }
+  .section-head p a:hover, .foot-brand a:hover, .foot-bottom a:hover, .credit-line a:hover, .acc-body a:hover{color:var(--fai-beet);}
+
+  header{position:sticky; top:0; z-index:50; background:var(--fai-paper); border-bottom:1px solid var(--line);}
+  nav{display:flex; align-items:center; justify-content:space-between; gap:12px 28px; max-width:var(--maxw); margin:0 auto; padding:14px 32px;}
+  .brand{font-size:15px; font-weight:600; line-height:1.3; color:var(--paper); text-decoration:none; flex:none;}
+  .brand:hover{color:var(--fai-beet);}
+  .navlinks{display:flex; flex-wrap:wrap; justify-content:flex-end; gap:6px 20px; font-size:14px; line-height:1.4;}
+  .navlinks a{text-decoration:none; color:var(--paper-dim); transition:color .2s;}
+  .navlinks a:hover{color:var(--paper);}
+  @media (max-width:900px){ .navlinks{display:none;} }
+  @media (max-width:720px){ nav{padding:12px 16px;} }
+
+  .hero{padding:64px 0 48px;}
+  .status-note{background:var(--fai-field); border-left:3px solid var(--fai-beet); padding:13px 18px; font-size:15px; line-height:1.5; color:var(--paper); width:fit-content; max-width:min(100%, 780px); margin:0 0 44px;}
+  .hero .eyebrow{margin:0 0 14px;}
+  .hero h1{font-size:clamp(40px, 6vw, 76px); font-weight:500; line-height:1.02; margin:0 0 24px; max-width:18ch;}
+  .hero p.lede{font-size:20px; line-height:1.45; color:var(--paper-dim); max-width:68ch; margin:0 0 28px;}
+  .hero .meta{margin:36px 0 0; padding-top:16px; border-top:1px solid var(--line); max-width:780px; display:grid; grid-template-columns:max-content 1fr; gap:6px 20px; font-size:14px; line-height:1.45; color:var(--paper-faint);}
+  .hero .meta dt{color:var(--paper); font-weight:500;}
+  .hero .meta dd{margin:0;}
+  @media (max-width:600px){ .hero .meta{grid-template-columns:1fr; gap:2px;} .hero .meta dd{margin-bottom:8px;} }
+  .hero .credit-line{font-size:14px; line-height:1.5; color:var(--paper-faint); max-width:780px; margin-top:14px;}
+  @media (max-width:720px){ .hero{padding:40px 0 28px;} .status-note{margin-bottom:32px;} .hero p.lede{font-size:18px;} }
+
+  .btn{font-size:15px; font-weight:500; line-height:1.2; padding:12px 18px; border:1px solid var(--line-strong); border-radius:3px; background:transparent; color:var(--paper); text-decoration:none; display:inline-flex; align-items:center; gap:8px; transition:background-color .2s, border-color .2s, color .2s;}
+  .btn:hover{border-color:var(--paper);}
+  .btn.solid{background:var(--fai-ink); border-color:var(--fai-ink); color:var(--fai-paper);}
+  .btn.solid:hover{background:var(--fai-beet); border-color:var(--fai-beet);}
+  .cta-row{display:flex; gap:12px; flex-wrap:wrap; margin:0;}
+
+  section{padding:48px 0;}
+  section.tight{padding:40px 0;}
+  section.band{padding:64px 0; margin:48px 0;}
+  @media (max-width:720px){ section{padding:28px 0;} section.tight{padding:24px 0;} section.band{padding:40px 0; margin:28px 0;} }
+  .section-head{max-width:68ch; margin-bottom:40px;}
+  .section-head:last-child{margin-bottom:0;}
+  .section-head h2{font-size:clamp(28px, 3.4vw, 40px); font-weight:500; line-height:1.1; margin-top:10px;}
+  .section-head p{color:var(--paper-dim); font-size:17px; margin:14px 0 0;}
+
+  .plain-summary{background:var(--fai-field); border-left:3px solid var(--line-strong); padding:16px 20px; margin:20px 0 0; max-width:68ch;}
+  .plain-summary .ps-label{font-size:14px; font-weight:600; color:var(--paper); display:block; margin-bottom:6px;}
+  .plain-summary p{font-size:16px; line-height:1.55; margin:0; color:var(--paper);}
+
+  /* accordions: field surface, 3px left bar encodes transferability */
+  .accordion{background:var(--surface); margin-bottom:8px; border-left:3px solid transparent;}
+  .accordion summary{cursor:pointer; padding:16px 20px; display:flex; align-items:baseline; gap:16px; list-style:none; font-size:17px; font-weight:600; line-height:1.35;}
+  .accordion summary::-webkit-details-marker{display:none;}
+  .accordion summary::after{content:"+"; margin-left:auto; color:var(--paper-faint); font-size:20px; font-weight:400; line-height:1; flex:none;}
+  .accordion[open] summary::after{content:"\2013";}
+  .accordion summary:hover{color:var(--fai-beet);}
+  .accordion .acc-tag{font-size:13px; font-weight:500; flex:none; padding:3px 9px; border-radius:2px; white-space:nowrap;}
+  .accordion .acc-body{padding:0 20px 20px 20px;}
+  @media (max-width:600px){ .accordion summary{padding:14px 16px; gap:10px; flex-wrap:wrap;} .accordion .acc-body{padding:0 16px 18px 16px;} }
+  .accordion .acc-body p{font-size:16px; color:var(--paper-dim); line-height:1.65; margin:0; max-width:68ch;}
+  .accordion .acc-body p + p{margin-top:12px;}
+  .accordion .acc-body strong{color:var(--paper);}
+  .accordion.transfer{border-left-color:var(--transfer);}
+  .accordion.transfer .acc-tag{background:var(--transfer); color:#fff;}
+  .accordion.partial{border-left-color:var(--partial);}
+  .accordion.partial .acc-tag{background:var(--partial); color:#fff;}
+  .accordion.no-transfer{border-left-color:var(--no-transfer);}
+  .accordion.no-transfer .acc-tag{background:var(--no-transfer); color:#fff;}
+  .accordion.baltic{border-left-color:var(--baltic);}
+  .accordion.baltic .acc-tag{background:var(--baltic); color:#fff;}
+
+  .level-legend{display:flex; gap:8px 22px; flex-wrap:wrap; margin-bottom:24px; font-size:14px; color:var(--paper-faint);}
+  .level-legend span{display:inline-flex; align-items:center; gap:8px;}
+  .level-legend .dot{width:10px; height:10px; display:inline-block; border-radius:2px;}
+  .dot-transfer{background:var(--transfer);} .dot-partial{background:var(--partial);} .dot-no{background:var(--no-transfer);} .dot-baltic{background:var(--baltic);}
+
+  .band{background:var(--surface); border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
+
+  .callout{background:var(--surface); border-left:3px solid var(--fai-beet); padding:20px 22px; margin-top:24px; max-width:68ch;}
+  .callout p{margin:0; font-size:16px; line-height:1.6; color:var(--paper);}
+  .callout p + p{margin-top:10px;}
+
+  footer{border-top:1px solid var(--line); padding:48px 0 32px; font-size:14px; color:var(--paper-faint);}
+  .foot-grid{display:flex; justify-content:space-between; gap:32px; flex-wrap:wrap;}
+  .foot-brand{font-size:14px; max-width:520px; color:var(--paper-faint); line-height:1.55;}
+  .foot-brand strong{color:var(--paper); display:block; font-size:15px; font-weight:600; margin-bottom:8px;}
+  .foot-col h5{font-size:14px; font-weight:600; color:var(--paper); margin:0 0 10px;}
+  .foot-col a{display:block; font-size:14px; margin-bottom:6px; text-decoration:none; color:var(--paper-dim); transition:color .2s;}
+  .foot-col a:hover{color:var(--fai-beet);}
+  .foot-bottom{margin-top:32px; padding-top:16px; border-top:1px solid var(--line); font-size:14px; color:var(--paper-faint); display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px 24px;}
+</style>
+<!-- fai:head -->
+<meta name="description" content="A Camden-specific reading of Dark Matter Labs’ Sweden food-system work: which instruments transfer directly, where Camden’s institutions differ, and what’s still an early signal from the Baltic States.">
+<link rel="canonical" href="https://food.darkmatterlabs.org/sweden-baltic-lessons-for-camden.html">
+<meta name="theme-color" content="#111112">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Food as Infrastructure, Dark Matter Labs">
+<meta property="og:locale" content="en_GB">
+<meta property="og:url" content="https://food.darkmatterlabs.org/sweden-baltic-lessons-for-camden.html">
+<meta property="og:title" content="What Transfers to Camden">
+<meta property="og:description" content="A Camden-specific reading of Dark Matter Labs’ Sweden food-system work: which instruments transfer directly, where Camden’s institutions differ, and what’s still an early signal from the Baltic States.">
+<meta property="og:image" content="https://food.darkmatterlabs.org/assets/fai/social/sweden-baltic-lessons-for-camden.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="What Transfers to Camden. Food as Infrastructure, Dark Matter Labs.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="What Transfers to Camden">
+<meta name="twitter:description" content="A Camden-specific reading of Dark Matter Labs’ Sweden food-system work: which instruments transfer directly, where Camden’s institutions differ, and what’s still an early signal from the Baltic States.">
+<meta name="twitter:image" content="https://food.darkmatterlabs.org/assets/fai/social/sweden-baltic-lessons-for-camden.png">
+<meta name="twitter:image:alt" content="What Transfers to Camden. Food as Infrastructure, Dark Matter Labs.">
+<link rel="icon" href="assets/fai/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400..900;1,400..700&display=swap">
+<link rel="stylesheet" href="assets/fai/fai.css">
+<!-- /fai:head -->
+</head>
+<body>
+<!-- fai:bar -->
+<div class="fai-bar">
+  <div class="fai-bar__inner">
+    <a class="fai-bar__dm" href="https://darkmatterlabs.org/"><img class="fai-bar__lockup" src="assets/brand/dm-logo-v1-white.svg" alt="Dark Matter Labs" width="102" height="20"><img class="fai-bar__stamp" src="assets/brand/dm-stamp-white.svg" alt="Dark Matter Labs" width="20" height="20"></a>
+    <span class="fai-bar__sep" aria-hidden="true"></span>
+    <a class="fai-bar__mission" href="index.html">Food as Infrastructure</a>
+    <span class="fai-bar__here"><span class="fai-el fai-el--camden fai-el--draft" aria-hidden="true"><b>Sb</b><i>20</i></span><span>What Transfers to Camden</span></span>
+    <a class="fai-bar__xco" href="https://optionality.darkmatterlabs.org/" target="_blank" rel="noopener" title="Dark Matter Labs' Expanding Civilizational Optionality portfolio">xCO portfolio<span aria-hidden="true"> ↗</span></a>
+    <div class="fai-bar__links" role="navigation" aria-label="Site"><a href="index.html">Portfolio</a><a href="library.html">Library</a></div>
+  </div>
+</div>
+<!-- /fai:bar -->
+
+<header>
+  <nav>
+    <a class="brand" href="#top">What Transfers to Camden</a>
+    <div class="navlinks">
+      <a href="#transfers">What transfers</a>
+      <a href="#differs">Where it differs</a>
+      <a href="#baltic">The Baltic States</a>
+      <a href="#next">Closing Phase 1</a>
+    </div>
+  </nav>
+</header>
+
+<!-- ===================== HERO ===================== -->
+<section class="hero" id="top">
+  <div class="wrap">
+    <p class="status-note">Draft, written directly for Camden's Phase 1 close-out, at Ali Alsaraf and Ayanna Griffith's request following the 8&ndash;9 October conversations.</p>
+    <p class="eyebrow">A Camden-specific reading of the wider Sweden work</p>
+    <h1>What Transfers to Camden</h1>
+    <p class="lede">Camden asked for case studies and lessons from comparable work in Sweden and the Baltic States: what's transferable, and where Camden's context differs. This page is that answer. It's a tighter, Camden-facing companion to <a href="sovereign-food-system.html">A Sovereign Food System</a> &mdash; the fuller body of work Aleksander Nowak has been building on the ground in Sweden &mdash; read specifically against Camden's own institutions, powers and funding routes, rather than left as a general framework.</p>
+    <div class="cta-row">
+      <a class="btn solid" href="#transfers">What transfers directly</a>
+      <a class="btn" href="#differs">Where Camden differs</a>
+    </div>
+    <dl class="meta">
+      <dt>Built from</dt><dd>The Sweden instruments developed under the UBNI mission, re-read specifically for a London borough</dd>
+      <dt>Companion to</dt><dd><a href="sovereign-food-system.html">A Sovereign Food System</a>, the full Sweden body of work this distils from</dd>
+      <dt>Written for</dt><dd>Camden's Phase 1 close-out: the third of the three minimum items Ali and Ayanna asked for</dd>
+      <dt>Baltic States</dt><dd>Early signal, not yet a developed case study &mdash; see below</dd>
+    </dl>
+    <div class="credit-line">Builds on <em>A Sovereign Food System</em>, written by Samuel F&auml;rdow Kazen (Positiva Pengar), Jessica Johansson and Gino Carciola (Milj&ouml;Matematik Malm&ouml;), and Aleksander Nowak (Dark Matter Labs), as part of the Universal Basic Nutrient Income (UBNI) mission &mdash; a collaboration with RISE Research Institutes of Sweden and Krinova, supported by Vinnova.</div>
+  </div>
+</section>
+
+<div class="wrap"><div class="roadline road"></div></div>
+
+<!-- ===================== WHY SWEDEN, READ FOR CAMDEN ===================== -->
+<section class="tight">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Why this comparison holds</div>
+      <h2>Not a model to copy, a set of working instruments to test</h2>
+      <p>Sweden's municipalities face the same underlying pressure Camden does: a food system priced around cheap calories and leakage, where the institutions footing the health, inequality and climate bill aren't the ones setting food prices. What's useful here isn't the Swedish policy environment &mdash; that's genuinely different, see below &mdash; it's that specific municipalities have already built and tested working instruments against that pressure, instrument by instrument, with real results attached. That's what's worth reading closely.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== WHAT TRANSFERS ===================== -->
+<section id="transfers">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Read instrument by instrument, not as a package</div>
+      <h2>Five things that transfer, directly or with adaptation</h2>
+      <p>Each of these already has a real Swedish example behind it. The tag shows how directly it carries into Camden's own powers and partnerships.</p>
+    </div>
+    <div class="level-legend">
+      <span><span class="dot dot-transfer"></span>Transfers directly</span>
+      <span><span class="dot dot-partial"></span>Transfers with adaptation</span>
+      <span><span class="dot dot-no"></span>Doesn't transfer at Camden's scale</span>
+    </div>
+
+    <details class="accordion transfer" open>
+      <summary><span class="acc-tag">Transfers directly</span><span>Public kitchens as a preventive-health lever</span></summary>
+      <div class="acc-body">
+        <p><strong>In Sweden:</strong> municipalities treat the food they already control &mdash; school meals, elderly care, public kitchens &mdash; as a preventive health tool rather than just a cost line. Sweden's own school-lunch reform has been linked to higher lifetime earnings, with the largest gains among children from poorer households.</p>
+        <p><strong>For Camden:</strong> this needs no new legal mechanism. Camden already runs and commissions exactly these services. The instrument is simply the decision to specify and measure them against nutrition and preventive-health outcomes, not only cost and compliance.</p>
+      </div>
+    </details>
+
+    <details class="accordion transfer">
+      <summary><span class="acc-tag">Transfers directly</span><span>De-risked transitional ownership for catering</span></summary>
+      <div class="acc-body">
+        <p><strong>In Sweden:</strong> for a service already outsourced to a for-profit contractor, a company majority-owned by the council from day one lets private capital cover the up-front cost of in-sourcing, repaid over time out of the contract itself. Ownership converts fully to the council once the private stake is repaid, without the council ever needing the full transition cost up front.</p>
+        <p><strong>For Camden:</strong> this one is already live in Camden's own history, not a hypothetical. Camden looked at in-sourcing school catering outright and stepped back because the up-front cost was too high. This structure is the specific fix for that exact blocker, and is ready to revisit on that basis.</p>
+      </div>
+    </details>
+
+    <details class="accordion transfer">
+      <summary><span class="acc-tag">Transfers directly</span><span>Headline indicators beyond &pound;</span></summary>
+      <div class="acc-body">
+        <p><strong>In Sweden:</strong> a single public standard defines which foods qualify for public food programmes based on nutrition, sustainability and resilience, not brand or geography &mdash; and progress is tracked against that standard rather than spend alone.</p>
+        <p><strong>For Camden:</strong> this is the same instinct behind <a href="https://cornerstoneindicators.com/" target="_blank" rel="noopener">Cornerstone Indicators<span aria-hidden="true"> ↗</span></a>, already shared separately: a small, practical set of headline indicators that Camden's Food Mission can own and track directly, proportionate rather than an exhaustive measurement framework.</p>
+      </div>
+    </details>
+
+    <details class="accordion partial">
+      <summary><span class="acc-tag">Transfers with adaptation</span><span>Food as medicine, financed on avoided cost</span></summary>
+      <div class="acc-body">
+        <p><strong>In Sweden:</strong> regions carry the healthcare cost of diet-related disease directly, which makes them the natural financer of prevention. Targeted food prescriptions and dietary support for high-risk patients are financed upfront through health impact bonds, where investors fund the intervention and repayment is tied to the healthcare costs it verifiably avoids &mdash; Region Stockholm's diabetes-prevention bond is a live example.</p>
+        <p><strong>For Camden:</strong> Camden isn't its own health authority the way a Swedish region is. The equivalent partner is North Central London ICB, a body Camden has to convene and partner with rather than instruct. The financing logic still transfers; it just needs that partnership built deliberately first, rather than assumed.</p>
+      </div>
+    </details>
+
+    <details class="accordion no-transfer">
+      <summary><span class="acc-tag">Doesn't transfer at Camden's scale</span><span>Price-shifting through tax and a local currency</span></summary>
+      <div class="acc-body">
+        <p><strong>In Sweden:</strong> municipalities can require part of a supplier payment in a local currency without breaching EU competition law, and the national VAT rate on food is a lever central government has already used as an entry point for shifting relative prices.</p>
+        <p><strong>For Camden:</strong> neither instrument exists at borough level in England. VAT sits with central government, and English councils have no comparable legal path to issue their own currency. The underlying question &mdash; can Camden shift what food actually costs, even slightly &mdash; is still worth asking, just through different levers: procurement-linked local spend requirements, business rates relief, or making the national case, which is part of what <a href="overdue-bill.html">The Overdue Bill</a> is for.</p>
+      </div>
+    </details>
+  </div>
+</section>
+
+<!-- ===================== WHERE IT DIFFERS ===================== -->
+<section id="differs" class="band">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Named plainly, not glossed over</div>
+      <h2>Three structural differences worth naming</h2>
+      <p>These aren't reasons the comparison fails. They're the reasons some instruments need a different route in, which is exactly what "transferable" has to mean if it's going to be useful rather than aspirational.</p>
+    </div>
+    <details class="accordion no-transfer">
+      <summary><span class="acc-tag">Structural</span><span>No devolved tax or monetary levers</span></summary>
+      <div class="acc-body"><p>Sweden's VAT and e-krona tools don't exist for a London borough. UK fiscal and monetary policy sits with central government and the Bank of England, not Camden. Any instrument built on those levers has to be re-routed through national advocacy or through Camden's own procurement and commissioning powers instead.</p></div>
+    </details>
+    <details class="accordion no-transfer">
+      <summary><span class="acc-tag">Structural</span><span>A different health-system architecture</span></summary>
+      <div class="acc-body"><p>Sweden's regions directly run and fund healthcare, which is what lets them finance food-as-medicine instruments on their own authority. Camden's equivalent partner, North Central London ICB, is a separate body with its own governance. Every health-financed instrument above needs that partnership built first, not assumed as already in place.</p></div>
+    </details>
+    <details class="accordion no-transfer">
+      <summary><span class="acc-tag">Structural</span><span>No Vinnova-equivalent at borough level</span></summary>
+      <div class="acc-body"><p>Swedish municipalities can draw on dedicated national innovation funding for exactly this kind of pilot. Camden's nearest equivalents &mdash; UKRI, the GLA, DHSC prevention funding, mission-aligned foundations &mdash; are more fragmented and have to be assembled deliberately. This is part of why DML's own co-funding commitment in Phase 1 matters: it's standing in for infrastructure Sweden's municipalities already have.</p></div>
+    </details>
+  </div>
+</section>
+
+<!-- ===================== THE BALTIC STATES ===================== -->
+<section id="baltic">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Said plainly, because it should be</div>
+      <h2>What we're still building: the Baltic States</h2>
+      <p>Camden's ask named the Baltic States alongside Sweden, and we want to be straightforward about where that stands rather than stretch a thin thread to match the Sweden material.</p>
+    </div>
+    <details class="accordion baltic" open>
+      <summary><span class="acc-tag">Early signal</span><span>Where this actually is right now</span></summary>
+      <div class="acc-body">
+        <p>Aleksander Nowak spent time in Vilnius in October meeting people running food-security ventures across the Baltic States, and those conversations are real and ongoing. But they're conversations, not yet a developed case study with the kind of specific instrument, precedent and in-practice detail the Sweden material above has behind it.</p>
+        <p>Rather than pad this out to look more finished than it is, we're naming it honestly: this section needs real work before it can sit alongside the Sweden instruments on equal footing. We'll bring Camden a proper Baltic States case study as its own follow-up, with a date, rather than fold a thinner version into this close-out.</p>
+      </div>
+    </details>
+  </div>
+</section>
+
+<!-- ===================== CLOSING PHASE 1 ===================== -->
+<section id="next" class="tight">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Where this leaves Phase 1</div>
+      <h2>The third item on Ali's list</h2>
+      <p>This page is the direct answer to one of the three things Ali and Ayanna named as the minimum to close Phase 1: case studies and lessons from Sweden and the Baltic States, with what's transferable and what differs made explicit rather than implied. Alongside <a href="options-for-camden.html">Options for Camden</a> and <a href="https://cornerstoneindicators.com/" target="_blank" rel="noopener">Cornerstone Indicators<span aria-hidden="true"> ↗</span></a>, that's all three.</p>
+      <div class="callout">
+        <p><strong>What's still open:</strong> the Baltic States case study, named above rather than quietly dropped. We'd rather close Phase 1 with one item honestly flagged than all three looking finished when one isn't.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <strong>What Transfers to Camden</strong>
+        A Camden-specific reading of Dark Matter Labs' Sweden food-system work, written for the Phase 1 close-out. Part of the Food as Infrastructure portfolio.
+      </div>
+      <div class="foot-col">
+        <h5>This page</h5>
+        <a href="#transfers">What transfers</a>
+        <a href="#differs">Where it differs</a>
+        <a href="#baltic">The Baltic States</a>
+        <a href="#next">Closing Phase 1</a>
+      </div>
+      <div class="foot-col">
+        <h5>Related</h5>
+        <a href="sovereign-food-system.html">A Sovereign Food System</a>
+        <a href="options-for-camden.html">Options for Camden</a>
+        <a href="index.html">Food as Infrastructure</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span class="credit-line">Builds on <em>A Sovereign Food System</em> by Samuel F&auml;rdow Kazen, Jessica Johansson, Gino Carciola and Aleksander Nowak, part of the UBNI mission with RISE Research Institutes of Sweden and Krinova, supported by Vinnova. Parts of this page were drafted with AI assistance (Claude). Licensed CC BY-SA 4.0.</span>
+    </div>
+  </div>
+</footer>
+
+<!-- fai:footer -->
+<footer class="fai-footer">
+  <div class="fai-footer__inner">
+    <span>Part of Dark Matter Labs' <a href="https://optionality.darkmatterlabs.org/" target="_blank" rel="noopener">xCO portfolio<span aria-hidden="true"> ↗</span></a>, expanding civilizational optionality.</span>
+  </div>
+</footer>
+<!-- /fai:footer -->
+</body>
+</html>
