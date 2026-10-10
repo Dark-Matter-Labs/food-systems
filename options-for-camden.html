@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Options for Camden (draft) — Food as Infrastructure</title>
+<title>Options and Indicators for Camden (draft) — Food as Infrastructure</title>
 <style>
   :root{
     --paper:var(--fai-paper);
@@ -100,7 +100,17 @@
   .opt .energy b{color:var(--ink); font-weight:600;}
   .opt .ask{margin-top:8px; font-size:14px; color:var(--ink-faint); line-height:1.5; max-width:68ch;}
   .opt .ask b{color:var(--ink); font-weight:600;}
+  .opt .moves{margin-top:8px; font-size:14px; color:var(--ink-faint); line-height:1.5; max-width:68ch;}
+  .opt .moves b{color:var(--ink); font-weight:600;}
   .opt .more{display:inline-block; margin-top:10px; font-size:14px;}
+
+  .indicator .num{color:var(--accent);}
+  .indicator .opt-head h3{font-size:clamp(20px,2.3vw,24px);}
+  .indicator .tracked{margin-top:14px; padding-top:12px; border-top:1px solid var(--rule-strong); font-size:14px; color:var(--ink-faint); line-height:1.5; max-width:68ch;}
+  .indicator .tracked b{color:var(--ink); font-weight:600;}
+  .indicator .success{margin-top:8px; font-size:14px; color:var(--ink-faint); line-height:1.5; max-width:68ch;}
+  .indicator .success b{color:var(--ink); font-weight:600;}
+  .indicator .lede{margin:10px 0 0; font-size:16px; color:var(--ink-soft); line-height:1.55; max-width:68ch;}
 
   .cta-box{background:var(--paper-2); padding:32px; margin-top:24px;}
   .cta-box h3{font-size:clamp(22px,2.4vw,28px); line-height:1.2; font-weight:500; margin-top:8px; max-width:42ch;}
@@ -148,24 +158,24 @@
   }
 </style>
 <!-- fai:head -->
-<meta name="description" content="A short options paper: nine interventions from the Future Food Dinner and Workshop where a named person or organisation is already showing real energy, distilled from Where’s the Energy?">
+<meta name="description" content="Nine interventions where someone already showed up, distilled from Where’s the Energy?, plus the three simple indicators Camden and DML will use to know the mission is actually working.">
 <link rel="canonical" href="https://food.darkmatterlabs.org/options-for-camden.html">
 <meta name="theme-color" content="#111112">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Food as Infrastructure, Dark Matter Labs">
 <meta property="og:locale" content="en_GB">
 <meta property="og:url" content="https://food.darkmatterlabs.org/options-for-camden.html">
-<meta property="og:title" content="Options for Camden">
-<meta property="og:description" content="A short options paper: nine interventions from the Future Food Dinner and Workshop where a named person or organisation is already showing real energy, distilled from Where’s the Energy?">
+<meta property="og:title" content="Options and Indicators for Camden">
+<meta property="og:description" content="Nine interventions where someone already showed up, distilled from Where’s the Energy?, plus the three simple indicators Camden and DML will use to know the mission is actually working.">
 <meta property="og:image" content="https://food.darkmatterlabs.org/assets/fai/social/options-for-camden.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Options for Camden. Food as Infrastructure, Dark Matter Labs.">
+<meta property="og:image:alt" content="Options and Indicators for Camden. Food as Infrastructure, Dark Matter Labs.">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Options for Camden">
-<meta name="twitter:description" content="A short options paper: nine interventions from the Future Food Dinner and Workshop where a named person or organisation is already showing real energy, distilled from Where’s the Energy?">
+<meta name="twitter:title" content="Options and Indicators for Camden">
+<meta name="twitter:description" content="Nine interventions where someone already showed up, distilled from Where’s the Energy?, plus the three simple indicators Camden and DML will use to know the mission is actually working.">
 <meta name="twitter:image" content="https://food.darkmatterlabs.org/assets/fai/social/options-for-camden.png">
-<meta name="twitter:image:alt" content="Options for Camden. Food as Infrastructure, Dark Matter Labs.">
+<meta name="twitter:image:alt" content="Options and Indicators for Camden. Food as Infrastructure, Dark Matter Labs.">
 <link rel="icon" href="assets/fai/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -180,7 +190,7 @@
     <a class="fai-bar__dm" href="https://darkmatterlabs.org/"><img class="fai-bar__lockup" src="assets/brand/dm-logo-v1-white.svg" alt="Dark Matter Labs" width="102" height="20"><img class="fai-bar__stamp" src="assets/brand/dm-stamp-white.svg" alt="Dark Matter Labs" width="20" height="20"></a>
     <span class="fai-bar__sep" aria-hidden="true"></span>
     <a class="fai-bar__mission" href="index.html">Food as Infrastructure</a>
-    <span class="fai-bar__here"><span class="fai-el fai-el--camden fai-el--draft" aria-hidden="true"><b>Oc</b><i>18</i></span><span>Options for Camden</span></span>
+    <span class="fai-bar__here"><span class="fai-el fai-el--camden fai-el--draft" aria-hidden="true"><b>Oc</b><i>18</i></span><span>Options and Indicators for Camden</span></span>
     <a class="fai-bar__xco" href="https://optionality.darkmatterlabs.org/" target="_blank" rel="noopener" title="Dark Matter Labs' Expanding Civilizational Optionality portfolio">xCO portfolio<span aria-hidden="true"> ↗</span></a>
     <div class="fai-bar__links" role="navigation" aria-label="Site"><a href="index.html">Portfolio</a><a href="library.html">Library</a></div>
   </div>
@@ -189,10 +199,11 @@
 
 <nav>
   <div class="navrow">
-    <div class="navbrand">Options for Camden</div>
+    <div class="navbrand">Options and Indicators for Camden</div>
     <div class="navlinks">
       <a href="#why">Why these, not forty</a>
       <a href="#options">The options</a>
+      <a href="#indicators">The indicators</a>
       <a href="#firstmove">First move</a>
       <a href="#tensions">Decide on purpose</a>
       <a href="#next">What's next</a>
@@ -203,7 +214,7 @@
 <div class="status-strip">
   <div class="wrap">
     <div class="status-note">
-      <p><strong>Draft, evolving.</strong> This is the short options paper Camden asked for: a small number of high-leverage interventions Camden could explore in partnership with key stakeholders, selected from the full catalogue on <a href="wheres-the-energy.html">Where's the Energy?</a> As energy moves, or new interventions surface, this list changes with it — it is not a final decision, and nothing here is funded or agreed by being listed.</p>
+      <p><strong>Draft, evolving.</strong> This is the short options paper Camden asked for: a small number of high-leverage interventions Camden could explore in partnership with key stakeholders, selected from the full catalogue on <a href="wheres-the-energy.html">Where's the Energy?</a> It now also carries the three simple indicators Camden asked for separately, tracked through data already being captured, for knowing whether any of it is working. As energy moves, or new interventions surface, this list changes with it — it is not a final decision, and nothing here is funded or agreed by being listed.</p>
       <span class="status-date">Working draft, October 2026</span>
     </div>
   </div>
@@ -213,9 +224,10 @@
   <div class="wrap">
     <div class="eyebrow">A short list, not the whole portfolio</div>
     <h1>Nine places where someone already showed up.</h1>
-    <p class="sub">Camden's Food Partnership raised more than forty ideas across the Future Food Dinner and Workshop. Most are real and worth holding. Only a handful already have a named person or organisation ready to move. This page is those — picked for momentum, not importance, so Camden can start a real conversation with a real partner rather than another round of ideas.</p>
+    <p class="sub">Camden's Food Partnership raised more than forty ideas across the Future Food Dinner and Workshop. Most are real and worth holding. Only a handful already have a named person or organisation ready to move. This page is those — picked for momentum, not importance, so Camden can start a real conversation with a real partner rather than another round of ideas. It ends with the three indicators that tell Camden and DML whether any of it is actually moving the mission.</p>
     <div class="ctarow">
       <a class="btn btn-primary" href="#options">See the nine options</a>
+      <a class="btn btn-primary" href="#indicators">See the three indicators</a>
       <a class="btn btn-ghost" href="wheres-the-energy.html">Open the full catalogue ↗</a>
     </div>
   </div>
@@ -246,29 +258,31 @@
     </div>
     <div class="optlist">
 
-      <div class="opt">
+      <div class="opt" id="opt-01">
         <div class="num">01</div>
         <div>
           <div class="opt-head"><h3>A Local Food Resilience Committee</h3><span class="track-tag civic">Civic muscle</span></div>
           <p class="mech">Add food formally to Camden's emergency response, alongside the police, hospital, ambulance and fire services already covered by the Borough Resilience Forum — before national policy requires it.</p>
           <div class="energy"><b>Energy already visible:</b> Tanya brought the proposal and put her name to it directly.</div>
           <div class="ask"><b>What's needed next:</b> who convenes it locally, and keeps the risk register alive after the first meeting.</div>
+          <div class="moves"><b>Moves:</b> <a href="#ind-III">indicator III, shock-absorbency</a> — this option exists for exactly this number.</div>
           <a class="more" href="wheres-the-energy.html#resilience">See the full case →</a>
         </div>
       </div>
 
-      <div class="opt">
+      <div class="opt" id="opt-02">
         <div class="num">02</div>
         <div>
           <div class="opt-head"><h3>A procurement charter</h3><span class="track-tag demand">Demand</span></div>
           <p class="mech">A joint public/private Camden charter set deliberately beyond existing certifications — Food for Life Served Here's gold standard only requires around 15% organic.</p>
           <div class="energy"><b>Energy already visible:</b> Rosemary named it directly on the day — "if anyone wants to talk about a charter, let's do it."</div>
           <div class="ask"><b>What's needed next:</b> who else wants in, and who owns the supplier relationships day to day.</div>
+          <div class="moves"><b>Moves:</b> <a href="#ind-II">indicator II, resilient local infrastructure</a> — a charter is a demand-side lever on where the money goes.</div>
           <a class="more" href="wheres-the-energy.html#f02">See the full case →</a>
         </div>
       </div>
 
-      <div class="opt">
+      <div class="opt" id="opt-03">
         <div class="num">03</div>
         <div>
           <div class="opt-head"><h3>Social value live-matchmaking</h3><span class="track-tag hub">Hub</span></div>
@@ -279,68 +293,74 @@
         </div>
       </div>
 
-      <div class="opt">
+      <div class="opt" id="opt-04">
         <div class="num">04</div>
         <div>
           <div class="opt-head"><h3>Camden food hub(s)</h3><span class="track-tag hub">Hub</span></div>
           <p class="mech">The single biggest tangible idea from the workshop — a hub-and-spoke model anchored at Regis Road, with composting and anaerobic digestion planned alongside it.</p>
           <div class="energy"><b>Energy already visible:</b> Damien Conrad (Felix Project) is already directing the London Hubs &amp; Markets Working Group carrying this forward.</div>
           <div class="ask"><b>What's needed next:</b> who from Camden sits alongside him on it, day to day.</div>
+          <div class="moves"><b>Moves:</b> <a href="#ind-II">indicator II</a> and <a href="#ind-III">indicator III</a> — a hub is both an aggregation point and a buffer against shocks.</div>
           <a class="more" href="hubs-and-markets-working-group.html">See the working group →</a>
         </div>
       </div>
 
-      <div class="opt">
+      <div class="opt" id="opt-05">
         <div class="num">05</div>
         <div>
           <div class="opt-head"><h3>A collective buying engine</h3><span class="track-tag hub">Hub</span></div>
           <p class="mech">Scale an existing "one conversation instead of a hundred" relationship model into a repeatable, institutional capability rather than one person's own contacts.</p>
           <div class="energy"><b>Energy already visible:</b> Carl's own business needs this to exist within six months — about as real as energy gets in the room.</div>
           <div class="ask"><b>What's needed next:</b> who helps that urgency become an institutional capability, not just Carl's own relationships.</div>
+          <div class="moves"><b>Moves:</b> <a href="#ind-II">indicator II, resilient local infrastructure</a> — collective buying power is exactly the share this indicator tracks.</div>
           <a class="more" href="wheres-the-energy.html#f02">See the full case →</a>
         </div>
       </div>
 
-      <div class="opt">
+      <div class="opt" id="opt-06">
         <div class="num">06</div>
         <div>
           <div class="opt-head"><h3>A mesh system for aggregated demand</h3><span class="track-tag supply">Supply</span></div>
           <p class="mech">Further explore WinVal's mesh architecture — the Liquid Farm Capacitor model already referenced across this portfolio — to match farm supply to demand aggregated across Camden and other aligned London boroughs, putting real purchasing power in councils' hands rather than leaving it scattered borough by borough.</p>
           <div class="energy"><b>Energy already visible:</b> the architecture already sits behind the farm-to-farm coverage model referenced in the wider portfolio; the opening is turning that reference into an actual test.</div>
           <div class="ask"><b>What's needed next:</b> who tests it first — Camden alone, or paired with one or two boroughs already at the Hubs &amp; Markets Working Group table, to make the aggregated-demand thesis real rather than theoretical.</div>
+          <div class="moves"><b>Moves:</b> <a href="#ind-II">indicator II</a> and <a href="#ind-III">indicator III</a> — aggregated demand is a direct route to both a bigger local-infrastructure share and a more diversified, shock-resistant supply.</div>
           <a class="more" href="hubs-and-markets-working-group.html">See the cross-borough working group →</a>
         </div>
       </div>
 
-      <div class="opt">
+      <div class="opt" id="opt-07">
         <div class="num">07</div>
         <div>
           <div class="opt-head"><h3>A Farmacy pilot</h3><span class="track-tag hub">Hub</span></div>
           <p class="mech">Pharmacies reframed as neighbourhood performance-and-nutrition nodes — fresh food, dietary advice and community links, framed around aspiration rather than illness.</p>
           <div class="energy"><b>Energy already visible:</b> raised in the new-economics session; a business owner at the table (Carl) reacted to it live as an opportunity for his own pivot.</div>
           <div class="ask"><b>What's needed next:</b> who scopes an actual pilot site and partner.</div>
+          <div class="moves"><b>Moves:</b> <a href="#ind-I">indicator I, the nutrition gap</a> — a direct, neighbourhood-level nutrition and health touchpoint.</div>
           <a class="more" href="wheres-the-energy.html#f01">See the full case →</a>
         </div>
       </div>
 
-      <div class="opt">
+      <div class="opt" id="opt-08">
         <div class="num">08</div>
         <div>
           <div class="opt-head"><h3>Deeper reach into non-traditional food actors</h3><span class="track-tag civic">Civic muscle</span></div>
           <p class="mech">Corner shops, convenience stores and small independent retailers sit outside most food-partnership conversations, despite being where many residents actually buy food.</p>
           <div class="energy"><b>Energy already visible:</b> Farah is already doing some of this engagement.</div>
           <div class="ask"><b>What's needed next:</b> what would help her do more of it.</div>
+          <div class="moves"><b>Moves:</b> <a href="#ind-I">indicator I, the nutrition gap</a> — this is where residents in the gap actually shop.</div>
           <a class="more" href="wheres-the-energy.html#f03">See the full case →</a>
         </div>
       </div>
 
-      <div class="opt">
+      <div class="opt" id="opt-09">
         <div class="num">09</div>
         <div>
           <div class="opt-head"><h3>A co-op toolkit and minimum standards</h3><span class="track-tag hub">Hub</span></div>
           <p class="mech">A recognisable, minimum-standards toolkit so anyone can start a food co-op, and residents can recognise one the way they'd recognise a supermarket or the Underground.</p>
           <div class="energy"><b>Energy already visible:</b> strong consensus at the table — no single name attached yet, the one option here still waiting on a first owner.</div>
           <div class="ask"><b>What's needed next:</b> who's willing to put their name on this first.</div>
+          <div class="moves"><b>Moves:</b> <a href="#ind-II">indicator II, resilient local infrastructure</a> — more co-ops is more of the food economy sitting outside the mainstream supply chain.</div>
           <a class="more" href="wheres-the-energy.html#f03">See the full case →</a>
         </div>
       </div>
@@ -358,11 +378,55 @@
     <div class="cta-box">
       <div class="eyebrow">Cabinet Office consultation window closed 5 October 2026</div>
       <h3>Food still isn't formally part of Camden's emergency response. That window closing doesn't close the opportunity.</h3>
-      <p>Tim Lang's National Preparedness Commission review recommended every local authority add a food resilience committee to its emergency planning; the Cabinet Office's call for views on making that statutory has now closed. Whichever way that lands nationally, a borough that has already set one up has done the work before being told to — and option 01 above already has a named person ready to carry it.</p>
+      <p>Tim Lang's National Preparedness Commission review recommended every local authority add a food resilience committee to its emergency planning; the Cabinet Office's call for views on making that statutory has now closed. Whichever way that lands nationally, a borough that has already set one up has done the work before being told to — and <a href="#opt-01">option 01</a> above already has a named person ready to carry it.</p>
       <div class="ctarow">
         <a class="btn btn-primary" href="https://nationalpreparednesscommission.uk/wp-content/uploads/2025/02/NPC-Just-in-Case-Main-Report_PDF-Download.pdf" target="_blank" rel="noopener">Read Tim Lang's report ↗</a>
       </div>
     </div>
+  </div>
+</section>
+
+<section id="indicators">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">Camden asked for this separately — three numbers, not a framework</div>
+      <h2>How Camden and DML will know this is working</h2>
+      <p>Not nine indicators for nine options, and not a measurement framework alongside <a href="https://cornerstoneindicators.com/" target="_blank" rel="noopener">Cornerstone Indicators<span aria-hidden="true"> ↗</span></a>'s own methodology. Three simple numbers for the mission itself — each one readable off data Camden or DML is already capturing, and each one, below, linked back to the specific options most likely to move it.</p>
+    </div>
+    <div class="optlist">
+
+      <div class="opt indicator" id="ind-I">
+        <div class="num">I</div>
+        <div>
+          <div class="opt-head"><h3>Is the nutrition gap closing, not just the average?</h3></div>
+          <p class="lede">The gap between Camden's most and least deprived wards on a single measure Camden already collects &mdash; child healthy weight, via the National Child Measurement Programme inside the Healthy Weight Acceleration Plan. Success is the gap narrowing, not the borough-wide average moving while the gap stays the same.</p>
+          <div class="tracked"><b>Tracked through:</b> Camden's own Healthy Weight Acceleration Plan data, already collected, no new survey needed.</div>
+          <div class="success"><b>Moved most by:</b> <a href="#opt-07">07, the Farmacy pilot</a> and <a href="#opt-08">08, reach into non-traditional food actors</a>.</div>
+        </div>
+      </div>
+
+      <div class="opt indicator" id="ind-II">
+        <div class="num">II</div>
+        <div>
+          <div class="opt-head"><h3>Is more of Camden's food moving through resilient, local infrastructure?</h3></div>
+          <p class="lede">The share of food moving through Camden's own hubs, public kitchens and short supply chains &mdash; already tracked by the Hubs &amp; Markets Working Group and the Supply Map &mdash; measured against the mainstream, global-supply-chain baseline the Supply Map maps out. Success is that share growing.</p>
+          <div class="tracked"><b>Tracked through:</b> hub tonnage, Felix Project volumes, Better Food Traders throughput and council catering contracts, all already monitored.</div>
+          <div class="success"><b>Moved most by:</b> <a href="#opt-02">02, the procurement charter</a>, <a href="#opt-04">04, the food hub(s)</a>, <a href="#opt-05">05, collective buying</a>, <a href="#opt-06">06, the mesh system</a> and <a href="#opt-09">09, the co-op toolkit</a>.</div>
+        </div>
+      </div>
+
+      <div class="opt indicator" id="ind-III">
+        <div class="num">III</div>
+        <div>
+          <div class="opt-head"><h3>Is Camden more shock-absorbent than it was last year?</h3></div>
+          <p class="lede">How far a modelled supply shock travels into Camden before local capacity &mdash; hubs, reserves, producer relationships &mdash; absorbs it, using the Nutrition Cascade Model already built for exactly this. Success is shocks reaching fewer households, or taking longer to bite.</p>
+          <div class="tracked"><b>Tracked through:</b> the <a href="nutrition-cascade-model.html">Nutrition Cascade Model</a>, re-run periodically against the same shock scenario.</div>
+          <div class="success"><b>Moved most by:</b> <a href="#opt-01">01, the Local Food Resilience Committee</a> &mdash; built for precisely this number &mdash; plus <a href="#opt-04">04, the food hub(s)</a> and <a href="#opt-06">06, the mesh system</a>.</div>
+        </div>
+      </div>
+
+    </div>
+    <div class="note"><b>On Cornerstone Indicators:</b> DML's wider <a href="https://cornerstoneindicators.com/" target="_blank" rel="noopener">Cornerstone Indicators<span aria-hidden="true"> ↗</span></a> work is the method behind getting indicators like these right &mdash; generated from inside the community actually doing the work, not handed down from outside. These three are that method's output for Camden specifically, not a separate ask.</div>
   </div>
 </section>
 
@@ -393,7 +457,7 @@
     <div class="sec-head">
       <div class="eyebrow">From options to a prioritised portfolio</div>
       <h2>What happens next</h2>
-      <p>This page is deliberately a shortlist, not a plan. The next job — Camden's, not DML's alone — is testing each option's feasibility, deciding which ones Camden or a partner can run locally versus which need the wider alliance, and working out what resources and partners each one actually needs. That filtering is phase two's job; this page is what phase two filters.</p>
+      <p>This page is deliberately a shortlist, not a plan. The next job — Camden's, not DML's alone — is testing each option's feasibility, deciding which ones Camden or a partner can run locally versus which need the wider alliance, and working out what resources and partners each one actually needs. The three indicators above are how both sides will know, once that work starts, whether it's actually landing. That filtering is phase two's job; this page is what phase two filters.</p>
     </div>
     <div class="toolgrid">
       <a class="tool" href="wheres-the-energy.html">
@@ -411,6 +475,11 @@
         <h4>London Hubs &amp; Markets</h4>
         <p>Where the hub option (04) gets tested against real boroughs, leases and funding gaps.</p>
       </a>
+      <a class="tool" href="https://cornerstoneindicators.com/" target="_blank" rel="noopener">
+        <div class="tag">Method</div>
+        <h4>Cornerstone Indicators ↗</h4>
+        <p>The open-source methodology behind the three indicators above, for Camden to own and adapt directly.</p>
+      </a>
     </div>
   </div>
 </section>
@@ -418,14 +487,15 @@
 <footer>
   <div class="wrap">
     <div>
-      <div class="foot-title">Options for Camden</div>
+      <div class="foot-title">Options and Indicators for Camden</div>
       <div class="foot-links">
         <a href="index.html">Food as Infrastructure</a><br>
         <a href="wheres-the-energy.html">Where's the Energy?</a><br>
+        <a href="https://cornerstoneindicators.com/" target="_blank" rel="noopener">Cornerstone Indicators ↗</a><br>
         <a href="library.html">Library</a>
       </div>
     </div>
-    <div class="credit">Source: the Future Food Dinner and Camden Food Futures Workshop, synthesised in <a href="wheres-the-energy.html">Where's the Energy?</a>, filtered down to the options with a named person or organisation already showing energy for them. A working draft from Dark Matter Labs' Food as Infrastructure portfolio, built to answer Camden's own request for a short options paper. Parts of this page were drafted with AI assistance (Claude). Licensed CC BY-SA 4.0 — see the <a href="index.html">homepage</a> for full credit and lineage.</div>
+    <div class="credit">Source: the Future Food Dinner and Camden Food Futures Workshop, synthesised in <a href="wheres-the-energy.html">Where's the Energy?</a>, filtered down to the options with a named person or organisation already showing energy for them. The three indicators were built directly in response to Camden's own request for a small, practical way to track the mission over time. A working draft from Dark Matter Labs' Food as Infrastructure portfolio. Parts of this page were drafted with AI assistance (Claude). Licensed CC BY-SA 4.0 — see the <a href="index.html">homepage</a> for full credit and lineage.</div>
   </div>
 </footer>
 
