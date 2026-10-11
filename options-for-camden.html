@@ -104,6 +104,17 @@
   .opt .moves b{color:var(--ink); font-weight:600;}
   .opt .more{display:inline-block; margin-top:10px; font-size:14px;}
 
+  .dropdown{background:var(--paper-2); margin-top:14px; max-width:68ch;}
+  .dropdown summary{cursor:pointer; list-style:none; padding:12px 16px; font-size:14px; font-weight:600; color:var(--ink); display:flex; align-items:baseline; gap:10px;}
+  .dropdown summary::-webkit-details-marker{display:none;}
+  .dropdown summary::before{content:"+"; color:var(--ink-faint); font-size:16px; font-weight:400; flex:none;}
+  .dropdown[open] summary::before{content:"\2212";}
+  .dropdown-body{padding:0 16px 16px;}
+  .dropdown-body p{font-size:14.5px; color:var(--ink-soft); line-height:1.6; margin:0 0 10px;}
+  .dropdown-body ul{margin:0; padding-left:18px;}
+  .dropdown-body li{font-size:13.5px; color:var(--ink-soft); line-height:1.6; margin-bottom:8px;}
+  .dropdown-body .caveat{font-size:13px; font-style:italic; color:var(--ink-faint); margin-top:10px;}
+
   .indicator .num{color:var(--accent);}
   .indicator .opt-head h3{font-size:clamp(20px,2.3vw,24px);}
   .indicator .tracked{margin-top:14px; padding-top:12px; border-top:1px solid var(--rule-strong); font-size:14px; color:var(--ink-faint); line-height:1.5; max-width:68ch;}
@@ -266,6 +277,19 @@
           <div class="energy"><b>Energy already visible:</b> Tanya brought the proposal and put her name to it directly.</div>
           <div class="ask"><b>What's needed next:</b> who convenes it locally, and keeps the risk register alive after the first meeting.</div>
           <div class="moves"><b>Moves:</b> <a href="#ind-III">indicator III, shock-absorbency</a> — this option exists for exactly this number.</div>
+          <details class="dropdown">
+            <summary>Why this is top of the list: the national picture</summary>
+            <div class="dropdown-body">
+              <p>The UK government is reportedly preparing a major food resilience commitment, expected within the coming weeks, focused on growing more food domestically and protecting supply chains from climate and geopolitical shocks. It follows a National Audit Office finding that Defra has done too little in recent years to help households, businesses and communities build resilience, and sits alongside a wider Cabinet Office campaign encouraging households to hold a basic emergency kit. Food supply is already treated as one of the UK's 13 Critical National Infrastructure sectors. A borough that has already set up its own resilience committee is ahead of guidance that looks to be arriving anyway, not reacting to it.</p>
+              <ul>
+                <li><a href="https://www.thegrocer.co.uk/news/government-set-for-major-food-resilience-announcement/724328.article" target="_blank" rel="noopener">The Grocer, "Government set for major food resilience announcement"<span aria-hidden="true"> ↗</span></a> (1 October 2026)</li>
+                <li><a href="https://www.nao.org.uk/reports/resilience-of-the-food-supply-chain-to-disruptions/" target="_blank" rel="noopener">National Audit Office, "Resilience of the food supply chain to disruptions"<span aria-hidden="true"> ↗</span></a> (4 September 2026)</li>
+                <li><a href="https://novaramedia.com/?p=69210" target="_blank" rel="noopener">Novara Media, on the government's household stockpiling campaign<span aria-hidden="true"> ↗</span></a> (26 August 2026, citing the Financial Times)</li>
+                <li><a href="https://lordslibrary.parliament.uk/threats-to-uk-food-security/" target="_blank" rel="noopener">House of Lords Library, "Threats to UK food security"<span aria-hidden="true"> ↗</span></a></li>
+              </ul>
+              <p class="caveat">As of this page's last update, the announcement itself hadn't formally landed, this is trade press and parliamentary reporting on what's coming, not a confirmed policy. Worth checking gov.uk directly before citing it as settled.</p>
+            </div>
+          </details>
           <a class="more" href="wheres-the-energy.html#resilience">See the full case →</a>
         </div>
       </div>
