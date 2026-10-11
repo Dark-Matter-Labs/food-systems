@@ -263,6 +263,19 @@
       "summary": "A Camden-specific reading of Dark Matter Labs’ Sweden food-system work: which instruments transfer directly, where Camden’s institutions differ, and what’s still an early signal from the Baltic States.",
       "pdf": false,
       "surface": "paper"
+    },
+    {
+      "n": 21,
+      "sym": "Fp",
+      "file": "food-partnership-operating-options.html",
+      "name": "Food Partnership Operating Options",
+      "scope": "camden",
+      "status": "draft",
+      "listed": true,
+      "title": "Options for How the Partnership Could Operate",
+      "summary": "A reference guide for how the Camden Food Partnership could be hosted and legally structured as it matures, drawing on the Kauffman Foundation’s ecosystem playbook and the Sustainable Food Places network of over 100 UK food partnerships.",
+      "pdf": false,
+      "surface": "paper"
     }
   ]
 }

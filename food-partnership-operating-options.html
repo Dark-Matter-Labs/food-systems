@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Options for How the Partnership Could Operate (draft) — Food as Infrastructure</title>
+<style>
+  :root{
+    --paper:var(--fai-paper);
+    --paper-2:var(--fai-field);
+    --ink:var(--fai-ink);
+    --ink-soft:var(--fai-ink-2);
+    --ink-faint:var(--fai-ink-3);
+    --rule:var(--fai-rule);
+    --rule-strong:var(--fai-rule-strong);
+    --accent:var(--fai-beet);
+    --maxw:var(--fai-container);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0; background:var(--paper); color:var(--ink);
+    font-family:var(--fai-sans); font-size:17px; line-height:1.6;
+  }
+  h1,h2,h3,h4{font-weight:500; line-height:1.1; margin:0; color:var(--ink);}
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 32px;}
+  a{color:var(--ink); text-decoration:underline; text-decoration-color:var(--accent); text-decoration-thickness:1px; text-underline-offset:3px;}
+  a:hover{color:var(--accent);}
+  .eyebrow{font-size:14px; line-height:1.45; color:var(--ink-faint);}
+
+  nav{position:sticky; top:0; z-index:50; background:var(--paper); border-bottom:1px solid var(--rule);}
+  .navrow{display:flex; align-items:center; justify-content:space-between; padding:14px 32px; max-width:var(--maxw); margin:0 auto; gap:24px;}
+  .navbrand{font-size:15px; font-weight:600; color:var(--ink); white-space:nowrap;}
+  .navlinks{display:flex; gap:20px; flex-wrap:wrap; justify-content:flex-end;}
+  .navlinks a{font-size:14px; color:var(--ink-soft); text-decoration:none; white-space:nowrap;}
+  .navlinks a:hover{color:var(--ink); text-decoration:underline; text-decoration-color:var(--accent);}
+
+  .status-strip{padding:32px 0 0;}
+  .status-note{
+    background:var(--paper-2); border-left:3px solid var(--accent);
+    padding:14px 18px; font-size:15px; line-height:1.5; color:var(--ink-soft); max-width:68ch;
+  }
+  .status-note strong{color:var(--ink); font-weight:600;}
+  .status-note .status-date{display:block; margin-top:6px; font-size:14px; color:var(--ink-faint);}
+
+  .hero{background:var(--paper); padding:56px 0 64px; border-bottom:1px solid var(--rule);}
+  .hero h1{font-size:clamp(36px, 5.2vw, 60px); line-height:1.05; font-weight:500; margin-top:16px; max-width:24ch;}
+  .hero .sub{max-width:68ch; font-size:21px; color:var(--ink-soft); margin:24px 0 0; line-height:1.45;}
+  .hero .meta{margin:32px 0 0; padding-top:16px; border-top:1px solid var(--rule); max-width:780px; display:grid; grid-template-columns:max-content 1fr; gap:6px 20px; font-size:14px; line-height:1.45; color:var(--ink-faint);}
+  .hero .meta dt{color:var(--ink); font-weight:500;}
+  .hero .meta dd{margin:0;}
+  @media (max-width:600px){ .hero .meta{grid-template-columns:1fr; gap:2px;} .hero .meta dd{margin-bottom:8px;} }
+
+  section{padding:72px 0;}
+  section + section{border-top:1px solid var(--rule);}
+  .sec-head{max-width:760px; margin-bottom:32px;}
+  .sec-head h2{font-size:clamp(26px,3vw,36px); line-height:1.15; font-weight:500; margin-top:10px;}
+  .sec-head p{color:var(--ink-soft); margin:16px 0 0; font-size:17px; max-width:68ch;}
+
+  .note{background:var(--paper-2); padding:18px 20px; font-size:16px; line-height:1.55; color:var(--ink-soft); margin:20px 0; max-width:68ch;}
+  .note b{color:var(--ink); font-weight:600;}
+  p{max-width:68ch;}
+  ul.opts{padding-left:20px; max-width:68ch;}
+  ul.opts li{margin-bottom:10px; line-height:1.55; color:var(--ink-soft);}
+  ul.opts li b, ul.opts li strong{color:var(--ink); font-weight:600;}
+
+  .cardgrid{display:flex; flex-direction:column; gap:16px; margin-top:24px;}
+  .card{background:var(--paper-2); padding:24px 26px;}
+  .card-head{display:flex; align-items:baseline; justify-content:space-between; gap:12px; flex-wrap:wrap; margin-bottom:10px;}
+  .card-head h3{font-size:20px; line-height:1.25; font-weight:600;}
+  .card .tag{font-size:13px; color:var(--ink-faint); border:1px solid var(--rule-strong); border-radius:999px; padding:3px 10px; white-space:nowrap;}
+  .card p{font-size:16px; color:var(--ink-soft); line-height:1.55; margin:0 0 14px;}
+  .trade{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+  .trade div{font-size:14.5px; line-height:1.55; color:var(--ink-soft);}
+  .trade .lbl{display:block; font-size:12px; letter-spacing:.04em; text-transform:uppercase; color:var(--ink-faint); margin-bottom:6px;}
+  @media (max-width:640px){ .trade{grid-template-columns:1fr;} }
+
+  .tbl-wrap{overflow-x:auto; margin:24px 0;}
+  table{width:100%; border-collapse:collapse; font-size:14.5px; min-width:680px;}
+  thead th{background:var(--ink); color:var(--paper); text-align:left; font-weight:600; font-size:13px; letter-spacing:.03em; text-transform:uppercase; padding:11px 14px;}
+  tbody td{padding:13px 14px; border-bottom:1px solid var(--rule); vertical-align:top; color:var(--ink-soft);}
+  tbody tr:nth-child(even){background:var(--paper-2);}
+  tbody td:first-child{font-weight:600; color:var(--ink);}
+
+  .qlist{counter-reset:q; margin:24px 0; padding:0; list-style:none; max-width:68ch;}
+  .qlist li{counter-increment:q; display:grid; grid-template-columns:30px 1fr; gap:14px; padding:16px 0; border-bottom:1px dashed var(--rule);}
+  .qlist li:last-child{border-bottom:none;}
+  .qlist li::before{content:counter(q); font-size:20px; font-weight:600; color:var(--ink-faint);}
+  .qlist .q-title{display:block; font-weight:600; color:var(--ink); margin-bottom:3px;}
+  .qlist p{color:var(--ink-soft); font-size:15.5px; margin:0;}
+
+  .disclaimer{font-size:14px; font-style:italic; color:var(--ink-faint); max-width:68ch;}
+
+  footer{background:var(--paper); color:var(--ink-soft); padding:56px 0 48px; font-size:14px; line-height:1.55; border-top:1px solid var(--rule);}
+  footer a{color:var(--ink-soft); text-decoration:none;}
+  footer a:hover{color:var(--ink); text-decoration:underline; text-decoration-color:var(--accent);}
+  footer .wrap{display:flex; justify-content:space-between; flex-wrap:wrap; gap:24px 32px;}
+  footer .foot-title{font-size:15px; font-weight:600; color:var(--ink); margin-bottom:6px;}
+  footer .foot-links{line-height:2;}
+  footer .credit{flex:1 1 100%; margin-top:32px; padding-top:20px; border-top:1px solid var(--rule); color:var(--ink-faint);}
+  footer .credit a{color:var(--ink-faint); text-decoration:underline; text-decoration-color:var(--accent); text-underline-offset:3px;}
+  footer .sources{list-style:none; padding:0; margin:12px 0 0; max-width:none;}
+  footer .sources li{padding:8px 0; border-bottom:1px solid var(--rule); font-size:13.5px;}
+  footer .sources li:first-child{border-top:1px solid var(--rule);}
+
+  @media (max-width:760px){
+    .wrap{padding:0 16px;}
+    .navrow{padding:12px 16px; flex-wrap:wrap; gap:6px 16px;}
+    .hero{padding:40px 0 48px;}
+    .hero .sub{font-size:19px;}
+    section{padding:48px 0;}
+  }
+</style>
+<!-- fai:head -->
+<meta name="description" content="A reference guide for how the Camden Food Partnership could be hosted and legally structured as it matures, drawing on the Kauffman Foundation’s ecosystem playbook and the Sustainable Food Places network of over 100 UK food partnerships.">
+<link rel="canonical" href="https://food.darkmatterlabs.org/food-partnership-operating-options.html">
+<meta name="theme-color" content="#111112">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Food as Infrastructure, Dark Matter Labs">
+<meta property="og:locale" content="en_GB">
+<meta property="og:url" content="https://food.darkmatterlabs.org/food-partnership-operating-options.html">
+<meta property="og:title" content="Options for How the Partnership Could Operate">
+<meta property="og:description" content="A reference guide for how the Camden Food Partnership could be hosted and legally structured as it matures, drawing on the Kauffman Foundation’s ecosystem playbook and the Sustainable Food Places network of over 100 UK food partnerships.">
+<meta property="og:image" content="https://food.darkmatterlabs.org/assets/fai/social/food-partnership-operating-options.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Options for How the Partnership Could Operate. Food as Infrastructure, Dark Matter Labs.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Options for How the Partnership Could Operate">
+<meta name="twitter:description" content="A reference guide for how the Camden Food Partnership could be hosted and legally structured as it matures, drawing on the Kauffman Foundation’s ecosystem playbook and the Sustainable Food Places network of over 100 UK food partnerships.">
+<meta name="twitter:image" content="https://food.darkmatterlabs.org/assets/fai/social/food-partnership-operating-options.png">
+<meta name="twitter:image:alt" content="Options for How the Partnership Could Operate. Food as Infrastructure, Dark Matter Labs.">
+<link rel="icon" href="assets/fai/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400..900;1,400..700&display=swap">
+<link rel="stylesheet" href="assets/fai/fai.css">
+<!-- /fai:head -->
+</head>
+<body>
+<!-- fai:bar -->
+<div class="fai-bar">
+  <div class="fai-bar__inner">
+    <a class="fai-bar__dm" href="https://darkmatterlabs.org/"><img class="fai-bar__lockup" src="assets/brand/dm-logo-v1-white.svg" alt="Dark Matter Labs" width="102" height="20"><img class="fai-bar__stamp" src="assets/brand/dm-stamp-white.svg" alt="Dark Matter Labs" width="20" height="20"></a>
+    <span class="fai-bar__sep" aria-hidden="true"></span>
+    <a class="fai-bar__mission" href="index.html">Food as Infrastructure</a>
+    <span class="fai-bar__here"><span class="fai-el fai-el--camden fai-el--draft" aria-hidden="true"><b>Fp</b><i>21</i></span><span>Food Partnership Operating Options</span></span>
+    <a class="fai-bar__xco" href="https://optionality.darkmatterlabs.org/" target="_blank" rel="noopener" title="Dark Matter Labs' Expanding Civilizational Optionality portfolio">xCO portfolio<span aria-hidden="true"> ↗</span></a>
+    <div class="fai-bar__links" role="navigation" aria-label="Site"><a href="index.html">Portfolio</a><a href="library.html">Library</a></div>
+  </div>
+</div>
+<!-- /fai:bar -->
+
+<nav>
+  <div class="navrow">
+    <div class="navbrand">Food Partnership Operating Options</div>
+    <div class="navlinks">
+      <a href="#purpose">Purpose</a>
+      <a href="#today">CFP today</a>
+      <a href="#framework">Kauffman framework</a>
+      <a href="#hosting">Who hosts it</a>
+      <a href="#legal">Legal structure</a>
+      <a href="#governance">Governance</a>
+      <a href="#questions">Questions to decide</a>
+    </div>
+  </div>
+</nav>
+
+<div class="status-strip">
+  <div class="wrap">
+    <div class="status-note">
+      <p><strong>Reference guide, shared with Camden in July 2026.</strong> This is a distillation of a guide Dark Matter Labs built for the Camden Food Partnership and its Catalyst group, drawing on the Kauffman Foundation's ecosystem-building work and on best practice from Sustain and the Sustainable Food Places network of over 100 UK local food partnerships. It sets out options, not a recommendation: the right choice depends on what the Partnership wants to do next.</p>
+      <span class="status-date">Working draft, published October 2026</span>
+    </div>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Operating models · Governance · Legal structure</div>
+    <h1>Options for how the Partnership could operate</h1>
+    <p class="sub">The Camden Food Partnership has grown quickly since it formed in 2020, gaining Sustainable Food Places network membership in 2024 and a Steering Group bringing together over 60 member organisations. As partnerships mature, most reach a point where the informal arrangements that got them started no longer fit the scale of what they're doing. This guide sets out the main options for how CFP could be organised and led going forward, drawing on two bodies of practice: the Kauffman Foundation's Entrepreneurial Ecosystem Building Playbook, and Sustain and Sustainable Food Places' own documentation of how peer partnerships such as Brighton &amp; Hove, Lambeth, Plymouth, Lewisham and Bristol have organised themselves.</p>
+    <dl class="meta">
+      <dt>Written for</dt><dd>Camden Food Partnership's Steering Group, to help decide whether and when to change its hosting or legal arrangement</dd>
+      <dt>Drawing on</dt><dd>The Kauffman Foundation's Entrepreneurial Ecosystem Building Playbook, and Sustain / Sustainable Food Places' guidance for over 100 UK local food partnerships</dd>
+      <dt>Companion to</dt><dd><a href="options-for-camden.html#opt-10">Option 10, from talking shop to action-oriented ecosystem</a>, on Options and Indicators for Camden</dd>
+    </dl>
+  </div>
+</header>
+
+<section id="purpose">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">01 — Introduction</div>
+      <h2>Purpose of this guide</h2>
+      <p>This guide does not recommend a single answer: the right choice depends on what the Partnership wants to do next, how much risk and funding it expects to hold, and how its members want to be represented.</p>
+    </div>
+    <ul class="opts">
+      <li><strong>The Kauffman Foundation's Entrepreneurial Ecosystem Building Playbook</strong> — not written for food partnerships, but built from decades of experience convening cross-sector local coalitions. Its principles about ecosystem "building" (bottom-up, relational, evolving structures) map closely onto how food partnerships work.</li>
+      <li><strong>Sustain and Sustainable Food Places (SFP)</strong> — the UK network of over 100 local food partnerships, which has directly documented the hosting arrangements and legal structures that peers such as Brighton &amp; Hove, Lambeth, Plymouth, Lewisham and Bristol have adopted, and why.</li>
+    </ul>
+  </div>
+</section>
+
+<section id="today">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">02 — Current position</div>
+      <h2>Camden Food Partnership today</h2>
+      <p>CFP currently operates as a partnership rather than a stand-alone legal entity. Since 2022, the local charity <strong>FEAST</strong> has coordinated it in partnership with Camden Council, steered by a Steering Group with agreed Terms of Reference that meets roughly every eight weeks, alongside working groups delivering the action plan.</p>
+    </div>
+    <div class="note"><b>Why this matters:</b> this is a common and sensible starting model — exactly the kind of lightweight, relationship-first structure that most food partnerships (and, per Kauffman, most entrepreneurial ecosystems) start with. The question this guide addresses is what CFP's options are as it considers its next stage.</div>
+  </div>
+</section>
+
+<section id="framework">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">03 — Frame of reference</div>
+      <h2>A framework for the choice: lessons from Kauffman</h2>
+      <p>The Kauffman Playbook is explicit that ecosystem building "is about process, not product; context, not content," and that the strongest local coalitions are built on sustained relationships rather than formal infrastructure. Three of its design principles are directly useful for CFP's decision:</p>
+    </div>
+    <ul class="opts">
+      <li><strong>Put the people at the centre.</strong> For an entrepreneurial ecosystem this means founders; for CFP it means residents experiencing food insecurity and the frontline organisations supporting them. Whatever structure is chosen should keep decision-making close to these voices, not add layers between them and the Partnership.</li>
+      <li><strong>Connect bottom-up, top-down and outside-in.</strong> Kauffman stresses that effective local coalitions combine grassroots organisations, senior institutional backing (in CFP's case, the Council and NHS), and outside expertise or funding. Any operating model should preserve all three — losing the Council's active backing, for example, would weaken CFP's ability to influence procurement, planning or public health policy.</li>
+      <li><strong>Structures should evolve as the ecosystem grows.</strong> The Playbook does not prescribe one governance model; it expects the "invisible infrastructure" supporting an ecosystem to change shape over time. Sustain's own guidance echoes this almost exactly: partnerships are encouraged to review their structure every couple of years rather than treat an early choice as permanent.</li>
+    </ul>
+    <p>In practice, this means CFP's decision is really two separate, sequential questions: <strong>(A)</strong> who leads and hosts the Partnership day-to-day, and <strong>(B)</strong> if it becomes independent, what legal form it should take. The rest of this guide takes each in turn.</p>
+  </div>
+</section>
+
+<section id="hosting">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">04 — Option set A</div>
+      <h2>Who leads and hosts the Partnership</h2>
+      <p>SFP's experience across its network is that food partnerships are led and hosted successfully under several different arrangements, and there is no single right answer — but SFP is consistent that active, ongoing support from the local authority is essential under any model, since councils hold much of the procurement, planning, public health and licensing power needed to shift a local food system.</p>
+    </div>
+    <div class="cardgrid">
+      <div class="card">
+        <div class="card-head"><h3>Council-hosted</h3><span class="tag">Closest to policy</span></div>
+        <p>The Partnership sits formally within the Council (e.g. Public Health or a community team), with Council officers coordinating it directly.</p>
+        <div class="trade">
+          <div><span class="lbl">Strengths</span>Closest possible link to Council policy, resources and decision-making; quicker to set up; benefits from Council administrative and financial infrastructure.</div>
+          <div><span class="lbl">Trade-offs</span>Can be perceived as less independent by community and voluntary sector members; capacity depends on Council staffing and budget cycles; harder to hold funding restricted to non-statutory bodies.</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-head"><h3>Hosted by a third-sector organisation</h3><span class="tag">CFP's current model</span></div>
+        <p>An existing local charity or community organisation employs the coordinator and manages the budget on the Partnership's behalf — the model CFP already uses with FEAST. Good Food Lewisham (hosted by Lewisham Local) and Nourish Hub in Hammersmith &amp; Fulham (delivered by charity UKHarvest with Council co-funding) are comparable London examples.</p>
+        <div class="trade">
+          <div><span class="lbl">Strengths</span>Lower set-up cost and complexity than a new legal entity; host brings existing HR, insurance, banking and charitable status; can feel more independent and community-rooted than council hosting.</div>
+          <div><span class="lbl">Trade-offs</span>Continuity depends on the health and priorities of the host organisation; strategy can become entangled with the host's own remit; larger or longer-term funders sometimes want to see a dedicated body first.</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-head"><h3>Independent partnership</h3><span class="tag">Own legal entity</span></div>
+        <p>The Partnership incorporates in its own right — the path taken by Brighton &amp; Hove Food Partnership, Lambeth Food Partnership, Good Food Oxford and Food Plymouth as they matured.</p>
+        <div class="trade">
+          <div><span class="lbl">Strengths</span>Distinct identity and brand; can hold funding, contracts and property, and employ staff directly; a governing board can represent members formally; often preferred by larger funders.</div>
+          <div><span class="lbl">Trade-offs</span>More time and cost to set up and run (annual filings, accounts, sometimes audits); requires recruiting and supporting a governing board; loses a host organisation's built-in infrastructure.</div>
+        </div>
+      </div>
+    </div>
+    <p style="margin-top:24px;">Sustain notes that most independent food partnerships did not start this way — they typically began as an informal or hosted partnership and incorporated once their funding, staffing or risk profile had grown enough to justify it. This mirrors CFP's own trajectory: an unincorporated, hosted arrangement now, with independence as one possible future step rather than an immediate necessity.</p>
+  </div>
+</section>
+
+<section id="legal">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">05 — Option set B</div>
+      <h2>If CFP becomes independent, which legal form</h2>
+      <p>If and when CFP (or its Steering Group) decides to become a freestanding organisation, Sustain's guidance for food partnerships sets out six broad options. None is objectively "best" — the right choice depends on whether the Partnership will employ staff, hold property, take on financial risk, and how it wants funders and members to see it.</p>
+      <p class="disclaimer">As with any legal or financial decision, CFP should take independent professional advice before committing to a structure; the summary below is for orientation, not a substitute for that advice.</p>
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr><th>Structure</th><th>Best suited to</th><th>Key trade-off</th><th>Example food partnerships</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Unincorporated association</td>
+            <td>A partnership with no paid staff, no property, and low financial risk, that wants a simple membership structure</td>
+            <td>No separate legal identity — members are personally liable, and it cannot hold contracts or property in its own name</td>
+            <td>Wells Food Network; Cambridge Sustainable Food (early stage)</td>
+          </tr>
+          <tr>
+            <td>Company limited by guarantee</td>
+            <td>A partnership that employs staff, holds contracts, or expects to take on financial risk</td>
+            <td>More reporting: annual accounts and Companies House filings; costs more to run than staying unincorporated</td>
+            <td>Brighton &amp; Hove Food Partnership; Lambeth Food Partnership; Liverpool Food People</td>
+          </tr>
+          <tr>
+            <td>Community Interest Company (CIC)</td>
+            <td>A partnership that wants to badge itself clearly as a social enterprise, may want to pay board members, and expects to hold assets or take on risk</td>
+            <td>Cannot also register as a charity; pays tax on profits; some funders avoid CICs</td>
+            <td>Bristol Food Network CIC; Food Plymouth CIC</td>
+          </tr>
+          <tr>
+            <td>Charity (unincorporated or as a company)</td>
+            <td>A partnership whose aims are exclusively charitable (e.g. relief of poverty, advancement of health) and wants access to charitable grants and tax reliefs</td>
+            <td>The Charity Commission has rejected some food partnerships whose objects include promoting local food businesses, as this is not a charitable purpose</td>
+            <td>Several SFP members have applied; success has depended on how charitable objects are framed</td>
+          </tr>
+          <tr>
+            <td>Charitable Incorporated Organisation (CIO)</td>
+            <td>A partnership that wants charity status and a separate legal identity, without the extra Companies House reporting a charitable company requires</td>
+            <td>If the organisation ever stops being charitable it must close, unlike a charitable company, which can continue as a non-charity</td>
+            <td>Brighton &amp; Hove Food Partnership has explored moving to this structure</td>
+          </tr>
+          <tr>
+            <td>Industrial &amp; Provident / Community Benefit Society</td>
+            <td>A partnership wanting a democratic, member-owned structure, potentially raising funds by issuing community shares</td>
+            <td>More costly to register; regulated separately from Companies House</td>
+            <td>Greenwich Cooperative Development Agency (hosts Good Food Greenwich)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p>A general pattern across the network: partnerships that will not employ staff, hold property, or take on financial risk tend to stay unincorporated for simplicity; those that grow into employing a coordinator or delivery team, or want to hold multi-year grants and contracts directly, tend to incorporate — most often as a company limited by guarantee, sometimes adding charitable or CIC status once their objects and funding needs are clearer.</p>
+  </div>
+</section>
+
+<section id="governance">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">06 — Regardless of structure</div>
+      <h2>Governance essentials</h2>
+      <p>Whichever hosting and legal options CFP chooses, SFP's experience points to a small number of governance features that tend to make partnerships effective:</p>
+    </div>
+    <ul class="opts">
+      <li>A Steering Group with clear Terms of Reference and representation across the Council, NHS/public health, food aid and community organisations, and residents — CFP already has this.</li>
+      <li>A named coordinator role (paid or hosted) to convene the Steering Group, run working groups, and hold the partnership's day-to-day momentum — the role FEAST currently plays for CFP.</li>
+      <li>A shared strategy or action plan, co-produced with members, that gives the Steering Group's work a common reference point — CFP's Good Food Principles and action plan already serve this function.</li>
+      <li>Regular review of the governance structure itself. Sustain's own advice to food partnerships is to "check in every couple of years with the Board to make sure [governance arrangements] meet the needs of the organisation" — effectively the same advice Kauffman gives ecosystem builders: let the structure evolve as the work grows, rather than treating an early choice as fixed.</li>
+    </ul>
+  </div>
+</section>
+
+<section id="questions">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">07 — Applying this to CFP</div>
+      <h2>Questions to help make the choice</h2>
+      <p>The following questions, drawn from both frameworks, can help the Steering Group decide whether and when to change CFP's current hosting or legal arrangement:</p>
+    </div>
+    <ol class="qlist">
+      <li><div><span class="q-title">Funding and risk</span><p>Is CFP being offered — or likely to seek — grants or contracts that require a legal entity, or that are too large or long-term for a hosted arrangement to manage comfortably?</p></div></li>
+      <li><div><span class="q-title">Staffing</span><p>Does CFP need to employ people directly, rather than through FEAST or another host, in order to secure the roles it needs?</p></div></li>
+      <li><div><span class="q-title">Independence and identity</span><p>Do members feel the Partnership needs a more clearly independent identity, separate from any single host organisation, to be credible with funders or residents?</p></div></li>
+      <li><div><span class="q-title">Capacity to govern</span><p>Can the Steering Group realistically recruit and support a formal governing board, with the added reporting and legal duties that a company, CIC or charity involves?</p></div></li>
+      <li><div><span class="q-title">Council relationship</span><p>Whatever option is chosen, does it preserve active, senior-level Council support and involvement — which every source consulted for this guide treats as essential to a food partnership's influence, regardless of hosting model?</p></div></li>
+    </ol>
+    <div class="note"><b>Where this points:</b> where the answer to most of these is "not yet," continuing with the current FEAST/Council-hosted, unincorporated arrangement — and revisiting the question in a year or two — is a reasonable, well-precedented choice. Where the answers point towards significant new funding, staff, or risk, moving towards an independent legal structure (most commonly a company limited by guarantee, potentially adding CIC or charitable status later) is the path most comparable London partnerships have taken.</div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <div class="foot-title">Food Partnership Operating Options</div>
+      <div class="foot-links">
+        <a href="index.html">Food as Infrastructure</a><br>
+        <a href="options-for-camden.html">Options and Indicators for Camden</a><br>
+        <a href="hubs-and-markets-working-group.html">Hubs &amp; Markets Working Group</a><br>
+        <a href="library.html">Library</a>
+      </div>
+    </div>
+    <div class="credit">
+      <p style="margin:0 0 10px;">Drawn up for the Camden Food Partnership and its Catalyst group in July 2026. This page covers the general hosting-and-legal-structure guidance only (sections on how it applies to Camden's own internal Food Mission framework, and to how Catalyst Partners currently relate to the Steering Group, sit with Camden internally and aren't included here). As with any legal or financial decision, CFP should take independent professional advice before committing to a structure.</p>
+      <ul class="sources">
+        <li>Ewing Marion Kauffman Foundation, <em>Entrepreneurial Ecosystem Building Playbook 3.0</em> (2019)</li>
+        <li>Sustainable Food Places / Food Matters, <em>Organisational Structures and Legal Status: A quick guide for food partnerships</em> (Nov 2017)</li>
+        <li>Sustainable Food Places, <em>Food Partnership Structures: Stories from Sustainable Food Places / Cities</em></li>
+        <li>Sustainable Food Places, <em>What are Sustainable Food Places</em> and <em>Food Governance and Strategy</em> pages</li>
+        <li>Sustain, <em>The value of local food partnerships: Covid and beyond</em> (2022) and Good Food Local London case studies</li>
+      </ul>
+      <p style="margin-top:16px;">Parts of this page were drafted with AI assistance (Claude). Licensed CC BY-SA 4.0 — see the <a href="index.html">homepage</a> for full credit and lineage.</p>
+    </div>
+  </div>
+</footer>
+
+<!-- fai:footer -->
+<footer class="fai-footer">
+  <div class="fai-footer__inner">
+    <span>Part of Dark Matter Labs' <a href="https://optionality.darkmatterlabs.org/" target="_blank" rel="noopener">xCO portfolio<span aria-hidden="true"> ↗</span></a>, expanding civilizational optionality.</span>
+  </div>
+</footer>
+<!-- /fai:footer -->
+</body>
+</html>
