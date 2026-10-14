@@ -276,6 +276,19 @@
       "summary": "A reference guide for how the Camden Food Partnership could be hosted and legally structured as it matures, drawing on the Kauffman Foundation’s ecosystem playbook and the Sustainable Food Places network of over 100 UK food partnerships.",
       "pdf": false,
       "surface": "paper"
+    },
+    {
+      "n": 22,
+      "sym": "Fi",
+      "file": "food-hubs-and-infrastructure.html",
+      "name": "Food Hubs & Infrastructure",
+      "scope": "london",
+      "status": "draft",
+      "listed": true,
+      "title": "Food Hubs and the Need for Infrastructure",
+      "summary": "The Felix Project’s own case for treating community food as infrastructure, not emergency response: the food waste challenge, the wider cost of inaction, and three ways a food hub can be built.",
+      "pdf": false,
+      "surface": "paper"
     }
   ]
 }
