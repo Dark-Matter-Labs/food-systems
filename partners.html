@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>London Food Partners (draft) — Food as Infrastructure</title>
+<style>
+/* Paper document. Sheet 1: schematic borough map by stage, plus London-wide partners by role. Sheet 2: the register. */
+:root{
+  --st-active:#2E7D6B;           /* hub teal */
+  --st-active-ink:#FFFFFF;
+  --st-booked:#A86A1F;           /* supply ochre */
+  --st-booked-ink:#FFFFFF;
+  --st-intro:rgba(138,139,132,.22);  /* neutral, tinted */
+  --st-intro-ink:var(--fai-ink);
+}
+body{margin:0;background:var(--fai-paper);color:var(--fai-ink)}
+.wrap{max-width:1200px;margin:0 auto;padding-left:32px;padding-right:32px}
+@media (max-width:640px){.wrap{padding-left:16px;padding-right:16px}}
+.status-strip{padding-top:32px}
+.status-note{background:var(--fai-field);border-left:3px solid var(--fai-beet);padding:14px 18px;font-size:15px;line-height:1.5;max-width:80ch}
+.status-note p{margin:0}
+.hero{padding-block:40px 24px}
+.kicker{font-size:14px;color:var(--fai-ink-3);margin:0 0 12px}
+h1{font-size:clamp(40px,6vw,76px);font-weight:500;line-height:1.02;margin:0;max-width:18ch;text-wrap:balance}
+.lede{font-size:21px;line-height:1.45;color:var(--fai-ink-2);max-width:60ch;margin:20px 0 0}
+section{padding-block:56px}
+section+section{border-top:1px solid var(--fai-rule)}
+h2{font-size:clamp(28px,3.4vw,40px);font-weight:500;line-height:1.1;margin:0 0 12px;text-wrap:balance}
+h3{font-size:20px;font-weight:600;line-height:1.25;margin:0 0 8px}
+.body{font-size:17px;line-height:1.6;max-width:68ch;color:var(--fai-ink-2);margin:0 0 28px}
+.figures{display:flex;flex-wrap:wrap;gap:12px 36px;margin:28px 0 0}
+.figures div{font-size:14px;color:var(--fai-ink-3)}
+.figures b{display:block;font-size:34px;font-weight:500;color:var(--fai-ink);font-variant-numeric:tabular-nums;line-height:1.1}
+.key{display:flex;flex-wrap:wrap;gap:8px 20px;font-size:14px;color:var(--fai-ink-2);margin:0 0 18px;padding:0;list-style:none}
+.key li{display:flex;align-items:center;gap:8px}
+.sw{width:14px;height:14px;display:inline-block}
+.st1{background:var(--st-active);color:var(--st-active-ink)}
+.st2{background:var(--st-booked);color:var(--st-booked-ink)}
+.st3{background:var(--st-intro);color:var(--st-intro-ink)}
+.st4{background:var(--fai-paper);color:var(--fai-ink-3);box-shadow:inset 0 0 0 1px var(--fai-rule)}
+.mapgrid{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:40px;align-items:start}
+@media (max-width:860px){.mapgrid{grid-template-columns:1fr}}
+.tiles{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:4px}
+.tile{aspect-ratio:1;padding:6px;display:flex;flex-direction:column;justify-content:space-between;min-width:0}
+.tile .ab{font-size:13px;font-weight:600;line-height:1}
+.tile .nm{font-size:10.5px;line-height:1.15;overflow-wrap:anywhere}
+@media (max-width:640px){.tile .nm{display:none}.tile .ab{font-size:11px}}
+.caption{font-size:14px;line-height:1.45;color:var(--fai-ink-3);margin:12px 0 0;max-width:68ch}
+.roles{display:grid;gap:24px}
+.role ul{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.role li{display:grid;grid-template-columns:12px 1fr;gap:10px;align-items:baseline;font-size:15px;line-height:1.4}
+.role li .sw{width:12px;height:12px;transform:translateY(1px)}
+.role li span.n{color:var(--fai-ink-3)}
+.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:40px}
+@media (max-width:860px){.cards{grid-template-columns:1fr}}
+.card{background:var(--fai-field);padding:20px}
+.card p{margin:0;font-size:15px;line-height:1.5;color:var(--fai-ink-2)}
+.tablewrap{overflow-x:auto}
+table{width:100%;min-width:760px;border-collapse:collapse;font-size:15px;line-height:1.45}
+thead th{background:var(--fai-field);text-align:left;font-weight:600;font-size:14px;padding:10px 12px}
+td{padding:10px 12px;border-bottom:1px solid var(--fai-rule);vertical-align:top}
+td:first-child{font-weight:600;min-width:180px}
+td.role-c{color:var(--fai-ink-2)}
+tr.grp th{background:none;text-align:left;font-size:20px;font-weight:600;padding:32px 12px 8px;border-bottom:1px solid var(--fai-rule-strong)}
+.chip{display:inline-block;font-size:13px;line-height:1;padding:5px 9px;border-radius:999px;white-space:nowrap}
+.chip.st4{box-shadow:inset 0 0 0 1px var(--fai-rule-strong)}
+@media print{section{break-inside:auto}#register{break-before:page}}
+</style>
+<!-- fai:head -->
+<meta name="description" content="Who Dark Matter Labs is working with on London&#x27;s food system: boroughs, hubs, supply and evidence partners, by role and stage.">
+<link rel="canonical" href="https://food.darkmatterlabs.org/partners.html">
+<meta name="theme-color" content="#111112">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Food as Infrastructure, Dark Matter Labs">
+<meta property="og:locale" content="en_GB">
+<meta property="og:url" content="https://food.darkmatterlabs.org/partners.html">
+<meta property="og:title" content="London Food Partners">
+<meta property="og:description" content="Who Dark Matter Labs is working with on London&#x27;s food system: boroughs, hubs, supply and evidence partners, by role and stage.">
+<meta property="og:image" content="https://food.darkmatterlabs.org/assets/fai/social/partners.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="London Food Partners. Food as Infrastructure, Dark Matter Labs.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="London Food Partners">
+<meta name="twitter:description" content="Who Dark Matter Labs is working with on London&#x27;s food system: boroughs, hubs, supply and evidence partners, by role and stage.">
+<meta name="twitter:image" content="https://food.darkmatterlabs.org/assets/fai/social/partners.png">
+<meta name="twitter:image:alt" content="London Food Partners. Food as Infrastructure, Dark Matter Labs.">
+<link rel="icon" href="assets/fai/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400..900;1,400..700&display=swap">
+<link rel="stylesheet" href="assets/fai/fai.css">
+<!-- /fai:head -->
+</head>
+<body>
+<!-- fai:bar -->
+<div class="fai-bar">
+  <div class="fai-bar__inner">
+    <a class="fai-bar__dm" href="https://darkmatterlabs.org/"><img class="fai-bar__lockup" src="assets/brand/dm-logo-v1-white.svg" alt="Dark Matter Labs" width="102" height="20"><img class="fai-bar__stamp" src="assets/brand/dm-stamp-white.svg" alt="Dark Matter Labs" width="20" height="20"></a>
+    <span class="fai-bar__sep" aria-hidden="true"></span>
+    <a class="fai-bar__mission" href="index.html">Food as Infrastructure</a>
+    <span class="fai-bar__here"><span class="fai-el fai-el--draft" aria-hidden="true"><b>Pn</b><i>22</i></span><span>Partners</span></span>
+    <a class="fai-bar__xco" href="https://optionality.darkmatterlabs.org/" target="_blank" rel="noopener" title="Dark Matter Labs' Expanding Civilizational Optionality portfolio">xCO portfolio<span aria-hidden="true"> ↗</span></a>
+    <div class="fai-bar__links" role="navigation" aria-label="Site"><a href="index.html">Portfolio</a><a href="library.html">Library</a></div>
+  </div>
+</div>
+<!-- /fai:bar -->
+
+<div class="status-strip">
+  <div class="wrap">
+    <div class="status-note"><p><strong>Working draft, October 2026.</strong> A snapshot of the organisations Dark Matter Labs is working with, or starting to work with, on London's food system. A stage describes where the conversation is. It doesn't mean a funded or signed agreement.</p></div>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="wrap">
+    <p class="kicker">Food as Infrastructure, London</p>
+    <h1>Who we are building London's civic food system with</h1>
+    <p class="lede">Camden, Islington and Hackney are active partners. We are aligning our bids and shared working infrastructure with Sustain, and will do the same with Newham. Seven more boroughs have first meetings set for October and November.</p>
+    <div class="figures">
+      <div><b>3</b>active boroughs</div>
+      <div><b>8</b>boroughs with meetings set</div>
+      <div><b>7</b>boroughs introduced</div>
+      <div><b>25+</b>delivery, supply and evidence partners</div>
+    </div>
+  </div>
+</header>
+
+<section id="map">
+  <div class="wrap">
+    <h2>Where the work reaches across London</h2>
+    <p class="body">Each square is a borough, placed roughly where it sits on the map. The panel on the right lists the partners who work across borough lines.</p>
+    <ul class="key" aria-label="Stage key">
+      <li><i class="sw st1"></i>Active partner</li>
+      <li><i class="sw st2"></i>Meeting set</li>
+      <li><i class="sw st3"></i>Introduced or in discussion</li>
+      <li><i class="sw st4"></i>Not yet engaged</li>
+    </ul>
+    <div class="mapgrid">
+      <div>
+        <div class="tiles" id="tiles" role="img" aria-label="Schematic map of London's 33 boroughs coloured by partnership stage"></div>
+        <p class="caption">Kingston, Hounslow and Tower Hamlets are introduced through local hub and food organisations rather than the council.</p>
+      </div>
+      <div class="roles" id="roles"></div>
+    </div>
+    <div class="cards">
+      <div class="card"><h3>Three boroughs already working together</h3><p>Camden, Islington and Hackney share the Hubs &amp; Markets Working Group and are developing collective buying and hub infrastructure side by side.</p></div>
+      <div class="card"><h3>Aligned bids and shared infrastructure</h3><p>We are working with Sustain so our bids and ongoing working infrastructure line up rather than overlap. We are starting the same conversation with Newham.</p></div>
+      <div class="card"><h3>A network that keeps widening</h3><p>Felix's partnership team has introduced us to seven boroughs and hub operators in the past fortnight, mostly in South and West London.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="register">
+  <div class="wrap">
+    <h2>Every partner, their role and stage</h2>
+    <p class="body">Grouped by the part of the food system each partner holds. Stages as of 16 October 2026.</p>
+    <div class="tablewrap"><table>
+      <thead><tr><th scope="col">Partner</th><th scope="col">Type</th><th scope="col">Likely role in the work</th><th scope="col">Stage</th><th scope="col">Next</th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table></div>
+    <p class="caption">See the wider portfolio at <a href="index.html">Food as Infrastructure</a>.</p>
+  </div>
+</section>
+
+<script>
+(function(){
+const ST={1:"Active",2:"Meeting set",3:"Introduced",4:"Not yet"};
+const B=[
+["Enf","Enfield",4,0,4],
+["Bar","Barnet",3,1,4],["Hgy","Haringey",4,1,2],["WF","Waltham Forest",5,1,2],
+["Hrw","Harrow",1,2,4],["Brt","Brent",2,2,3],["Cmd","Camden",3,2,1],["Isl","Islington",4,2,1],["Hck","Hackney",5,2,1],["Rdb","Redbridge",6,2,3],["Hav","Havering",7,2,2],
+["Hil","Hillingdon",0,3,4],["Eal","Ealing",1,3,4],["K&C","Kensington and Chelsea",2,3,4],["Wst","Westminster",3,3,4],["City","City of London",4,3,4],["TH","Tower Hamlets",5,3,3],["Nwm","Newham",6,3,2],["B&D","Barking and Dagenham",7,3,2],
+["Hns","Hounslow",0,4,3],["H&F","Hammersmith and Fulham",1,4,4],["Wnd","Wandsworth",2,4,4],["Lam","Lambeth",3,4,2],["Swk","Southwark",4,4,4],["Lew","Lewisham",5,4,3],["Grn","Greenwich",6,4,3],["Bex","Bexley",7,4,4],
+["Ric","Richmond",1,5,4],["Kng","Kingston",2,5,3],["Mrt","Merton",3,5,3],["Cro","Croydon",4,5,2],["Brm","Bromley",5,5,4],
+["Sut","Sutton",3,6,4]
+];
+const t=document.getElementById("tiles"),cells=new Map(B.map(b=>[b[2]+","+b[3],b]));
+for(let r=0;r<7;r++)for(let c=0;c<8;c++){const b=cells.get(c+","+r);
+ if(!b){t.append(document.createElement("span"));continue}
+ const d=document.createElement("div");d.className="tile st"+b[4];d.title=b[1]+": "+ST[b[4]];
+ const ab=document.createElement("span");ab.className="ab";ab.textContent=b[0];
+ const nm=document.createElement("span");nm.className="nm";nm.textContent=b[1];d.append(ab,nm);t.append(d)}
+const R=[
+["Hubs, redistribution and convening",[["Sustain",1,"aligning bids and shared infrastructure"],["Felix",1,"hub partner and connector"],["Greater London Authority",3,"London-wide policy"]]],
+["Community food and local partnerships",[["Hackney collective buying group",1,"six community food organisations"],["Islington Food Partnership",1,"partnership delivery"],["Hackney Food Partnership",3,"borough food strategy"],["Lewisham Local",3,"food justice"],["Borough hub operators",3,"Lambeth, Kingston, Hounslow, Merton, Tower Hamlets"]]],
+["Supply, retail and buying",[["Better Food Traders and Growing Communities",1,"collective buying of UK-grown fruit and veg"],["Wholegood and Young Camden Foundation",1,"Camden fruit pilot"],["Langridge Organic",2,"wholesale supply"],["Camden Town Unlimited",2,"local businesses"]]],
+["Evidence, data and advice",[["TrackCarbon",3,"supply-chain impact data"],["Bremner & Co",2,"food systems strategy"],["Soil Association",2,"production and standards"],["Real Zero and UCL",2,"health and climate evidence"]]]
+];
+const ro=document.getElementById("roles");
+R.forEach(([h,items])=>{const s=document.createElement("div");s.className="role";const hh=document.createElement("h3");hh.textContent=h;const ul=document.createElement("ul");
+ items.forEach(([n,st,no])=>{const li=document.createElement("li");const i=document.createElement("i");i.className="sw st"+st;i.title=ST[st];const sp=document.createElement("span");sp.textContent=n+", ";const nn=document.createElement("span");nn.className="n";nn.textContent=no;sp.append(nn);li.append(i,sp);ul.append(li)});
+ s.append(hh,ul);ro.append(s)});
+const G=[
+["Boroughs and public bodies",[
+["Camden Council","Borough, anchor partner","Lead borough. DML is a Camden Food Mission Ambassador and sits on the Camden Food Partnership steering group",1,"Fortnightly working group"],
+["Islington Council","Borough","Joint hub and logistics work with Camden through the Hubs & Markets Working Group",1,"Ongoing"],
+["Hackney Council","Borough","Collective buying model for the Hackney Food Network; school food procurement",1,"Working group, October"],
+["Newham Council","Borough","Food strategy. Aligning approaches and bids, as with Sustain",2,"October"],
+["Lambeth Council","Borough","Climate network and the Lambeth hub",2,"October"],
+["Croydon Council","Borough","Community delivery through the Urban Room, and public health",2,"October"],
+["Havering Council","Borough","Hub and food access",2,"October"],
+["Barking and Dagenham Council","Borough","Food strategy",2,"October"],
+["Waltham Forest Council","Borough","Local food network",2,"November"],
+["Haringey Council","Borough","Public health",2,"November"],
+["Lewisham Council","Borough","Learning exchange with Camden; collective buying and regional procurement",3,"Winter"],
+["Merton Council","Borough","Hub and wider food environment",3,"In discussion"],
+["Redbridge, Brent and Greenwich","Boroughs","Collective buying",3,"Introduced"],
+["Greater London Authority","Regional","London-wide food policy",3,"In conversation"]]],
+["Hubs, convening and community food",[
+["Sustain","Food alliance","Aligning bids and ongoing working infrastructure; Good Food Collective; London hubs network",1,"Workshop, November"],
+["Felix","Food redistribution charity","Hub partner; brokers introductions to boroughs and hub operators",1,"Ongoing"],
+["Hackney collective buying group","Community food organisations","Pilot buyers: Hackney Food Bank, HCVS and the Hackney Food Network, Cooperation Town, Streetbox, Woodberry Aid, Children with Voices",1,"Ongoing"],
+["Islington Food Partnership","Food partnership (Manor Gardens)","Partnership delivery and report-backs into the working group",1,"Ongoing"],
+["Hackney Food Partnership","Food partnership","Borough food strategy",3,"Relaunch, October"],
+["Lewisham Local","Community organisation","Food justice programme",3,"In discussion"],
+["Borough hub operators","Healthy Living Platform, Kingston Voluntary Action, Surplus to Supper, Dons Local Action, Critical Support, Bow Food Bank","Local hubs joining the network",3,"Introduced"]]],
+["Supply, retail and buying",[
+["Better Food Traders and Growing Communities","Sustainable food retail and growers","Collective buying of UK-grown fruit and veg",1,"Ongoing"],
+["Wholegood and Young Camden Foundation","Wholesaler and children's charity","Delivered the Camden fruit pilot through the school-holiday food programme",1,"Pilot delivered"],
+["Langridge Organic","Organic wholesaler","Supply side for the hubs",2,"October"],
+["Camden Town Unlimited","Business improvement district","Bringing local businesses into the work",2,"October"]]],
+["Evidence, data and advice",[
+["TrackCarbon","Impact measurement","Supply-chain carbon and procurement data",3,"Introduced"],
+["Bremner & Co","Food systems advisers","Strategy and connections",2,"November"],
+["Soil Association","Farming and food charity","Production, procurement standards",2,"November"],
+["Real Zero and UCL","Health and climate research","Evidence base",2,"November"]]]
+];
+const tb=document.getElementById("rows");
+G.forEach(([g,rows])=>{const gr=document.createElement("tr");gr.className="grp";const gh=document.createElement("th");gh.colSpan=5;gh.scope="colgroup";gh.textContent=g;gr.append(gh);tb.append(gr);
+ rows.forEach(([n,ty,rl,st,nx])=>{const tr=document.createElement("tr");
+  [n,ty,rl,null,nx].forEach((v,i)=>{const td=document.createElement("td");if(i===2)td.className="role-c";if(i===3){const c=document.createElement("span");c.className="chip st"+st;c.textContent=ST[st];td.append(c)}else td.textContent=v;tr.append(td)});
+  tb.append(tr)})});
+})();
+</script>
+<!-- fai:footer -->
+<footer class="fai-footer">
+  <div class="fai-footer__inner">
+    <span>Part of Dark Matter Labs' <a href="https://optionality.darkmatterlabs.org/" target="_blank" rel="noopener">xCO portfolio<span aria-hidden="true"> ↗</span></a>, expanding civilizational optionality.</span>
+  </div>
+</footer>
+<!-- /fai:footer -->
+</body>
+</html>

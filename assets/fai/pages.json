@@ -263,6 +263,19 @@
       "summary": "A reference guide for how the Camden Food Partnership could be hosted and legally structured as it matures, drawing on the Kauffman Foundation’s ecosystem playbook and the Sustainable Food Places network of over 100 UK food partnerships.",
       "pdf": false,
       "surface": "paper"
+    },
+    {
+      "n": 22,
+      "sym": "Pn",
+      "file": "partners.html",
+      "name": "Partners",
+      "scope": "london",
+      "status": "draft",
+      "listed": false,
+      "title": "London Food Partners",
+      "summary": "Who Dark Matter Labs is working with on London's food system: boroughs, hubs, supply and evidence partners, by role and stage.",
+      "pdf": false,
+      "surface": "paper"
     }
   ]
 }
