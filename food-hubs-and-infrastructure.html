@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Food Hubs and the Need for Infrastructure (draft) — Food as Infrastructure</title>
+<style>
+  :root{
+    --paper:var(--fai-paper);
+    --paper-2:var(--fai-field);
+    --ink:var(--fai-ink);
+    --ink-soft:var(--fai-ink-2);
+    --ink-faint:var(--fai-ink-3);
+    --accent:var(--fai-beet);
+    --line:var(--fai-rule);
+    --line-strong:var(--fai-rule-strong);
+    --gold:#A86A1F;
+    --hub:#2E7D6B;
+    --maxw:var(--fai-container);
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0; background:var(--paper); color:var(--ink);
+    font-family:var(--fai-sans); font-size:17px; line-height:1.6;
+  }
+  h1,h2,h3,h4{font-weight:500; color:var(--ink); margin:0;}
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 32px;}
+  @media (max-width:720px){ .wrap{padding:0 16px;} }
+  a{color:var(--ink);}
+  main p a, footer .credit a, .accordion a{
+    color:var(--ink); text-decoration:underline; text-decoration-color:var(--accent);
+    text-decoration-thickness:1px; text-underline-offset:3px;
+  }
+  main p a:hover, footer .credit a:hover{color:var(--accent);}
+
+  .eyebrow{font-size:14px; line-height:1.45; color:var(--ink-faint);}
+
+  header.site-nav{
+    position:sticky; top:0; z-index:50; background:var(--paper);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{
+    max-width:var(--maxw); margin:0 auto; padding:14px 32px;
+    display:flex; align-items:center; justify-content:space-between; gap:24px; flex-wrap:wrap;
+  }
+  @media (max-width:720px){ .nav-inner{padding:12px 16px;} }
+  .nav-mark{display:flex; align-items:baseline; gap:12px; flex-wrap:wrap; line-height:1.3;}
+  .nav-mark strong{font-size:15px; font-weight:600; color:var(--ink);}
+  .nav-mark span{font-size:14px; color:var(--ink-faint);}
+  nav.nav-links{display:flex; gap:20px; flex-wrap:wrap;}
+  nav.nav-links a{font-size:14px; color:var(--ink-soft); text-decoration:none;}
+  nav.nav-links a:hover{color:var(--ink); text-decoration:underline; text-decoration-color:var(--accent); text-underline-offset:3px;}
+  @media (max-width:860px){ nav.nav-links, .nav-mark span{display:none;} }
+
+  .status-strip{padding:32px 0 0;}
+  .status-note{
+    background:var(--paper-2); border-left:3px solid var(--accent);
+    padding:14px 18px; font-size:15px; line-height:1.5; color:var(--ink-soft); max-width:var(--fai-measure);
+  }
+  .status-note p{margin:0;}
+  .status-note strong{color:var(--ink); font-weight:600;}
+  .status-note .status-date{display:block; margin-top:6px; font-size:14px; color:var(--ink-faint);}
+
+  .hero{padding:56px 0 0; border-bottom:1px solid var(--line);}
+  .hero .hero-grid{display:grid; grid-template-columns:1.1fr 0.9fr; gap:48px; align-items:center; padding-bottom:48px;}
+  @media (max-width:860px){ .hero .hero-grid{grid-template-columns:1fr; gap:28px;} }
+  .hero .lot-number{font-size:14px; color:var(--ink-faint); margin-bottom:16px;}
+  .hero h1{font-size:clamp(34px, 5vw, 58px); line-height:1.08; font-weight:500; max-width:18ch;}
+  .hero .lede{max-width:var(--fai-measure); margin:22px 0 0; font-size:20px; color:var(--ink-soft); line-height:1.5;}
+  .hero .cta-row{margin-top:28px; display:flex; gap:12px; flex-wrap:wrap; align-items:center;}
+  .btn{
+    font-size:15px; font-weight:500; line-height:1.2;
+    padding:12px 18px; border:1px solid var(--line-strong); border-radius:3px; color:var(--ink); background:transparent;
+    display:inline-flex; align-items:center; gap:8px; cursor:pointer; text-decoration:none;
+    transition:background .15s ease, border-color .15s ease, color .15s ease;
+  }
+  .btn:hover{border-color:var(--ink);}
+  .btn.primary{background:var(--ink); border-color:var(--ink); color:var(--paper);}
+  .btn.primary:hover{background:var(--accent); border-color:var(--accent);}
+  .hero .photo-band{width:100%; height:100%; min-height:320px; border-radius:2px; overflow:hidden;}
+  .hero .photo-band img{width:100%; height:100%; object-fit:cover; display:block;}
+  @media (max-width:860px){ .hero .photo-band{min-height:220px;} }
+
+  section{padding:88px 0; border-bottom:1px solid var(--line);}
+  main > section:last-child{border-bottom:none;}
+  @media (max-width:720px){ section{padding:52px 0;} }
+
+  .section-head{max-width:760px; margin-bottom:36px;}
+  .section-head h2{font-size:clamp(26px,3.2vw,36px); line-height:1.12; font-weight:500;}
+  .section-head p.sub{color:var(--ink-soft); margin-top:14px; font-size:17px; max-width:var(--fai-measure);}
+
+  .tie-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:16px;}
+  @media (max-width:960px){ .tie-grid{grid-template-columns:repeat(2,1fr);} }
+  @media (max-width:640px){ .tie-grid{grid-template-columns:1fr;} }
+  .tie-card{background:var(--paper-2); padding:24px;}
+  .tie-card h4{font-size:18px; line-height:1.3; font-weight:600; color:var(--ink);}
+  .tie-card p, .tie-card ul{font-size:15px; line-height:1.6; color:var(--ink-soft); margin:10px 0 0;}
+  .tie-card ul{padding-left:18px; margin-top:8px;}
+  .tie-card li{margin-bottom:4px;}
+
+  .stat-row{display:grid; grid-template-columns:repeat(4,1fr); gap:24px; margin-top:8px;}
+  @media (max-width:860px){ .stat-row{grid-template-columns:repeat(2,1fr);} }
+  .stat-row .stat{border-top:1px solid var(--line-strong); padding-top:16px;}
+  .stat-row .stat b{display:block; font-size:clamp(26px,3vw,36px); line-height:1.1; font-weight:500; color:var(--accent); font-variant-numeric:tabular-nums;}
+  .stat-row .stat span{display:block; margin-top:8px; font-size:14px; line-height:1.45; color:var(--ink-faint);}
+
+  figure{margin:0;}
+  figure.plate{background:var(--paper-2); padding:20px;}
+  figure.plate img{width:100%; height:auto; display:block;}
+  figure.plate figcaption{margin-top:14px; font-size:14px; color:var(--ink-faint); line-height:1.5;}
+
+  .full-bleed-figure{margin-top:32px;}
+  .full-bleed-figure img{width:100%; height:auto; display:block; border-radius:2px;}
+  .full-bleed-figure figcaption{margin-top:12px; font-size:14px; color:var(--ink-faint); line-height:1.5; max-width:var(--fai-measure);}
+
+  .prose{max-width:var(--fai-measure); font-size:17px; line-height:1.65; color:var(--ink);}
+  .prose p + p{margin-top:16px;}
+  .prose ul{padding-left:20px; margin:16px 0 0;}
+  .prose li{margin-bottom:8px;}
+
+  .two-col{display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:start;}
+  @media (max-width:860px){ .two-col{grid-template-columns:1fr; gap:28px;} }
+  .two-col .icon{width:72px; height:auto; margin-bottom:16px;}
+
+  .reports-list{margin-top:8px; border-top:1px solid var(--line);}
+  .reports-list .report-row{padding:16px 0; border-bottom:1px solid var(--line); display:grid; grid-template-columns:260px 1fr; gap:20px;}
+  @media (max-width:720px){ .reports-list .report-row{grid-template-columns:1fr; gap:6px;} }
+  .reports-list .report-name{font-size:15px; font-weight:600; color:var(--ink);}
+  .reports-list .report-desc{font-size:15px; color:var(--ink-soft); line-height:1.55;}
+
+  .diagram-grid{display:grid; grid-template-columns:1fr; gap:28px; margin-top:8px;}
+
+  .callout{margin-top:16px; padding:18px 20px; background:var(--paper-2); font-size:16px; line-height:1.55; color:var(--ink); max-width:var(--fai-measure);}
+  .callout b{color:var(--ink); font-weight:600;}
+
+  .crossover{background:var(--paper-2); margin-top:28px; max-width:var(--fai-measure);}
+  .crossover summary{cursor:pointer; list-style:none; padding:14px 18px; font-size:14px; font-weight:600; color:var(--ink); display:flex; align-items:baseline; gap:10px;}
+  .crossover summary::-webkit-details-marker{display:none;}
+  .crossover summary::before{content:"+"; color:var(--ink-faint); font-size:16px; font-weight:400; flex:none;}
+  .crossover[open] summary::before{content:"\2212";}
+  .crossover-body{padding:0 18px 18px;}
+  .crossover-body p{font-size:14.5px; color:var(--ink-soft); line-height:1.6; margin:0 0 10px;}
+  .crossover-body p:last-child{margin-bottom:0;}
+
+  .sources{padding:56px 0;}
+  .sources h3{font-size:18px; font-weight:600; margin-bottom:16px;}
+  .sources ul{margin:0; padding:0; list-style:none; max-width:var(--fai-measure);}
+  .sources li{font-size:14px; line-height:1.7; color:var(--ink-soft); padding:8px 0; border-top:1px solid var(--line);}
+  .sources a{color:var(--ink-soft); text-decoration:underline; text-decoration-color:var(--line-strong); text-underline-offset:3px;}
+  .sources a:hover{color:var(--ink); text-decoration-color:var(--accent);}
+
+  footer{background:var(--paper); color:var(--ink-soft); padding:56px 0 48px; font-size:14px; line-height:1.5; border-top:1px solid var(--line);}
+  footer a{color:var(--ink-soft); text-decoration:none;}
+  footer .col a:hover{color:var(--ink); text-decoration:underline; text-decoration-color:var(--accent); text-underline-offset:3px;}
+  footer .wrap{display:flex; justify-content:space-between; flex-wrap:wrap; gap:32px;}
+  footer .col h4{color:var(--ink); font-size:15px; font-weight:600;}
+  footer .col a{display:block; margin-top:8px; font-size:14px;}
+  footer .col-about{max-width:340px;}
+  footer .col-about p{color:var(--ink-soft); font-size:14px; line-height:1.55; margin:8px 0 0;}
+  footer .footer-bottom{display:block; margin-top:0; padding-top:0;}
+  footer .credit{font-size:14px; line-height:1.55; color:var(--ink-faint); margin-top:32px; border-top:1px solid var(--line); padding-top:20px; max-width:none;}
+  footer .credit .felix-logo{height:18px; width:auto; vertical-align:-3px; margin-right:6px; filter:invert(1);}
+</style>
+<!-- fai:head -->
+<meta name="description" content="The Felix Project’s own case for treating community food as infrastructure, not emergency response: the food waste challenge, the wider cost of inaction, and three ways a food hub can be built.">
+<link rel="canonical" href="https://food.darkmatterlabs.org/food-hubs-and-infrastructure.html">
+<meta name="theme-color" content="#111112">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Food as Infrastructure, Dark Matter Labs">
+<meta property="og:locale" content="en_GB">
+<meta property="og:url" content="https://food.darkmatterlabs.org/food-hubs-and-infrastructure.html">
+<meta property="og:title" content="Food Hubs and the Need for Infrastructure">
+<meta property="og:description" content="The Felix Project’s own case for treating community food as infrastructure, not emergency response: the food waste challenge, the wider cost of inaction, and three ways a food hub can be built.">
+<meta property="og:image" content="https://food.darkmatterlabs.org/assets/fai/social/food-hubs-and-infrastructure.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Food Hubs and the Need for Infrastructure. Food as Infrastructure, Dark Matter Labs.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Food Hubs and the Need for Infrastructure">
+<meta name="twitter:description" content="The Felix Project’s own case for treating community food as infrastructure, not emergency response: the food waste challenge, the wider cost of inaction, and three ways a food hub can be built.">
+<meta name="twitter:image" content="https://food.darkmatterlabs.org/assets/fai/social/food-hubs-and-infrastructure.png">
+<meta name="twitter:image:alt" content="Food Hubs and the Need for Infrastructure. Food as Infrastructure, Dark Matter Labs.">
+<link rel="icon" href="assets/fai/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400..900;1,400..700&display=swap">
+<link rel="stylesheet" href="assets/fai/fai.css">
+<!-- /fai:head -->
+</head>
+<body>
+<!-- fai:bar -->
+<div class="fai-bar">
+  <div class="fai-bar__inner">
+    <a class="fai-bar__dm" href="https://darkmatterlabs.org/"><img class="fai-bar__lockup" src="assets/brand/dm-logo-v1-white.svg" alt="Dark Matter Labs" width="102" height="20"><img class="fai-bar__stamp" src="assets/brand/dm-stamp-white.svg" alt="Dark Matter Labs" width="20" height="20"></a>
+    <span class="fai-bar__sep" aria-hidden="true"></span>
+    <a class="fai-bar__mission" href="index.html">Food as Infrastructure</a>
+    <span class="fai-bar__here"><span class="fai-el fai-el--draft" aria-hidden="true"><b>Fi</b><i>22</i></span><span>Food Hubs &amp; Infrastructure</span></span>
+    <a class="fai-bar__xco" href="https://optionality.darkmatterlabs.org/" target="_blank" rel="noopener" title="Dark Matter Labs' Expanding Civilizational Optionality portfolio">xCO portfolio<span aria-hidden="true"> ↗</span></a>
+    <div class="fai-bar__links" role="navigation" aria-label="Site"><a href="index.html">Portfolio</a><a href="library.html">Library</a></div>
+  </div>
+</div>
+<!-- /fai:bar -->
+
+<header class="site-nav">
+  <div class="nav-inner">
+    <div class="nav-mark">
+      <strong>Food Hubs and the Need for Infrastructure</strong>
+      <span>The Felix Project's case, shared with the Hubs &amp; Markets Working Group</span>
+    </div>
+    <nav class="nav-links">
+      <a href="#why">Why now</a>
+      <a href="#waste">Food waste</a>
+      <a href="#journey">The food journey</a>
+      <a href="#case">The infrastructure case</a>
+      <a href="#aid">The food aid system</a>
+      <a href="#cost">Cost of inaction</a>
+      <a href="#hubs">What hubs do</a>
+      <a href="#models">Three hub models</a>
+    </nav>
+  </div>
+</header>
+
+<div class="status-strip">
+  <div class="wrap">
+    <div class="status-note">
+      <p><strong>Draft. A synthesis of an internal Felix Project presentation, shared directly with Dark Matter Labs and the London Hubs &amp; Markets Working Group.</strong> The original deck is marked internal to Felix; this page sets out the same argument and the same figures, properly credited, for the working group's own reference. It should be checked with Felix Project before being treated as a public Felix position.</p>
+      <span class="status-date">Working note, October 2026</span>
+    </div>
+  </div>
+</div>
+
+<main id="main">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero-grid">
+        <div>
+          <div class="lot-number">Food Hubs &amp; Infrastructure, The Felix Project</div>
+          <h1>Treating community food as infrastructure, not emergency response.</h1>
+          <p class="lede">The Felix Project's own case for why the food aid system needs real, funded infrastructure: shared storage, logistics and purchasing power, not just more goodwill stretched further. It sits directly behind the hub thinking already running through this portfolio's Hubs &amp; Markets Working Group.</p>
+          <div class="cta-row">
+            <a class="btn primary" href="#case">See the infrastructure case</a>
+            <a class="btn" href="hubs-and-markets-working-group.html">Open the Hubs &amp; Markets Working Group</a>
+          </div>
+        </div>
+        <div class="photo-band">
+          <img src="assets/media/felix-food-hubs/hero-broccoli.jpg" alt="Crates of rescued broccoli at a Felix Project depot.">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY NOW -->
+  <section id="why">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">The pressures stacking up at once</div>
+        <h2>Why Felix is making this case now</h2>
+        <p class="sub">The climate emergency, unsustainable farming practices, supermarket dominance and growing health impacts all show the same thing: the food system isn't fit for purpose. Six pressures, all live at once.</p>
+      </div>
+      <div class="tie-grid">
+        <div class="tie-card">
+          <h4>Rising food prices</h4>
+          <ul>
+            <li>Unaffordability and inaccessibility</li>
+            <li>Rising food bank usage</li>
+            <li>Cheaper, less nutritious food chosen instead</li>
+            <li>Independent grocers increasingly unsustainable</li>
+          </ul>
+        </div>
+        <div class="tie-card">
+          <h4>Environmental</h4>
+          <ul>
+            <li>Greenhouse gas emissions, soil and water damage</li>
+            <li>Intensive farming reduces biodiversity</li>
+            <li>Horticulture is key but not incentivised</li>
+            <li>40% of the UK's most productive farmland grows food for animals, not people</li>
+          </ul>
+        </div>
+        <div class="tie-card">
+          <h4>Poor diet and health</h4>
+          <ul>
+            <li>High consumption of ultra-processed food, low fruit and veg intake</li>
+            <li>A clear link between health and poverty</li>
+            <li>An estimated £298bn a year cost of poor diet</li>
+          </ul>
+        </div>
+        <div class="tie-card">
+          <h4>Food waste</h4>
+          <ul>
+            <li>Millions of tonnes wasted yearly, at farms, supermarkets and in homes</li>
+            <li>Enough edible food wasted on UK farms alone to feed everyone in poverty</li>
+            <li>Wasted food is wasted resources, not just wasted meals</li>
+          </ul>
+        </div>
+        <div class="tie-card">
+          <h4>Pressure on farmers</h4>
+          <ul>
+            <li>Rising fuel and fertiliser costs</li>
+            <li>Supermarket contracts extract value and create risk</li>
+            <li>Labour shortages, Brexit and climate change together</li>
+            <li>49% of UK farms considered under threat</li>
+          </ul>
+        </div>
+        <div class="tie-card">
+          <h4>Food imports</h4>
+          <ul>
+            <li>The UK imports a large share of its food; global disruption affects supply directly</li>
+            <li>Import and input dependence is itself a risk</li>
+            <li>The Joint Intelligence Committee and Defra warn of a strategic risk of catastrophic UK food system failure by 2030</li>
+          </ul>
+        </div>
+      </div>
+      <details class="crossover">
+        <summary>Where this connects: Camden's own resilience thinking</summary>
+        <div class="crossover-body">
+          <p>Food is already one of the UK's 13 Critical National Infrastructure sectors, the same national risk picture behind Camden's own proposed Local Food Resilience Committee, option 01 on the Options and Indicators for Camden page. It's also exactly what the Nutrition Cascade Model is built to trace at borough scale: how far a shock like this actually travels before local capacity absorbs it.</p>
+          <p>See <a href="options-for-camden.html#opt-01">option 01, the Local Food Resilience Committee</a>, and <a href="nutrition-cascade-model.html">the Nutrition Cascade Model</a>.</p>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- FOOD WASTE CHALLENGE -->
+  <section id="waste">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">Where surplus food should go, and where it actually ends up</div>
+        <h2>The food waste challenge</h2>
+        <p class="sub">The waste hierarchy is clear: prevention and redistribution to people should come first, recycling and recovery after. In practice, it runs almost backwards.</p>
+      </div>
+      <figure class="plate">
+        <img src="assets/media/felix-food-hubs/waste-chart.jpg" alt="Two charts comparing where surplus food should go against where it actually ends up: 0.8% prevented through redistribution to people, 23.1% sent to animal feed, 16.2% recycled through anaerobic digestion and composting, 43.6% disposed of through landspreading and thermal treatment, and 16.2% disposed of through sewage and landfill.">
+        <figcaption>Source: The Felix Project. Redistribution to people, the top of the hierarchy, accounts for just 0.8% of where surplus food actually goes; disposal, the bottom, accounts for nearly 60%.</figcaption>
+      </figure>
+      <details class="crossover">
+        <summary>Where this connects: Camden's own hub, and the funding gap underneath it</summary>
+        <div class="crossover-body">
+          <p>Felix's UK-wide number is stark on its own: an estimated 2.9m tonnes of edible surplus is wasted on farms every year, enough for 6.9 billion meals, with only 1 to 2% actually redistributed. Camden's own proposed food hub plans composting and anaerobic digestion alongside it for exactly this reason, and the Hubs &amp; Markets Working Group goes into the funding gap between genuine surplus and farm-level waste in more detail.</p>
+          <p>See <a href="options-for-camden.html#opt-04">option 04, Camden food hub(s)</a>, and <a href="hubs-and-markets-working-group.html#logistics">the working group's own section on logistics and the funding gap</a>.</p>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- FOOD JOURNEY -->
+  <section id="journey">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">Rescue, repurpose, redistribute</div>
+        <h2>How Felix's own model works today</h2>
+        <p class="sub">Felix rescues surplus food from farms, manufacturers and suppliers; repurposes some of it through its own kitchens, factory and bakery; and redistributes the rest, alongside meals made from it, to more than 8,000 frontline charities, schools and community partners across the UK every week.</p>
+      </div>
+      <figure class="full-bleed-figure">
+        <img src="assets/media/felix-food-hubs/food-journey.jpg" alt="Illustrated diagram of Felix's food journey in three steps: rescue surplus food from farms and suppliers, repurpose it through kitchens and a bakery, and redistribute it to over 8,000 frontline charities, schools and community partners a week, 92% of which provide wrap-around services that increase community resilience.">
+        <figcaption>Source: The Felix Project. 92% of the organisations Felix supplies provide wrap-around services as well as food, which the surplus food itself helps keep financially viable.</figcaption>
+      </figure>
+      <details class="crossover">
+        <summary>Where this connects: already one of Camden's own tracked numbers</summary>
+        <div class="crossover-body">
+          <p>Felix Project's own redistribution volumes aren't just background here, they're one of the four things Camden and DML already track for indicator II, whether more of Camden's food is moving through resilient, local infrastructure, alongside hub tonnage, Better Food Traders throughput and council catering contracts.</p>
+          <p>See <a href="options-for-camden.html#ind-II">indicator II, resilient local infrastructure</a>.</p>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- THE INFRASTRUCTURE CASE -->
+  <section id="case">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">Three reports, one direction</div>
+        <h2>Infrastructure for a resilient food system</h2>
+        <p class="sub">Recent national and London-focused reports on the climate emergency, global instability, unsustainable farming and growing health risks all converge on the same conclusion: invest in community food infrastructure.</p>
+      </div>
+      <div class="reports-list">
+        <div class="report-row">
+          <div class="report-name">National Security Assessment</div>
+          <div class="report-desc">Ecosystem degradation or collapse will challenge the UK's food security.</div>
+        </div>
+        <div class="report-row">
+          <div class="report-name">Food Resilient London</div>
+          <div class="report-desc">Advocates logistical, infrastructural and operational support for community food assets.</div>
+        </div>
+        <div class="report-row">
+          <div class="report-name">Food Rise, Britain's Food Security</div>
+          <div class="report-desc">Calls to decentralise and regionalise food supply networks while increasing self-sufficiency.</div>
+        </div>
+        <div class="report-row">
+          <div class="report-name">Right to Food Commission UK</div>
+          <div class="report-desc">Calls for statutory funding for community food infrastructure, permanently and at the true cost of delivery.</div>
+        </div>
+      </div>
+      <div class="callout"><b>Not yet independently verified:</b> this page states the four reports' positions as Felix's own deck summarised them. Each is worth reading in full before citing its conclusions elsewhere.</div>
+      <details class="crossover">
+        <summary>Where this connects: Camden's own version of the same argument</summary>
+        <div class="crossover-body">
+          <p>Camden's own options page makes a near-identical case at borough scale, trade press and parliamentary reporting pointing at a UK government food resilience announcement, treated as reason for Camden to act ahead of national guidance rather than wait for it.</p>
+          <p>See <a href="options-for-camden.html#opt-01">option 01's own dropdown on the national picture</a>.</p>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- FOOD AID SYSTEM -->
+  <section id="aid">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">Today, and where Felix wants it to go</div>
+        <h2>The food aid system, and the vision beyond it</h2>
+      </div>
+      <div class="two-col">
+        <div>
+          <img class="icon" src="assets/media/felix-food-hubs/van.png" alt="">
+          <h3 style="font-size:20px; font-weight:600; margin-bottom:12px;">The system today</h3>
+          <div class="prose">
+            <ul>
+              <li>Food aid is solidarity and a community reaction to deprivation</li>
+              <li>Reactivity tends to make food consumers rather than food citizens, though affordable food clubs and cooperatives are changing this</li>
+              <li>Demand is growing while staff, volunteers and food are all stretched</li>
+              <li>Addressing the causes of food poverty, not just the symptoms, is still patchy</li>
+              <li>Funding challenges are perennial</li>
+              <li>Food services build trust, community and financial resilience, but often lack the tools to measure their own impact</li>
+              <li>Buying still happens in silos, organisation by organisation</li>
+            </ul>
+          </div>
+        </div>
+        <div>
+          <h3 style="font-size:20px; font-weight:600; margin-bottom:12px;">The vision</h3>
+          <div class="prose">
+            <ul>
+              <li>Move food services from being accessed by necessity to being accessed by choice</li>
+              <li>Empower communities by shifting control of food growing, buying and distribution to them</li>
+              <li>Treat community food assets as essential social infrastructure</li>
+              <li>Strengthen local capacity for storage, transport, distribution and coordination</li>
+              <li>Build shared, open tools: to plan and measure social return on investment, and blueprints for hubs and food systems that anyone can reuse</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <details class="crossover">
+        <summary>Where this connects: the same language, the same constraint</summary>
+        <div class="crossover-body">
+          <p>Felix's language here, moving people from food consumers to food citizens, is close to how Cooperation Town frames its own community co-ops in Camden. Cooperation Town's own ask, funding capacity to grow that network rather than just hold it, is option 12 on the Options and Indicators for Camden page. It sits alongside a related tension elsewhere in this portfolio: Felix itself said no to running a new hub this year, already stretched thin merging with FareShare. Capacity, not willingness, is the binding constraint on more than one side of this work.</p>
+          <p>See <a href="options-for-camden.html#opt-12">option 12, funding capacity to grow Camden's co-op network</a>, and <a href="hubs-and-markets-working-group.html#logistics">the working group's own section on Felix's logistics reality</a>.</p>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- COST OF INACTION -->
+  <section id="cost">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">Who actually pays for an unhealthy food system</div>
+        <h2>The wider cost of inaction</h2>
+        <p class="sub">The food system internalises profit and externalises cost and risk. Food networks and health networks both want better outcomes for the same residents, but too often work in silos from each other.</p>
+      </div>
+      <div class="stat-row">
+        <div class="stat"><b>£298bn</b><span>Estimated annual cost of the UK's unhealthy food system</span></div>
+        <div class="stat"><b>£104bn</b><span>Falls directly on the NHS, social care, welfare, taxpayers and households</span></div>
+        <div class="stat"><b>£194bn</b><span>Reflects lost productivity and diminished quality of life</span></div>
+        <div class="stat"><b>~£10,000</b><span>Equivalent cost per UK household, per year</span></div>
+      </div>
+      <details class="crossover">
+        <summary>Where this connects: the same figures, itemised in full</summary>
+        <div class="crossover-body">
+          <p>These are the same three figures, £298bn, £104bn, £194bn, as the headline numbers on this portfolio's own Overdue Bill page, which itemises and sources the full UK-wide cost in much more depth. Both ultimately trace to the same study, the Food, Farming &amp; Countryside Commission's "The False Economy of Big Food."</p>
+          <p>See <a href="overdue-bill.html">The Overdue Bill</a>.</p>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- WHAT HUBS DO -->
+  <section id="hubs">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">Crisis support to long-term resilience</div>
+        <h2>What a food hub actually does</h2>
+      </div>
+      <div class="prose">
+        <ul>
+          <li>Offers increased access to healthy, nutritious surplus food</li>
+          <li>Lets partners offer cash-first advice, welfare support and specialist services alongside food</li>
+          <li>Provides a welcoming space to share food and strengthen community connection</li>
+          <li>Builds pathways away from emergency food aid, toward empowered food citizens</li>
+          <li>Collective purchasing reduces costs and improves producer equity</li>
+          <li>Shared storage, transport and operations increase efficiency</li>
+          <li>Shorter supply chains improve resilience during disruption</li>
+          <li>Regional networks help align food production to nutritional need</li>
+        </ul>
+      </div>
+      <div style="margin-top:40px; max-width:var(--fai-measure);">
+        <img class="icon" src="assets/media/felix-food-hubs/tractor.png" alt="">
+        <h3 style="font-size:20px; font-weight:600; margin-bottom:12px;">Farm sustainability: making the economics work</h3>
+        <div class="prose">
+          <p>Farmers who want to farm well, or who have genuine surplus, often can't find a viable route to market, or find that the only available route extracts most of the value before it reaches them.</p>
+          <p>Food hubs solve this by aggregating output from many small producers into a single, larger offer that can meet institutional and retail demand. That gives small, sustainable farms access to markets, schools, hospitals, local retailers, that they couldn't reach alone, provides more stable and fairer prices by cutting out intermediary layers that currently capture most of the value, and creates the economic conditions for farmers to invest in soil health, biodiversity and lower-carbon practices, rather than being forced into volume-at-any-cost farming to survive.</p>
+        </div>
+      </div>
+      <details class="crossover">
+        <summary>Where this connects: four of Camden's own options, and two proof points</summary>
+        <div class="crossover-body">
+          <p>Everything above is the argument already running through four of Camden's own options: the food hub itself, the same Damien Conrad and Felix Project relationship that runs this working group, collective buying, aggregated demand across boroughs through WinVal's mesh system, and a co-op toolkit. The farm economics point, that cutting out an expensive middle is what makes good farming viable, is the one Kentish Town Veg Box (60p in the pound to growers) and Cooperation Town (100 tons a year, £360,000 saved) already prove at Camden scale, just from the consumer side rather than the farm side.</p>
+          <p>See <a href="options-for-camden.html#opt-04">option 04</a>, <a href="options-for-camden.html#opt-05">option 05</a>, <a href="options-for-camden.html#opt-06">option 06</a> and <a href="options-for-camden.html#opt-09">option 09</a>.</p>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- THREE HUB MODELS -->
+  <section id="models">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">Three ways of drawing the same machine</div>
+        <h2>From surplus-only to a closed loop</h2>
+        <p class="sub">Felix's own diagrams set out three versions of a food hub, each adding a layer the last one didn't have. The London Hubs &amp; Markets Working Group's own living diagrams, linked below, cover closely related ground.</p>
+      </div>
+      <div class="diagram-grid">
+        <figure class="plate">
+          <img src="assets/media/felix-food-hubs/diagram-surplus-only.png" alt="Diagram: a food hub handling surplus food only. Surplus food, with no fee but funding support, flows through a food hub and logistics operation, then out to food banks, pantries and co-ops, and community kitchens, under shared governance and relationship management, delivering reduced food waste, use of embedded environmental inputs, improved diets, reduced food costs and a pathway to support and advice.">
+          <figcaption>Food hub, surplus food only. The simplest version: no money changes hands for the food itself, only for the logistics that move it.</figcaption>
+        </figure>
+        <figure class="plate">
+          <img src="assets/media/felix-food-hubs/diagram-sustainable-hub.png" alt="Diagram: a sustainable food hub that also purchases from ethical, local and sustainable producers, aggregates and stores food, and supplies public sector procurement, local food projects and local food retail on a mix of cost, cost-plus and supply terms, delivering sustainable farms, environmental gains, fresher and better quality food, improved diets, reduced food costs, food resilience, food citizens and reduced waste.">
+          <figcaption>Sustainable food hub. Adds a paid supply chain, from ethical and local producers through to public sector procurement and retail, alongside the surplus-food route.</figcaption>
+        </figure>
+        <figure class="plate">
+          <img src="assets/media/felix-food-hubs/diagram-closed-loop.jpg" alt="Diagram: a sustainable closed-loop food hub. Food producers and local growers supply a food hub, which distributes to the public sector, retailers and food projects. Food waste from all three goes to anaerobic digestion, producing biogas and energy for the hub and digestate that returns to food producers and local growers as compost, closing the loop.">
+          <figcaption>Sustainable closed-loop food hub. The waste that remains, rather than ending in the bin, becomes energy for the hub and compost for the growers who supplied it in the first place.</figcaption>
+        </figure>
+      </div>
+      <details class="crossover">
+        <summary>Where this connects: a live example of the sustainable hub model, in Camden right now</summary>
+        <div class="crossover-body">
+          <p>Camden and Islington's own proposed hub, still subject to the EOI process, is a live example of something close to the sustainable food hub model above: an expected 15 tonnes of food a week, a financial value of roughly £1.5 million a year, on top of the surplus already reaching around 36 Camden and 72 Islington organisations today.</p>
+          <p>See <a href="hubs-and-markets-working-group.html#anatomy">the working group's hub anatomy section</a>.</p>
+        </div>
+      </details>
+      <div style="margin-top:32px;">
+        <a class="btn" href="hubs-and-markets-working-group.html#diagrams">See the working group's own hub diagrams</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<div class="wrap sources">
+  <h3>Source</h3>
+  <ul>
+    <li>The Felix Project, "Food Hubs &amp; Infrastructure" (internal presentation, shared directly with Dark Matter Labs, October 2026)</li>
+  </ul>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="col col-about">
+      <h4>Food Hubs and the Need for Infrastructure</h4>
+      <p>A synthesis of The Felix Project's own internal case for food hub infrastructure, part of Dark Matter Labs' Food as Infrastructure portfolio.</p>
+    </div>
+    <div class="col">
+      <h4>This page</h4>
+      <a href="#why">Why now</a>
+      <a href="#waste">Food waste</a>
+      <a href="#case">The infrastructure case</a>
+      <a href="#models">Three hub models</a>
+    </div>
+    <div class="col">
+      <h4>Wider portfolio</h4>
+      <a href="hubs-and-markets-working-group.html">Hubs &amp; Markets Working Group</a>
+      <a href="index.html">Food as Infrastructure</a>
+      <a href="nutrition-supply-map.html">Where Camden's Food Comes From</a>
+    </div>
+  </div>
+  <div class="wrap footer-bottom">
+    <div class="credit"><img class="felix-logo" src="assets/media/felix-food-hubs/felix-logo.png" alt="">Every figure, chart and diagram on this page is The Felix Project's own work, drawn from a presentation shared directly with Dark Matter Labs and marked internal by Felix at the time. It is included here, with attribution, for the Hubs &amp; Markets Working Group's own reference, not as a published Felix Project position.<br><br>Parts of this page were drafted with AI assistance (Claude). Licensed CC BY-SA 4.0 — see the <a href="index.html">homepage</a> for full credit and lineage.</div>
+  </div>
+</footer>
+
+<!-- fai:footer -->
+<footer class="fai-footer">
+  <div class="fai-footer__inner">
+    <span>Part of Dark Matter Labs' <a href="https://optionality.darkmatterlabs.org/" target="_blank" rel="noopener">xCO portfolio<span aria-hidden="true"> ↗</span></a>, expanding civilizational optionality.</span>
+  </div>
+</footer>
+<!-- /fai:footer -->
+</body>
+</html>

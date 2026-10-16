@@ -104,6 +104,17 @@
   .opt .moves b{color:var(--ink); font-weight:600;}
   .opt .more{display:inline-block; margin-top:10px; font-size:14px;}
 
+  .dropdown{background:var(--paper-2); margin-top:14px; max-width:68ch;}
+  .dropdown summary{cursor:pointer; list-style:none; padding:12px 16px; font-size:14px; font-weight:600; color:var(--ink); display:flex; align-items:baseline; gap:10px;}
+  .dropdown summary::-webkit-details-marker{display:none;}
+  .dropdown summary::before{content:"+"; color:var(--ink-faint); font-size:16px; font-weight:400; flex:none;}
+  .dropdown[open] summary::before{content:"\2212";}
+  .dropdown-body{padding:0 16px 16px;}
+  .dropdown-body p{font-size:14.5px; color:var(--ink-soft); line-height:1.6; margin:0 0 10px;}
+  .dropdown-body ul{margin:0; padding-left:18px;}
+  .dropdown-body li{font-size:13.5px; color:var(--ink-soft); line-height:1.6; margin-bottom:8px;}
+  .dropdown-body .caveat{font-size:13px; font-style:italic; color:var(--ink-faint); margin-top:10px;}
+
   .indicator .num{color:var(--accent);}
   .indicator .opt-head h3{font-size:clamp(20px,2.3vw,24px);}
   .indicator .tracked{margin-top:14px; padding-top:12px; border-top:1px solid var(--rule-strong); font-size:14px; color:var(--ink-faint); line-height:1.5; max-width:68ch;}
@@ -158,7 +169,7 @@
   }
 </style>
 <!-- fai:head -->
-<meta name="description" content="Ten interventions where someone already showed up, distilled from Where’s the Energy?, plus the three simple indicators Camden and DML will use to know the mission is actually working.">
+<meta name="description" content="Twelve interventions where someone already showed up, distilled from Where’s the Energy?, Camden&#x27;s own sensemaking workshop and direct conversations with partners, plus the three simple indicators Camden and DML will use to know the mission is actually working.">
 <link rel="canonical" href="https://food.darkmatterlabs.org/options-for-camden.html">
 <meta name="theme-color" content="#111112">
 <meta property="og:type" content="article">
@@ -166,14 +177,14 @@
 <meta property="og:locale" content="en_GB">
 <meta property="og:url" content="https://food.darkmatterlabs.org/options-for-camden.html">
 <meta property="og:title" content="Options and Indicators for Camden">
-<meta property="og:description" content="Ten interventions where someone already showed up, distilled from Where’s the Energy?, plus the three simple indicators Camden and DML will use to know the mission is actually working.">
+<meta property="og:description" content="Twelve interventions where someone already showed up, distilled from Where’s the Energy?, Camden&#x27;s own sensemaking workshop and direct conversations with partners, plus the three simple indicators Camden and DML will use to know the mission is actually working.">
 <meta property="og:image" content="https://food.darkmatterlabs.org/assets/fai/social/options-for-camden.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Options and Indicators for Camden. Food as Infrastructure, Dark Matter Labs.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Options and Indicators for Camden">
-<meta name="twitter:description" content="Ten interventions where someone already showed up, distilled from Where’s the Energy?, plus the three simple indicators Camden and DML will use to know the mission is actually working.">
+<meta name="twitter:description" content="Twelve interventions where someone already showed up, distilled from Where’s the Energy?, Camden&#x27;s own sensemaking workshop and direct conversations with partners, plus the three simple indicators Camden and DML will use to know the mission is actually working.">
 <meta name="twitter:image" content="https://food.darkmatterlabs.org/assets/fai/social/options-for-camden.png">
 <meta name="twitter:image:alt" content="Options and Indicators for Camden. Food as Infrastructure, Dark Matter Labs.">
 <link rel="icon" href="assets/fai/favicon.svg" type="image/svg+xml">
@@ -226,7 +237,7 @@
     <h1>Options and Indicators for Camden</h1>
     <p class="sub">Camden's Food Partnership raised more than forty ideas across the Future Food Dinner and Workshop. Most are real and worth holding. Only a handful already have a named person or organisation ready to move. This page is those — picked for momentum, not importance, so Camden can start a real conversation with a real partner rather than another round of ideas. It ends with the three indicators that tell Camden and DML whether any of it is actually moving the mission.</p>
     <div class="ctarow">
-      <a class="btn btn-primary" href="#options">See the ten options</a>
+      <a class="btn btn-primary" href="#options">See the twelve options</a>
       <a class="btn btn-primary" href="#indicators">See the three indicators</a>
       <a class="btn btn-ghost" href="wheres-the-energy.html">Open the full catalogue ↗</a>
     </div>
@@ -237,8 +248,8 @@
   <div class="wrap">
     <div class="sec-head">
       <div class="eyebrow">The selection rule</div>
-      <h2>Why these ten, and not the other thirty</h2>
-      <p>Every idea on <a href="wheres-the-energy.html">Where's the Energy?</a> was tested against one question: did someone at the table already show up with real energy for it — a name, a business reason, a thing they're already doing — or is it still an idea waiting for an owner? The options below passed that test. Everything else is still live, just not yet ready for a partnership conversation; it stays on the full catalogue, not off the agenda. Option 10 is the one exception: it doesn't come from the Dinner and Workshop catalogue at all, but from what's actually been said in the Food Partnership's own steering meetings since, which earned it a place here on the same basis — real, repeated energy, not yet an owner.</p>
+      <h2>Why these twelve, and not the other thirty</h2>
+      <p>Every idea on <a href="wheres-the-energy.html">Where's the Energy?</a> was tested against one question: did someone at the table already show up with real energy for it — a name, a business reason, a thing they're already doing — or is it still an idea waiting for an owner? The options below passed that test. Everything else is still live, just not yet ready for a partnership conversation; it stays on the full catalogue, not off the agenda. Options 10, 11 and 12 are the exceptions: none of them come from the Dinner and Workshop catalogue. 10 comes from what's actually been said in the Food Partnership's own steering meetings since, 11 from Camden's own 2026 sensemaking workshop, and 12 from a direct conversation with Cooperation Town — each earning a place here on the same basis, real, repeated energy, not yet an owner.</p>
     </div>
     <div class="legend">
       <span><i class="dot supply"></i> Supply</span>
@@ -254,7 +265,7 @@
   <div class="wrap">
     <div class="sec-head">
       <div class="eyebrow">In the order the room showed energy for them, not a ranking</div>
-      <h2>The ten options</h2>
+      <h2>The twelve options</h2>
     </div>
     <div class="optlist">
 
@@ -266,6 +277,19 @@
           <div class="energy"><b>Energy already visible:</b> Tanya brought the proposal and put her name to it directly.</div>
           <div class="ask"><b>What's needed next:</b> who convenes it locally, and keeps the risk register alive after the first meeting.</div>
           <div class="moves"><b>Moves:</b> <a href="#ind-III">indicator III, shock-absorbency</a> — this option exists for exactly this number.</div>
+          <details class="dropdown">
+            <summary>Why this is top of the list: the national picture</summary>
+            <div class="dropdown-body">
+              <p>The UK government is reportedly preparing a major food resilience commitment, expected within the coming weeks, focused on growing more food domestically and protecting supply chains from climate and geopolitical shocks. It follows a National Audit Office finding that Defra has done too little in recent years to help households, businesses and communities build resilience, and sits alongside a wider Cabinet Office campaign encouraging households to hold a basic emergency kit. Food supply is already treated as one of the UK's 13 Critical National Infrastructure sectors. A borough that has already set up its own resilience committee is ahead of guidance that looks to be arriving anyway, not reacting to it.</p>
+              <ul>
+                <li><a href="https://www.thegrocer.co.uk/news/government-set-for-major-food-resilience-announcement/724328.article" target="_blank" rel="noopener">The Grocer, "Government set for major food resilience announcement"<span aria-hidden="true"> ↗</span></a> (1 October 2026)</li>
+                <li><a href="https://www.nao.org.uk/reports/resilience-of-the-food-supply-chain-to-disruptions/" target="_blank" rel="noopener">National Audit Office, "Resilience of the food supply chain to disruptions"<span aria-hidden="true"> ↗</span></a> (4 September 2026)</li>
+                <li><a href="https://novaramedia.com/?p=69210" target="_blank" rel="noopener">Novara Media, on the government's household stockpiling campaign<span aria-hidden="true"> ↗</span></a> (26 August 2026, citing the Financial Times)</li>
+                <li><a href="https://lordslibrary.parliament.uk/threats-to-uk-food-security/" target="_blank" rel="noopener">House of Lords Library, "Threats to UK food security"<span aria-hidden="true"> ↗</span></a></li>
+              </ul>
+              <p class="caveat">As of this page's last update, the announcement itself hadn't formally landed, this is trade press and parliamentary reporting on what's coming, not a confirmed policy. Worth checking gov.uk directly before citing it as settled.</p>
+            </div>
+          </details>
           <a class="more" href="wheres-the-energy.html#resilience">See the full case →</a>
         </div>
       </div>
@@ -301,6 +325,8 @@
           <div class="energy"><b>Energy already visible:</b> Damien Conrad (Felix Project) is already directing the London Hubs &amp; Markets Working Group carrying this forward.</div>
           <div class="ask"><b>What's needed next:</b> who from Camden sits alongside him on it, day to day.</div>
           <div class="moves"><b>Moves:</b> <a href="#ind-II">indicator II</a> and <a href="#ind-III">indicator III</a> — a hub is both an aggregation point and a buffer against shocks.</div>
+          <div class="moves"><b>A frame worth borrowing:</b> Cooperation Town, which is already in conversations about a bigger shared logistics hub, puts it simply: community co-ops build the demand side, a hub provides the supply side. Worth designing this hub with that demand already organised, in Camden's own co-op network, rather than assuming the supply side alone will create it.</div>
+          <div class="moves"><b>A caution from elsewhere in the portfolio:</b> redirecting surplus or donated food into a structured catering programme is easier to plan than to actually do, a school dinner club that tried it found irregular surplus hard to fit into a planned, bulk menu. Worth designing the hub's own redistribution side around that from the start, not discovering it later.</div>
           <a class="more" href="hubs-and-markets-working-group.html">See the working group →</a>
         </div>
       </div>
@@ -337,6 +363,7 @@
           <div class="energy"><b>Energy already visible:</b> raised in the new-economics session; a business owner at the table (Carl) reacted to it live as an opportunity for his own pivot.</div>
           <div class="ask"><b>What's needed next:</b> who scopes an actual pilot site and partner.</div>
           <div class="moves"><b>Moves:</b> <a href="#ind-I">indicator I, the nutrition gap</a> — a direct, neighbourhood-level nutrition and health touchpoint.</div>
+          <div class="moves"><b>Already underway nearby:</b> Kentish Town Veg Box is already piloting a "food is medicine" pathway with an Islington GP surgery for residents with type 2 diabetes — not a Farmacy exactly, but working proof that the GP-to-food link holds up in practice, one borough over.</div>
           <a class="more" href="wheres-the-energy.html#f01">See the full case →</a>
         </div>
       </div>
@@ -361,6 +388,8 @@
           <div class="energy"><b>Energy already visible:</b> strong consensus at the table — no single name attached yet, the one option here still waiting on a first owner.</div>
           <div class="ask"><b>What's needed next:</b> who's willing to put their name on this first.</div>
           <div class="moves"><b>Moves:</b> <a href="#ind-II">indicator II, resilient local infrastructure</a> — more co-ops is more of the food economy sitting outside the mainstream supply chain.</div>
+          <div class="moves"><b>Evidence already here:</b> Kentish Town Veg Box pays its growers roughly 60p in the pound, against about 1p through a typical supermarket chain, and its own experience is that awareness, not price, is the real barrier — bags start at £9, cheaper than most residents assume. Its constitution, a worker co-op with its own asset lock, is close to what a minimum-standards toolkit should be asking any new co-op to aim for.</div>
+          <div class="moves"><b>Already working at scale:</b> Cooperation Town's network of roughly 15 to 16 community co-ops across Camden, neighbourhood buying groups of about 20 households each, already moves around 100 tons of food a year and saves members an estimated £360,000 against supermarket prices. This is what the toolkit would be standardising.</div>
           <a class="more" href="wheres-the-energy.html#f03">See the full case →</a>
         </div>
       </div>
@@ -368,13 +397,35 @@
       <div class="opt" id="opt-10">
         <div class="num">10</div>
         <div>
-          <div class="opt-head"><h3>From talking shop to action-oriented ecosystem</h3><span class="track-tag civic">Civic muscle</span></div>
-          <p class="mech">A year into regular meetings, the Camden Food Partnership has a real rhythm and has gotten genuinely good at sharing information between members. What it hasn't yet done is unlock collective action at any meaningful scale. DML has real experience moving groups like this from a talking shop into an action-oriented ecosystem: giving members the capacities and the freedom to actually move, not another agenda item. The live food system map could do real work here, letting the group state what it intends to do, put soft accountability on when, and widen who's actively participating well beyond the current core.</p>
+          <div class="opt-head"><h3>From information-sharing to action-oriented ecosystem</h3><span class="track-tag civic">Civic muscle</span></div>
+          <p class="mech">A year into regular meetings, the Camden Food Partnership has a real rhythm and has gotten genuinely good at sharing information between members. What it hasn't yet done is unlock collective action at any meaningful scale. DML has real experience moving groups like this from sharing information into an action-oriented ecosystem: giving members the capacities and the freedom to actually move, not another agenda item. The live food system map could do real work here, letting the group state what it intends to do, put soft accountability on when, and widen who's actively participating well beyond the current core. A concrete version of that gap: a family identified as vulnerable through one project, say a school dinner club, has no shared way of also being connected to budget-cooking mentors or a veg box's solidarity bags. Three teams, one household, no shared visibility between them.</p>
           <div class="energy"><b>Energy already visible:</b> several members raised exactly this in the last couple of steering meetings, and one member tried to drive change at the most recent one. It hasn't yet manifested, but the frustration, and the appetite to fix it, are both real and repeated, not a one-off complaint.</div>
           <div class="ask"><b>What's needed next:</b> who wants DML to facilitate this evolution directly, and whether the Partnership adopts tools like the live map as its own shared layer for visibility and soft accountability, rather than leaving that to DML to hold.</div>
-          <div class="moves"><b>Moves:</b> underpins all three indicators above — none of them move at real scale while the group meant to drive them stays a talking shop.</div>
+          <div class="moves"><b>Moves:</b> underpins all three indicators above — none of them move at real scale while the group meant to drive them is still finding its feet.</div>
           <div class="moves"><b>Related:</b> a separate reference guide on <a href="food-partnership-operating-options.html">how the Partnership could be hosted and legally structured</a> as it matures sits alongside this — a different lever on the same evolution.</div>
           <a class="more" href="https://camden-map.vercel.app/" target="_blank" rel="noopener">See the live food system map<span aria-hidden="true"> ↗</span></a>
+        </div>
+      </div>
+
+      <div class="opt" id="opt-11">
+        <div class="num">11</div>
+        <div>
+          <div class="opt-head"><h3>Care and sheltered housing kitchens as neighbourhood hubs</h3><span class="track-tag hub">Hub</span></div>
+          <p class="mech">Camden has 32 sheltered housing schemes and 5 extra care services, most with a working kitchen that barely gets used beyond contracted, off-site-cooked meals reheated on site. As the borough's population ages, that's a bigger and faster-growing underused kitchen footprint than school kitchens, with a built-in reason to open it up that goes beyond food: tackling isolation and food quality at once, not capacity alone. The version raised directly was handing one of these kitchens to an outside community kitchen operator, making it a hub for the wider neighbourhood, not just residents. The Camden-specific case for doing it is as much about intergenerational connection as nutrition: older residents whose own families have been priced out of the borough meeting younger residents who've lost that same generation locally, over food, in a space neither would otherwise have reason to share.</p>
+          <div class="energy"><b>Energy already visible:</b> a sheltered housing and extra care manager is already actively pursuing this, having hosted visits from several outside community kitchens already, and is looking for one willing to take the kitchen over properly, not just visit.</div>
+          <div class="ask"><b>What's needed next:</b> a route through the real barriers raised directly: safeguarding when vulnerable residents share a kitchen with the public, how one operator serves enough variety without losing consistency, and who funds getting the kitchen to a genuinely commercial standard. One de-risking idea already on the table: start with an outside caterer cooking off-site and delivering in, to activate the space before committing to that investment.</div>
+          <div class="moves"><b>Moves:</b> <a href="#ind-II">indicator II, resilient local infrastructure</a> — another node of local food capacity, outside the two the rest of this list already assumes.</div>
+        </div>
+      </div>
+
+      <div class="opt" id="opt-12">
+        <div class="num">12</div>
+        <div>
+          <div class="opt-head"><h3>Funding capacity to grow Camden's co-op network, not just hold it</h3><span class="track-tag hub">Hub</span></div>
+          <p class="mech">Cooperation Town's roughly 15 to 16 community co-ops across Camden, neighbourhood buying groups of about 20 households each, already move around 100 tons of food a year and save members an estimated £360,000 against supermarket prices. The whole network runs on one part-time organiser plus logistics support. Today that's maintaining the network, not growing it. Cooperation Town's own ambition is bigger still: a funded Cooperative Development Organisation that takes this organising capability beyond food entirely, into housing, workplaces and other forms of social and economic organisation. That's a genuinely different, cross-sector ask, and beyond this page's food-specific scope to properly weigh. The food-specific version of it sits squarely here: funding enough organising capacity in Camden to grow a network that already works, rather than just keeping it standing still.</p>
+          <div class="energy"><b>Energy already visible:</b> Cooperation Town raised this directly, with the numbers to back it, a working, evidenced model that's explicit about being capacity-constrained, not short of demand.</div>
+          <div class="ask"><b>What's needed next:</b> whether Camden funds organising capacity directly, what growth actually looks like as a target, more co-ops, more households per co-op, or both, and a separate decision on whether Camden wants any part in the bigger cross-sector ambition or leaves that to Cooperation Town to pursue elsewhere.</div>
+          <div class="moves"><b>Moves:</b> <a href="#ind-II">indicator II, resilient local infrastructure</a> — more co-ops operating is the most direct, already-measured route to that share growing.</div>
         </div>
       </div>
 
@@ -404,7 +455,7 @@
     <div class="sec-head">
       <div class="eyebrow">Camden asked for this separately — three numbers, not a framework</div>
       <h2>How Camden and DML will know this is working</h2>
-      <p>Not ten indicators for ten options, and not a measurement framework alongside <a href="https://cornerstoneindicators.com/" target="_blank" rel="noopener">Cornerstone Indicators<span aria-hidden="true"> ↗</span></a>'s own methodology. Three simple numbers for the mission itself — each one readable off data Camden or DML is already capturing, and each one, below, linked back to the specific options most likely to move it.</p>
+      <p>Not twelve indicators for twelve options, and not a measurement framework alongside <a href="https://cornerstoneindicators.com/" target="_blank" rel="noopener">Cornerstone Indicators<span aria-hidden="true"> ↗</span></a>'s own methodology. Three simple numbers for the mission itself — each one readable off data Camden or DML is already capturing, and each one, below, linked back to the specific options most likely to move it.</p>
     </div>
     <div class="optlist">
 
@@ -424,7 +475,7 @@
           <div class="opt-head"><h3>Is more of Camden's food moving through resilient, local infrastructure?</h3></div>
           <p class="lede">The share of food moving through Camden's own hubs, public kitchens and short supply chains &mdash; already tracked by the Hubs &amp; Markets Working Group and the Supply Map &mdash; measured against the mainstream, global-supply-chain baseline the Supply Map maps out. Success is that share growing.</p>
           <div class="tracked"><b>Tracked through:</b> hub tonnage, Felix Project volumes, Better Food Traders throughput and council catering contracts, all already monitored.</div>
-          <div class="success"><b>Moved most by:</b> <a href="#opt-02">02, the procurement charter</a>, <a href="#opt-04">04, the food hub(s)</a>, <a href="#opt-05">05, collective buying</a>, <a href="#opt-06">06, the mesh system</a> and <a href="#opt-09">09, the co-op toolkit</a>.</div>
+          <div class="success"><b>Moved most by:</b> <a href="#opt-02">02, the procurement charter</a>, <a href="#opt-04">04, the food hub(s)</a>, <a href="#opt-05">05, collective buying</a>, <a href="#opt-06">06, the mesh system</a>, <a href="#opt-09">09, the co-op toolkit</a>, <a href="#opt-11">11, care and sheltered housing kitchens</a> and <a href="#opt-12">12, co-op network capacity</a>.</div>
         </div>
       </div>
 
@@ -432,7 +483,7 @@
         <div class="num">III</div>
         <div>
           <div class="opt-head"><h3>Is Camden more shock-absorbent than it was last year?</h3></div>
-          <p class="lede">How far a modelled supply shock travels into Camden before local capacity &mdash; hubs, reserves, producer relationships &mdash; absorbs it, using the Nutrition Cascade Model already built for exactly this. Success is shocks reaching fewer households, or taking longer to bite.</p>
+          <p class="lede">How far a modelled supply shock travels into Camden before local capacity &mdash; hubs, reserves, producer relationships &mdash; absorbs it, using the Nutrition Cascade Model already built for exactly this. Success is shocks reaching fewer households, or taking longer to bite. Camden doesn't have to look far for a live example: Kentish Town Veg Box's transport costs have doubled this year, forcing cuts to staff hours, exactly the kind of shock this indicator exists to catch.</p>
           <div class="tracked"><b>Tracked through:</b> the <a href="nutrition-cascade-model.html">Nutrition Cascade Model</a>, re-run periodically against the same shock scenario.</div>
           <div class="success"><b>Moved most by:</b> <a href="#opt-01">01, the Local Food Resilience Committee</a> &mdash; built for precisely this number &mdash; plus <a href="#opt-04">04, the food hub(s)</a> and <a href="#opt-06">06, the mesh system</a>.</div>
         </div>
@@ -448,7 +499,7 @@
     <div class="sec-head">
       <div class="eyebrow">Held, not resolved</div>
       <h2>What to decide on purpose before picking a shortlist</h2>
-      <p>None of the ten options above are free of a genuine trade-off. Naming them here is the point — these are Camden's decisions to make deliberately, not gaps this page is hiding.</p>
+      <p>None of the twelve options above are free of a genuine trade-off. Naming them here is the point — these are Camden's decisions to make deliberately, not gaps this page is hiding.</p>
     </div>
     <div class="tension">
       <div class="q">Independence vs. council backing</div>
@@ -466,6 +517,14 @@
       <div class="q">Facilitation vs. ownership</div>
       <div class="a">DML facilitating the Partnership's shift into action, with DML's own map underpinning its accountability (option 10), raises the same question as everything else here — whether the Partnership ends up owning its own direction, or leaning on DML to hold it for them.</div>
     </div>
+    <div class="tension">
+      <div class="q">Safeguarding vs. openness</div>
+      <div class="a">Opening a care or sheltered housing kitchen to the wider neighbourhood (option 11) is exactly where its value lies, but it puts vulnerable residents and the general public in the same space. Worth deciding how that's handled before a provider is approached, not after.</div>
+    </div>
+    <div class="tension">
+      <div class="q">Funding capacity vs. funding ambition</div>
+      <div class="a">Funding organising capacity to grow Camden's existing co-op network (option 12) is a clean, bounded ask. Cooperation Town's own ambition for that capacity is bigger, a cross-sector Cooperative Development Organisation reaching into housing and workplaces. Camden doesn't have to answer that bigger question to fund the food-specific one, but it's worth being clear, on both sides, about which one is actually being funded.</div>
+    </div>
   </div>
 </section>
 
@@ -480,7 +539,7 @@
       <a class="tool" href="wheres-the-energy.html">
         <div class="tag">Full catalogue</div>
         <h4>Where's the Energy?</h4>
-        <p>Every idea raised at the Dinner and Workshop, not just the nine with a named owner.</p>
+        <p>Every idea raised at the Dinner and Workshop, not just the ones with a named owner.</p>
       </a>
       <a class="tool" href="pathways-to-civic-food-system.html">
         <div class="tag">Pathways</div>

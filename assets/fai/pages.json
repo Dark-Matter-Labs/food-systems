@@ -201,6 +201,19 @@
     },
     {
       "n": 16,
+      "sym": "Kb",
+      "file": "kilburn-high-road.html",
+      "name": "Kilburn High Road",
+      "scope": "camden",
+      "status": "draft",
+      "listed": true,
+      "title": "Kilburn High Road",
+      "summary": "A starting proposal for bringing Kilburn High Road’s community to life through its food system, working with the businesses and organisations already on the ground.",
+      "pdf": true,
+      "surface": "paper"
+    },
+    {
+      "n": 17,
       "sym": "Sr",
       "file": "nutrition-continuity-exercise.html",
       "name": "Nutrition Continuity Exercise",
@@ -221,7 +234,7 @@
       "status": "draft",
       "listed": true,
       "title": "Options and Indicators for Camden",
-      "summary": "Ten interventions where someone already showed up, distilled from Where’s the Energy?, plus the three simple indicators Camden and DML will use to know the mission is actually working.",
+      "summary": "Twelve interventions where someone already showed up, distilled from Where’s the Energy?, Camden's own sensemaking workshop and direct conversations with partners, plus the three simple indicators Camden and DML will use to know the mission is actually working.",
       "pdf": false,
       "surface": "paper"
     },
@@ -266,6 +279,19 @@
     },
     {
       "n": 22,
+      "sym": "Fi",
+      "file": "food-hubs-and-infrastructure.html",
+      "name": "Food Hubs & Infrastructure",
+      "scope": "london",
+      "status": "draft",
+      "listed": true,
+      "title": "Food Hubs and the Need for Infrastructure",
+      "summary": "The Felix Project’s own case for treating community food as infrastructure, not emergency response: the food waste challenge, the wider cost of inaction, and three ways a food hub can be built.",
+      "pdf": false,
+      "surface": "paper"
+    },
+    {
+      "n": 23,
       "sym": "Pn",
       "file": "partners.html",
       "name": "Partners",
