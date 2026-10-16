@@ -289,6 +289,19 @@
       "summary": "The Felix Project’s own case for treating community food as infrastructure, not emergency response: the food waste challenge, the wider cost of inaction, and three ways a food hub can be built.",
       "pdf": false,
       "surface": "paper"
+    },
+    {
+      "n": 23,
+      "sym": "Pn",
+      "file": "partners.html",
+      "name": "Partners",
+      "scope": "london",
+      "status": "draft",
+      "listed": false,
+      "title": "London Food Partners",
+      "summary": "Who Dark Matter Labs is working with on London's food system: boroughs, hubs, supply and evidence partners, by role and stage.",
+      "pdf": false,
+      "surface": "paper"
     }
   ]
 }
