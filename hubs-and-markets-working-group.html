@@ -330,6 +330,17 @@
   .accordion-body-inner{padding:0 0 24px; max-width:var(--fai-measure);}
   .accordion-body-inner p{color:var(--ink-soft); font-size:17px; margin:0 0 10px;}
 
+  .dropdown{background:var(--paper-2); margin-top:14px; max-width:68ch;}
+  .dropdown summary{cursor:pointer; list-style:none; padding:12px 16px; font-size:14px; font-weight:600; color:var(--ink); display:flex; align-items:baseline; gap:10px;}
+  .dropdown summary::-webkit-details-marker{display:none;}
+  .dropdown summary::before{content:"+"; color:var(--ink-faint); font-size:16px; font-weight:400; flex:none;}
+  .dropdown[open] summary::before{content:"\2212";}
+  .dropdown-body{padding:0 16px 16px;}
+  .dropdown-body p{font-size:14.5px; color:var(--ink-soft); line-height:1.6; margin:0 0 10px;}
+  .dropdown-body ul{margin:0; padding-left:18px;}
+  .dropdown-body li{font-size:13.5px; color:var(--ink-soft); line-height:1.6; margin-bottom:8px;}
+  .dropdown-body .caveat{font-size:13px; font-style:italic; color:var(--ink-faint); margin-top:10px;}
+
   /* ---------- Portfolio tie-in ---------- */
   .tie-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:24px;}
   @media (max-width:860px){ .tie-grid{grid-template-columns:1fr; gap:16px;} }
@@ -1197,6 +1208,20 @@
           <div class="accordion-body">
             <div class="accordion-body-inner">
               <p>Hackney Food Network's own September 2026 survey put a real number on this: roughly £32,000 a month in combined food spend already confirmed across 34 community organisations, with a further 19 still to respond. Replicated across London's boroughs, that implies well over £1m in community-food and better-food-trader spend that could in principle be pooled. That's before touching the larger institutional procurement this group is also chasing.</p>
+              <details class="dropdown">
+                <summary>What one borough's real spend data actually shows</summary>
+                <div class="dropdown-body">
+                  <p>This is the kind of ground truth a borough-wide average can't give you, and exactly what this working group would need from each borough before a shared buying platform could work across all of them.</p>
+                  <ul>
+                    <li>The single biggest organisation in the network accounts for roughly a third of the total spend on its own, nearly all of it on bulk grocery items rather than fresh produce — a sign it may already have its own wholesale terms. Any design has to work for the smallest lunch club and the largest food bank at once, not an average of the two.</li>
+                    <li>A real segment of the network, several organisations relying entirely on donations and Felix Project redistribution, has no cash spend to pool at all. A scheme built purely around purchasing power will miss them structurally, not just incidentally.</li>
+                    <li>16 organisations confirmed interest in joining a collective buying scheme the moment they were simply asked, not recruited, a founding group ready to convene today.</li>
+                    <li>Round Chapel has already suggested the obvious starting point: tea, coffee, oil and staples, long shelf life, no cold storage, directly comparable across very different kitchens, rather than trying to aggregate fresh produce first.</li>
+                    <li>Storage, not price, is the first wall several organisations will hit, and halal and culturally specific supply, serving Hackney's Turkish, Congolese, Caribbean, Irish and other communities, has to be part of any wholesale deal from the outset, not an afterthought bolted on later.</li>
+                  </ul>
+                  <p class="caveat">Drawn from Hackney Food Network's own September 2026 survey of its member organisations. Held internally beyond this summary, given the financial detail several small charities shared in confidence.</p>
+                </div>
+              </details>
             </div>
           </div>
         </div>
