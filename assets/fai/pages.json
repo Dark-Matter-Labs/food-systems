@@ -289,6 +289,19 @@
       "summary": "The Felix Project’s own case for treating community food as infrastructure, not emergency response: the food waste challenge, the wider cost of inaction, and three ways a food hub can be built.",
       "pdf": false,
       "surface": "paper"
+    },
+    {
+      "n": 23,
+      "sym": "Lp",
+      "file": "london-food-partners.html",
+      "name": "London Food Partners",
+      "scope": "london",
+      "status": "draft",
+      "listed": false,
+      "title": "London Food Partners",
+      "summary": "A working map of the boroughs, hubs and partners coming together around London's collective buying power: where each borough stands, and who else is building this with us.",
+      "pdf": false,
+      "surface": "paper"
     }
   ]
 }
