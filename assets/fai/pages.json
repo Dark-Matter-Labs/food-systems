@@ -302,6 +302,19 @@
       "summary": "Who Dark Matter Labs is working with on London's food system: boroughs, hubs, supply and evidence partners, by role and stage.",
       "pdf": false,
       "surface": "paper"
+    },
+    {
+      "n": 24,
+      "sym": "Nf",
+      "file": "neighbourhood-food-model.html",
+      "name": "Neighbourhood Food Model",
+      "scope": "london",
+      "status": "draft",
+      "listed": true,
+      "title": "A Neighbourhood Food Model",
+      "summary": "Lessons from the Walworth Neighbourhood Food Model, Southwark: four jobs a neighbourhood food system has to do, and what it takes to build one.",
+      "pdf": false,
+      "surface": "paper"
     }
   ]
 }
