@@ -1,5 +1,5 @@
 {
-  "_comment": "One entry per page. n = position in the library table, sym = two-letter element symbol (unique), name = short name for the site bar, short = optional shorter name for the library tile, title/summary = library listing, scope = london | camden | islington | hackney, status = live | draft, listed = shown in the library, pdf = a snapshot exists in assets/library-pdfs/. surface = paper | canvas (STYLE.md rule 1). social_title and social_photo optionally override the sharing card. summary is also the page's meta description.",
+  "_comment": "One entry per page. n = position in the library table, sym = two-letter element symbol (unique), name = short name for the site bar, short = optional shorter name for the library tile, title/summary = library listing, scope = london | camden | islington | hackney | edinburgh, status = live | draft, listed = shown in the library, pdf = a snapshot exists in assets/library-pdfs/. surface = paper | canvas (STYLE.md rule 1). social_title and social_photo optionally override the sharing card. summary is also the page's meta description.",
   "pages": [
     {
       "n": 1,
@@ -328,6 +328,19 @@
       "summary": "An illustrative digital twin of Camden's food system: how it runs today, flagged with real data gaps, and a civic-led alternative built from the options already on the table.",
       "pdf": false,
       "surface": "canvas"
+    },
+    {
+      "n": 26,
+      "sym": "Cr",
+      "file": "cramond-resilience-group.html",
+      "name": "Cramond Resilience",
+      "scope": "edinburgh",
+      "status": "draft",
+      "listed": false,
+      "title": "Cramond and Barnton Community Resilience Group",
+      "summary": "A working note for a community resilience group in Cramond and Barnton: the Ready Scotland process, local risks and assets, food, and first steps.",
+      "pdf": false,
+      "surface": "paper"
     }
   ]
 }

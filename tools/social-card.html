@@ -73,7 +73,7 @@
   document.getElementById("sym").textContent = q.get("sym");
   document.getElementById("n").textContent = q.get("n");
 
-  var names = { london: "London-wide", camden: "Camden", islington: "Islington", hackney: "Hackney" };
+  var names = { london: "London-wide", camden: "Camden", islington: "Islington", hackney: "Hackney", edinburgh: "Edinburgh" };
   document.getElementById("scope").textContent = (names[scope] || "") + (draft ? ", draft" : "");
 
   var title = q.get("title").replace(/'/g, "\u2019");
