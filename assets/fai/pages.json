@@ -315,6 +315,19 @@
       "summary": "Camden's next food mission focus, resilience at the neighbourhood level, starting with Kilburn: four jobs a neighbourhood has to do, tested against Walworth.",
       "pdf": false,
       "surface": "paper"
+    },
+    {
+      "n": 25,
+      "sym": "Dt",
+      "file": "camden-food-system-twin.html",
+      "name": "Camden Food System Twin",
+      "scope": "camden",
+      "status": "draft",
+      "listed": false,
+      "title": "Camden Food System Twin",
+      "summary": "An illustrative digital twin of Camden's food system: how it runs today, flagged with real data gaps, and a civic-led alternative built from the options already on the table.",
+      "pdf": false,
+      "surface": "canvas"
     }
   ]
 }

@@ -1,0 +1,433 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Camden Food System Twin (draft) — Food as Infrastructure</title>
+<style>
+  /* Instrument on DM canvas. Tokens come from assets/fai/fai.css (loaded after this block). */
+  :root{
+    --bg:var(--fai-canvas);
+    --raised:var(--fai-canvas-raised);
+    --rule:var(--fai-canvas-rule);
+    --text:var(--fai-on-canvas);
+    --text-2:var(--fai-on-canvas-2);
+    --control:#6B6B6B;
+    --beet-c:#C75A8A;        /* beet lifted for canvas, matches the site's own instrument pages */
+    --money:#D4953A;         /* supply ochre, lifted */
+    --food:#5FB39C;          /* hub teal, lifted */
+    --gov:#8089A0;           /* periwinkle-neutral, lifted, for governance/coordination */
+    --gap:#E0533F;           /* crisis red, lifted */
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{background:var(--bg);color:var(--text);font-family:var(--fai-sans);font-size:17px;line-height:1.6}
+  *:focus-visible{outline:2px solid var(--fai-lavender);outline-offset:2px}
+  a{color:var(--text);text-decoration:underline;text-decoration-color:var(--beet-c);text-decoration-thickness:1px;text-underline-offset:3px}
+  a:hover{color:var(--beet-c)}
+
+  .page-shell{max-width:1660px;margin:0 auto;padding:48px 32px 72px}
+  @media (max-width:760px){.page-shell{padding:32px 16px 56px}}
+
+  .hero{padding-bottom:32px;margin-bottom:32px;border-bottom:1px solid var(--rule)}
+  .eyebrow{font-size:14px;line-height:1.45;color:var(--text-2);margin:0 0 14px}
+  h1{font-weight:500;font-size:clamp(32px,4.6vw,52px);line-height:1.06;margin:0 0 18px;max-width:22ch;color:var(--text)}
+  .subtitle{font-size:19px;line-height:1.5;color:var(--text-2);max-width:72ch;margin:0}
+  h2{font-size:clamp(22px,2.6vw,28px);font-weight:500;line-height:1.15;color:var(--text);margin:0 0 10px}
+
+  section{margin-bottom:48px}
+
+  /* toggle */
+  .switcher{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:20px}
+  .tabs{display:inline-flex;background:var(--raised);border-radius:999px;padding:4px}
+  .tabs button{font-size:15px;font-weight:500;color:var(--text-2);background:transparent;border:none;border-radius:999px;padding:9px 18px;cursor:pointer}
+  .tabs button[aria-pressed="true"]{background:var(--beet-c);color:var(--bg)}
+  .tabs button:not([aria-pressed="true"]):hover{color:var(--text)}
+  .meta-note{font-size:14px;color:var(--text-2)}
+
+  /* legend */
+  .legend{display:flex;flex-wrap:wrap;gap:14px 24px;font-size:14px;color:var(--text-2);background:var(--raised);border-radius:10px;padding:14px 18px;margin-bottom:20px}
+  .legend span{display:inline-flex;align-items:center;gap:8px;max-width:100%}
+  .swatch{width:20px;height:3px;border-radius:2px;flex:none}
+  .swatch.dashed{background:none;border-top:2px dashed var(--gov)}
+  .dot{width:9px;height:9px;border-radius:50%;flex:none;border:1.5px dashed var(--gap);background:transparent}
+
+  /* canvas */
+  .canvas-wrap{min-width:0;overflow-x:auto;overflow-y:hidden;border:1px solid var(--rule);border-radius:14px;background:var(--raised)}
+  .diagram{position:relative;min-width:1560px}
+  .diagram svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+  .diagram svg text{font:500 12px var(--fai-sans);fill:var(--text-2)}
+  .diagram svg text.gaplabel{fill:var(--gap)}
+  .node{position:absolute;width:190px;transform:translate(-50%,-50%);background:var(--bg);border:1.5px solid var(--rule);border-radius:10px;padding:10px 12px;cursor:pointer;z-index:2}
+  .node:hover{border-color:var(--control)}
+  .node.selected{border-color:var(--beet-c);box-shadow:0 0 0 1px var(--beet-c)}
+  .node.isgap{border-style:dashed;border-color:var(--gap)}
+  .node .tier-tag{font-size:12.5px;color:var(--text-2);display:block;margin-bottom:4px}
+  .node .label{display:block;font-size:14px;font-weight:600;line-height:1.3;color:var(--text)}
+  .node .gapflag{display:inline-flex;align-items:center;gap:5px;margin-top:6px;font-size:12px;color:var(--gap)}
+  .node .gapflag::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--gap)}
+
+  /* detail panel */
+  .detail{background:var(--raised);border-radius:12px;padding:20px 22px;display:grid;gap:10px;min-height:92px}
+  .detail .dtitle{font-size:18px;font-weight:600}
+  .detail .dbody{font-size:15.5px;line-height:1.55;color:var(--text-2)}
+  .detail .dgap{font-size:14px;line-height:1.5;color:var(--gap)}
+  .detail .placeholder{color:var(--text-2);font-size:15px}
+
+  /* gap list */
+  .gaplist{display:grid;gap:12px;grid-template-columns:repeat(2,1fr)}
+  @media (max-width:760px){.gaplist{grid-template-columns:1fr}}
+  .gapcard{background:var(--raised);border-left:3px solid var(--gap);border-radius:0 10px 10px 0;padding:14px 18px}
+  .gapcard b{display:block;font-size:15px;margin-bottom:5px;color:var(--text);font-weight:600}
+  .gapcard span{font-size:14px;color:var(--text-2);line-height:1.5}
+
+  .footer{margin-top:56px;border-top:1px solid var(--rule);padding-top:20px;font-size:14px;line-height:1.6;color:var(--text-2)}
+</style>
+<!-- fai:head -->
+<meta name="description" content="An illustrative digital twin of Camden&#x27;s food system: how it runs today, flagged with real data gaps, and a civic-led alternative built from the options already on the table.">
+<link rel="canonical" href="https://food.darkmatterlabs.org/camden-food-system-twin.html">
+<meta name="theme-color" content="#111112">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Food as Infrastructure, Dark Matter Labs">
+<meta property="og:locale" content="en_GB">
+<meta property="og:url" content="https://food.darkmatterlabs.org/camden-food-system-twin.html">
+<meta property="og:title" content="Camden Food System Twin">
+<meta property="og:description" content="An illustrative digital twin of Camden&#x27;s food system: how it runs today, flagged with real data gaps, and a civic-led alternative built from the options already on the table.">
+<meta property="og:image" content="https://food.darkmatterlabs.org/assets/fai/social/camden-food-system-twin.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Camden Food System Twin. Food as Infrastructure, Dark Matter Labs.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Camden Food System Twin">
+<meta name="twitter:description" content="An illustrative digital twin of Camden&#x27;s food system: how it runs today, flagged with real data gaps, and a civic-led alternative built from the options already on the table.">
+<meta name="twitter:image" content="https://food.darkmatterlabs.org/assets/fai/social/camden-food-system-twin.png">
+<meta name="twitter:image:alt" content="Camden Food System Twin. Food as Infrastructure, Dark Matter Labs.">
+<link rel="icon" href="assets/fai/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400..900;1,400..700&display=swap">
+<link rel="stylesheet" href="assets/fai/fai.css">
+<!-- /fai:head -->
+</head>
+<body>
+<!-- fai:bar -->
+<div class="fai-bar">
+  <div class="fai-bar__inner">
+    <a class="fai-bar__dm" href="https://darkmatterlabs.org/"><img class="fai-bar__lockup" src="assets/brand/dm-logo-v1-white.svg" alt="Dark Matter Labs" width="102" height="20"><img class="fai-bar__stamp" src="assets/brand/dm-stamp-white.svg" alt="Dark Matter Labs" width="20" height="20"></a>
+    <span class="fai-bar__sep" aria-hidden="true"></span>
+    <a class="fai-bar__mission" href="index.html">Food as Infrastructure</a>
+    <span class="fai-bar__here"><span class="fai-el fai-el--camden fai-el--draft" aria-hidden="true"><b>Dt</b><i>25</i></span><span>Camden Food System Twin</span></span>
+    <a class="fai-bar__xco" href="https://optionality.darkmatterlabs.org/" target="_blank" rel="noopener" title="Dark Matter Labs' Expanding Civilizational Optionality portfolio">xCO portfolio<span aria-hidden="true"> ↗</span></a>
+    <div class="fai-bar__links" role="navigation" aria-label="Site"><a href="index.html">Portfolio</a><a href="library.html">Library</a></div>
+  </div>
+</div>
+<!-- /fai:bar -->
+
+<main class="page-shell">
+
+  <section class="hero">
+    <span class="eyebrow">Internal proposition, illustrative, not final data. Shared only by direct link.</span>
+    <h1>Camden's food system, twinned</h1>
+    <p class="subtitle">One map of how the system actually runs today, built from what's confirmed so far and honest about what isn't. One map of the civic-led alternative, built from the options, precedents and figures already in motion. Click any node for detail. The proposition is to keep both maps alive and update them as real data comes in.</p>
+  </section>
+
+  <section>
+    <div class="switcher">
+      <div class="tabs" role="tablist" aria-label="Choose which system to view">
+        <button id="tab-today" role="tab" aria-pressed="true">Today</button>
+        <button id="tab-alt" role="tab" aria-pressed="false">The alternative</button>
+      </div>
+      <span class="meta-note" id="metaNote"></span>
+    </div>
+
+    <div class="legend" id="legend"></div>
+
+    <div class="canvas-wrap">
+      <div class="diagram" id="canvas">
+        <svg id="edgeLayer"></svg>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2 id="detailHeading">Selected</h2>
+    <div class="detail" id="detail">
+      <p class="placeholder">Click a node on the map above to see what it is, how confident we are in it, and what connects to it.</p>
+    </div>
+  </section>
+
+  <section id="gapSection">
+    <h2>Where Today's picture is thin</h2>
+    <p class="subtitle" style="margin-bottom:16px">The dashed nodes above are flagged for the same reason these are: real, specific gaps worth closing before this map is treated as fact rather than a working sketch.</p>
+    <div class="gaplist" id="gapList"></div>
+  </section>
+
+  <div class="footer">
+    Built from confirmed public record (Camden's school meals contract, LACA's Cost of the School Meal Report, the Food Futures workshop deck, the 29 October reset call with Ali, Piers and Ayanna) where marked, and Dark Matter Labs' own working proposal where marked. Not read directly from Camden's own systems. A first illustrative pass, not a finished digital twin. Not linked from the rest of this portfolio.
+  </div>
+
+</main>
+
+<script>
+(function(){
+"use strict";
+
+var COLS = {money:"var(--money)", food:"var(--food)", gov:"var(--gov)"};
+
+var today = {
+  width:1560, height:960,
+  nodes:[
+    {id:"budget", x:230, y:70, tier:"Funding", label:"Camden Council Budget", detail:"Camden's own spend, including the ~£4.02m/yr school meals line. Confirmed via the contract award record.", gap:false},
+    {id:"mayor", x:620, y:70, tier:"Funding", label:"Mayor of London (UIFSM top-up)", detail:"Funds the Years 3–6 extension of universal primary free meals. 3,606 Camden children were funded under this scheme in 2023–24.", gap:false},
+    {id:"crisis", x:1010, y:70, tier:"Funding", label:"Crisis & Resilience Fund", detail:"Camden's crisis-and-resilience fund is already shrinking — one partnership meeting noted it replacing household support with roughly £500k less than before.", gap:false},
+
+    {id:"caterlink", x:230, y:225, tier:"Commissioning", label:"Caterlink (school catering contract)", detail:"Confirmed incumbent, same supplier as the 2017–2025 contract. Awarded Dec 2024, runs 1 Apr 2025 – 31 Mar 2028, extendable to 2030. £20.11m total, ~£4.02m/yr.", gap:false},
+    {id:"nhs", x:620, y:225, tier:"Commissioning", label:"NHS / Public Health", detail:"A separate budget and system. No confirmed link yet between GP-level prevention work and the food system — the gap the Farmacy idea is meant to close.", gap:true, gapNote:"No confirmed link between NHS prevention budgets and food provision."},
+
+    {id:"national", x:230, y:385, tier:"Supply", label:"National Food Supply Chains", detail:"Where most of Caterlink's sourcing is assumed to come from. The actual share that's local to London is not confirmed.", gap:true, gapNote:"Exact % of Caterlink's sourcing that is local or London-region is unknown."},
+    {id:"localgrow", x:620, y:385, tier:"Supply", label:"Local Growers & Suppliers (small scale)", detail:"Better Food Traders, Growing Communities, Wholegood and others — already engaged, but supplying a small fraction of Camden's total food volume.", gap:false},
+    {id:"supermarkets", x:1010, y:385, tier:"Supply", label:"Supermarkets & Retail", detail:"Where most household food spend actually goes. The scale of that spend, and how much leaves Camden entirely, has not been mapped — Walworth's own £94m/45,000-population figure is the only comparable reference we have.", gap:true, gapNote:"Camden's own household food spend, and how much of it leaves the borough, is unmapped."},
+
+    {id:"schools", x:130, y:545, tier:"Distribution", label:"Schools (40+, opt-in)", detail:"Served by Caterlink, ~8,000 meals/day. 38 primary and 10 secondary schools in the borough overall; which have working kitchens vs. reheat-only is not confirmed.", gap:false},
+    {id:"felix", x:420, y:545, tier:"Distribution", label:"Felix Project", detail:"Redistributes supermarket and producer surplus into Camden's food banks and pantries.", gap:false},
+    {id:"foodbanks", x:710, y:545, tier:"Distribution", label:"Food Banks & Pantries", detail:"Fed by Felix and the shrinking crisis fund. Separately, Camden children are reported to miss out on around 200,000 free school meals a year — a take-up gap, not just a supply one.", gap:false},
+    {id:"hub", x:1010, y:545, tier:"Distribution", label:"Camden–Islington Food Hub", detail:"In progress, not yet live. Up to £400k from both councils over two years once operating.", gap:true, gapNote:"Not yet operating — current status and timeline need confirming with Camden directly."},
+    {id:"coops", x:1300, y:545, tier:"Distribution", label:"Cooperation Town & Co-ops", detail:"Proven at small scale: moves 100 tonnes of food a year, has saved £360,000, and returns 60p in the pound to growers through the Kentish Town Veg Box.", gap:false},
+
+    {id:"partnership", x:620, y:705, tier:"Governance", label:"Food Partnership (steering group)", detail:"Exists on paper. Piers has said directly that there isn't yet a common sense of purpose across its members — real activity level, not just membership, is the open question.", gap:true, gapNote:"Nominal membership is known; real activity and shared purpose is not."},
+
+    {id:"households", x:420, y:865, tier:"People", label:"Households & Residents", detail:"Receive food through schools, food banks, co-ops and retail. Their own spending patterns and food culture across Camden's neighbourhoods are not yet mapped.", gap:false},
+    {id:"neighbourhoods", x:900, y:865, tier:"People", label:"Five Neighbourhoods", detail:"Camden's own geography, not yet organised around food. This is exactly the gap the neighbourhood-level focus is meant to close.", gap:true, gapNote:"No neighbourhood-level food mapping exists yet for any of the five."}
+  ],
+  edges:[
+    {a:"budget", b:"caterlink", type:"money", label:"£4.02m/yr"},
+    {a:"mayor", b:"schools", type:"money", label:"Yr 3–6 top-up"},
+    {a:"crisis", b:"foodbanks", type:"money", label:"shrinking"},
+    {a:"caterlink", b:"schools", type:"food", label:"~8,000/day"},
+    {a:"national", b:"caterlink", type:"food", gap:true, label:"% local: gap"},
+    {a:"supermarkets", b:"households", type:"food", gap:true, label:"gap: unmapped"},
+    {a:"supermarkets", b:"felix", type:"food"},
+    {a:"felix", b:"foodbanks", type:"food"},
+    {a:"foodbanks", b:"households", type:"food", label:"~200k/yr unclaimed"},
+    {a:"localgrow", b:"coops", type:"food"},
+    {a:"coops", b:"households", type:"food"},
+    {a:"hub", b:"foodbanks", type:"food", gap:true, label:"not live yet"},
+    {a:"partnership", b:"budget", type:"gov", gap:true},
+    {a:"partnership", b:"nhs", type:"gov", gap:true},
+    {a:"partnership", b:"coops", type:"gov"},
+    {a:"neighbourhoods", b:"partnership", type:"gov", gap:true},
+    {a:"nhs", b:"households", type:"gov", gap:true, label:"no Rx link"}
+  ]
+};
+
+var alt = {
+  width:1560, height:1120,
+  nodes:[
+    {id:"a1", x:160, y:70, tier:"Capital", label:"Camden's Redirected Budget", detail:"The existing ~£4m/yr school meal spend, redirected toward a civic-led vehicle rather than a national contractor — not new money, the existing lever."},
+    {id:"a2", x:430, y:70, tier:"Capital", label:"DML Co-investment (XCO Fund)", detail:"DML's own money, for work Camden structurally can't fund itself — risk, speculative bid-writing, legal structuring. Already £20k deployed, up to £100k more available."},
+    {id:"a3", x:700, y:70, tier:"Capital", label:"Camden Food Bond", detail:"Community shares, the same instrument as Camden's own 2022 Local Climate Bond (£1m from 398 residents via Abundance) — re-scoped for food, a UK first."},
+    {id:"a4", x:970, y:70, tier:"Capital", label:"Climate Action Fund", detail:"The National Lottery bid already in train, funding the resilience and local-sourcing infrastructure specifically."},
+    {id:"a5", x:1240, y:70, tier:"Capital", label:"Philanthropic Funders", detail:"Covers the co-op and community-ownership structuring costs specifically."},
+
+    {id:"a6", x:580, y:240, tier:"Ownership", label:"Co-operative / Community-Benefit Society", detail:"Owns the processing and logistics vehicle outright — Camden's own version of Newham's Juniper Ventures, structured for worker and community ownership rather than council-only."},
+    {id:"a7", x:980, y:240, tier:"Ownership", label:"Food Partnership Steering Group", detail:"The actual glue holding the levels together — the body Today's map shows as existing only on paper, made real."},
+    {id:"a8", x:1320, y:240, tier:"Ownership", label:"Catalyst Partners", detail:"Partner organisations each holding expertise in one area — healthy eating, sustainability, affordability — setting minimum standards and backing local innovation."},
+
+    {id:"a9", x:730, y:400, tier:"Local organising", label:"Neighbourhood Action Groups (×5)", detail:"One per Camden neighbourhood — residents, VCS workers and a council officer, meeting monthly, deciding the local food offer themselves."},
+    {id:"a10", x:1120, y:400, tier:"Local organising", label:"Self-Nomination, Open Alliance", detail:"Anyone who wants to be a catalyst partner or neighbourhood lead puts their name forward openly — visible who's stepped up."},
+
+    {id:"a11", x:260, y:560, tier:"Supply", label:"London-Region Growers (Mesh)", detail:"Demand aggregated across boroughs so no single farm's bad harvest is felt as a shortage — others quietly cover the gap."},
+    {id:"a12", x:540, y:560, tier:"Supply", label:"Organic-Transition Farms", detail:"Bridge-financed through the 2–3 lean years of converting to organic, in exchange for a guaranteed supply contract back."},
+    {id:"a13", x:820, y:560, tier:"Supply", label:"Existing Local Suppliers", detail:"Better Food Traders, Growing Communities, Wholegood — already engaged, now supplying at real scale rather than a pilot."},
+
+    {id:"a14", x:330, y:720, tier:"Processing", label:"Camden–Islington Food Hub", detail:"The borough-scale hub, live and moving volume, feeding the wider network."},
+    {id:"a15", x:630, y:720, tier:"Processing", label:"Kilburn Neighbourhood Hub", detail:"Scaled to one neighbourhood — DML's own live test case for the model."},
+    {id:"a16", x:930, y:720, tier:"Processing", label:"Central School-Meals Kitchen", detail:"Camden's own processing capability for school catering — the Juniper Ventures analogue, bulk prep and portioning done locally."},
+
+    {id:"a17", x:160, y:880, tier:"Access", label:"Schools (On-Site Finishing)", detail:"Schools with kitchens finish and plate on site, keeping local jobs and room for culturally specific dishes."},
+    {id:"a18", x:440, y:880, tier:"Access", label:"Community Kitchens & Micro-Enterprises", detail:"Run by residents, on Living Wage terms, in spaces the council makes available rent-light."},
+    {id:"a19", x:720, y:880, tier:"Access", label:"Fresh Food Access Points", detail:"Fridges and stalls in places people already go — a surgery, a school gate — stocked daily from hub surplus."},
+    {id:"a20", x:1000, y:880, tier:"Access", label:"Public-Interest Grocers", detail:"Part council, part community trust, part shopper-owned — stocking hub produce below supermarket prices for members."},
+
+    {id:"a21", x:280, y:1040, tier:"People & feedback", label:"Residents (Co-op Members, Worker-Owners)", detail:"Hold a genuine stake, not just a service relationship — London Living Wage as the floor, ownership as the ambition."},
+    {id:"a22", x:600, y:1040, tier:"People & feedback", label:"Nutrition & Supply-Gap Mapping", detail:"The Walworth-style food map, done for each Camden neighbourhood — feeds sourcing and investment decisions back to the co-op."},
+    {id:"a23", x:900, y:1040, tier:"People & feedback", label:"Consumption Transparency Dashboard", detail:"A public, checkable record of how much food moving through the system is actually local, healthy and sustainable."},
+    {id:"a24", x:1200, y:1040, tier:"People & feedback", label:"Future Food Dinner", detail:"Grows the wider London alliance — councillors and officers from other boroughs, convened to join or copy the model."}
+  ],
+  edges:[
+    {a:"a1", b:"a6", type:"money"},
+    {a:"a2", b:"a6", type:"money", label:"unfundable work"},
+    {a:"a3", b:"a6", type:"money", label:"capital"},
+    {a:"a4", b:"a6", type:"money"},
+    {a:"a5", b:"a6", type:"money"},
+    {a:"a6", b:"a7", type:"gov", label:"the glue"},
+    {a:"a6", b:"a8", type:"gov"},
+    {a:"a7", b:"a9", type:"gov"},
+    {a:"a9", b:"a10", type:"gov"},
+    {a:"a6", b:"a11", type:"money", label:"mesh"},
+    {a:"a6", b:"a12", type:"money", label:"bridge finance"},
+    {a:"a13", b:"a6", type:"food"},
+    {a:"a11", b:"a14", type:"food"},
+    {a:"a11", b:"a15", type:"food"},
+    {a:"a11", b:"a16", type:"food"},
+    {a:"a12", b:"a14", type:"food"},
+    {a:"a13", b:"a15", type:"food"},
+    {a:"a14", b:"a17", type:"food"},
+    {a:"a14", b:"a19", type:"food"},
+    {a:"a15", b:"a18", type:"food"},
+    {a:"a15", b:"a19", type:"food"},
+    {a:"a16", b:"a17", type:"food"},
+    {a:"a16", b:"a20", type:"food"},
+    {a:"a9", b:"a18", type:"gov", label:"residents run it"},
+    {a:"a17", b:"a21", type:"food"},
+    {a:"a18", b:"a21", type:"food"},
+    {a:"a19", b:"a21", type:"food"},
+    {a:"a20", b:"a21", type:"food"},
+    {a:"a22", b:"a6", type:"gov", label:"informs sourcing"},
+    {a:"a23", b:"a7", type:"gov", label:"accountability"},
+    {a:"a24", b:"a7", type:"gov", label:"grows alliance"}
+  ]
+};
+
+var state = { mode:"today", selected:null };
+
+function byId(list, id){ for (var i=0;i<list.length;i++){ if (list[i].id===id) return list[i]; } return null; }
+function currentData(){ return state.mode==="today" ? today : alt; }
+
+function renderLegend(){
+  var el = document.getElementById("legend");
+  var isToday = state.mode==="today";
+  el.innerHTML =
+    '<span><span class="swatch" style="background:'+COLS.money+'"></span>money flow</span>' +
+    '<span><span class="swatch" style="background:'+COLS.food+'"></span>food flow</span>' +
+    '<span><span class="swatch dashed"></span>governance / coordination</span>' +
+    (isToday ? '<span><span class="dot"></span>confirmed real data gap &mdash; dashed edges and borders</span>' : '');
+}
+
+function renderMeta(){
+  var el = document.getElementById("metaNote");
+  el.textContent = state.mode==="today"
+    ? "16 nodes, 4 of them flagged as real data gaps"
+    : "24 nodes, the civic-led system drawn from the options menu and the 29 October reset call";
+}
+
+function clearDetail(){
+  document.getElementById("detailHeading").textContent = "Selected";
+  document.getElementById("detail").innerHTML = '<p class="placeholder">Click a node on the map above to see what it is, how confident we are in it, and what connects to it.</p>';
+}
+
+function showDetail(node, data){
+  document.getElementById("detailHeading").textContent = node.label;
+  var connections = [];
+  data.edges.forEach(function(e){
+    if (e.a===node.id){ connections.push(byId(data.nodes,e.b).label); }
+    if (e.b===node.id){ connections.push(byId(data.nodes,e.a).label); }
+  });
+  var html = '<p class="dbody">'+node.detail+'</p>';
+  if (node.gap){ html += '<p class="dgap">Data gap &mdash; '+node.gapNote+'</p>'; }
+  if (connections.length){ html += '<p class="dbody"><strong style="color:var(--text)">Connects to:</strong> '+connections.join(", ")+'</p>'; }
+  document.getElementById("detail").innerHTML = html;
+}
+
+function renderGapList(){
+  var section = document.getElementById("gapSection");
+  if (state.mode!=="today"){ section.style.display="none"; return; }
+  section.style.display="";
+  var items = [
+    {t:"Household and retail food spend", d:"How much Camden residents spend on food each year, and how much leaves the borough. Walworth's own £94m/45,000-population figure is the only comparable number we have."},
+    {t:"Independent and ethnic grocers, markets", d:"Entirely unmapped. Needed both to celebrate Camden's own diverse food cultures and to track where wealth actually goes."},
+    {t:"School kitchen infrastructure", d:"Which of the 40+ schools can cook on-site versus reheat-only — this decides what any alternative model can actually serve."},
+    {t:"Real Food Partnership activity", d:"Who's actually active versus nominally a member, how often it meets, and whether it holds any real decision-making power."},
+    {t:"Local growing capacity", d:"Allotments, school gardens, community farms — how much land exists and how much of it is actually in use."},
+    {t:"Food bank and pantry volumes", d:"A consolidated Camden-wide total. We have Felix's London-wide numbers, not a Camden total."},
+    {t:"Neighbourhood-level nutrition and health data", d:"Diet-related health outcomes tied to each of the five neighbourhoods specifically, not just borough-wide averages."},
+    {t:"Food waste streams", d:"Where waste actually happens across the current system — schools, retail, hospitality — and at what volume."},
+    {t:"A street-by-street map per neighbourhood", d:"The Walworth Food Map method, not yet done for any of Camden's five neighbourhoods."},
+    {t:"Mayor of London funding security", d:"How long the Years 3–6 free meals top-up is guaranteed — Camden's ‘permanent’ promise depends on being able to self-fund it if that stops."},
+    {t:"The April 2026 market engagement", d:"Whether Camden's school-meals ‘future market engagement’ notice is still live, and who inside the council is running it."}
+  ];
+  document.getElementById("gapList").innerHTML = items.map(function(it){
+    return '<div class="gapcard"><b>'+it.t+'</b><span>'+it.d+'</span></div>';
+  }).join("");
+}
+
+function layout(){
+  var data = currentData();
+  var canvas = document.getElementById("canvas");
+  canvas.style.width = data.width+"px";
+  canvas.style.height = data.height+"px";
+  Array.prototype.slice.call(canvas.querySelectorAll(".node")).forEach(function(n){ n.remove(); });
+
+  data.nodes.forEach(function(n){
+    var div = document.createElement("div");
+    div.className = "node" + (n.gap ? " isgap" : "") + (state.selected===n.id ? " selected" : "");
+    div.style.left = n.x+"px";
+    div.style.top = n.y+"px";
+    div.dataset.id = n.id;
+    div.innerHTML = '<span class="tier-tag">'+n.tier+'</span><span class="label">'+n.label+'</span>' +
+      (n.gap ? '<span class="gapflag">data gap</span>' : '');
+    div.addEventListener("click", function(){
+      state.selected = n.id;
+      layout();
+      showDetail(n, data);
+    });
+    canvas.appendChild(div);
+  });
+
+  drawEdges(data);
+}
+
+function drawEdges(data){
+  var svg = document.getElementById("edgeLayer");
+  svg.setAttribute("viewBox", "0 0 "+data.width+" "+data.height);
+  var svgHTML =
+    '<defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">' +
+    '<path d="M0,0 L10,5 L0,10 z" fill="currentColor"></path></marker></defs>';
+
+  var byIdMap = {};
+  data.nodes.forEach(function(n){ byIdMap[n.id] = n; });
+
+  data.edges.forEach(function(e){
+    var A = byIdMap[e.a], B = byIdMap[e.b];
+    if (!A || !B) return;
+    var color = e.type==="money" ? COLS.money : (e.type==="food" ? COLS.food : COLS.gov);
+    var dash = (e.gap || e.type==="gov") ? ' stroke-dasharray="5 5"' : "";
+    var stroke = e.gap ? "var(--gap)" : color;
+    svgHTML += '<line x1="'+A.x+'" y1="'+A.y+'" x2="'+B.x+'" y2="'+B.y+'" stroke="'+stroke+'" stroke-width="1.6" marker-end="url(#arrow)" color="'+stroke+'"'+dash+' opacity="0.9"></line>';
+    if (e.label){
+      var mx = (A.x+B.x)/2, my = (A.y+B.y)/2;
+      svgHTML += '<text class="'+(e.gap?"gaplabel":"")+'" x="'+mx+'" y="'+(my-6)+'" text-anchor="middle">'+e.label+'</text>';
+    }
+  });
+  svg.innerHTML = svgHTML;
+}
+
+function setMode(mode){
+  state.mode = mode;
+  state.selected = null;
+  document.getElementById("tab-today").setAttribute("aria-pressed", String(mode==="today"));
+  document.getElementById("tab-alt").setAttribute("aria-pressed", String(mode==="alt"));
+  renderLegend();
+  renderMeta();
+  clearDetail();
+  renderGapList();
+  layout();
+}
+
+document.getElementById("tab-today").addEventListener("click", function(){ setMode("today"); });
+document.getElementById("tab-alt").addEventListener("click", function(){ setMode("alt"); });
+
+setMode("today");
+
+})();
+</script>
+
+<!-- fai:footer -->
+<footer class="fai-footer">
+  <div class="fai-footer__inner">
+    <span>Part of Dark Matter Labs' <a href="https://optionality.darkmatterlabs.org/" target="_blank" rel="noopener">xCO portfolio<span aria-hidden="true"> ↗</span></a>, expanding civilizational optionality.</span>
+  </div>
+</footer>
+<!-- /fai:footer -->
+</body>
+</html>
