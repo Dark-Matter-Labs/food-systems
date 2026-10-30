@@ -328,6 +328,19 @@
       "summary": "An illustrative digital twin of Camden's food system: how it runs today, flagged with real data gaps, and a civic-led alternative built from the options already on the table.",
       "pdf": false,
       "surface": "canvas"
+    },
+    {
+      "n": 26,
+      "sym": "Cb",
+      "file": "collective-buying-engine.html",
+      "name": "Collective Buying Engine",
+      "scope": "london",
+      "status": "draft",
+      "listed": true,
+      "title": "London's Collective Buying Engine",
+      "summary": "The economic infrastructure sibling to the Hubs & Markets Working Group: aggregating demand across London so buying power, not charity, moves the food system.",
+      "pdf": false,
+      "surface": "paper"
     }
   ]
 }

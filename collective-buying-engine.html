@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>London's Collective Buying Engine (draft) — Food as Infrastructure</title>
+<style>
+  :root{ --maxw:var(--fai-container); }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{ margin:0; background:var(--fai-paper); color:var(--fai-ink); font-family:var(--fai-sans); font-size:17px; line-height:1.6; }
+  h1,h2,h3,h4{font-weight:500; color:var(--fai-ink); margin:0;}
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 32px;}
+  @media (max-width:720px){ .wrap{padding:0 16px;} }
+  a{color:var(--fai-ink);}
+  main p a, .crossover a, footer .credit a{
+    color:var(--fai-ink); text-decoration:underline; text-decoration-color:var(--fai-beet);
+    text-decoration-thickness:1px; text-underline-offset:3px;
+  }
+  main p a:hover, .crossover a:hover, footer .credit a:hover{color:var(--fai-beet);}
+
+  .eyebrow{font-size:14px; line-height:1.45; color:var(--fai-ink-3);}
+
+  header.site-nav{ position:sticky; top:0; z-index:50; background:var(--fai-paper); border-bottom:1px solid var(--fai-rule); }
+  .nav-inner{ max-width:var(--maxw); margin:0 auto; padding:14px 32px; display:flex; align-items:center; justify-content:space-between; gap:24px; flex-wrap:wrap; }
+  @media (max-width:720px){ .nav-inner{padding:12px 16px;} }
+  .nav-mark{display:flex; align-items:baseline; gap:12px; flex-wrap:wrap; line-height:1.3;}
+  .nav-mark strong{font-size:15px; font-weight:600; color:var(--fai-ink);}
+  .nav-mark span{font-size:14px; color:var(--fai-ink-3);}
+  nav.nav-links{display:flex; gap:20px; flex-wrap:wrap;}
+  nav.nav-links a{font-size:14px; color:var(--fai-ink-2); text-decoration:none;}
+  nav.nav-links a:hover{color:var(--fai-ink); text-decoration:underline; text-decoration-color:var(--fai-beet); text-underline-offset:3px;}
+  @media (max-width:900px){ nav.nav-links, .nav-mark span{display:none;} }
+
+  .status-strip{padding:32px 0 0;}
+  .status-note{ background:var(--fai-field); border-left:3px solid var(--fai-beet); padding:14px 18px; font-size:15px; line-height:1.5; color:var(--fai-ink-2); max-width:var(--fai-measure); }
+  .status-note p{margin:0;}
+  .status-note strong{color:var(--fai-ink); font-weight:600;}
+  .status-note .status-date{display:block; margin-top:6px; font-size:14px; color:var(--fai-ink-3);}
+
+  .hero{padding:56px 0 48px; border-bottom:1px solid var(--fai-rule);}
+  .hero .lot-number{font-size:14px; color:var(--fai-ink-3); margin-bottom:16px;}
+  .hero h1{font-size:clamp(34px, 5vw, 58px); line-height:1.08; font-weight:500; max-width:20ch;}
+  .hero .lede{max-width:var(--fai-measure); margin:22px 0 0; font-size:20px; color:var(--fai-ink-2); line-height:1.5;}
+  .hero .cta-row{margin-top:28px; display:flex; gap:12px; flex-wrap:wrap; align-items:center;}
+  .btn{ font-size:15px; font-weight:500; line-height:1.2; padding:12px 18px; border:1px solid var(--fai-rule-strong); border-radius:3px; color:var(--fai-ink); background:transparent; display:inline-flex; align-items:center; gap:8px; cursor:pointer; text-decoration:none; transition:background .15s ease, border-color .15s ease, color .15s ease; }
+  .btn:hover{border-color:var(--fai-ink);}
+  .btn.primary{background:var(--fai-ink); border-color:var(--fai-ink); color:var(--fai-paper);}
+  .btn.primary:hover{background:var(--fai-beet); border-color:var(--fai-beet);}
+
+  section{padding:88px 0; border-bottom:1px solid var(--fai-rule);}
+  main > section:last-child{border-bottom:none;}
+  @media (max-width:720px){ section{padding:52px 0;} }
+
+  .section-head{max-width:760px; margin-bottom:36px;}
+  .section-head h2{font-size:clamp(26px,3.2vw,36px); line-height:1.12; font-weight:500;}
+  .section-head p.sub{color:var(--fai-ink-2); margin-top:14px; font-size:17px; max-width:var(--fai-measure);}
+
+  .prose{max-width:var(--fai-measure); font-size:17px; line-height:1.65; color:var(--fai-ink);}
+  .prose p + p{margin-top:16px;}
+  .prose ul{padding-left:20px; margin:16px 0 0;}
+  .prose li{margin-bottom:8px;}
+
+  .tie-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:8px;}
+  @media (max-width:860px){ .tie-grid{grid-template-columns:1fr;} }
+  .tie-card{background:var(--fai-field); padding:24px;}
+  .tie-card h4{font-size:17px; line-height:1.3; font-weight:600; color:var(--fai-ink);}
+  .tie-card p{font-size:15px; line-height:1.6; color:var(--fai-ink-2); margin:10px 0 0;}
+
+  .stat-row{display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin-top:28px; max-width:none;}
+  @media (max-width:760px){ .stat-row{grid-template-columns:1fr;} }
+  .stat-row .stat{border-top:1px solid var(--fai-rule-strong); padding-top:16px;}
+  .stat-row .stat b{display:block; font-size:clamp(24px,2.6vw,32px); line-height:1.1; font-weight:500; color:var(--fai-beet); font-variant-numeric:tabular-nums;}
+  .stat-row .stat span{display:block; margin-top:8px; font-size:14px; line-height:1.45; color:var(--fai-ink-3);}
+
+  .callout{margin-top:24px; padding:18px 20px; background:var(--fai-field); font-size:16px; line-height:1.55; color:var(--fai-ink); max-width:var(--fai-measure);}
+  .callout b{color:var(--fai-ink); font-weight:600;}
+
+  .crossover{background:var(--fai-field); margin-top:24px; max-width:var(--fai-measure);}
+  .crossover summary{cursor:pointer; list-style:none; padding:14px 18px; font-size:14px; font-weight:600; color:var(--fai-ink); display:flex; align-items:baseline; gap:10px;}
+  .crossover summary::-webkit-details-marker{display:none;}
+  .crossover summary::before{content:"+"; color:var(--fai-ink-3); font-size:16px; font-weight:400; flex:none;}
+  .crossover[open] summary::before{content:"\2212";}
+  .crossover-body{padding:0 18px 18px;}
+  .crossover-body p{font-size:14.5px; color:var(--fai-ink-2); line-height:1.6; margin:0 0 10px;}
+  .crossover-body p:last-child{margin-bottom:0;}
+
+  .checklist{margin-top:8px; max-width:var(--fai-measure);}
+  .checklist ul{list-style:none; margin:0; padding:0;}
+  .checklist li{padding:14px 0; border-top:1px solid var(--fai-rule); font-size:17px; color:var(--fai-ink);}
+  .checklist li:last-child{border-bottom:1px solid var(--fai-rule);}
+
+  .sources{padding:56px 0;}
+  .sources h3{font-size:18px; font-weight:600; margin-bottom:16px;}
+  .sources ul{margin:0; padding:0; list-style:none; max-width:var(--fai-measure);}
+  .sources li{font-size:14px; line-height:1.7; color:var(--fai-ink-2); padding:8px 0; border-top:1px solid var(--fai-rule);}
+
+  footer.page-footer{background:var(--fai-paper); color:var(--fai-ink-2); padding:56px 0 48px; font-size:14px; line-height:1.5; border-top:1px solid var(--fai-rule);}
+  footer.page-footer a{color:var(--fai-ink-2); text-decoration:none;}
+  footer.page-footer .col a:hover{color:var(--fai-ink); text-decoration:underline; text-decoration-color:var(--fai-beet); text-underline-offset:3px;}
+  footer.page-footer .wrap{display:flex; justify-content:space-between; flex-wrap:wrap; gap:32px;}
+  footer.page-footer .col h4{color:var(--fai-ink); font-size:15px; font-weight:600;}
+  footer.page-footer .col a{display:block; margin-top:8px; font-size:14px;}
+  footer.page-footer .col-about{max-width:340px;}
+  footer.page-footer .col-about p{color:var(--fai-ink-2); font-size:14px; line-height:1.55; margin:8px 0 0;}
+  footer.page-footer .credit{font-size:14px; line-height:1.55; color:var(--fai-ink-3); margin-top:32px; border-top:1px solid var(--fai-rule); padding-top:20px; max-width:none;}
+</style>
+<!-- fai:head -->
+<meta name="description" content="The economic infrastructure sibling to the Hubs &amp; Markets Working Group: aggregating demand across London so buying power, not charity, moves the food system.">
+<link rel="canonical" href="https://food.darkmatterlabs.org/collective-buying-engine.html">
+<meta name="theme-color" content="#111112">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Food as Infrastructure, Dark Matter Labs">
+<meta property="og:locale" content="en_GB">
+<meta property="og:url" content="https://food.darkmatterlabs.org/collective-buying-engine.html">
+<meta property="og:title" content="London&#x27;s Collective Buying Engine">
+<meta property="og:description" content="The economic infrastructure sibling to the Hubs &amp; Markets Working Group: aggregating demand across London so buying power, not charity, moves the food system.">
+<meta property="og:image" content="https://food.darkmatterlabs.org/assets/fai/social/collective-buying-engine.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="London&#x27;s Collective Buying Engine. Food as Infrastructure, Dark Matter Labs.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="London&#x27;s Collective Buying Engine">
+<meta name="twitter:description" content="The economic infrastructure sibling to the Hubs &amp; Markets Working Group: aggregating demand across London so buying power, not charity, moves the food system.">
+<meta name="twitter:image" content="https://food.darkmatterlabs.org/assets/fai/social/collective-buying-engine.png">
+<meta name="twitter:image:alt" content="London&#x27;s Collective Buying Engine. Food as Infrastructure, Dark Matter Labs.">
+<link rel="icon" href="assets/fai/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400..900;1,400..700&display=swap">
+<link rel="stylesheet" href="assets/fai/fai.css">
+<!-- /fai:head -->
+</head>
+<body>
+<!-- fai:bar -->
+<div class="fai-bar">
+  <div class="fai-bar__inner">
+    <a class="fai-bar__dm" href="https://darkmatterlabs.org/"><img class="fai-bar__lockup" src="assets/brand/dm-logo-v1-white.svg" alt="Dark Matter Labs" width="102" height="20"><img class="fai-bar__stamp" src="assets/brand/dm-stamp-white.svg" alt="Dark Matter Labs" width="20" height="20"></a>
+    <span class="fai-bar__sep" aria-hidden="true"></span>
+    <a class="fai-bar__mission" href="index.html">Food as Infrastructure</a>
+    <span class="fai-bar__here"><span class="fai-el fai-el--draft" aria-hidden="true"><b>Cb</b><i>26</i></span><span>Collective Buying Engine</span></span>
+    <a class="fai-bar__xco" href="https://optionality.darkmatterlabs.org/" target="_blank" rel="noopener" title="Dark Matter Labs' Expanding Civilizational Optionality portfolio">xCO portfolio<span aria-hidden="true"> ↗</span></a>
+    <div class="fai-bar__links" role="navigation" aria-label="Site"><a href="index.html">Portfolio</a><a href="library.html">Library</a></div>
+  </div>
+</div>
+<!-- /fai:bar -->
+
+<header class="site-nav">
+  <div class="nav-inner">
+    <div class="nav-mark">
+      <strong>London's Collective Buying Engine</strong>
+      <span>The economic infrastructure, alongside the physical</span>
+    </div>
+    <nav class="nav-links">
+      <a href="#why">Why this</a>
+      <a href="#proof">Already proving it</a>
+      <a href="#how">How it works</a>
+      <a href="#london">The London opportunity</a>
+      <a href="#camden">Camden as node one</a>
+      <a href="#open">What's not proven yet</a>
+    </nav>
+  </div>
+</header>
+
+<div class="status-strip">
+  <div class="wrap">
+    <div class="status-note">
+      <p><strong>Draft. A first pass at naming this as a centrepiece of the portfolio, not a side option.</strong> The hub and the working group are the physical infrastructure; this is the economic infrastructure that makes the hub's own numbers mean something at London scale. Most of what's below is real and already running, at proof-of-concept scale &mdash; the honest gap is everything in the final section.</p>
+      <span class="status-date">Working draft, October 2026</span>
+    </div>
+  </div>
+</div>
+
+<main id="main">
+
+  <section class="hero">
+    <div class="wrap">
+      <div class="lot-number">London's Collective Buying Engine</div>
+      <h1>Buying power, not charity, moves the food system.</h1>
+      <p class="lede">A food bank redistributes what's left over. A buying engine changes what gets grown, who gets paid, and where the money goes in the first place. This is Dark Matter Labs' case for treating collective buying power as the centrepiece of this portfolio, alongside the <a href="hubs-and-markets-working-group.html">Hubs &amp; Markets Working Group</a>, not a line item inside it.</p>
+      <div class="cta-row">
+        <a class="btn primary" href="#proof">See what's already proving it</a>
+        <a class="btn" href="hubs-and-markets-working-group.html">Open the Hubs &amp; Markets Working Group</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="why">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">The problem hiding in plain sight</div>
+        <h2>Every buying group alone is too small to matter</h2>
+        <p class="sub">A food bank, a community kitchen, a single school: each buys alone, each pays close to retail price, and none of them is big enough on its own to set terms with a supplier, let alone a supermarket.</p>
+      </div>
+      <div class="prose">
+        <p>Meanwhile the money that actually could change this is already moving. Camden alone spends roughly £4.02m a year on school meals through a single national contractor. Across London, dozens of councils, hundreds of schools and thousands of community organisations are each separately buying food that, combined, would be one of the largest food procurement blocks in the country. None of it is aggregated. Most of it leaves London's own economy before it reaches a plate.</p>
+        <p>A collective buying engine is the thing that turns that fragmented spend into actual leverage: fair prices back to growers, lower prices to the organisations buying, and a London-region supply chain resilient enough that one bad harvest or one failed contractor doesn't become a shortage.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="proof">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">Not a hypothesis</div>
+        <h2>What's already proving this works</h2>
+        <p class="sub">Small scale, real numbers, already running inside this portfolio's own network.</p>
+      </div>
+      <div class="stat-row">
+        <div class="stat"><b>100 tonnes/yr</b><span>Moved by Cooperation Town, London's own street-level food co-op network</span></div>
+        <div class="stat"><b>£360,000</b><span>Saved by Cooperation Town's members against retail prices</span></div>
+        <div class="stat"><b>60p in the £</b><span>Returned to growers through the Kentish Town Veg Box &mdash; most supply chains return far less</span></div>
+      </div>
+      <div class="tie-grid" style="margin-top:28px">
+        <div class="tie-card">
+          <h4>Better Food Traders + Growing Communities</h4>
+          <p>Already running collective buying of UK-grown fruit and veg at multi-organisation scale, with a Food Foundation report featuring Camden's own version of it.</p>
+        </div>
+        <div class="tie-card">
+          <h4>The Hackney collective buying group</h4>
+          <p>Six community food organisations, including Cooperation Town and the Hackney Food Network, pooling demand through a shared model for the whole Hackney Food Network.</p>
+        </div>
+        <div class="tie-card">
+          <h4>The Camden&ndash;Islington Food Hub</h4>
+          <p>Collective buying built into its design from the start: around 15 tonnes a week and roughly £1.5m of food a year once fully operating.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="how">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">The actual mechanics</div>
+        <h2>How the engine works</h2>
+        <p class="sub">Four moving parts, each one already named and tested somewhere in this portfolio's own options work &mdash; the engine is what happens when they run together, not apart.</p>
+      </div>
+      <div class="tie-grid">
+        <div class="tie-card">
+          <h4>Aggregation</h4>
+          <p>One shared ordering system lets every kitchen, food bank and buying group place a combined order with a wholesaler each week, getting bulk prices none of them could get alone.</p>
+        </div>
+        <div class="tie-card">
+          <h4>A mesh, not a single supplier</h4>
+          <p>Demand pooled across several boroughs and growers, so one farm's bad harvest is quietly covered by others rather than felt as a shortage.</p>
+        </div>
+        <div class="tie-card">
+          <h4>Bridge financing</h4>
+          <p>Growers converting to organic or expanding to meet this demand get their lean years covered, in exchange for a guaranteed supply contract back to the engine.</p>
+        </div>
+        <div class="tie-card">
+          <h4>Procurement charters</h4>
+          <p>Councils and their major catering contracts commit to buying a rising share locally each year, turning existing institutional spend into guaranteed demand rather than new money.</p>
+        </div>
+        <div class="tie-card">
+          <h4>Conditions on scarce assets</h4>
+          <p>Wherever a council already controls something everyone wants &mdash; a market pitch, a lease, a grant &mdash; it can attach a food-system condition instead of waiting for new leverage to appear.</p>
+        </div>
+        <div class="tie-card">
+          <h4>Consumption transparency</h4>
+          <p>A public, checkable record of how much food moving through the system is actually local, so the case for the engine stays provable, not asserted.</p>
+        </div>
+      </div>
+      <div class="crossover">
+        <details>
+          <summary>Where this connects: the hub is the building, the engine is what runs through it</summary>
+          <div class="crossover-body">
+            <p>A food hub without an engine behind it is a warehouse. The Camden&ndash;Islington hub's own collective-buying design is the engine's first physical home, and the same aggregation logic is exactly what the Hubs &amp; Markets Working Group tracks across every borough's own hub thinking.</p>
+            <p>See the <a href="hubs-and-markets-working-group.html">Hubs &amp; Markets Working Group</a>.</p>
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section id="london">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">Where the scale actually comes from</div>
+        <h2>The London opportunity</h2>
+        <p class="sub">18 of London's 33 boroughs are already engaged with this portfolio's own network, at every stage from active delivery to first introduction. That's the real substrate an engine would aggregate demand across &mdash; not a hypothetical future network, one already forming.</p>
+      </div>
+      <div class="prose">
+        <p>No London-wide total has been calculated yet, and this page won't invent one. What's real: Camden's own school-meals spend alone is confirmed at roughly £4.02m a year. Newham is running its own climate action bid in parallel. Hackney, Islington and a growing list of other boroughs are each building some version of the same thing independently. The honest opportunity is coordination, not a bigger number &mdash; the same spend, aligned rather than duplicated thirty-three separate times.</p>
+      </div>
+      <div class="callout"><b>What this is not yet:</b> a single London-wide number, a signed multi-borough agreement, or a shared platform. It's eighteen separate relationships that haven't yet been asked to buy together.</div>
+    </div>
+  </section>
+
+  <section id="camden">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">Where it starts</div>
+        <h2>Camden as node one, not the whole story</h2>
+        <p class="sub">Camden's own hub, school-meals work and neighbourhood focus were never just a Camden project. They're the first working proof that the engine's mechanics hold at real scale.</p>
+      </div>
+      <div class="prose">
+        <p>That reframing cuts both ways. It means Camden's own investment buys something bigger than a local fix &mdash; a working reference other boroughs can actually copy, not just admire. It also means Camden deserves to hear that framing stated plainly, not left implicit: the point of getting this right in Camden first is that it stops being only Camden's problem to solve alone.</p>
+      </div>
+      <a class="btn" href="kilburn-high-road.html">Open Kilburn High Road</a>
+    </div>
+  </section>
+
+  <section id="open">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">A working check, not a finished case</div>
+        <h2>What's not proven yet</h2>
+      </div>
+      <div class="checklist">
+        <ul>
+          <li>Every proof point above is real, but still proof-of-concept scale &mdash; tonnes and pounds, not yet the scale a London-wide claim would need</li>
+          <li>No borough has yet committed its own institutional spend to a shared, cross-borough buying mechanism</li>
+          <li>The mesh system that makes supply resilient to one grower's bad harvest hasn't been tested under an actual shock yet</li>
+          <li>There is no shared digital ordering system today &mdash; each buying group still runs its own</li>
+          <li>Whoever holds this engine long-term, and how it's governed across boroughs that don't yet trust each other's priorities, is genuinely unresolved</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<div class="wrap sources">
+  <h3>Sources</h3>
+  <ul>
+    <li>Cooperation Town and the Kentish Town Veg Box figures, and the Better Food Traders / Growing Communities collective buying work, via the Food Futures workshop deck and this portfolio's own partner register</li>
+    <li>Camden's school meals contract value (Caterlink, £20.11m over the term, ~£4.02m/yr), via public procurement records</li>
+    <li>Borough engagement count (18 of 33), via this portfolio's own working partner register, October 2026</li>
+  </ul>
+</div>
+
+<footer class="page-footer">
+  <div class="wrap">
+    <div class="col col-about">
+      <h4>London's Collective Buying Engine</h4>
+      <p>The economic infrastructure sibling to the Hubs &amp; Markets Working Group. Part of Dark Matter Labs' Food as Infrastructure portfolio.</p>
+    </div>
+    <div class="col">
+      <h4>This page</h4>
+      <a href="#proof">Already proving it</a>
+      <a href="#how">How it works</a>
+      <a href="#london">The London opportunity</a>
+      <a href="#open">What's not proven yet</a>
+    </div>
+    <div class="col">
+      <h4>Wider portfolio</h4>
+      <a href="hubs-and-markets-working-group.html">Hubs &amp; Markets Working Group</a>
+      <a href="kilburn-high-road.html">Kilburn High Road</a>
+      <a href="index.html">Food as Infrastructure</a>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="credit">Parts of this page were drafted with AI assistance (Claude). Licensed CC BY-SA 4.0 &mdash; see the <a href="index.html">homepage</a> for full credit and lineage.</div>
+  </div>
+</footer>
+
+<!-- fai:footer -->
+<footer class="fai-footer">
+  <div class="fai-footer__inner">
+    <span>Part of Dark Matter Labs' <a href="https://optionality.darkmatterlabs.org/" target="_blank" rel="noopener">xCO portfolio<span aria-hidden="true"> ↗</span></a>, expanding civilizational optionality.</span>
+  </div>
+</footer>
+<!-- /fai:footer -->
+</body>
+</html>
