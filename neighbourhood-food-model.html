@@ -104,6 +104,17 @@
   .crossover-body p{font-size:14.5px; color:var(--fai-ink-2); line-height:1.6; margin:0 0 10px;}
   .crossover-body p:last-child{margin-bottom:0;}
 
+  .impact-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-top:8px;}
+  @media (max-width:860px){ .impact-grid{grid-template-columns:repeat(2,1fr);} }
+  .impact-card{background:var(--fai-field); padding:22px 20px;}
+  .impact-card h4{font-size:15px; line-height:1.3; font-weight:600; color:var(--fai-beet); text-transform:uppercase; letter-spacing:.03em;}
+  .impact-card .figure{display:block; margin-top:10px; font-size:clamp(26px,2.6vw,32px); line-height:1.1; font-weight:500; color:var(--fai-ink); font-variant-numeric:tabular-nums;}
+  .impact-card .figure-label{display:block; margin-top:4px; font-size:13px; line-height:1.4; color:var(--fai-ink-3);}
+  .impact-card .figure + .figure-row{margin-top:14px;}
+  .impact-card .figure-row{display:flex; justify-content:space-between; gap:8px; margin-top:10px; padding-top:10px; border-top:1px solid var(--fai-rule);}
+  .impact-card .figure-row b{font-size:20px; font-weight:500; color:var(--fai-ink); font-variant-numeric:tabular-nums;}
+  .impact-card .figure-row span{font-size:12.5px; color:var(--fai-ink-3); text-align:right; max-width:60%;}
+
   .checklist{margin-top:8px; max-width:var(--fai-measure);}
   .checklist ul{list-style:none; margin:0; padding:0;}
   .checklist li{padding:14px 0; border-top:1px solid var(--fai-rule); font-size:17px; color:var(--fai-ink);}
@@ -179,6 +190,7 @@
       <a href="#wealth">Keep wealth local</a>
       <a href="#enterprise">Enterprise and jobs</a>
       <a href="#together">Bring people together</a>
+      <a href="#impact">How Walworth measures it</a>
       <a href="#checklist">Before calling it done</a>
     </nav>
   </div>
@@ -187,8 +199,8 @@
 <div class="status-strip">
   <div class="wrap">
     <div class="status-note">
-      <p><strong>Draft. Camden's own next focus for its food mission: resilience at the neighbourhood level, starting with Kilburn High Road.</strong> Camden's shape for this is still being worked through, not yet a fixed strategy, so treat it as live thinking rather than settled policy. Tested here against lessons already learned in the Walworth Neighbourhood Food Model, built by Pembroke House with the Southwark Food Action Alliance: reported from their own public pages and a 2021 report for Sustain's Food Power programme, not independently verified against the primary source.</p>
-      <span class="status-date">Working note, October 2026</span>
+      <p><strong>Draft. Camden's own next focus for its food mission: resilience at the neighbourhood level, starting with Kilburn High Road.</strong> Camden's shape for this is still being worked through, not yet a fixed strategy, so treat it as live thinking rather than settled policy. Tested here against lessons already learned in the Walworth Neighbourhood Food Model, built by Pembroke House with the Southwark Food Action Alliance: the "four jobs" are our own reading of their public pages, a 2021 report for Sustain's Food Power programme, and WNFM's own Year 3 (2024&ndash;2025) report — not a verbatim framework published by Pembroke House itself, and not something they've reviewed against our use of it here.</p>
+      <span class="status-date">Working note, November 2026</span>
     </div>
   </div>
 </div>
@@ -288,7 +300,7 @@
       <div class="tie-grid">
         <div class="tie-card">
           <h4>Locally owned businesses and co-ops</h4>
-          <p>Strong local supply chains, new food projects, locally owned food businesses, cooperatives, collaborations and partnerships, named directly as the mechanism for keeping wealth local, not a side effect of it.</p>
+          <p>Strong local supply chains, new food projects, locally owned food businesses, cooperatives, collaborations and partnerships, named directly as the mechanism for keeping wealth local, not a side effect of it. Fareshares, a volunteer-run food co-op sourcing cost-price food from ethical wholesalers, has been doing exactly this for 40 years &mdash; WNFM stepped in as its fiscal host so it could receive a council grant it couldn't otherwise access.</p>
         </div>
         <div class="tie-card">
           <h4>A living-wage anchor</h4>
@@ -321,6 +333,44 @@
           </div>
         </details>
       </div>
+    </div>
+  </section>
+
+  <section id="impact">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">A logic model, not a theory of change</div>
+        <h2>How Walworth measures it</h2>
+        <p class="sub">Pembroke House doesn't publish a single theory-of-change diagram for the model. What they do run is an Impact Framework, trialled through Year 3 (2024&ndash;2025): four stages, Connect, Grow, Act, Share, each tracked with its own real numbers rather than a general narrative of change.</p>
+      </div>
+      <div class="impact-grid">
+        <div class="impact-card">
+          <h4>Connect</h4>
+          <span class="figure">1,657</span>
+          <span class="figure-label">attendances across the year's activity</span>
+          <div class="figure-row"><b>1,819</b><span>connections made between people</span></div>
+        </div>
+        <div class="impact-card">
+          <h4>Grow</h4>
+          <span class="figure">1,158</span>
+          <span class="figure-label">participants engaged in a focused activity</span>
+          <div class="figure-row"><b>47</b><span>new experiences, e.g. a first market stall</span></div>
+          <div class="figure-row"><b>21</b><span>ideas or opportunities generated</span></div>
+        </div>
+        <div class="impact-card">
+          <h4>Act</h4>
+          <span class="figure">2</span>
+          <span class="figure-label">individual actions taken as a result</span>
+          <div class="figure-row"><b>0</b><span>collaborative actions recorded this year</span></div>
+        </div>
+        <div class="impact-card">
+          <h4>Share</h4>
+          <span class="figure">2</span>
+          <span class="figure-label">times someone told others what they'd found</span>
+          <div class="figure-row"><b>0</b><span>initiatives recorded as inspired by it</span></div>
+        </div>
+      </div>
+      <div class="callout"><b>Worth reading plainly, not just celebrating:</b> Pembroke House's own report says Connect and Grow are where the numbers are real; Act and Share are still close to zero, and they say so themselves &mdash; "learning from this tool will take more time," because relational, long-term change is genuinely hard to quantify. That honesty is part of why the framework is useful as a model for Kilburn, not just the headline totals.</div>
     </div>
   </section>
 
@@ -363,7 +413,8 @@
     <li>Camden Food Mission, its own neighbourhood-level focus, shared directly with Dark Matter Labs, October 2026. Still being worked through, not yet a fixed strategy.</li>
     <li>Pembroke House, "Neighbourhood" and "Walworth Neighbourhood Food Model" pages, pembrokehouse.org.uk</li>
     <li>Southwark Food Action Alliance, <em>Building Local Food Resilience Beyond Covid-19: Southwark</em>, for Sustain's Food Power programme, May 2021</li>
-    <li>The Walworth Neighbourhood Food Model, <a href="https://www.neighbourhoodfoodmodel.org/" target="_blank" rel="noopener">neighbourhoodfoodmodel.org<span aria-hidden="true"> ↗</span></a></li>
+    <li>Pembroke House, <em>Walworth Neighbourhood Food Model — Year 3 (2024&ndash;2025) Report</em>, read directly, November 2026</li>
+    <li>The Walworth Neighbourhood Food Model, <a href="https://www.neighbourhoodfoodmodel.org/" target="_blank" rel="noopener">neighbourhoodfoodmodel.org<span aria-hidden="true"> ↗</span></a> — not independently re-checked against this live site since</li>
   </ul>
 </div>
 
@@ -379,6 +430,7 @@
       <a href="#kilburn">Kilburn first</a>
       <a href="#culture">Diverse food cultures</a>
       <a href="#wealth">Keep wealth local</a>
+      <a href="#impact">How Walworth measures it</a>
     </div>
     <div class="col">
       <h4>Wider portfolio</h4>
