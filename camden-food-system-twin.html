@@ -44,12 +44,6 @@
   .tabs button[aria-pressed="true"]{background:var(--beet-c);color:var(--bg)}
   .tabs button:not([aria-pressed="true"]):hover{color:var(--text)}
   .meta-note{font-size:14px;color:var(--text-2)}
-  .subtabs{display:none;align-items:center;gap:10px;flex-wrap:wrap}
-  .subtabs.show{display:flex}
-  .subtabs .tabs{padding:3px}
-  .subtabs .tabs button{font-size:13.5px;padding:7px 14px}
-  .subtabs .tabs button[aria-pressed="true"]{background:var(--gov);color:var(--bg)}
-  .subtabs .label{font-size:13px;color:var(--text-2)}
 
   /* legend */
   .legend{display:flex;flex-wrap:wrap;gap:14px 24px;font-size:14px;color:var(--text-2);background:var(--raised);border-radius:10px;padding:14px 18px;margin-bottom:20px}
@@ -72,16 +66,12 @@
   .node .label{display:block;font-size:14px;font-weight:600;line-height:1.3;color:var(--text)}
   .node .gapflag{display:inline-flex;align-items:center;gap:5px;margin-top:6px;font-size:12px;color:var(--gap)}
   .node .gapflag::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--gap)}
-  .node.istbd{border-style:dashed;border-color:var(--gov)}
-  .node .tbdflag{display:inline-flex;align-items:center;gap:5px;margin-top:6px;font-size:12px;color:var(--gov)}
-  .node .tbdflag::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--gov)}
 
   /* detail panel */
   .detail{background:var(--raised);border-radius:12px;padding:20px 22px;display:grid;gap:10px;min-height:92px}
   .detail .dtitle{font-size:18px;font-weight:600}
   .detail .dbody{font-size:15.5px;line-height:1.55;color:var(--text-2)}
   .detail .dgap{font-size:14px;line-height:1.5;color:var(--gap)}
-  .detail .dtbd{font-size:14px;line-height:1.5;color:var(--gov)}
   .detail .placeholder{color:var(--text-2);font-size:15px}
 
   /* gap list */
@@ -138,7 +128,7 @@
   <section class="hero">
     <span class="eyebrow">Internal proposition, illustrative, not final data. Shared only by direct link.</span>
     <h1>Camden's food system, twinned</h1>
-    <p class="subtitle">One map of how the system actually runs today, built from what's confirmed so far and honest about what isn't. One map of the civic-led alternative, built from the options, precedents and figures already in motion &mdash; shown at two points in its own life: Year 1, when it's still one space proving the model, and Year 3+, once that role has split and moved. Click any node for detail. The proposition is to keep both maps alive and update them as real data comes in.</p>
+    <p class="subtitle">One map of how the system actually runs today, built from what's confirmed so far and honest about what isn't. One map of the civic-led alternative, built from the options, precedents and figures already in motion. Click any node for detail. The proposition is to keep both maps alive and update them as real data comes in.</p>
   </section>
 
   <section>
@@ -146,13 +136,6 @@
       <div class="tabs" role="tablist" aria-label="Choose which system to view">
         <button id="tab-today" role="tab" aria-pressed="true">Today</button>
         <button id="tab-alt" role="tab" aria-pressed="false">The alternative</button>
-      </div>
-      <div class="subtabs" id="phaseTabs" role="tablist" aria-label="Choose which point in the alternative's evolution to view">
-        <span class="label">When:</span>
-        <div class="tabs">
-          <button id="tab-phase-y1" role="tab" aria-pressed="true">Year 1 &mdash; testing</button>
-          <button id="tab-phase-y3" role="tab" aria-pressed="false">Year 3+ &mdash; mature network</button>
-        </div>
       </div>
       <span class="meta-note" id="metaNote"></span>
     </div>
@@ -237,7 +220,7 @@ var today = {
   ]
 };
 
-var alt1 = {
+var alt = {
   width:1560, height:1120,
   nodes:[
     {id:"a1", x:160, y:70, tier:"Capital", label:"Camden's Redirected Budget", detail:"The existing ~£4m/yr school meal spend, redirected toward a civic-led vehicle rather than a national contractor — not new money, the existing lever."},
@@ -257,7 +240,7 @@ var alt1 = {
     {id:"a12", x:540, y:560, tier:"Supply", label:"Organic-Transition Farms", detail:"Bridge-financed through the 2–3 lean years of converting to organic, in exchange for a guaranteed supply contract back."},
     {id:"a13", x:820, y:560, tier:"Supply", label:"Existing Local Suppliers", detail:"Better Food Traders, Growing Communities, Wholegood — already engaged, now supplying at real scale rather than a pilot."},
 
-    {id:"a14", x:330, y:720, tier:"Processing", label:"Camden–Islington Food Hub", detail:"The one space proving the whole model early on &mdash; processing, storage and redistribution all under one roof. See Year 3+ for how this role splits and moves as the system scales."},
+    {id:"a14", x:330, y:720, tier:"Processing", label:"Camden–Islington Food Hub", detail:"The borough-scale hub, live and moving volume, feeding the wider network."},
     {id:"a15", x:630, y:720, tier:"Processing", label:"Kilburn Neighbourhood Hub", detail:"Scaled to one neighbourhood — DML's own live test case for the model."},
     {id:"a16", x:930, y:720, tier:"Processing", label:"Central School-Meals Kitchen", detail:"Camden's own processing capability for school catering — the Juniper Ventures analogue, bulk prep and portioning done locally."},
 
@@ -306,111 +289,26 @@ var alt1 = {
   ]
 };
 
-var alt3 = {
-  width:1700, height:1160,
-  nodes:[
-    {id:"c1", x:150, y:70, tier:"Capital", label:"Camden's Redirected Budget", detail:"Same lever as Year 1, now proven and harder to argue against."},
-    {id:"c2", x:400, y:70, tier:"Capital", label:"DML Co-investment (XCO Fund)", detail:"Still covering the unfundable work, now mostly de-risking the move upstream rather than getting the first hub open."},
-    {id:"c3", x:650, y:70, tier:"Capital", label:"Camden Food Bond", detail:"Community shares, reissued or extended once the Year 1 bond has a track record to point to."},
-    {id:"c4", x:900, y:70, tier:"Capital", label:"Climate Action Fund", detail:"The original bid's resilience and local-sourcing infrastructure, now funding the near-farm facility rather than the borough hub."},
-    {id:"c5", x:1150, y:70, tier:"Capital", label:"Philanthropic Funders", detail:"Still covering co-op and community-ownership structuring costs, now at a multi-borough scale."},
-    {id:"c6", x:1450, y:70, tier:"Capital", label:"London Boroughs Consortium Capital", detail:"New at this stage: a number of London boroughs, having watched the Camden pilot work, pool capital to co-invest in shared, near-farm processing and ownership &mdash; the mesh's logic taken to its conclusion."},
-
-    {id:"c7", x:600, y:240, tier:"Ownership", label:"Co-operative / Community-Benefit Society", detail:"The same vehicle as Year 1, now co-owning the upstream facility jointly with the Boroughs Consortium rather than running the Camden hub alone."},
-    {id:"c8", x:950, y:240, tier:"Ownership", label:"Food Partnership Steering Group", detail:"Still the glue holding the levels together, now with an established track record to govern from."},
-    {id:"c9", x:1250, y:240, tier:"Ownership", label:"Catalyst Partners", detail:"The same partner organisations, now backing five neighbourhood-specific offers instead of one standard model."},
-    {id:"c10", x:1450, y:240, tier:"Ownership", label:"London Boroughs Consortium", detail:"New governance body: the boroughs that pooled capital above, co-owning and co-directing the near-farm processing facility alongside Camden's own co-op."},
-
-    {id:"c11", x:750, y:400, tier:"Local organising", label:"Neighbourhood Action Groups (×5)", detail:"The same groups as Year 1, now each tied to a physical neighbourhood food point rather than one shared, borough-wide hub."},
-    {id:"c12", x:1120, y:400, tier:"Local organising", label:"Self-Nomination, Open Alliance", detail:"Unchanged from Year 1 &mdash; still how catalyst partners and neighbourhood leads put themselves forward."},
-
-    {id:"c13", x:260, y:560, tier:"Supply", label:"London-Region Growers (Mesh)", detail:"Now feeding the near-farm processing facility directly rather than routing through a borough hub &mdash; shorter miles, less handling."},
-    {id:"c14", x:540, y:560, tier:"Supply", label:"Organic-Transition Farms", detail:"Bridge-financing matured into standing supply contracts, feeding the same near-farm facility."},
-    {id:"c15", x:820, y:560, tier:"Supply", label:"Existing Local Suppliers", detail:"Better Food Traders, Growing Communities, Wholegood and others, now supplying the near-farm facility at real scale."},
-
-    {id:"c16", x:320, y:720, tier:"Upstream processing", label:"Upstream Processing &amp; Collection (near-farm, consortium-owned)", detail:"What used to happen inside the Camden hub &mdash; bulk collection, processing, portioning &mdash; now sited near the growers themselves rather than in the borough, at a scale that justifies the move. Jointly owned by Camden's co-op and the London Boroughs Consortium."},
-    {id:"c17", x:700, y:720, tier:"Upstream processing", label:"Camden–Islington Hub &mdash; Temporary Storage &amp; Logistics", detail:"The Year 1 hub building, repurposed: no longer where processing happens, but the cross-dock that moves volume from the near-farm facility out to Camden's five neighbourhood points within hours."},
-    {id:"c18", x:1080, y:720, tier:"Upstream processing", label:"Central School-Meals Kitchen", detail:"Unchanged role from Year 1: Camden's own bulk prep and portioning for school catering specifically, now also drawing on the near-farm facility's supply."},
-
-    {id:"c19", x:120, y:900, tier:"Access", label:"Neighbourhood Food Point &mdash; Kilburn", detail:"DML's own live test case, already running as a neighbourhood-scale pilot in Year 1 &mdash; one of the two confirmed sites (with Kentish Town) due to launch at the June 2027 We Make Camden Summit."},
-    {id:"c20", x:380, y:900, tier:"Access", label:"Neighbourhood Food Point &mdash; Kentish Town", detail:"The second confirmed site, launching alongside Kilburn at the June 2027 summit."},
-    {id:"c21", x:640, y:900, tier:"Access", label:"Neighbourhood Food Point &mdash; Neighbourhood 3", detail:"Camden has five neighbourhoods in its own North Star framing; only Kilburn and Kentish Town are confirmed sites so far.", tbd:true, tbdNote:"Which of Camden's remaining neighbourhoods gets a point, and when, is not yet decided."},
-    {id:"c22", x:900, y:900, tier:"Access", label:"Neighbourhood Food Point &mdash; Neighbourhood 4", detail:"Not yet sited.", tbd:true, tbdNote:"Not yet decided."},
-    {id:"c23", x:1160, y:900, tier:"Access", label:"Neighbourhood Food Point &mdash; Neighbourhood 5", detail:"Not yet sited.", tbd:true, tbdNote:"Not yet decided."},
-    {id:"c24", x:1420, y:900, tier:"Access", label:"Schools (On-Site Finishing)", detail:"Unchanged channel from Year 1: schools with kitchens finish and plate on site, fed by the central school-meals kitchen, separate from the five neighbourhood points."},
-
-    {id:"c25", x:300, y:1060, tier:"People & feedback", label:"Residents (Co-op Members, Worker-Owners)", detail:"Now served by a space shaped to their own neighbourhood &mdash; could be an unused shopfront, a part-time community room &mdash; rather than one standard format repeated five times."},
-    {id:"c26", x:650, y:1060, tier:"People & feedback", label:"Nutrition &amp; Supply-Gap Mapping", detail:"The Walworth-style map, now informing both the near-farm facility's sourcing and each neighbourhood point's own offer."},
-    {id:"c27", x:950, y:1060, tier:"People & feedback", label:"Consumption Transparency Dashboard", detail:"Unchanged role: a public, checkable record of how local, healthy and sustainable the system really is."},
-    {id:"c28", x:1250, y:1060, tier:"People & feedback", label:"Future Food Dinner", detail:"Unchanged role: grows the wider London alliance, now with a working multi-borough model to point to rather than a proposal."}
-  ],
-  edges:[
-    {a:"c1", b:"c7", type:"money"},
-    {a:"c2", b:"c7", type:"money", label:"unfundable work"},
-    {a:"c3", b:"c7", type:"money", label:"capital"},
-    {a:"c4", b:"c7", type:"money"},
-    {a:"c5", b:"c7", type:"money"},
-    {a:"c6", b:"c10", type:"money", label:"pooled across boroughs"},
-    {a:"c7", b:"c8", type:"gov", label:"the glue"},
-    {a:"c7", b:"c9", type:"gov"},
-    {a:"c10", b:"c7", type:"gov", label:"co-owns upstream facility"},
-    {a:"c8", b:"c11", type:"gov"},
-    {a:"c11", b:"c12", type:"gov"},
-    {a:"c7", b:"c13", type:"money", label:"mesh"},
-    {a:"c7", b:"c14", type:"money", label:"bridge finance"},
-    {a:"c13", b:"c16", type:"food"},
-    {a:"c14", b:"c16", type:"food"},
-    {a:"c15", b:"c16", type:"food"},
-    {a:"c13", b:"c18", type:"food"},
-    {a:"c10", b:"c16", type:"gov", label:"co-owned, near-farm"},
-    {a:"c16", b:"c17", type:"food", label:"bulk collection & processing"},
-    {a:"c17", b:"c19", type:"food", label:"temporary storage → same-day"},
-    {a:"c17", b:"c20", type:"food"},
-    {a:"c17", b:"c21", type:"food", gap:true},
-    {a:"c17", b:"c22", type:"food", gap:true},
-    {a:"c17", b:"c23", type:"food", gap:true},
-    {a:"c18", b:"c24", type:"food"},
-    {a:"c11", b:"c19", type:"gov", label:"residents run it"},
-    {a:"c11", b:"c20", type:"gov"},
-    {a:"c11", b:"c21", type:"gov"},
-    {a:"c11", b:"c22", type:"gov"},
-    {a:"c11", b:"c23", type:"gov"},
-    {a:"c19", b:"c25", type:"food"},
-    {a:"c20", b:"c25", type:"food"},
-    {a:"c21", b:"c25", type:"food"},
-    {a:"c22", b:"c25", type:"food"},
-    {a:"c23", b:"c25", type:"food"},
-    {a:"c24", b:"c25", type:"food"},
-    {a:"c26", b:"c7", type:"gov", label:"informs sourcing"},
-    {a:"c27", b:"c8", type:"gov", label:"accountability"},
-    {a:"c28", b:"c8", type:"gov", label:"grows alliance"}
-  ]
-};
-
-var state = { mode:"today", phase:"y1", selected:null };
+var state = { mode:"today", selected:null };
 
 function byId(list, id){ for (var i=0;i<list.length;i++){ if (list[i].id===id) return list[i]; } return null; }
-function currentData(){ return state.mode==="today" ? today : (state.phase==="y3" ? alt3 : alt1); }
+function currentData(){ return state.mode==="today" ? today : alt; }
 
 function renderLegend(){
   var el = document.getElementById("legend");
   var isToday = state.mode==="today";
-  var data = currentData();
-  var hasTbd = data.nodes.some(function(n){ return n.tbd; });
   el.innerHTML =
     '<span><span class="swatch" style="background:'+COLS.money+'"></span>money flow</span>' +
     '<span><span class="swatch" style="background:'+COLS.food+'"></span>food flow</span>' +
     '<span><span class="swatch dashed"></span>governance / coordination</span>' +
-    (isToday ? '<span><span class="dot"></span>confirmed real data gap &mdash; dashed edges and borders</span>' : '') +
-    (hasTbd ? '<span><span class="dot" style="border-color:var(--gov)"></span>not yet decided &mdash; dashed edges and borders</span>' : '');
+    (isToday ? '<span><span class="dot"></span>confirmed real data gap &mdash; dashed edges and borders</span>' : '');
 }
 
 function renderMeta(){
   var el = document.getElementById("metaNote");
-  if (state.mode==="today"){ el.textContent = "16 nodes, 4 of them flagged as real data gaps"; return; }
-  el.textContent = state.phase==="y3"
-    ? "28 nodes: the alternative at Year 3+, once the hub's role has split between a near-farm processing facility and five neighbourhood points"
-    : "24 nodes: the alternative at Year 1, still one borough-scale hub proving the model";
+  el.textContent = state.mode==="today"
+    ? "16 nodes, 4 of them flagged as real data gaps"
+    : "24 nodes, the civic-led system drawn from the options menu and the 29 October reset call";
 }
 
 function clearDetail(){
@@ -426,8 +324,7 @@ function showDetail(node, data){
     if (e.b===node.id){ connections.push(byId(data.nodes,e.a).label); }
   });
   var html = '<p class="dbody">'+node.detail+'</p>';
-  if (node.gap && node.gapNote){ html += '<p class="dgap">Data gap &mdash; '+node.gapNote+'</p>'; }
-  if (node.tbd){ html += '<p class="dtbd">Not yet decided &mdash; '+node.tbdNote+'</p>'; }
+  if (node.gap){ html += '<p class="dgap">Data gap &mdash; '+node.gapNote+'</p>'; }
   if (connections.length){ html += '<p class="dbody"><strong style="color:var(--text)">Connects to:</strong> '+connections.join(", ")+'</p>'; }
   document.getElementById("detail").innerHTML = html;
 }
@@ -463,13 +360,12 @@ function layout(){
 
   data.nodes.forEach(function(n){
     var div = document.createElement("div");
-    div.className = "node" + (n.gap ? " isgap" : "") + (n.tbd ? " istbd" : "") + (state.selected===n.id ? " selected" : "");
+    div.className = "node" + (n.gap ? " isgap" : "") + (state.selected===n.id ? " selected" : "");
     div.style.left = n.x+"px";
     div.style.top = n.y+"px";
     div.dataset.id = n.id;
     div.innerHTML = '<span class="tier-tag">'+n.tier+'</span><span class="label">'+n.label+'</span>' +
-      (n.gap ? '<span class="gapflag">data gap</span>' : '') +
-      (n.tbd ? '<span class="tbdflag">not yet decided</span>' : '');
+      (n.gap ? '<span class="gapflag">data gap</span>' : '');
     div.addEventListener("click", function(){
       state.selected = n.id;
       layout();
@@ -511,7 +407,6 @@ function setMode(mode){
   state.selected = null;
   document.getElementById("tab-today").setAttribute("aria-pressed", String(mode==="today"));
   document.getElementById("tab-alt").setAttribute("aria-pressed", String(mode==="alt"));
-  document.getElementById("phaseTabs").classList.toggle("show", mode==="alt");
   renderLegend();
   renderMeta();
   clearDetail();
@@ -519,21 +414,8 @@ function setMode(mode){
   layout();
 }
 
-function setPhase(phase){
-  state.phase = phase;
-  state.selected = null;
-  document.getElementById("tab-phase-y1").setAttribute("aria-pressed", String(phase==="y1"));
-  document.getElementById("tab-phase-y3").setAttribute("aria-pressed", String(phase==="y3"));
-  renderLegend();
-  renderMeta();
-  clearDetail();
-  layout();
-}
-
 document.getElementById("tab-today").addEventListener("click", function(){ setMode("today"); });
 document.getElementById("tab-alt").addEventListener("click", function(){ setMode("alt"); });
-document.getElementById("tab-phase-y1").addEventListener("click", function(){ setPhase("y1"); });
-document.getElementById("tab-phase-y3").addEventListener("click", function(){ setPhase("y3"); });
 
 setMode("today");
 
