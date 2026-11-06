@@ -1,0 +1,444 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#fcfaf5">
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="A rapid field research proposal: validating the resilience case for regenerative soil, in time to shape the narrative before next summer.">
+<title>Proving the resilience case for regenerative soil</title>
+<script>document.documentElement.classList.replace('no-js','js');</script>
+<style>
+:root {
+  --field-50:#eef3f0; --field-100:#d7e3df; --field-200:#b5ceca; --field-300:#8aaeaa;
+  --field-500:#4c7273; --field-700:#29454d; --field-800:#1b303b; --field-900:#111c25; --field-950:#0b141b;
+  --signal:#ef6748; --signal-soft:#fbe2da; --signal-text:#963b29; --focus:#c44b31;
+  --paper:#fcfaf5; --paper-2:#f0ede9; --line:#c9cbc6; --soft:#64655f; --ink:#171614;
+  --serif:'Iowan Old Style','Palatino Linotype',Palatino,Baskerville,Georgia,'Times New Roman',serif;
+  --sans:Inter,-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
+  --mono:'DM Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace;
+  --pad:clamp(22px,4.8vw,76px); --max:1600px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:134px}
+.draft-banner{position:fixed;top:0;left:0;right:0;z-index:60;background:var(--signal-soft);color:var(--signal-text);text-align:center;font:600 11px/1.6 var(--mono);letter-spacing:.08em;text-transform:uppercase;padding:9px 16px}
+body{margin:0;color:var(--ink);background:var(--paper);font:16px/1.55 var(--sans);text-rendering:optimizeLegibility}
+button,a,summary{-webkit-tap-highlight-color:transparent}
+button{font:inherit}
+a{color:inherit;text-underline-offset:.2em}
+button{cursor:pointer}
+button:disabled{cursor:default}
+button:focus-visible,a:focus-visible,summary:focus-visible{outline:3px solid var(--focus);outline-offset:5px;border-radius:2px}
+::selection{background:var(--field-700);color:var(--paper)}
+[hidden]{display:none!important}
+.no-js .concept-note[hidden]{display:block!important}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.skip{position:fixed;top:-100px;left:20px;z-index:100;background:var(--field-950);color:var(--paper);padding:12px 20px;border-radius:12px;text-decoration:none}
+.skip:focus{top:16px}
+.progress{position:fixed;inset:0 0 auto;z-index:95;height:3px;pointer-events:none}
+.progress span{display:block;width:0;height:100%;background:var(--signal)}
+.topbar{position:fixed;inset:52px var(--pad) auto;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:14px;pointer-events:none}
+.brand{pointer-events:auto;display:inline-flex;align-items:center;gap:16px;min-height:48px;padding:8px 17px;background:var(--field-950);color:var(--paper);border:1px solid var(--field-700);border-radius:15px 15px 5px 15px;text-decoration:none;box-shadow:0 9px 30px #0b141b10}
+.brand strong{font-size:20px;letter-spacing:-.04em;font-weight:650}
+.brand span{border-left:1px solid #d7e3df55;padding-left:15px;font:10px/1.4 var(--mono);letter-spacing:.09em;text-transform:uppercase;color:var(--field-100)}
+.top-actions{display:flex;gap:9px;align-items:center;pointer-events:auto}
+.print-button{min-height:46px;padding:0 16px;background:var(--paper);color:var(--ink);border:1px solid var(--line);border-radius:14px 14px 5px 14px;font-size:12px}
+.print-button:hover{background:var(--paper-2)}
+.index-menu{position:relative}
+.index-menu summary{display:flex;align-items:center;gap:10px;list-style:none;min-height:46px;padding:0 18px;background:var(--field-950);color:var(--paper);border-radius:14px 14px 14px 5px;font-size:12px;cursor:pointer;border:1px solid var(--field-700)}
+.index-menu summary::-webkit-details-marker{display:none}
+.index-menu summary::after{content:'+';font:21px/1 var(--mono);color:var(--field-200)}
+.index-menu[open] summary::after{content:'−'}
+.index-menu nav{position:absolute;right:0;top:57px;width:min(355px,calc(100vw - 44px));max-height:calc(100dvh - 110px);overflow:auto;padding:18px;background:var(--paper);border:1px solid var(--line);border-radius:16px 5px 16px 16px;box-shadow:0 20px 64px #0b141b26}
+.index-menu nav p{margin:0 0 10px;font:10px/1.5 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--soft)}
+.index-menu nav p:not(:first-child){margin-top:16px}
+.index-menu nav a{display:grid;grid-template-columns:24px 1fr;gap:12px;align-items:start;min-height:44px;padding:11px 7px;border-radius:5px;text-decoration:none;font-size:13px;line-height:1.4}
+.index-menu nav a span{font:11px/1.7 var(--mono);color:var(--soft)}
+.index-menu nav a:hover{background:var(--field-50);box-shadow:inset 2px 0 var(--focus)}
+.frame{max-width:var(--max);margin:0 auto;padding-inline:var(--pad)}
+.hero{padding-top:172px;padding-bottom:64px;background:radial-gradient(ellipse at 96% 5%,#d7e3df60,transparent 45%),var(--paper);border-bottom:1px solid var(--line)}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(260px,.8fr);gap:clamp(36px,6vw,100px);align-items:end}
+.eyebrow{margin:0;font:11px/1.6 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--soft)}
+.hero h1{margin:29px 0 22px;font:400 clamp(50px,6.4vw,100px)/.97 var(--serif);letter-spacing:-.05em;max-width:960px}
+.hero h1 em{font-weight:400;font-style:italic;color:var(--field-700)}
+.hero-subtitle{margin:0;font:400 clamp(22px,2.3vw,33px)/1.25 var(--serif);letter-spacing:-.02em;max-width:620px}
+.hero-context{padding:0 0 2px 28px;border-left:1px solid var(--field-300);max-width:370px}
+.hero-context h2{font:400 30px/1.1 var(--serif);letter-spacing:-.025em;margin:0 0 18px}
+.hero-context p{margin:0 0 15px;font-size:15px;line-height:1.7;color:#454641}
+.hero-context p:last-child{margin-bottom:0}
+.hero-foot{display:flex;justify-content:space-between;align-items:center;gap:20px;margin-top:43px;flex-wrap:wrap}
+.hero-foot a{display:inline-flex;align-items:center;gap:16px;font-size:13px;text-decoration:none;border-bottom:1px solid var(--field-700);padding-bottom:5px}
+.hero-foot a span{font-size:20px}
+.hero-foot .status{font:10px/1.6 var(--mono);color:var(--soft);letter-spacing:.07em;text-transform:uppercase}
+.status::before{content:'';display:inline-block;width:6px;height:6px;border:1px solid var(--field-500);border-radius:50%;margin-right:9px;vertical-align:1px}
+.matrix-section{padding-block:57px 82px}
+.matrix-toolbar{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:28px;flex-wrap:wrap}
+.matrix-toolbar h2{font:400 clamp(32px,3.8vw,52px)/1.08 var(--serif);letter-spacing:-.04em;margin:0}
+.matrix-toolbar .eyebrow{margin-bottom:10px}
+.matrix-toolbar p.lede{margin:10px 0 0;font-size:15px;line-height:1.65;color:var(--soft);max-width:60ch}
+.view-switch{display:inline-flex;flex-shrink:0;border:1px solid var(--line);border-radius:10px 10px 3px 10px;padding:3px;background:var(--paper)}
+.view-switch button{padding:9px 15px;border:0;border-radius:7px 7px 2px 7px;color:var(--soft);background:transparent;font-size:12px;min-height:39px}
+.view-switch button[aria-pressed=true]{background:var(--field-800);color:var(--paper)}
+.view-switch button:hover:not([aria-pressed=true]){background:var(--paper-2);color:var(--ink)}
+.matrix{border-collapse:collapse;width:100%;table-layout:fixed;border-top:1px solid var(--field-700)}
+.matrix col:nth-child(1){width:23%}.matrix col:nth-child(2){width:41%}.matrix col:nth-child(3){width:36%}
+.matrix caption{text-align:left;font:12px/1.5 var(--sans);color:var(--soft);padding:0 0 14px}
+.matrix thead th{text-align:left;padding:18px 24px 18px 0;border-bottom:1px solid var(--field-700);font:10px/1.5 var(--mono);text-transform:uppercase;letter-spacing:.1em;color:var(--field-700);font-weight:400;vertical-align:bottom}
+.matrix thead th+th{padding-left:27px}
+.matrix thead th:last-child{padding-right:0}
+.matrix tbody th,.matrix tbody td{text-align:left;font-weight:400;vertical-align:top;border-bottom:1px solid var(--line);padding-block:30px;transition:background-color .15s ease}
+.matrix tbody td{padding-left:27px;padding-right:26px}
+.matrix tbody th{padding-right:20px}
+.matrix tbody td:last-child{padding-right:0}
+.matrix tbody tr{scroll-margin-top:105px}
+.inquiry-heading{display:grid;grid-template-columns:27px minmax(0,1fr);gap:15px;align-items:start}
+.inquiry-number{font:11px/1.6 var(--mono);color:var(--soft);padding-top:5px;font-variant-numeric:tabular-nums}
+.inquiry-title{display:block;font:600 clamp(15px,1.25vw,19px)/1.35 var(--sans);letter-spacing:-.018em;text-decoration:none;text-wrap:balance}
+.inquiry-title:hover{text-decoration:underline;text-decoration-color:var(--field-500)}
+.inquiry-descriptor{display:block;margin-top:10px;color:var(--soft);font:13px/1.45 var(--sans)}
+.question-text{margin:0;font:400 clamp(21px,1.7vw,26px)/1.32 var(--serif);letter-spacing:-.015em;overflow-wrap:anywhere}
+.opens-cell>p{margin:2px 0 0;font:15px/1.7 var(--sans);color:#454641}
+.concept-knot{display:inline;padding:0;border:0;border-bottom:1px dotted var(--field-500);border-radius:0;background:transparent;color:inherit;font:inherit;letter-spacing:inherit;text-align:inherit;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.concept-knot:disabled{color:inherit;opacity:1}
+.concept-knot:hover,.concept-knot:focus-visible,.concept-knot[aria-expanded=true]{color:var(--signal-text);border-color:var(--signal-text)}
+.concept-note{margin:23px 0 0;border-left:1px dashed var(--field-500);padding:0 0 0 17px}
+.concept-note p{font:14px/1.65 var(--sans);color:#454641;margin:0}
+.concept-note .note-label{font:9px/1.5 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--soft);margin-bottom:9px}
+.mobile-label{display:none}
+.concept-tooltip{position:fixed;z-index:70;max-width:340px;width:calc(100vw - 40px);padding:21px 22px;background:var(--field-950);color:var(--paper);border:1px solid var(--field-700);border-radius:16px 16px 4px 16px;box-shadow:0 16px 42px #0b141b30;pointer-events:none}
+.concept-tooltip .tooltip-label{margin:0 0 9px;font:9px/1.5 var(--mono);text-transform:uppercase;letter-spacing:.11em;color:var(--field-200)}
+.concept-tooltip .tooltip-term{margin:0 0 11px;font:400 24px/1.1 var(--serif);letter-spacing:-.02em}
+.concept-tooltip .tooltip-copy{margin:0;font:13px/1.65 var(--sans);color:var(--field-100)}
+.concept-tooltip .tooltip-hint{margin:12px 0 0;font:10px/1.5 var(--mono);color:var(--field-300)}
+
+/* plan tables: team & cost, timeline — same typographic language, independent widths */
+.plan-section{padding-block:0 82px}
+.plan-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:clamp(32px,5vw,80px);align-items:start}
+.plan-intro p{margin:0 0 14px;font-size:15px;line-height:1.75;color:#454641;max-width:56ch}
+.plan-intro p:last-child{margin-bottom:0}
+.plan-table{border-collapse:collapse;width:100%;border-top:1px solid var(--field-700)}
+.plan-table caption{text-align:left;font:12px/1.5 var(--sans);color:var(--soft);padding:0 0 14px}
+.plan-table thead th{text-align:left;padding:14px 16px 14px 0;border-bottom:1px solid var(--field-700);font:10px/1.5 var(--mono);text-transform:uppercase;letter-spacing:.1em;color:var(--field-700);font-weight:400}
+.plan-table tbody td{padding:16px 16px 16px 0;border-bottom:1px solid var(--line);font-size:13.5px;line-height:1.6;color:#454641;vertical-align:top}
+.plan-table tbody td:first-child{font-weight:600;color:var(--ink);font-size:14px}
+.plan-table tbody tr.total td{font-weight:700;color:var(--ink);border-top:2px solid var(--field-700);border-bottom:0}
+.timeline-list{display:grid;gap:0;border-top:1px solid var(--field-700)}
+.timeline-row{display:grid;grid-template-columns:110px 1fr;gap:18px;padding:18px 0;border-bottom:1px solid var(--line)}
+.timeline-row .when{font:600 12px/1.6 var(--mono);color:var(--signal-text);padding-top:2px}
+.timeline-row p{margin:0;font-size:14px;line-height:1.65;color:#454641}
+.plan-note{margin-top:16px;font:12px/1.6 var(--sans);color:var(--soft)}
+.method-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:10px}
+.method-card{background:var(--field-50);border-radius:12px 12px 3px 12px;padding:22px 24px}
+.method-card b{display:block;font:600 15px/1.3 var(--sans);color:var(--ink);margin-bottom:8px;letter-spacing:-.01em}
+.method-card p{margin:0;font:14px/1.65 var(--sans);color:#454641}
+@media(max-width:780px){.method-grid{grid-template-columns:1fr}}
+
+.afterword{background:var(--field-950);color:var(--paper);padding-block:60px 45px}
+.afterword-grid{display:grid;grid-template-columns:1fr 1.5fr;gap:clamp(32px,7vw,110px)}
+.afterword h2{font:400 clamp(34px,3.6vw,50px)/1.08 var(--serif);letter-spacing:-.035em;margin:0;max-width:360px}
+.afterword p{font:400 clamp(19px,1.7vw,25px)/1.5 var(--serif);color:var(--field-100);margin:0 0 20px;max-width:760px}
+.afterword ol{margin:0 0 20px;padding-left:22px;font:400 17px/1.55 var(--serif);color:var(--field-100);max-width:700px}
+.afterword ol li{margin-bottom:10px}
+.source-line{margin-top:39px;padding-top:23px;border-top:1px solid #d7e3df38;display:flex;justify-content:space-between;gap:32px;align-items:flex-start;flex-wrap:wrap}
+.source-line p{font:12px/1.7 var(--sans);color:var(--field-200);max-width:730px}
+.source-line .edition{font:10px/1.6 var(--mono);white-space:nowrap;letter-spacing:.08em;text-transform:uppercase;color:var(--field-300)}
+.live-links{margin-top:40px;padding-top:30px;border-top:1px solid #d7e3df38}
+.live-links p.eyebrow{color:var(--field-300);margin-bottom:16px}
+.live-links ul{margin:0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.live-links li{font:13px/1.6 var(--sans);color:var(--field-200)}
+.live-links a{display:block;color:var(--paper);font:600 15px/1.3 var(--sans);text-decoration-color:var(--field-300);margin-bottom:5px}
+.live-links a:hover{color:var(--signal-soft);text-decoration-color:var(--signal)}
+.live-links strong{display:block;color:var(--paper);font:600 15px/1.3 var(--sans);margin-bottom:5px}
+.live-links .unverified{display:block;margin-top:16px;font:12px/1.6 var(--sans);color:var(--field-300)}
+@media(max-width:780px){.live-links ul{grid-template-columns:1fr;gap:18px}}
+.no-js [data-js-only]{display:none}
+body[data-view=reading] .matrix,body[data-view=reading] .matrix tbody{display:block}
+body[data-view=reading] .matrix colgroup,body[data-view=reading] .matrix thead{display:none}
+body[data-view=reading] .matrix caption{display:block}
+body[data-view=reading] .matrix .inquiry-row{display:grid;grid-template-columns:minmax(180px,.7fr) minmax(0,1.5fr) minmax(0,1fr);gap:40px;padding-block:45px;border-bottom:1px solid var(--line)}
+body[data-view=reading] .matrix tbody th,body[data-view=reading] .matrix tbody td{display:block;border:0;padding:0}
+body[data-view=reading] .question-text{font-size:clamp(26px,2.3vw,34px);line-height:1.26}
+body[data-view=reading] .matrix .mobile-label{display:block;font:9px/1.5 var(--mono);text-transform:uppercase;letter-spacing:.1em;color:var(--soft);margin-bottom:14px}
+@media(min-width:1650px){.hero h1{font-size:104px}}
+@media(max-width:1100px){
+  .hero-grid{grid-template-columns:minmax(0,1.6fr) minmax(240px,.9fr);gap:36px}
+  .hero-context{padding-left:22px}.hero-context p{font-size:14px}
+  .matrix col:nth-child(1){width:24%}.matrix col:nth-child(2){width:41%}.matrix col:nth-child(3){width:35%}
+  .matrix tbody td,.matrix thead th+th{padding-left:22px}.matrix tbody td{padding-right:20px}
+  .inquiry-heading{gap:9px;grid-template-columns:23px minmax(0,1fr)}
+  .opens-cell>p{font-size:14px;line-height:1.65}
+  body[data-view=reading] .matrix .inquiry-row{grid-template-columns:minmax(155px,.7fr) minmax(0,1.4fr);gap:24px 36px}
+  body[data-view=reading] .opens-cell{grid-column:2}
+  .plan-grid{grid-template-columns:1fr}
+}
+@media(max-width:780px){
+  html{scroll-padding-top:128px}
+  .draft-banner{font-size:10px;padding:8px 12px}
+  .topbar{inset:48px var(--pad) auto}.brand{min-height:44px;padding:7px 13px;gap:12px}.brand span{font-size:9px;padding-left:12px}.brand strong{font-size:19px}
+  .top-actions{gap:7px}.print-button{display:none}.index-menu summary{min-height:44px;padding:0 13px;font-size:11px}
+  .hero{padding-top:147px;padding-bottom:35px}.hero-grid{grid-template-columns:1fr;gap:31px}
+  .hero h1{font-size:clamp(46px,11vw,76px);margin-top:23px;margin-bottom:19px;max-width:650px}
+  .hero-subtitle{font-size:clamp(21px,4.6vw,28px);max-width:470px}
+  .hero-context{max-width:600px;padding-left:19px;border-left-color:var(--field-300)}.hero-context h2{font-size:25px;margin-bottom:11px}.hero-context p{font-size:14px;line-height:1.7;margin-bottom:10px}
+  .hero-foot{margin-top:29px}.hero-foot .status{font-size:9px;max-width:140px;text-align:right}
+  .hero-foot a{font-size:12px;gap:13px}
+  .matrix-section{padding-block:36px 52px}.matrix-toolbar{margin-bottom:23px;align-items:flex-start;gap:16px}.matrix-toolbar h2{font-size:32px}.matrix-toolbar .eyebrow{font-size:9px;margin-bottom:8px}
+  .view-switch{display:none!important}
+  .matrix,.matrix tbody,body[data-view=reading] .matrix,body[data-view=reading] .matrix tbody{display:block}
+  .matrix colgroup,.matrix thead{display:none}
+  .matrix caption{display:block;font-size:11px;line-height:1.6;padding-bottom:15px}
+  .matrix .inquiry-row,body[data-view=reading] .matrix .inquiry-row{display:grid;grid-template-columns:1fr;gap:0;padding-block:28px 31px;border-bottom:1px solid var(--line)}
+  .matrix tbody th,.matrix tbody td,body[data-view=reading] .matrix tbody th,body[data-view=reading] .matrix tbody td{display:block;padding:0;border:0}
+  .inquiry-heading{grid-template-columns:29px minmax(0,1fr);gap:12px}
+  .inquiry-number{padding-top:2px;font-size:10px}.inquiry-title{font-size:17px;line-height:1.35;max-width:420px}
+  .inquiry-descriptor{margin-top:6px;font-size:12px;line-height:1.5;max-width:390px}
+  .matrix .question-cell,body[data-view=reading] .matrix .question-cell{margin-top:24px}
+  .question-text,body[data-view=reading] .question-text{font-size:clamp(25px,5.8vw,31px);line-height:1.3;letter-spacing:-.02em}
+  .matrix .opens-cell,body[data-view=reading] .matrix .opens-cell{margin-top:22px;grid-column:auto}
+  .matrix .mobile-label,body[data-view=reading] .matrix .mobile-label{display:block;margin-bottom:9px;font:9px/1.5 var(--mono);letter-spacing:.09em;text-transform:uppercase;color:var(--soft)}
+  .opens-cell>p{font-size:14px;line-height:1.72;margin:0;max-width:590px}
+  .concept-note{margin-top:20px}.concept-note p{font-size:13px}
+  .concept-tooltip{display:none!important}
+  .plan-table thead{display:none}.plan-table,.plan-table tbody{display:block}.plan-table tbody tr{display:grid;gap:3px;padding-block:14px;border-bottom:1px solid var(--line)}.plan-table tbody td{display:block;border:0;padding:0}.plan-table tbody tr.total{border-top:2px solid var(--field-700)}
+  .timeline-row{grid-template-columns:1fr;gap:4px}
+  .afterword{padding-block:39px 30px}.afterword-grid{grid-template-columns:1fr;gap:23px}.afterword h2{font-size:34px;max-width:300px}.afterword p{font-size:20px;line-height:1.48}.afterword ol{font-size:16px}
+  .source-line{display:block;margin-top:30px;padding-top:20px}.source-line p{font-size:11px;line-height:1.8}.source-line .edition{font-size:9px;margin-top:23px}
+}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{transition:none!important;animation:none!important}}
+@media print{
+  @page{size:A4 portrait;margin:14mm 12mm}
+  html{scroll-behavior:auto;scroll-padding-top:0}body{background:white;color:#171614;font-size:10pt}
+  .topbar,.skip,.progress,.hero-foot,.view-switch,.concept-tooltip,.draft-banner{display:none!important}
+  .frame{max-width:none;padding:0}.hero{background:none;padding:0 0 7mm;border-bottom:1px solid #c9cbc6}
+  .hero-grid{display:block}.hero .eyebrow{font-size:8pt}.hero h1{font-size:32pt;line-height:1.05;margin:4mm 0;max-width:none}.hero h1 em{color:inherit}
+  .hero-subtitle{font-size:16pt}.hero-context{border:0;padding:0;max-width:none;margin-top:5mm}.hero-context h2{display:none}.hero-context p{display:inline;font-size:9pt;line-height:1.45;margin:0}
+  .hero-context p+p::before{content:' '}.matrix-section,.plan-section{padding:6mm 0}.matrix-toolbar{display:block;margin-bottom:4mm}.matrix-toolbar h2{font-size:20pt}.matrix-toolbar .eyebrow{font-size:7pt}
+  .matrix{display:table!important;table-layout:fixed;width:100%;border-collapse:collapse}
+  .matrix colgroup{display:table-column-group!important}.matrix thead{display:table-header-group!important}.matrix tbody{display:table-row-group!important}.matrix caption{display:table-caption!important;font-size:8pt;padding-bottom:3mm}
+  .matrix .inquiry-row{display:table-row!important;break-inside:avoid;page-break-inside:avoid;padding:0}
+  .matrix tbody th,.matrix tbody td{display:table-cell!important;border-bottom:1px solid #c9cbc6;padding:4mm 3mm 4mm 0!important;margin:0!important}
+  .matrix thead th{font-size:7pt;padding:3mm 3mm 3mm 0!important}.inquiry-heading{grid-template-columns:16px minmax(0,1fr);gap:6px}.inquiry-number{font-size:7pt;padding-top:0}
+  .inquiry-title{font-size:9pt;line-height:1.3}.inquiry-descriptor{font-size:8pt;line-height:1.4;margin-top:2mm}
+  .question-text{font-size:11pt;line-height:1.3}.opens-cell>p{font-size:8.5pt;line-height:1.5;margin:0}
+  .concept-knot{border:0;color:inherit!important}.concept-note{display:block!important;border-left:1px dashed #8aaeaa;margin-top:3mm;padding-left:2.5mm}.concept-note p{font-size:8pt;line-height:1.4}.concept-note .note-label{font-size:6.5pt;margin-bottom:1mm}
+  .mobile-label{display:none!important}
+  .plan-grid{display:block}.plan-table{display:table!important;width:100%}.plan-table thead{display:table-header-group!important}.plan-table tbody{display:table-row-group!important}.plan-table tbody tr{display:table-row!important}.plan-table tbody td{display:table-cell!important;font-size:8.5pt;padding:2.5mm 2mm 2.5mm 0!important}
+  .timeline-row{display:table-row!important}.timeline-list{display:table!important;width:100%}.timeline-row .when,.timeline-row p{display:table-cell!important;padding:2.5mm 3mm 2.5mm 0;font-size:8.5pt}
+  .afterword{background:none;color:#171614;padding:4mm 0 0}.afterword-grid{display:block}.afterword h2{font-size:16pt;max-width:none;margin-bottom:3mm}.afterword p,.afterword ol{color:inherit;font-size:9.5pt;line-height:1.45;max-width:none}.source-line{display:block;border-color:#c9cbc6;margin-top:4mm;padding-top:3mm}.source-line p{font-size:8pt;line-height:1.5;color:inherit}.source-line .edition{font-size:7pt;color:inherit;margin-top:2mm}
+}
+</style>
+</head>
+<body data-view="matrix">
+<div class="draft-banner">Draft proposal &middot; shared only by direct link &middot; not listed or indexed</div>
+<a class="skip" href="#matrix">Skip to the research questions</a>
+<div class="progress" aria-hidden="true"><span></span></div>
+<header class="topbar">
+  <a class="brand" href="#top" aria-label="Dark Matter Labs, Regen Food Systems, back to top"><strong>DM</strong><span>Regen Food Systems<br>Internal</span></a>
+  <div class="top-actions">
+    <button class="print-button" id="print-button" type="button" data-js-only>Print / save PDF</button>
+    <details class="index-menu"><summary>Index</summary><nav aria-label="Section index">
+      <p>The research</p>
+      <a href="#question-01"><span>01</span>Did soil health buy resilience?</a>
+      <a href="#question-02"><span>02</span>Why are farmers switching anyway?</a>
+      <p>The plan</p>
+      <a href="#method"><span>→</span>Method</a>
+      <a href="#team"><span>→</span>Team and cost</a>
+      <a href="#timeline"><span>→</span>Timeline</a>
+      <a href="#compass"><span>→</span>Partnering with Compass</a>
+    </nav></details>
+  </div>
+</header>
+<main id="top">
+  <section class="hero" aria-labelledby="page-title">
+    <div class="frame">
+      <div class="hero-grid">
+        <div><p class="eyebrow">Dark Matter Labs / Regen Food Systems</p>
+          <h1 id="page-title">Proving the <em>resilience</em><br>case for regenerative soil.</h1>
+          <p class="hero-subtitle">A rapid field study, ready to go, ahead of next summer.</p>
+        </div>
+        <aside class="hero-context" aria-label="Why this, why now"><h2>Why this, why now</h2>
+          <p>This year's drought gave the UK a live test of the soil-health thesis &mdash; industrial farms hit hard, regenerative soil holding its moisture. Right now that's a strong anecdote. It needs to become evidence.</p>
+          <p>Some conventional farmers are already switching of their own accord &mdash; not for ideology, but because they watched a neighbour's soil outperform theirs while input costs kept climbing.</p>
+          <p>Left unanswered, that gap could just as easily be filled by capital chasing it on its own terms. Answered well, it gives government and industry a floor to act on, not just a story to repeat.</p>
+        </aside>
+      </div>
+      <div class="hero-foot"><a href="#matrix">Explore the proposal <span aria-hidden="true">↓</span></a><span class="status">Internal note</span></div>
+    </div>
+  </section>
+
+  <section class="matrix-section frame" id="matrix" aria-labelledby="matrix-title">
+    <div class="matrix-toolbar">
+      <div><p class="eyebrow">01&ndash;02 / The research</p><h2 id="matrix-title">What this has to answer</h2>
+        <p class="lede">Rapid, on-the-ground field research &mdash; not a literature review &mdash; built to be done and published by April&ndash;May 2027, in time to shape the narrative before the summer that follows.</p>
+      </div>
+      <div class="view-switch" role="group" aria-label="Reading layout" data-js-only><button type="button" data-view-button="matrix" aria-pressed="true">Matrix</button><button type="button" data-view-button="reading" aria-pressed="false">Reading view</button></div>
+    </div>
+    <table class="matrix" role="table"><caption>Two questions, what answering them takes, and what it proves.</caption><colgroup><col><col><col></colgroup>
+      <thead role="rowgroup"><tr role="row"><th scope="col" role="columnheader">Research question</th><th scope="col" role="columnheader">What we're asking</th><th scope="col" role="columnheader">What it proves</th></tr></thead>
+      <tbody role="rowgroup">
+      <tr id="question-01" class="inquiry-row" role="row">
+        <th scope="row" role="rowheader"><div class="inquiry-heading"><span class="inquiry-number">01</span><div><a class="inquiry-title" href="#question-01">Did soil health buy resilience?</a><span class="inquiry-descriptor">The 2026 drought as a natural experiment</span></div></div></th>
+        <td class="question-cell" role="cell"><span class="mobile-label">What we're asking</span><p class="question-text">Did farms that have invested in soil health come through this year's drought meaningfully better than heavy-input neighbours &mdash; measured on yield stability, <button class="concept-knot" type="button" disabled aria-expanded="false" aria-controls="note-01" aria-describedby="note-copy-01" data-term="input-cost exposure">input-cost exposure</button> and the economics that follow, checked against a <button class="concept-knot" type="button" disabled aria-expanded="false" aria-controls="note-02" aria-describedby="note-copy-02" data-term="stratified, triangulated sample">stratified, triangulated sample</button>?</p>
+          <aside class="concept-note" id="note-01" hidden><p class="note-label">Exploring this term</p><p id="note-copy-01">Measured against rising fertiliser, spray and fuel costs through the drought, not yield alone &mdash; the real reason some farmers are switching.</p></aside>
+          <aside class="concept-note" id="note-02" hidden><p class="note-label">Exploring this term</p><p id="note-copy-02">A deliberately small, representative set across UK regions and farm types, checked against Defra's June Agricultural Survey, Soil Association reporting, AHDB yield data and Environment Agency drought records &mdash; enough to be credible, not so much it misses the April/May deadline.</p></aside>
+        </td>
+        <td class="opens-cell" role="cell"><span class="mobile-label">What it proves</span><p>A floor under what's currently anecdote &mdash; usable directly in government and industry lobbying, by Dark Matter Labs and Compass alike.</p></td>
+      </tr>
+      <tr id="question-02" class="inquiry-row" role="row">
+        <th scope="row" role="rowheader"><div class="inquiry-heading"><span class="inquiry-number">02</span><div><a class="inquiry-title" href="#question-02">Why are farmers switching anyway?</a><span class="inquiry-descriptor">Voluntary transition, not ideology</span></div></div></th>
+        <td class="question-cell" role="cell"><span class="mobile-label">What we're asking</span><p class="question-text">Why are some conventional farmers choosing, off their own backs, to move to a practice that needs fewer inputs and rebuilds their soil &mdash; and what's actually stopping the rest from following, without creating <button class="concept-knot" type="button" disabled aria-expanded="false" aria-controls="note-03" aria-describedby="note-copy-03" data-term="the yield-gap risk">the yield-gap risk</button>?</p>
+          <aside class="concept-note" id="note-03" hidden><p class="note-label">Exploring this term</p><p id="note-copy-03">Sir Charles Godfrey's (Oxford) caution: pushing transition too fast risks plugging the resulting shortfall with worse sourcing elsewhere. The methodology measures net system impact, not just the upside at the farm gate &mdash; and says so plainly in what's published.</p></aside>
+        </td>
+        <td class="opens-cell" role="cell"><span class="mobile-label">What it proves</span><p>A real transition timeline and real barriers &mdash; the basis for accelerating the switch responsibly, not just encouraging it.</p></td>
+      </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="matrix-section frame" id="method" aria-labelledby="method-title">
+    <div class="matrix-toolbar">
+      <div><p class="eyebrow">Method</p><h2 id="method-title">Rapid field research, not a desk study</h2></div>
+    </div>
+    <div class="method-grid">
+      <div class="method-card"><b>Fast access through existing relationships</b><p>Dark Matter Labs' own organic wholesaler relationships (Wholegood, Langridge Organic) and Compass's Foodbuy supply network give two independent, fast routes to real farmers &mdash; not a cold-call exercise. This is the single biggest lever for speed and cost.</p></div>
+      <div class="method-card"><b>Stratified, not exhaustive</b><p>Around 15&ndash;18 farm visits across a handful of UK regions and farm types, not an attempt at a national census. Enough to be credible, not so much it misses the April/May deadline.</p></div>
+      <div class="method-card"><b>Triangulated against public data</b><p>Interview and site-visit findings checked against Defra's June Agricultural Survey, Soil Association reporting, AHDB yield data and Environment Agency drought records &mdash; so the published findings aren't resting on interviews alone.</p></div>
+      <div class="method-card"><b>Answers the obvious counter-argument directly</b><p>Sir Charles Godfrey's (Oxford) caution is the right one to design against from day one: pushing regenerative transition too fast risks plugging the resulting yield gap with worse sourcing elsewhere. The methodology measures net system impact, not just the upside case at the farm gate &mdash; and says so plainly in the published output.</p></div>
+    </div>
+  </section>
+
+  <section class="plan-section frame" id="team" aria-labelledby="team-title">
+    <div class="matrix-toolbar">
+      <div><p class="eyebrow">Delivery</p><h2 id="team-title">Two people, on the ground &mdash; work done and published by May</h2></div>
+    </div>
+    <div class="plan-grid">
+      <div class="plan-intro">
+        <p>The large majority of the time is spent on the ground &mdash; farm visits, structured interviews, site data collection &mdash; across a handful of UK regions. Not a desk-based pair: a field researcher doing the bulk of the travel and interviewing, paired with a lead who structures the research design, handles wholesaler and farmer access, and leads the analysis and write-up. ~58 working days each, concentrated in a focused Dec&ndash;Feb fieldwork window.</p>
+        <p>Professor Paul Behrens (Oxford) is likely to join part of the fieldwork directly &mdash; a collaboration already being planned separately &mdash; bringing independent academic credibility to the published findings.</p>
+      </div>
+      <table class="plan-table"><caption>Costed on Dark Matter Labs' current minimum day rate (&pound;626, 2026) &mdash; the floor rate, not the target rate (&pound;804) some projects use.</caption>
+        <thead><tr><th scope="col">Line</th><th scope="col">Basis</th><th scope="col">Cost</th></tr></thead>
+        <tbody>
+          <tr><td>Lead researcher</td><td>~58 working days, concentrated Dec&ndash;Feb, at DM's minimum day rate (&pound;626)</td><td>&pound;36,308</td></tr>
+          <tr><td>Field researcher</td><td>~58 working days, concentrated Dec&ndash;Feb, at DM's minimum day rate (&pound;626)</td><td>&pound;36,308</td></tr>
+          <tr><td>UK travel &amp; subsistence</td><td>Rail, mileage, overnight stays &mdash; 15&ndash;18 farm visits across multiple regions</td><td>&pound;5,000</td></tr>
+          <tr><td>Data &amp; external review</td><td>Public dataset access, a paid external academic reviewer for credibility</td><td>&pound;3,000</td></tr>
+          <tr><td>Report production &amp; launch</td><td>Design, editing, a small briefing/launch event</td><td>&pound;4,000</td></tr>
+          <tr class="total"><td>Total</td><td></td><td>&pound;84,616</td></tr>
+        </tbody>
+      </table>
+      <p class="plan-note">Dark Matter Labs is asking Compass for <b style="color:var(--ink)">&pound;45,000</b> toward this &mdash; just over half &mdash; with Dark Matter Labs covering the remaining &pound;39,616 itself.</p>
+    </div>
+  </section>
+
+  <section class="plan-section frame" id="timeline" aria-labelledby="timeline-title">
+    <div class="matrix-toolbar">
+      <div><p class="eyebrow">Nov &ndash; May</p><h2 id="timeline-title">Out by May, ahead of next summer</h2></div>
+    </div>
+    <div class="timeline-list">
+      <div class="timeline-row"><div class="when">Nov&ndash;Dec</div><p>Finalise methodology and sample frame; confirm wholesaler-facilitated farmer access; line up an external academic reviewer.</p></div>
+      <div class="timeline-row"><div class="when">Dec&ndash;Feb</div><p>Fieldwork: farm visits and interviews across the ~15&ndash;18 farm sample; parallel collection of public comparison data.</p></div>
+      <div class="timeline-row"><div class="when">Mar</div><p>Analysis and first draft; external academic review against the yield-gap/leakage critique specifically.</p></div>
+      <div class="timeline-row"><div class="when">Apr</div><p>Final validation, design and production; early briefing to government and partner contacts ahead of public release.</p></div>
+      <div class="timeline-row"><div class="when">May</div><p>Public launch &mdash; timed to set the narrative before the 2027 growing season and summer.</p></div>
+    </div>
+  </section>
+
+  <section class="afterword" id="compass" aria-labelledby="afterword-title"><div class="frame">
+    <div class="afterword-grid">
+      <h2 id="afterword-title">Partnering with Compass.</h2>
+      <div>
+        <p>This sits squarely inside Compass's own regenerative-sourcing target and Our Planet Promise commitments &mdash; and directly addresses a gap Compass has itself identified: the ambition is there, but supply-chain volume isn't catching up fast enough. It's equally core to Dark Matter Labs' own food-missions work and the wider push toward a more sovereign, shock-resistant UK food system.</p>
+        <ol>
+          <li>Farmer and wholesaler access via Foodbuy, to widen and speed up the sample alongside Dark Matter Labs' existing organic wholesaler relationships.</li>
+          <li>Levy as a possible live case study &mdash; a track record trialling new approaches that could turn a finding into an actual pilot, not just a published one.</li>
+          <li>Credibility and challenge, reviewing the work specifically against the yield-gap risk before it's published.</li>
+          <li>Funding: a direct contribution of &pound;45,000 toward the &pound;84,616 total &mdash; just over half &mdash; with Dark Matter Labs covering the rest from its own resourcing.</li>
+        </ol>
+      </div>
+    </div>
+    <div class="live-links">
+      <p class="eyebrow">What this is building towards</p>
+      <ul>
+        <li><a href="https://food.darkmatterlabs.org/">Food as Infrastructure &rarr;</a>The live London-wide portfolio this research sits inside.</li>
+        <li><a href="https://food.darkmatterlabs.org/collective-buying-engine.html">London's Collective Buying Engine &rarr;</a>The infrastructure this evidence is built to de-risk and accelerate.</li>
+        <li><a href="https://food.darkmatterlabs.org/pathways-to-civic-food-system.html">Six Pathways to a Civic Food System &rarr;</a>The shared framework the Camden and London work sits inside.</li>
+        <li><a href="https://www.compass-group.co.uk/our-impact">Compass's regenerative-sourcing ambition &rarr;</a>Originally &ge;70% of fresh produce from regenerative agriculture by 2030 &mdash; the target this evidence is built to help close.</li>
+        <li><a href="https://www.foodbuy.co.uk">Foodbuy &rarr;</a>Compass's own collective buying engine &mdash; already doing at national scale what Dark Matter Labs is building at London and borough scale.</li>
+      </ul>
+      <span class="unverified">Both Compass links and the 70%/2030 figure are best-guess, not independently verified &mdash; Compass's Feb 2026 "Our Planet Promise" strategy pushed its net-zero date to 2040, so check these still hold and point to the right page before this goes out.</span>
+    </div>
+    <div class="source-line">
+      <p class="edition">Dark Matter Labs / Regen Food Systems</p>
+    </div>
+  </div></section>
+</main>
+<div class="concept-tooltip" id="concept-tooltip" role="tooltip" hidden><p class="tooltip-label">Exploring this term</p><p class="tooltip-term" id="tooltip-term"></p><p class="tooltip-copy" id="tooltip-copy"></p><p class="tooltip-hint">Select to keep this note open</p></div>
+<script>
+(() => {
+  const root = document.body;
+  const menu = document.querySelector('.index-menu');
+  const tooltip = document.getElementById('concept-tooltip');
+  const progress = document.querySelector('.progress span');
+  const knots = [...document.querySelectorAll('.concept-knot')];
+  let active = null;
+  function closeTooltip() { tooltip.hidden = true; active = null; }
+  function positionTooltip(button) {
+    const r = button.getBoundingClientRect();
+    const width = tooltip.offsetWidth;
+    const height = tooltip.offsetHeight;
+    const left = Math.max(20, Math.min(r.left, window.innerWidth - width - 20));
+    const below = r.bottom + 13;
+    let top = below + height <= window.innerHeight - 16 ? below : r.top - height - 13;
+    top = Math.max(86, Math.min(top, window.innerHeight - height - 16));
+    tooltip.style.left = left + 'px'; tooltip.style.top = top + 'px';
+  }
+  function showTooltip(button) {
+    if (window.matchMedia('(max-width:780px)').matches || button.getAttribute('aria-expanded') === 'true') return;
+    const note = document.getElementById(button.getAttribute('aria-controls'));
+    document.getElementById('tooltip-term').textContent = button.dataset.term;
+    document.getElementById('tooltip-copy').textContent = note.querySelector('p:not(.note-label)').textContent;
+    active = button; tooltip.hidden = false; positionTooltip(button);
+  }
+  knots.forEach(button => {
+    button.disabled = false;
+    button.addEventListener('pointerenter', event => { if(event.pointerType !== 'touch') showTooltip(button); });
+    button.addEventListener('pointerleave', closeTooltip);
+    button.addEventListener('focus', () => showTooltip(button));
+    button.addEventListener('blur', closeTooltip);
+    button.addEventListener('click', () => {
+      closeTooltip();
+      const open = button.getAttribute('aria-expanded') !== 'true';
+      button.setAttribute('aria-expanded', String(open));
+      document.getElementById(button.getAttribute('aria-controls')).hidden = !open;
+    });
+  });
+  document.querySelectorAll('[data-view-button]').forEach(button => button.addEventListener('click', () => {
+    root.dataset.view = button.dataset.viewButton;
+    document.querySelectorAll('[data-view-button]').forEach(b => b.setAttribute('aria-pressed', String(b === button)));
+    closeTooltip();
+  }));
+  document.getElementById('print-button').addEventListener('click', () => window.print());
+  document.querySelectorAll('.index-menu nav a').forEach(a => a.addEventListener('click', () => { menu.open = false; }));
+  document.addEventListener('pointerdown', e => { if(!menu.contains(e.target)) menu.open = false; });
+  document.addEventListener('keydown', e => {
+    if(e.key === 'Escape') {
+      closeTooltip(); menu.open = false;
+      if(document.activeElement?.classList.contains('concept-knot')) {
+        const button = document.activeElement;
+        button.setAttribute('aria-expanded','false');
+        document.getElementById(button.getAttribute('aria-controls')).hidden = true;
+      }
+    }
+  });
+  function updateProgress() {
+    const distance = document.documentElement.scrollHeight - window.innerHeight;
+    progress.style.width = (distance > 0 ? Math.min(100,Math.max(0,window.scrollY / distance * 100)) : 0) + '%';
+  }
+  window.addEventListener('scroll', () => { updateProgress(); closeTooltip(); }, {passive:true});
+  window.addEventListener('resize', () => { closeTooltip(); updateProgress(); }, {passive:true});
+  updateProgress();
+})();
+</script>
+</body>
+</html>
