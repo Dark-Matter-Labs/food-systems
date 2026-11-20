@@ -328,6 +328,19 @@
       "summary": "An illustrative digital twin of Camden's food system: how it runs today, flagged with real data gaps, and a civic-led alternative built from the options already on the table.",
       "pdf": false,
       "surface": "paper"
+    },
+    {
+      "n": 26,
+      "sym": "Rm",
+      "file": "situation-rooms.html",
+      "name": "Situation Rooms",
+      "scope": "london",
+      "status": "live",
+      "listed": false,
+      "title": "Situation rooms for the risks finance can’t yet see",
+      "summary": "Small, off-the-record situation rooms that trace a near-term shock to the decisions finance and policy leaders hold, starting with food.",
+      "pdf": false,
+      "surface": "paper"
     }
   ]
 }

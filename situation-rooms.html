@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Situation rooms for the risks finance can’t yet see — Food as Infrastructure</title>
+<style>
+  /* A document on paper, written for potential backers. Tokens come from assets/fai/fai.css (loaded after this block). */
+  *{box-sizing:border-box;}
+  body{margin:0; background:var(--fai-paper); color:var(--fai-ink); font-size:17px; line-height:1.6;}
+  .page{padding:0 32px 96px;}
+  @media (max-width:760px){ .page{padding:0 16px 56px;} }
+  .wrap{max-width:880px; margin-inline:auto;}
+  h1,h2,h3,p{margin:0;}
+  p,li{max-width:var(--fai-measure);}
+  p+p,ul+p,ol+p,div+p{margin-top:12px;}
+  a{color:var(--fai-ink); text-decoration:underline; text-decoration-color:var(--fai-beet); text-decoration-thickness:1px; text-underline-offset:3px; transition:color var(--fai-ease);}
+  a:hover{color:var(--fai-beet);}
+
+  header.doc{padding:56px 0 8px;}
+  .kicker{font-size:14px; color:var(--fai-ink-3); margin-bottom:16px;}
+  h1{font-size:clamp(40px,6vw,76px); font-weight:500; line-height:1.02;}
+  .lede{font-size:21px; line-height:1.45; color:var(--fai-ink-2); margin-top:24px; max-width:60ch;}
+  @media (max-width:760px){ .lede{font-size:19px;} }
+  .actions{display:flex; flex-wrap:wrap; gap:12px; margin-top:32px;}
+  .btn{display:inline-block; font-size:15px; font-weight:500; line-height:1.2; padding:12px 18px; border-radius:3px; text-decoration:none; border:1px solid var(--fai-rule-strong); color:var(--fai-ink); transition:background var(--fai-ease),border-color var(--fai-ease),color var(--fai-ease);}
+  .btn:hover{border-color:var(--fai-ink); color:var(--fai-ink);}
+  .btn.primary{background:var(--fai-ink); border-color:var(--fai-ink); color:var(--fai-paper);}
+  .btn.primary:hover{background:var(--fai-beet); border-color:var(--fai-beet); color:var(--fai-paper);}
+
+  section{padding-top:64px;}
+  @media (max-width:760px){ section{padding-top:44px;} }
+  section.topic{border-top:1px solid var(--fai-rule); margin-top:64px;}
+  h2{font-size:clamp(28px,3.4vw,40px); font-weight:500; line-height:1.1; margin-bottom:20px;}
+  h3{font-size:20px; font-weight:600; line-height:1.25; margin:28px 0 8px;}
+  ul,ol{margin:12px 0 0; padding-left:22px;}
+  li+li{margin-top:6px;}
+  .road{border:none; border-top:2px dashed var(--fai-ink); margin:72px 0 0;}
+
+  .quote{background:var(--fai-field); padding:22px 26px; margin-top:24px;}
+  .quote p{font-size:20px; line-height:1.4; font-weight:500; max-width:58ch;}
+  .quote cite{display:block; margin-top:10px; font-size:14px; color:var(--fai-ink-3); font-style:normal;}
+  @media (max-width:600px){ .quote{padding:18px;} .quote p{font-size:18px;} }
+
+  .table-wrap{overflow-x:auto; margin-top:16px;}
+  table{border-collapse:collapse; width:100%; font-size:15px; line-height:1.45;}
+  th,td{text-align:left; vertical-align:top; padding:10px 12px; border-bottom:1px solid var(--fai-rule);}
+  thead th{background:var(--fai-field); font-weight:600;}
+  tbody th{font-weight:600;}
+  .caption{font-size:14px; color:var(--fai-ink-3); margin-top:10px; line-height:1.45;}
+
+  .grid{display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:20px;}
+  @media (max-width:760px){ .grid{grid-template-columns:1fr;} }
+  .card{background:var(--fai-field); padding:20px 22px; min-width:0;}
+  .card h3{margin-top:0; font-size:18px;}
+  .card p{font-size:16px; color:var(--fai-ink-2);}
+
+  .steps{list-style:none; padding:0; margin-top:20px; counter-reset:step;}
+  .steps li{counter-increment:step; display:grid; grid-template-columns:44px 1fr; gap:12px; padding:14px 0; border-top:1px solid var(--fai-rule); max-width:none;}
+  .steps li::before{content:counter(step, decimal-leading-zero); font-size:15px; font-weight:600; color:var(--fai-beet); padding-top:2px;}
+  .steps li+li{margin-top:0;}
+
+  .back{background:var(--fai-field); padding:28px 30px; margin-top:24px;}
+  @media (max-width:600px){ .back{padding:22px 18px;} }
+  .back ul{margin-top:12px;}
+  .fig{font-size:clamp(28px,3.4vw,36px); font-weight:500; line-height:1.1; margin:4px 0 12px;}
+
+  @media print{
+    .page{padding:0;}
+    section{padding-top:28px;}
+    section.topic{margin-top:28px;}
+    header.doc{padding-top:8px;}
+    h1{font-size:40px;}
+    .actions{display:none;}
+  }
+</style>
+<!-- fai:head -->
+<meta name="description" content="Small, off-the-record situation rooms that trace a near-term shock to the decisions finance and policy leaders hold, starting with food.">
+<link rel="canonical" href="https://food.darkmatterlabs.org/situation-rooms.html">
+<meta name="theme-color" content="#111112">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Food as Infrastructure, Dark Matter Labs">
+<meta property="og:locale" content="en_GB">
+<meta property="og:url" content="https://food.darkmatterlabs.org/situation-rooms.html">
+<meta property="og:title" content="Situation rooms for the risks finance can’t yet see">
+<meta property="og:description" content="Small, off-the-record situation rooms that trace a near-term shock to the decisions finance and policy leaders hold, starting with food.">
+<meta property="og:image" content="https://food.darkmatterlabs.org/assets/fai/social/situation-rooms.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Situation rooms for the risks finance can’t yet see. Food as Infrastructure, Dark Matter Labs.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Situation rooms for the risks finance can’t yet see">
+<meta name="twitter:description" content="Small, off-the-record situation rooms that trace a near-term shock to the decisions finance and policy leaders hold, starting with food.">
+<meta name="twitter:image" content="https://food.darkmatterlabs.org/assets/fai/social/situation-rooms.png">
+<meta name="twitter:image:alt" content="Situation rooms for the risks finance can’t yet see. Food as Infrastructure, Dark Matter Labs.">
+<link rel="icon" href="assets/fai/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400..900;1,400..700&display=swap">
+<link rel="stylesheet" href="assets/fai/fai.css">
+<!-- /fai:head -->
+</head>
+<body>
+<!-- fai:bar -->
+<div class="fai-bar">
+  <div class="fai-bar__inner">
+    <a class="fai-bar__dm" href="https://darkmatterlabs.org/"><img class="fai-bar__lockup" src="assets/brand/dm-logo-v1-white.svg" alt="Dark Matter Labs" width="102" height="20"><img class="fai-bar__stamp" src="assets/brand/dm-stamp-white.svg" alt="Dark Matter Labs" width="20" height="20"></a>
+    <span class="fai-bar__sep" aria-hidden="true"></span>
+    <a class="fai-bar__mission" href="index.html">Food as Infrastructure</a>
+    <span class="fai-bar__here"><span class="fai-el" aria-hidden="true"><b>Rm</b><i>26</i></span><span>Situation Rooms</span></span>
+    <a class="fai-bar__xco" href="https://optionality.darkmatterlabs.org/" target="_blank" rel="noopener" title="Dark Matter Labs' Expanding Civilizational Optionality portfolio">xCO portfolio<span aria-hidden="true"> ↗</span></a>
+    <div class="fai-bar__links" role="navigation" aria-label="Site"><a href="index.html">Portfolio</a><a href="library.html">Library</a></div>
+  </div>
+</div>
+<!-- /fai:bar -->
+<div class="page">
+<div class="wrap">
+
+<header class="doc">
+  <p class="kicker">A programme from Dark Matter Labs, the Systems Transformation Hub and Climate-KIC</p>
+  <h1>Situation rooms for the risks finance can’t yet see</h1>
+  <p class="lede">Senior people in finance and policy already accept that climate and nature risk is systemic. That knowledge has not yet changed where capital goes. We run small, off-the-record situation rooms that trace one near-term shock to the decisions the people in the room actually hold, starting with food.</p>
+  <div class="actions">
+    <a class="btn primary" href="#back">Back the programme</a>
+    <a class="btn" href="nutrition-cascade-model.html">See the risk model</a>
+  </div>
+</header>
+
+<section class="topic" id="problem">
+  <h2>The risk is coupled, and most models aren’t</h2>
+  <p>Food, energy, water and labour risks now feed back on one another. A thin harvest or a blocked chokepoint shows up within months as food inflation that interest rates can’t fix, as insurance claims and withdrawn cover, as weaker loan books, as repricing across portfolios and as calls on public budgets already near their limits. These are not 2050 scenarios. They sit inside one reporting cycle.</p>
+  <p>Most institutions still model each risk on its own. Where they try to model how risks cascade, they rarely do it well, and the cost of keeping people fed when systems break sits on no one’s balance sheet. So it gets paid for in the crisis instead of priced in advance.</p>
+  <div class="quote">
+    <p>“I’m not inviting you to be kind. I’m just inviting you to be smart right now.”</p>
+    <cite>Indy Johar, Dark Matter Labs, speaking to capital allocators on <a href="https://www.youtube.com/watch?v=Mt34DbYKRbQ" target="_blank" rel="noopener">The Great Simplification<span aria-hidden="true"> ↗</span></a></cite>
+  </div>
+</section>
+
+<section class="topic" id="what">
+  <h2>What a situation room is</h2>
+  <p>A small group of people who hold real decisions, in a space well supported by data, having conversations they can’t have in public. Together they work through one shock and the options for responding to it: in policy, in finance, and in the places where the risk actually lands.</p>
+  <div class="grid">
+    <div class="card">
+      <h3>Where it starts</h3>
+      <p>Participants know the risk is systemic. What they lack is a clear line from a near-term shock to their own book, and the words to make that case to their boards, supervisors and investors.</p>
+    </div>
+    <div class="card">
+      <h3>Where it ends</h3>
+      <p>Each participant leaves with one decision within their own remit to test in the next six months, a plain case to take back to colleagues, and named follow-ups with others in the room.</p>
+    </div>
+    <div class="card">
+      <h3>The rule</h3>
+      <p>No action leaves the room assigned to someone who isn’t in it. We invite the people with the remit to act, so “that’s for the regulator” is never the answer.</p>
+    </div>
+  </div>
+  <h3>Two horizons in every room</h3>
+  <p>What can be done now to make the shock less damaging, and what has to be built so the next one hurts less. The most useful moves often do both, like a city food hub that is built for everyday supply and also holds the line when supply breaks.</p>
+</section>
+
+<section class="topic" id="first-room">
+  <h2>The first room: how a food shock reaches the balance sheet</h2>
+  <p>We start with food because it is where coupled risk turns concrete fastest, and because people can’t buy less of it. The scenario builds on Dark Matter Labs’ Nutrition Continuity work and the Systems Transformation Hub’s near-term risk outlook.</p>
+  <ol class="steps">
+    <li><span><b>The growing season.</b> After a winter of high energy and fertiliser prices, farmers cut nitrogen use, and a strong El Niño stresses several breadbaskets at once.</span></li>
+    <li><span><b>The price shock.</b> Import-dependent food prices rise, and food inflation stays high after energy prices ease.</span></li>
+    <li><span><b>Into the financial system.</b> Central banks face tightening into a supply shock. Insurers meet claims and pull back cover. Food and farming loan books weaken. Portfolios and import-dependent sovereign bonds reprice. Public budgets absorb emergency support just as inflation squeezes them.</span></li>
+  </ol>
+  <h3>Who is in the room</h3>
+  <p>Eight to ten people at director level or above who direct capital flows or set the rules: the people who decide allocation, lending, underwriting or supervision, alongside the policymakers and regional leaders who decide what happens on the ground.</p>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th scope="col">Who</th><th scope="col">What they can change</th></tr></thead>
+    <tbody>
+      <tr><th scope="row">Central banks and supervisors</th><td>Stress-test design, supervisory expectations, how they read food inflation</td></tr>
+      <tr><th scope="row">Public and development banks</th><td>Lending criteria, blended-finance terms, what they fund next</td></tr>
+      <tr><th scope="row">Insurers and reinsurers</th><td>Underwriting appetite, pricing, parametric cover</td></tr>
+      <tr><th scope="row">Banks lending to farming and food</th><td>Credit terms, transition finance</td></tr>
+      <tr><th scope="row">Pension funds, asset owners and family offices</th><td>Allocation, stewardship, and investment in the places they depend on</td></tr>
+      <tr><th scope="row">Policymakers and regional leaders</th><td>Prudential and fiscal rules, preparedness funding, regional investment</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<section class="topic" id="series">
+  <h2>A series, not a one-off</h2>
+  <p>Food is the first room. The same method then moves to the next pressure points: labour, then heat and water. Each room reuses the format with a new shock and the institutions most exposed to it, and each adds to a shared picture of how one system’s failure feeds the next.</p>
+  <p>Behind the rooms sits a standing capability: a small team, a way of bringing in modelling from participating institutions, and clear data visualisation, so each new room starts from what the last one learned.</p>
+</section>
+
+<section class="topic" id="outcomes">
+  <h2>What it is for</h2>
+  <p>Three outcomes that reinforce one another. We aim to deliver all three.</p>
+  <div class="grid">
+    <div class="card">
+      <h3>Finance that prices continuity</h3>
+      <p>Institutions that understand the cascading risk on their books and act on it, and new thinking at the level of central banks and monetary policy.</p>
+    </div>
+    <div class="card">
+      <h3>Policy that prepares</h3>
+      <p>Risk built into policy before the crisis, so governments don’t improvise and load up liabilities when it arrives.</p>
+    </div>
+    <div class="card">
+      <h3>Regions that move</h3>
+      <p>Front-runner regions where money actually flows into the infrastructure that keeps people fed and supplied.</p>
+    </div>
+  </div>
+</section>
+
+<section class="topic" id="why-now">
+  <h2>Why now</h2>
+  <ul>
+    <li><b>The timing is near-term.</b> The pressures on food, energy and climate are converging now, not in a distant scenario.</li>
+    <li><b>Demand is coming to us.</b> Leaders of financial institutions, including UK pension funds, have started approaching us directly to ask how to do this work for themselves.</li>
+    <li><b>The gap is clear.</b> Risk teams are trying to model cascading risk and finding it hard. A trusted, off-the-record space to work through it does not yet exist.</li>
+  </ul>
+</section>
+
+<section class="topic" id="how">
+  <h2>How we run it</h2>
+  <ul>
+    <li><b>Every participant first.</b> We speak to each participant one to one before the room, to understand their exposure, what they could change and where their hands are tied.</li>
+    <li><b>Led by people who know the field.</b> Each room has a lead who works on that topic day to day, alongside people who have worked inside the industries we convene and speak their language.</li>
+    <li><b>Rehearsed and data-led.</b> We run each session in full beforehand, and build the data and visualisation that let a room see the cascade.</li>
+    <li><b>Plain language.</b> Finance terms, near-term horizons, no jargon.</li>
+    <li><b>A clear structure.</b> Senior leads from the partner organisations set direction. A dedicated delivery team runs the work.</li>
+  </ul>
+</section>
+
+<section class="topic" id="back">
+  <h2>Back the programme</h2>
+  <div class="back">
+    <p>We are raising for the first year: building the capability and running the first rooms, starting with food.</p>
+    <p class="fig tnum">About €1 million</p>
+    <p>There are several ways to be part of it:</p>
+    <ul>
+      <li><b>Fund the capability</b>, so every room starts from shared tools, data and a standing team.</li>
+      <li><b>Fund a room</b> on a topic that matters to you.</li>
+      <li><b>Host a room</b> at your offices.</li>
+      <li><b>Contribute modelling or data</b> from your own risk work.</li>
+      <li><b>Introduce us</b> to the people who should be in the room.</li>
+    </ul>
+    <p>To talk about backing the programme, get in touch with Adam at Dark Matter Labs or Milan at the Systems Transformation Hub.</p>
+  </div>
+</section>
+
+<section class="topic" id="more">
+  <h2>Read more</h2>
+  <ul>
+    <li><a href="nutrition-cascade-model.html">The Nutrition Cascade</a>: how one food shock cascades into social and financial risk.</li>
+    <li><a href="nutrition-supply-map.html">Where Camden’s food comes from</a>: the global systems a London borough depends on.</li>
+    <li><a href="index.html">Food as Infrastructure</a>: Dark Matter Labs’ work treating food like the infrastructure it is.</li>
+  </ul>
+</section>
+
+</div>
+</div>
+<!-- fai:footer -->
+<footer class="fai-footer">
+  <div class="fai-footer__inner">
+    <span>Part of Dark Matter Labs' <a href="https://optionality.darkmatterlabs.org/" target="_blank" rel="noopener">xCO portfolio<span aria-hidden="true"> ↗</span></a>, expanding civilizational optionality.</span>
+  </div>
+</footer>
+<!-- /fai:footer -->
+</body>
+</html>
