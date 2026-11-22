@@ -20,6 +20,10 @@
 
   header.doc{padding:56px 0 8px;}
   .kicker{font-size:14px; color:var(--fai-ink-3); margin-bottom:16px;}
+  .partners{display:flex; flex-wrap:wrap; align-items:center; gap:20px 36px; margin-bottom:32px;}
+  .partners img{display:block; width:auto; max-width:100%;}
+  .partners .dm{height:26px;} .partners .ckic{height:46px;} .partners .sth{height:84px;}
+  @media (max-width:600px){ .partners{gap:16px 24px;} .partners .dm{height:18px;} .partners .ckic{height:32px;} .partners .sth{height:56px;} }
   h1{font-size:clamp(40px,6vw,76px); font-weight:500; line-height:1.02;}
   .lede{font-size:21px; line-height:1.45; color:var(--fai-ink-2); margin-top:24px; max-width:60ch;}
   @media (max-width:760px){ .lede{font-size:19px;} }
@@ -121,6 +125,11 @@
 <div class="wrap">
 
 <header class="doc">
+  <div class="partners">
+    <img class="dm" src="assets/brand/dm-logo-v1-black.svg" alt="Dark Matter Labs" width="112" height="22">
+    <img class="sth" src="assets/brand/sth-logo.png" alt="Systems Transformation Hub" width="62" height="72">
+    <img class="ckic" src="assets/brand/climate-kic-logo.png" alt="EIT Climate-KIC" width="130" height="40">
+  </div>
   <p class="kicker">A programme from Dark Matter Labs, the Systems Transformation Hub and Climate-KIC</p>
   <h1>Situation rooms</h1>
   <p class="lede">Senior people in finance and policy already accept that climate and nature risk is systemic. That knowledge has not yet changed where capital goes. We run small, off-the-record situation rooms that trace one near-term shock to the decisions the people in the room actually hold. Food is the pilot for a programme that will cover other interconnected risks.</p>
