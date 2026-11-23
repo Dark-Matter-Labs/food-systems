@@ -20,9 +20,10 @@ ID = re.compile(r'\bid=["\']([^"\']+)["\']')
 
 
 def internal_problems(pages):
-    ids = {p.name: set(ID.findall(p.read_text(encoding="utf-8"))) for p in pages}
+    ids = {p.resolve(): set(ID.findall(p.read_text(encoding="utf-8"))) for p in pages}
     problems = []
     for page in pages:
+        name = page.relative_to(ROOT).as_posix()
         for ref in REF.findall(page.read_text(encoding="utf-8")):
             if ref.startswith(("http://", "https://", "//")) or ref.startswith(SKIP_SCHEMES):
                 continue
@@ -30,11 +31,11 @@ def internal_problems(pages):
                 continue
             path, _, frag = ref.partition("#")
             path = path.split("?")[0]
-            target = path or page.name
-            if path and not (ROOT / path).exists():
-                problems.append(f"{page.name}: missing file {ref}")
-            elif frag and target.endswith(".html") and frag not in ids.get(target, set()):
-                problems.append(f"{page.name}: missing anchor {ref}")
+            target = (page.parent / path).resolve() if path else page.resolve()
+            if path and not target.exists():
+                problems.append(f"{name}: missing file {ref}")
+            elif frag and target.suffix == ".html" and frag not in ids.get(target, set()):
+                problems.append(f"{name}: missing anchor {ref}")
     return problems
 
 
@@ -59,7 +60,8 @@ def external_problems(pages):
 
 
 def main(argv):
-    pages = sorted(ROOT.glob("*.html"))
+    # Top-level pages plus link-only pages kept in subfolders such as BR/.
+    pages = sorted(ROOT.glob("*.html")) + sorted(ROOT.glob("BR/*.html"))
     internal = internal_problems(pages)
     for line in internal:
         print("BROKEN", line)

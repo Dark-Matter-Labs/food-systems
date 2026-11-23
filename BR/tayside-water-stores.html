@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Tayside water stores (draft) — Food as Infrastructure</title>
+<style>
+/* Paper document in a single 68ch reading column. Link-only page in BR/, kept out of the library. */
+body{margin:0;background:var(--fai-paper);color:var(--fai-ink);font-size:17px;line-height:1.6}
+.wrap{max-width:1200px;margin:0 auto;padding-left:32px;padding-right:32px;padding-bottom:96px}
+@media (max-width:640px){.wrap{padding-left:16px;padding-right:16px;padding-bottom:56px}}
+.col{max-width:68ch}
+.status-strip{padding-top:32px}
+.status-note{background:var(--fai-field);border-left:3px solid var(--fai-beet);padding:14px 18px;font-size:15px;line-height:1.5}
+.status-note p{margin:0}
+.hero{padding-block:40px 8px}
+.kicker{font-size:14px;color:var(--fai-ink-3);margin:0 0 12px}
+h1{font-size:clamp(40px,6vw,76px);font-weight:500;line-height:1.02;margin:0}
+h2{font-size:clamp(28px,3.4vw,40px);font-weight:500;line-height:1.1;margin:72px 0 0;padding-top:24px;border-top:1px solid var(--fai-rule)}
+h3{font-size:21px;font-weight:600;line-height:1.25;margin:32px 0 0}
+.lede{font-size:21px;line-height:1.45;color:var(--fai-ink-2);margin:20px 0 0}
+p,ul,ol{margin:14px 0} li{margin:6px 0}
+.wrap a{color:var(--fai-ink);text-decoration:underline;text-decoration-color:var(--fai-beet);text-decoration-thickness:1px;text-underline-offset:3px}
+.wrap a:hover{color:var(--fai-beet)}
+.small,.meta{font-size:14px;line-height:1.45;color:var(--fai-ink-3)}
+.note,.item,.ask,.sum{background:var(--fai-field);padding:18px 20px;margin:20px 0}
+.ask h3,.item h3{margin-top:0}
+.note>:first-child,.ask>:first-child,.sum>:first-child,.item>:first-child{margin-top:0}
+.note>:last-child,.ask>:last-child,.sum>:last-child{margin-bottom:0}
+.item p{margin:8px 0 0}
+.three{display:grid;gap:12px;margin:20px 0}
+.three .item{margin:0}
+.figs{display:grid;grid-template-columns:repeat(auto-fit,minmax(14rem,1fr));gap:24px;margin:28px 0}
+.fig{border-top:1px solid var(--fai-ink);padding-top:10px;min-width:0}
+.fig b{display:block;font-size:40px;font-weight:500;line-height:1.1;color:var(--fai-beet);font-variant-numeric:tabular-nums}
+.fig span{font-size:15px;color:var(--fai-ink-2)}
+.inf,.conf{display:inline-block;font-size:13px;line-height:1.4;padding:1px 9px;border:1px solid var(--fai-rule-strong);border-radius:999px;color:var(--fai-ink-2);white-space:nowrap;font-weight:400}
+.conf.c-h{border-color:var(--fai-ink);color:var(--fai-ink)}
+.conf.c-l{border-style:dashed}
+.tbl{overflow-x:auto;margin:20px 0;max-width:100%}
+table{border-collapse:collapse;width:100%;min-width:34rem;font-size:15px}
+th,td{text-align:left;vertical-align:top;padding:10px 12px;border-bottom:1px solid var(--fai-rule)}
+th{background:var(--fai-field);font-weight:600}
+td.num{text-align:right;white-space:nowrap}
+.checks{list-style:none;padding:0;margin:16px 0}
+.checks li{margin:0;border-bottom:1px solid var(--fai-rule)}
+.checks label{display:grid;grid-template-columns:28px 1fr;gap:12px;padding:12px 0;cursor:pointer;align-items:start}
+.checks input{width:20px;height:20px;margin:3px 0 0;accent-color:var(--fai-beet)}
+.checks input:checked + span{color:var(--fai-ink-3)}
+.ask ul{padding-left:20px}
+.sum .eq{font-size:19px;font-weight:600}
+.stack{list-style:none;padding:0;margin:20px 0;display:grid;gap:14px}
+.stack li{display:grid;grid-template-columns:32px 1fr;gap:12px;margin:0}
+.stack .k{font-size:24px;font-weight:500;color:var(--fai-beet);line-height:1.2}
+.sources{font-size:14px;color:var(--fai-ink-2);padding-left:20px}
+.sources li{overflow-wrap:anywhere}
+.endnote{margin-top:56px;padding-top:16px;border-top:1px solid var(--fai-rule);font-size:14px;color:var(--fai-ink-3)}
+</style>
+<!-- fai:head -->
+<meta name="description" content="Who could build hundreds of small farm water stores across Tayside, and how a regional programme could pay for itself.">
+<link rel="canonical" href="https://food.darkmatterlabs.org/BR/tayside-water-stores.html">
+<meta name="theme-color" content="#111112">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Food as Infrastructure, Dark Matter Labs">
+<meta property="og:locale" content="en_GB">
+<meta property="og:url" content="https://food.darkmatterlabs.org/BR/tayside-water-stores.html">
+<meta property="og:title" content="Tayside water stores">
+<meta property="og:description" content="Who could build hundreds of small farm water stores across Tayside, and how a regional programme could pay for itself.">
+<meta property="og:image" content="https://food.darkmatterlabs.org/assets/fai/social/tayside-water-stores.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Tayside water stores. Food as Infrastructure, Dark Matter Labs.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Tayside water stores">
+<meta name="twitter:description" content="Who could build hundreds of small farm water stores across Tayside, and how a regional programme could pay for itself.">
+<meta name="twitter:image" content="https://food.darkmatterlabs.org/assets/fai/social/tayside-water-stores.png">
+<meta name="twitter:image:alt" content="Tayside water stores. Food as Infrastructure, Dark Matter Labs.">
+<link rel="icon" href="../assets/fai/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400..900;1,400..700&display=swap">
+<link rel="stylesheet" href="../assets/fai/fai.css">
+<!-- /fai:head -->
+</head>
+<body>
+<!-- fai:bar -->
+<div class="fai-bar">
+  <div class="fai-bar__inner">
+    <a class="fai-bar__dm" href="https://darkmatterlabs.org/"><img class="fai-bar__lockup" src="../assets/brand/dm-logo-v1-white.svg" alt="Dark Matter Labs" width="102" height="20"><img class="fai-bar__stamp" src="../assets/brand/dm-stamp-white.svg" alt="Dark Matter Labs" width="20" height="20"></a>
+    <span class="fai-bar__sep" aria-hidden="true"></span>
+    <a class="fai-bar__mission" href="../index.html">Food as Infrastructure</a>
+    <span class="fai-bar__here"><span class="fai-el fai-el--draft" aria-hidden="true"><b>Tw</b><i>28</i></span><span>Tayside Water Stores</span></span>
+    <a class="fai-bar__xco" href="https://optionality.darkmatterlabs.org/" target="_blank" rel="noopener" title="Dark Matter Labs' Expanding Civilizational Optionality portfolio">xCO portfolio<span aria-hidden="true"> ↗</span></a>
+    <div class="fai-bar__links" role="navigation" aria-label="Site"><a href="../index.html">Portfolio</a><a href="../library.html">Library</a></div>
+  </div>
+</div>
+<!-- /fai:bar -->
+<main class="wrap">
+<div class="status-strip col"><div class="status-note"><p>Draft for discussion. Desk research by Dark Matter Labs, supporting Bioregioning Tayside, November 2026. No firm listed here has been contacted.</p></div></div>
+<header class="hero col">
+  <p class="kicker">Bioregioning Tayside, water</p>
+  <h1>Tayside water stores</h1>
+  <p class="lede">Who could build hundreds of small water stores on Tayside farms, whether there are enough of them, and how a regional programme could pay for itself and fund other bioregional work.</p>
+</header>
+<div class="col">
+<div class="note">
+  <p>This page goes with the information sheet for farmers, <a href="catch-water-this-winter.html">Catch water this winter</a>. That sheet tells landowners what they can build without asking. This page asks who builds it, and who pays. Points marked <span class="inf">Our reading</span> are our judgement. Everything else is from a source listed at the end.</p>
+</div>
+
+<h2>Why now</h2>
+<p>Tayside farms have been short of water in summer two years running. In winter, the same rivers flood.</p>
+<div class="figs">
+  <div class="fig"><b>17</b><span>Scottish catchments at "Significant" water scarcity at once in 2025, a record. About 270 abstraction licences were restricted. The Lunan Water in Angus was one of them.</span></div>
+  <div class="fig"><b>48</b><span>more licences restricted in August 2026, when Tay Estuary (North) reached Significant scarcity. SEPA said they were "primarily" farm licences.</span></div>
+  <div class="fig"><b>2×</b><span>how often surface-water droughts may happen by 2050, in a James Hutton Institute study for CREW.</span></div>
+  <div class="fig"><b>£17m</b><span>to reinstate council houses in Brechin after Storm Babet in 2023 overtopped its £16m flood wall.</span></div>
+</div>
+<p>The Hutton study recommends storing water in the wet months, in lagoons that are not on a watercourse. Many small stores across farms do this. They take some of the winter peak off the burns, and they hold water for the dry months.</p>
+
+<h2>Who could do the work</h2>
+<p>We found no firm that offers small farm water stores across Tayside as a service. The skills exist, but they are spread across drainage contractors, groundworks firms, consultancies and rivers trusts. The list below is a starting point from directories and trade press. We have not spoken to any of these firms.</p>
+<p><span class="conf c-h">Confirmed</span> based in or working in Tayside. <span class="conf c-m">Likely</span> nearby, or the service is likely. <span class="conf c-l">Check</span> not confirmed.</p>
+
+<h3>Local contractors</h3>
+<div class="tbl"><table>
+<thead><tr><th>Firm</th><th>Where</th><th>What they do</th><th>Tayside</th></tr></thead>
+<tbody>
+<tr><td><a href="https://drainmasterscotland.com/drainage" target="_blank" rel="noopener">Drainmaster (Scotland) Ltd ↗</a></td><td>Perth</td><td>Drainage surveys, repairs and land drainage</td><td><span class="conf c-h">Confirmed</span></td></tr>
+<tr><td><a href="https://www.bryancontractors.co.uk/" target="_blank" rel="noopener">Bryan Contractors ↗</a></td><td>Blairgowrie</td><td>Plant hire, groundworks, drainage, flood prevention</td><td><span class="conf c-h">Confirmed</span></td></tr>
+<tr><td><a href="https://www.lowjoinerybuildingcontractors.co.uk/groundworks-drainage/" target="_blank" rel="noopener">LOW Ltd ↗</a></td><td>Arbroath</td><td>Groundworks and drainage in Angus and Dundee, mainly for buildings</td><td><span class="conf c-h">Confirmed</span></td></tr>
+<tr><td>Robert Smith Contractors</td><td>East Perthshire</td><td>Farm land drainage and ditching. Search listing only</td><td><span class="conf c-m">Likely</span></td></tr>
+<tr><td><a href="https://www.thescottishfarmer.co.uk/features/24980733.d-t-stewarts-cutting-edge-tech-efficient-field-drainage/" target="_blank" rel="noopener">D.T. Stewart &amp; Sons ↗</a></td><td>Ceres, Fife</td><td>Field drainage, about 100 km of pipe in a year. Works within 30 miles</td><td><span class="conf c-m">Likely</span></td></tr>
+<tr><td><a href="https://elvisservicecompany.co.uk/services/groundworks-drainage/" target="_blank" rel="noopener">Elvis Service Company ↗</a></td><td>Brechin, Forfar, Kirriemuir</td><td>Groundworks and drainage</td><td><span class="conf c-m">Likely</span></td></tr>
+<tr><td><a href="https://mamcontracting.co.uk/service/agriculture" target="_blank" rel="noopener">MAM Contracting ↗</a></td><td>Base not confirmed</td><td>Farm groundworks and drainage. Has worked at Pitlochry and on wetland restoration</td><td><span class="conf c-m">Likely</span></td></tr>
+<tr><td><a href="https://www.scotttelford.com/agricultural-contracting/" target="_blank" rel="noopener">Scott Telford ↗</a></td><td>Serves Dundee</td><td>Farm contracting. Drainage not confirmed</td><td><span class="conf c-m">Likely</span></td></tr>
+<tr><td><a href="https://www.thescottishfarmer.co.uk/features/25911579.wah-contracts-shares-40-years-drainage-experience/" target="_blank" rel="noopener">WAH Contracts ↗</a></td><td>Kirkintilloch</td><td>Farm drainage "from Largs to Kinross"</td><td><span class="conf c-l">Check</span></td></tr>
+<tr><td>Ogilvie Ground Works, SD Clark Planthire, Scott Mackie Ltd</td><td>Brechin and Forfar</td><td>Plant hire and groundworks. Directory listings only</td><td><span class="conf c-l">Check</span></td></tr>
+</tbody></table></div>
+
+<h3>Designers and suppliers</h3>
+<div class="tbl"><table>
+<thead><tr><th>Firm</th><th>Role</th><th>Tayside</th></tr></thead>
+<tbody>
+<tr><td><a href="https://consult.pkc.gov.uk/communities/perthswmp/user_uploads/perth-swmp---consult-hub.pdf" target="_blank" rel="noopener">Amey Consulting ↗</a></td><td>Design hub in Perth and office in Dundee. Wrote the Perth Surface Water Management Plan</td><td><span class="conf c-h">Confirmed</span></td></tr>
+<tr><td><a href="https://www.sweco.co.uk/services/water-energy-industry/water-consultancy/flood-resilience/" target="_blank" rel="noopener">Sweco ↗</a></td><td>SuDS and flood design. Worked on the Comrie flood scheme for Perth &amp; Kinross Council</td><td><span class="conf c-h">Confirmed</span></td></tr>
+<tr><td><a href="https://www.watermagazine.co.uk/2026/05/12/scottish-water-confirms-companies-which-will-help-deliver-multi-billion-pound-transformation-of-water-and-waste-water-infrastructure/" target="_blank" rel="noopener">Stantec, AECOM, M Group Water ↗</a></td><td>Partners in Scottish Water's 2027–33 programme. Could deliver at scale</td><td><span class="conf c-m">Likely</span></td></tr>
+<tr><td><a href="https://www.rainharvesting.co.uk/commercial-overview" target="_blank" rel="noopener">Rainharvesting Systems ↗</a>, Graf UK, Enduramaxx</td><td>Rainwater tanks and kit. They supply; a local groundworker installs</td><td>All UK</td></tr>
+</tbody></table></div>
+
+<h3>Rivers trusts, councils and advisers</h3>
+<ul>
+  <li><strong>Tay Rivers Trust</strong> (Perth). A partner on the River Eden in Fife, where ponds, wetlands, leaky barriers and irrigation lagoons were identified as options.</li>
+  <li><strong>Esk Rivers &amp; Fisheries Trust</strong> (Angus). Partner in a £1.4m Nature Restoration Fund project on the South Esk.</li>
+  <li><strong>River South Esk Catchment Partnership</strong>, led by Angus Council. Natural flood management is a theme of its 2026–36 plan.</li>
+  <li><strong>Perth &amp; Kinross Council nature fund</strong>. It has already paid for farm and SuDS ponds at Marybank Farm, Keltneyburn, Blairgowrie, Perth, Murthly and Abernethy.</li>
+  <li><strong>Forestry and Land Scotland</strong>. Builds leaky dams in the South Esk.</li>
+  <li><strong>James Hutton Institute</strong>. Ran rural SuDS pilots, including a sediment pond, in the upper Lunan Water.</li>
+  <li><strong>Farm Advisory Service</strong>. Advice on rainwater harvesting and slowing the flow.</li>
+  <li><strong>Tayside Biodiversity Partnership</strong>. Its 2016–2026 action plan has a SuDS and ponds initiative. It ends this year, so the next plan is an opening.</li>
+</ul>
+
+<h2>Is there a gap?</h2>
+<p>Yes, for specialist farm drainage. Probably not for basic digging.</p>
+<ul>
+  <li>WAH Contracts says there are "fewer specialist drainage contractors in Scotland today". It has more than a year of work booked. It says drainage now costs £1,500–£2,000 an acre, up from £500–£700.</li>
+  <li>D.T. Stewart reports "constant demand" and has trouble finding skilled staff. Its drainage plough dates from 1986.</li>
+  <li>CITB says Scotland has enough construction workers overall for 2026–30. But they are in the wrong places and roles, and the workforce is ageing.</li>
+  <li>Guidance from England says good reservoir contractors are booked up all summer. It suggests two years from idea to a working reservoir.</li>
+</ul>
+<p>No one has counted Scotland's farm drainage contractors or measured waiting times. We looked for a study from the Scottish Government, SRUC and the drainage trade body, and found none.</p>
+<p><span class="inf">Our reading</span> A small scrape, a pond in a wet hollow, or a tank under a shed roof does not need a drainage specialist. A competent local digger driver can build one with a simple design and a checklist. The gap is in packaging the work: finding sites, giving a standard design, checking the rules, and lining up contractors in the winter when they are less busy. Drainage specialists can then keep to the technical jobs.</p>
+
+<h2>What it costs</h2>
+<div class="tbl"><table>
+<thead><tr><th>Item</th><th>Figure</th><th>Source</th></tr></thead>
+<tbody>
+<tr><td>Irrigation lagoon, Scottish grant rate 2026</td><td class="num">£2.94/m³ unlined<br>£8.20/m³ lined</td><td>AECS. Roof-runoff pipework £35.46/m. Capped at £40k per business, targeted catchments only, work done by 31 Dec 2027</td></tr>
+<tr><td>Wildlife pond, Scottish grant rate</td><td class="num">£4.50/m²</td><td>AECS. Up to 600 m² per pond</td></tr>
+<tr><td>Farm reservoir, build cost</td><td class="num">£1–£3/m³</td><td>Farmers Weekly. A liner adds £1–£3/m³</td></tr>
+<tr><td>Reservoir, England grant</td><td class="num">£3.60/m³</td><td>Clay-lined, first 10,000 m³, paid at 40% of cost</td></tr>
+<tr><td>Natural flood storage, Somerset</td><td class="num">about £3/m³</td><td>About half the cost of conventional schemes nearby</td></tr>
+<tr><td>Leaky dam</td><td class="num">£81–£764</td><td>Case studies and England grant rates</td></tr>
+<tr><td>Rainwater harvesting off farm roofs</td><td class="num">not found</td><td>No published farm cost. FAS gives tank sizes, not prices</td></tr>
+</tbody></table></div>
+<p><span class="inf">Our reading</span> Small ponds cost more per cubic metre than big lagoons, because getting a machine to site costs the same either way. That is a reason to plan a whole valley's stores at once and move one machine and crew from farm to farm.</p>
+
+<div class="note">
+<p><strong>An illustration, not a plan.</strong> Say 500 stores of 1,000 m³ each go in over three winters. That is 500,000 m³, or half a million tonnes of water. At £3–£9 per m³ it would cost roughly £1.5m to £4.5m.</p>
+<p>For scale, Brechin's flood wall cost £16m and the Comrie scheme costs £27m. Whether those stores protect the same homes depends on where they sit. The numbers 500 and 1,000 m³ are ours, chosen to show the order of magnitude.</p>
+</div>
+
+<h2>Does it pay back?</h2>
+<p>For flood benefit, the evidence says probably, several times over, in the long run.</p>
+<ul>
+  <li>A national study of natural flood management in Great Britain puts the benefit at about <strong>3 to 5 times</strong> the cost, to 2100.</li>
+  <li>Stantec, for the Wildlife Trusts, found <strong>4:1 over 10 years and 10:1 over 30 years</strong>, from limited data.</li>
+  <li>At Eddleston Water in the Borders, features already built avoid a net £950k of flood damage over 100 years.</li>
+  <li>A Scottish headwaters study found ponds and runoff stores were worth the money for keeping rivers flowing in dry spells. Tree planting was not.</li>
+</ul>
+<p>Three caveats matter.</p>
+<ul>
+  <li>Most of the ratios come from England, and they are long-term.</li>
+  <li>Ponds cut flood peaks most in small catchments (under 1 km²), in smaller floods, and when they have room to spare. Where each store sits matters.</li>
+  <li>The drought value to a grower is a separate and more direct payback. No one has priced it for Scotland. The 2017–18 dry period cost Scottish farmers £161m (WWF Scotland), but we found no figure for 2025.</li>
+</ul>
+
+<h2>How a regional vehicle could work</h2>
+<p>John's email put it plainly: the avoided costs would pay for this several times over. The hard part is that those savings land on many different people, and no one of them pays the whole bill. The Wyre project in Lancashire is the closest working model.</p>
+<div class="note">
+<p><strong>Wyre natural flood management, Lancashire.</strong> About £1.5m, led by the Rivers Trust, Wyre Rivers Trust and Triodos. An £850k nine-year loan sits beside a £627k Woodland Trust grant.</p>
+<p>United Utilities, Flood Re, the Environment Agency, the regional flood committee and Wyre Council signed nine-year contracts to pay for results, starting in year 6. The Green Finance Institute says flood benefit <em>alone</em> would not have made it viable.</p>
+</div>
+<p><span class="inf">Our reading</span> A Tayside vehicle would sell several things to several buyers. In order of how soon they could pay:</p>
+<ol class="stack">
+  <li><span class="k">1</span><div><strong>Grants for the build.</strong> AECS capital items, the Nature Restoration Fund (an extra £9m was announced in July 2026), and council nature funds. This pays for the first stores.</div></li>
+  <li><span class="k">2</span><div><strong>Growers paying for drought cover.</strong> Soft fruit, potato and veg growers in Angus and Perthshire have now had licences restricted two summers running. They have a direct reason to pay for a store and an installation service. Any store used for irrigation needs an EIA screening opinion first, so the vehicle should handle that paperwork for them.</div></li>
+  <li><span class="k">3</span><div><strong>Downstream buyers paying for less flood risk.</strong> Angus Council, Perth &amp; Kinross Council, Scottish Water, insurers and Flood Re, pooled as at Wyre. This takes a few years of monitoring before anyone pays.</div></li>
+  <li><span class="k">4</span><div><strong>Nature credits, later.</strong> Scotland's Ecosystem Restoration Code is still being developed. The government's own paper says a market built only on voluntary demand is "unlikely to be viable" in the near term.</div></li>
+</ol>
+
+<h3>Three shapes it could take</h3>
+<div class="tbl"><table>
+<thead><tr><th></th><th>What it does</th><th>Risk</th><th>Surplus for bioregional work</th></tr></thead>
+<tbody>
+<tr><td><strong>A. Coordinator</strong></td><td>Finds sites, gives standard designs, checks rules, books local contractors, runs grant claims. Owns no machines.</td><td>Low. Can start this winter.</td><td>Small: a fee per store</td></tr>
+<tr><td><strong>B. Public-private company</strong></td><td>As A, plus signs multi-year contracts with flood and water buyers and holds the monitoring data.</td><td>Medium. Needs buyers to commit.</td><td>Larger, once results-based payments start</td></tr>
+<tr><td><strong>C. Publicly owned installer</strong></td><td>Owns machines and employs crews, perhaps as a council trading arm or under Community Wealth Building.</td><td>Higher. Capital tied up, and it competes with local firms.</td><td>Largest if busy all year, the hardest to keep busy</td></tr>
+</tbody></table></div>
+<p><span class="inf">Our reading</span> Start as A and grow into B. A coordinator can use the local firms above rather than compete with them. The Community Wealth Building (Scotland) Act 2026 got Royal Assent in March 2026 and will require local action plans. A Tayside vehicle that keeps the work and the surplus local fits it well. We have not confirmed whether the regulations that start those duties have been made.</p>
+<p>FIRNS (the Facility for Investment Ready Nature in Scotland) offers up to £160k to make a nature project ready for investment. Several funded projects include natural flood management, but none on the Tay that we could find. It could pay for the design of option B.</p>
+
+<h2>A regional water resilience plan</h2>
+<p>Scotland plans for floods by region, through local flood risk management plans such as the Tay plan. It manages drought nationally and, by SEPA's own account, after the fact. We found no regional or catchment plan that deals with drought, or with flood and drought together.</p>
+<ul>
+  <li>SEPA is consulting on a more planned approach to managing water resources.</li>
+  <li>A draft fourth river basin management plan is due for consultation in <strong>December 2026</strong>, with the final plan by December 2027. It includes "proactive management of water resources".</li>
+  <li>The National Flood Resilience Strategy (December 2024) runs to 2045 and has £3m for blue-green infrastructure.</li>
+</ul>
+<p><span class="inf">Our reading</span> A Tayside plan that treats winter flood and summer drought as one storage problem would fill a real gap. It could also show government where the policy, rules and finance fall short. The river basin plan consultation next month is the first chance to put it on the record.</p>
+
+<h3>Gaps in the rules that we found while writing the farmers' sheet</h3>
+<ul>
+  <li><strong>Irrigation has no lower limit.</strong> Under the 2017 farm EIA regulations, any "project involving irrigation" needs a screening opinion from Rural Payments first. A 200 m³ scrape for watering a field is caught the same as a large lagoon. This is the single biggest brake on growers storing water.</li>
+  <li><strong>No current pond guidance.</strong> SEPA's 2021 guidance on ponds has been withdrawn. Nothing has replaced it under the new rules (EASR, in force since 1 November 2025). Farmers and contractors have to piece it together from the regulations.</li>
+  <li><strong>Pumping from a drain-fed pond needs registering, at any size.</strong> SEPA's registration EASR-SC-047 states no volume limit. A roof-fed pond is outside it, which is not obvious to anyone.</li>
+  <li><strong>"Wetland" is hard to call on the ground.</strong> A field hollow that lies wet in winter may or may not be one. A simple field test from SEPA would remove most of the doubt.</li>
+  <li><strong>No regional drought plan.</strong> See above.</li>
+</ul>
+<p><span class="inf">Our reading</span> Each of these could be fixed by guidance or a small threshold change, not new law. That makes them a realistic ask of ministers.</p>
+
+<div class="ask">
+  <h3>Who to write to</h3>
+  <p><strong>Gillian Martin MSP</strong>, Cabinet Secretary for Climate Action and Rural Affairs since 20 May 2026. Her brief covers farming and land use, and also Scottish Water, flood prevention and SEPA. She is the one minister who holds both the farm side and the water side.</p>
+  <p><strong>Jim Fairlie MSP</strong>, Minister for Agriculture, Marine and the Islands since May 2026, working under her. He is also the MSP for Perthshire South and Kinross-shire, which takes in Glenfarg.</p>
+  <p>The letter could propose Tayside as a living lab for dispersed farm water storage, ask for the rule fixes above and clear national guidance on what farmers can build without permission, and offer a regional water resilience plan as the pilot.</p>
+</div>
+
+<h2>Open questions</h2>
+<ul>
+  <li>Which Angus growers have already built lagoons, and who dug them? SEPA and Rural Payments hold the records. The growers are the quickest way in.</li>
+  <li>Would Scottish Water, Angus Council or Perth &amp; Kinross Council sign a multi-year agreement to pay for results, as United Utilities did on the Wyre?</li>
+  <li>What does a store cost a grower in lost land and upkeep, and what is a summer's water worth to them?</li>
+  <li>Can the Tay and Esk rivers trusts host the monitoring, so every store adds to the evidence?</li>
+  <li>Tay Rivers Trust's website and NatureScot's FIRNS project list could not be reached during this research. Both need checking.</li>
+</ul>
+
+<h2>Sources</h2>
+<ol class="sources">
+  <li>SEPA, record water scarcity, 2025: <a href="https://beta.sepa.scot/news/2025/scotland-faces-record-water-scarcity-with-17-catchments-at-significant/" target="_blank" rel="noopener">beta.sepa.scot ↗</a></li>
+  <li>SEPA, Tayside abstraction restrictions, August 2026: <a href="https://www.sepa.org.uk/news/2026/sepa-extend-temporary-water-abstraction-restrictions-across-parts-of-tayside-and-scottish-borders/" target="_blank" rel="noopener">sepa.org.uk ↗</a></li>
+  <li>James Hutton Institute, drought by 2050: <a href="https://www.hutton.ac.uk/key-scottish-sectors-warned-of-doubling-of-drought-events-by-2050/" target="_blank" rel="noopener">hutton.ac.uk ↗</a></li>
+  <li>Angus Council, Brechin recovery report, November 2024: <a href="https://www.angus.gov.uk/sites/default/files/2024-11/Report%20331_24_Brechin%20Recovery_Regeneration%20Update.pdf" target="_blank" rel="noopener">angus.gov.uk ↗</a></li>
+  <li>Rural Payments, irrigation lagoon capital item: <a href="https://www.ruralpayments.org/topics/all-schemes/agri-environment-climate-scheme/management-options-and-capital-items/water-use-efficiency---irrigation-lagoon" target="_blank" rel="noopener">ruralpayments.org ↗</a></li>
+  <li>Rural Payments, pond creation for wildlife: <a href="https://www.ruralpayments.org/topics/all-schemes/agri-environment-climate-scheme/management-options-and-capital-items/pond-creation-for-wildlife/" target="_blank" rel="noopener">ruralpayments.org ↗</a></li>
+  <li>Farmers Weekly, planning an on-farm reservoir: <a href="https://www.fwi.co.uk/business/guidance-on-planning-an-on-farm-irrigation-reservoir" target="_blank" rel="noopener">fwi.co.uk ↗</a></li>
+  <li>CITB, local skills in Scotland: <a href="https://www.citb.co.uk/funding-support/business-support/analysis-and-forecasting/construction-industry-research-reports/local-skills-scotland" target="_blank" rel="noopener">citb.co.uk ↗</a></li>
+  <li>National assessment of natural flood management (UEA), 2025: <a href="https://ueaeprints.uea.ac.uk/id/eprint/101027/1/He_National_assessment_of_natural_flood_management_2025_JoFRM_AAM.pdf" target="_blank" rel="noopener">ueaeprints.uea.ac.uk ↗</a></li>
+  <li>Wildlife Trusts, NFM returns: <a href="https://www.wildlifetrusts.org/node/6198111" target="_blank" rel="noopener">wildlifetrusts.org ↗</a></li>
+  <li>Eddleston Water report, 2021: <a href="https://nora.nerc.ac.uk/id/eprint/540517/1/Eddleston%20Water%202021%20-%20Final.pdf" target="_blank" rel="noopener">nora.nerc.ac.uk ↗</a></li>
+  <li>Green Finance Institute, Wyre case study: <a href="https://hive.greenfinanceinstitute.com/wp-content/uploads/2025/05/Wyre-NFM-Technical-Case-Study.pdf" target="_blank" rel="noopener">greenfinanceinstitute.com ↗</a></li>
+  <li>NatureScot, FIRNS: <a href="https://www.nature.scot/funding-and-projects/firns-facility-investment-ready-nature-scotland" target="_blank" rel="noopener">nature.scot ↗</a></li>
+  <li>Scottish Government, Ecosystem Restoration Code engagement paper: <a href="https://www.gov.scot/publications/ecosystem-restoration-code-engagement-paper/pages/2/" target="_blank" rel="noopener">gov.scot ↗</a></li>
+  <li>Community Wealth Building (Scotland) Act 2026: <a href="https://www.legislation.gov.uk/asp/2026/7" target="_blank" rel="noopener">legislation.gov.uk ↗</a></li>
+  <li>SEPA, water resources management consultation: <a href="https://consultation.sepa.org.uk/circular-economy/water-resources-management-plan-consultation/" target="_blank" rel="noopener">consultation.sepa.org.uk ↗</a></li>
+  <li>Scottish Government, National Flood Resilience Strategy: <a href="https://www.gov.scot/publications/national-flood-resilience-strategy-3/" target="_blank" rel="noopener">gov.scot ↗</a></li>
+  <li>Scottish Government, Cabinet Secretary for Climate Action and Rural Affairs: <a href="https://www.gov.scot/about/who-runs-government/cabinet-and-ministers/cabinet-secretary-for-climate-action-and-rural-affairs/" target="_blank" rel="noopener">gov.scot ↗</a></li>
+  <li>Scottish Government, Minister for Agriculture, Marine and the Islands: <a href="https://www.gov.scot/about/who-runs-government/cabinet-and-ministers/minister-for-agriculture-marine-and-the-islands/" target="_blank" rel="noopener">gov.scot ↗</a></li>
+</ol>
+
+<p class="endnote">Desk research only, November 2026. No firm listed has been contacted, and listing is not a recommendation. Check figures against the source before quoting them.</p>
+</div>
+</main>
+<!-- fai:footer -->
+<footer class="fai-footer">
+  <div class="fai-footer__inner">
+    <span>Part of Dark Matter Labs' <a href="https://optionality.darkmatterlabs.org/" target="_blank" rel="noopener">xCO portfolio<span aria-hidden="true"> ↗</span></a>, expanding civilizational optionality.</span>
+  </div>
+</footer>
+<!-- /fai:footer -->
+</body>
+</html>

@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Catch water this winter (draft) — Food as Infrastructure</title>
+<style>
+/* Paper document in a single 68ch reading column. Link-only page in BR/, kept out of the library. */
+body{margin:0;background:var(--fai-paper);color:var(--fai-ink);font-size:17px;line-height:1.6}
+.wrap{max-width:1200px;margin:0 auto;padding-left:32px;padding-right:32px;padding-bottom:96px}
+@media (max-width:640px){.wrap{padding-left:16px;padding-right:16px;padding-bottom:56px}}
+.col{max-width:68ch}
+.status-strip{padding-top:32px}
+.status-note{background:var(--fai-field);border-left:3px solid var(--fai-beet);padding:14px 18px;font-size:15px;line-height:1.5}
+.status-note p{margin:0}
+.hero{padding-block:40px 8px}
+.kicker{font-size:14px;color:var(--fai-ink-3);margin:0 0 12px}
+h1{font-size:clamp(40px,6vw,76px);font-weight:500;line-height:1.02;margin:0}
+h2{font-size:clamp(28px,3.4vw,40px);font-weight:500;line-height:1.1;margin:72px 0 0;padding-top:24px;border-top:1px solid var(--fai-rule)}
+h3{font-size:21px;font-weight:600;line-height:1.25;margin:32px 0 0}
+.lede{font-size:21px;line-height:1.45;color:var(--fai-ink-2);margin:20px 0 0}
+p,ul,ol{margin:14px 0} li{margin:6px 0}
+.wrap a{color:var(--fai-ink);text-decoration:underline;text-decoration-color:var(--fai-beet);text-decoration-thickness:1px;text-underline-offset:3px}
+.wrap a:hover{color:var(--fai-beet)}
+.small,.meta{font-size:14px;line-height:1.45;color:var(--fai-ink-3)}
+.note,.item,.ask,.sum{background:var(--fai-field);padding:18px 20px;margin:20px 0}
+.ask h3,.item h3{margin-top:0}
+.note>:first-child,.ask>:first-child,.sum>:first-child,.item>:first-child{margin-top:0}
+.note>:last-child,.ask>:last-child,.sum>:last-child{margin-bottom:0}
+.item p{margin:8px 0 0}
+.three{display:grid;gap:12px;margin:20px 0}
+.three .item{margin:0}
+.figs{display:grid;grid-template-columns:repeat(auto-fit,minmax(14rem,1fr));gap:24px;margin:28px 0}
+.fig{border-top:1px solid var(--fai-ink);padding-top:10px;min-width:0}
+.fig b{display:block;font-size:40px;font-weight:500;line-height:1.1;color:var(--fai-beet);font-variant-numeric:tabular-nums}
+.fig span{font-size:15px;color:var(--fai-ink-2)}
+.inf,.conf{display:inline-block;font-size:13px;line-height:1.4;padding:1px 9px;border:1px solid var(--fai-rule-strong);border-radius:999px;color:var(--fai-ink-2);white-space:nowrap;font-weight:400}
+.conf.c-h{border-color:var(--fai-ink);color:var(--fai-ink)}
+.conf.c-l{border-style:dashed}
+.tbl{overflow-x:auto;margin:20px 0;max-width:100%}
+table{border-collapse:collapse;width:100%;min-width:34rem;font-size:15px}
+th,td{text-align:left;vertical-align:top;padding:10px 12px;border-bottom:1px solid var(--fai-rule)}
+th{background:var(--fai-field);font-weight:600}
+td.num{text-align:right;white-space:nowrap}
+.checks{list-style:none;padding:0;margin:16px 0}
+.checks li{margin:0;border-bottom:1px solid var(--fai-rule)}
+.checks label{display:grid;grid-template-columns:28px 1fr;gap:12px;padding:12px 0;cursor:pointer;align-items:start}
+.checks input{width:20px;height:20px;margin:3px 0 0;accent-color:var(--fai-beet)}
+.checks input:checked + span{color:var(--fai-ink-3)}
+.ask ul{padding-left:20px}
+.sum .eq{font-size:19px;font-weight:600}
+.stack{list-style:none;padding:0;margin:20px 0;display:grid;gap:14px}
+.stack li{display:grid;grid-template-columns:32px 1fr;gap:12px;margin:0}
+.stack .k{font-size:24px;font-weight:500;color:var(--fai-beet);line-height:1.2}
+.sources{font-size:14px;color:var(--fai-ink-2);padding-left:20px}
+.sources li{overflow-wrap:anywhere}
+.endnote{margin-top:56px;padding-top:16px;border-top:1px solid var(--fai-rule);font-size:14px;color:var(--fai-ink-3)}
+</style>
+<!-- fai:head -->
+<meta name="description" content="What Tayside farmers can build this winter to store water without asking permission, and when they need to ask first.">
+<link rel="canonical" href="https://food.darkmatterlabs.org/BR/catch-water-this-winter.html">
+<meta name="theme-color" content="#111112">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Food as Infrastructure, Dark Matter Labs">
+<meta property="og:locale" content="en_GB">
+<meta property="og:url" content="https://food.darkmatterlabs.org/BR/catch-water-this-winter.html">
+<meta property="og:title" content="Catch water this winter">
+<meta property="og:description" content="What Tayside farmers can build this winter to store water without asking permission, and when they need to ask first.">
+<meta property="og:image" content="https://food.darkmatterlabs.org/assets/fai/social/catch-water-this-winter.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Catch water this winter. Food as Infrastructure, Dark Matter Labs.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Catch water this winter">
+<meta name="twitter:description" content="What Tayside farmers can build this winter to store water without asking permission, and when they need to ask first.">
+<meta name="twitter:image" content="https://food.darkmatterlabs.org/assets/fai/social/catch-water-this-winter.png">
+<meta name="twitter:image:alt" content="Catch water this winter. Food as Infrastructure, Dark Matter Labs.">
+<link rel="icon" href="../assets/fai/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400..900;1,400..700&display=swap">
+<link rel="stylesheet" href="../assets/fai/fai.css">
+<!-- /fai:head -->
+</head>
+<body>
+<!-- fai:bar -->
+<div class="fai-bar">
+  <div class="fai-bar__inner">
+    <a class="fai-bar__dm" href="https://darkmatterlabs.org/"><img class="fai-bar__lockup" src="../assets/brand/dm-logo-v1-white.svg" alt="Dark Matter Labs" width="102" height="20"><img class="fai-bar__stamp" src="../assets/brand/dm-stamp-white.svg" alt="Dark Matter Labs" width="20" height="20"></a>
+    <span class="fai-bar__sep" aria-hidden="true"></span>
+    <a class="fai-bar__mission" href="../index.html">Food as Infrastructure</a>
+    <span class="fai-bar__here"><span class="fai-el fai-el--draft" aria-hidden="true"><b>Cw</b><i>27</i></span><span>Catch Water This Winter</span></span>
+    <a class="fai-bar__xco" href="https://optionality.darkmatterlabs.org/" target="_blank" rel="noopener" title="Dark Matter Labs' Expanding Civilizational Optionality portfolio">xCO portfolio<span aria-hidden="true"> ↗</span></a>
+    <div class="fai-bar__links" role="navigation" aria-label="Site"><a href="../index.html">Portfolio</a><a href="../library.html">Library</a></div>
+  </div>
+</div>
+<!-- /fai:bar -->
+<main class="wrap">
+<div class="status-strip col"><div class="status-note"><p>Draft for checking. Prepared by Dark Matter Labs with Bioregioning Tayside in November 2026. SEPA and the Farm Advisory Service should read it before it goes to farmers.</p></div></div>
+<header class="hero col">
+  <p class="kicker">For farmers and landowners in Perth and Kinross, Angus and Dundee</p>
+  <h1>Catch water this winter</h1>
+  <p class="lede">SEPA restricted farm water licences in Tayside in 2025 and again in 2026. The rain still comes in winter. This sheet sets out what you can build on your own land to hold some of it, without asking anyone. It also says when you do need to ask.</p>
+</header>
+<div class="col">
+<h2>Three things you can do without permission</h2>
+<div class="three">
+  <div class="item">
+    <h3>Dig a pond or scrape</h3>
+    <p>Dig it into the ground, away from any burn. Don't build a bank or dam to hold the water up. A low corner of a field that lies wet in winter is often the right spot.</p>
+  </div>
+  <div class="item">
+    <h3>Catch water off your roofs</h3>
+    <p>Run the downpipes from sheds and steadings into tanks or a pond. Rain off a roof has not reached a burn, so you are not taking water from the river.</p>
+  </div>
+  <div class="item">
+    <h3>Put a SuDS at the steading</h3>
+    <p>A swale, a grass strip or a small pond to hold yard and roof run-off. SEPA does not regulate the SuDS itself. It does have rules for what leaves it.</p>
+  </div>
+</div>
+<p class="small">SuDS means sustainable drainage system: a ditch, strip or pond that slows and cleans run-off before it reaches a burn.</p>
+
+<h2>Before you dig</h2>
+<p>If you can tick every line, you can go ahead.</p>
+<ul class="checks">
+  <li><label><input type="checkbox" id="c1"><span>The holding is <strong>0.4 hectares or more</strong> (about one acre), and the work is for farming.</span></label></li>
+  <li><label><input type="checkbox" id="c2"><span>The pond is <strong>not on a burn, river or loch</strong>, and no burn runs into it.</span></label></li>
+  <li><label><input type="checkbox" id="c3"><span>The spot is <strong>not a marsh, bog or rushy ground</strong> that stays wet all year. Wet hollows in grass or arable are different. See "Is it a wetland?" below.</span></label></li>
+  <li><label><input type="checkbox" id="c4"><span>The water sits <strong>below ground level</strong>. You are not building a bank to hold it up.</span></label></li>
+  <li><label><input type="checkbox" id="c5"><span>The work is <strong>more than 25 metres</strong> from the tarred edge of an A, B or C road.</span></label></li>
+  <li><label><input type="checkbox" id="c6"><span>The land is <strong>not</strong> in an SSSI, a scheduled monument, a National Scenic Area, or a site protected for nature (such as a Special Area of Conservation).</span></label></li>
+  <li><label><input type="checkbox" id="c7"><span>You have <strong>checked for buried pipes and cables</strong> through Linesearch beforeUdig, Scottish Water, SSEN and SGN.</span></label></li>
+  <li><label><input type="checkbox" id="c8"><span>You <strong>keep the soil on your own farm</strong> and spread it on dry ground, not into a wet area or beside a burn.</span></label></li>
+  <li><label><input type="checkbox" id="c9"><span>You <strong>refuel and wash machines at least 10 metres</strong> from any burn, ditch or wet ground.</span></label></li>
+  <li><label><input type="checkbox" id="c10"><span>You have looked for <strong>otter holts, water vole burrows and nests</strong>, and none will be disturbed.</span></label></li>
+  <li><label><input type="checkbox" id="c11"><span><strong>Dirty yard water</strong> goes to the slurry store. Only clean roof and yard water goes to the pond or SuDS.</span></label></li>
+  <li><label><input type="checkbox" id="c12"><span>The water is <strong>not for irrigating crops</strong>. Water for stock, washing, fire, or holding back floods is fine. Irrigation is covered below.</span></label></li>
+</ul>
+<p class="small">Ticks are not saved. Use the list to talk it through with your contractor.</p>
+
+<h3>Is it a wetland?</h3>
+<p>SEPA's rules treat a wetland as ground shaped by being often flooded or waterlogged. Digging in a wetland that connects to a burn or loch needs a SEPA permit.</p>
+<p>A field you crop or graze in summer that lies wet in winter is often not a wetland. Rushes, reeds, moss, peat, or water that runs in and out all year are signs that it might be one. If you are not sure, ask SEPA before you dig.</p>
+
+<h2>When you do need to ask</h2>
+<div class="ask">
+  <ul>
+    <li><strong>You plan to irrigate crops with it.</strong> Ask Rural Payments (RPID) for a screening opinion first. There is no minimum size for this rule.</li>
+    <li><strong>You will pump more than 10 cubic metres a day</strong> (10,000 litres) out of a burn or the ground. Between 10 and 50 a day you register with SEPA. Over 50 a day you need a licence.</li>
+    <li><strong>You will pump out of a pond that is fed by field drains or groundwater.</strong> SEPA asks you to register this. Building the pond needs no permission; taking water out of it does. Roof-fed ponds and tanks are not covered by this rule.</li>
+    <li><strong>The pond is on a burn, or in marsh or bog.</strong> Ask SEPA.</li>
+    <li><strong>The water is held above ground behind a bank</strong> and could hold 10,000 cubic metres or more. That is a reservoir in law and must be registered with SEPA. Ponds joined together count as one.</li>
+    <li><strong>You plan a big tank.</strong> A large tank may count as a building, which needs 28 days' notice to the council. If in doubt, ask the planning office.</li>
+    <li><strong>The land is in a protected site</strong> (SSSI, scheduled monument, National Scenic Area or Special Area of Conservation). Ask NatureScot or Historic Environment Scotland.</li>
+    <li><strong>Earth works over 1 hectare</strong> in total. Ask the council whether you need a screening opinion.</li>
+  </ul>
+</div>
+
+<h2>If water leaves your pond</h2>
+<p>An overflow pipe into a burn is fine if:</p>
+<ul>
+  <li>it does not narrow the burn or raise the bank;</li>
+  <li>the outfall is no bigger than it needs to be, and takes up no more than 20 metres of bank;</li>
+  <li>the water is clean, with no yard muck, slurry or sewage, and does not discolour the burn;</li>
+  <li>you do no work in the burn while fish are spawning, or until the young fish come out of the gravel.</li>
+</ul>
+
+<h2>How much water</h2>
+<div class="sum">
+  <p class="eq">Roof area (m²) × rain (mm) ÷ 1,000 = cubic metres caught</p>
+  <p>A 500 m² shed roof in a month with 100 mm of rain: 500 × 100 ÷ 1,000 = <strong>50 cubic metres</strong>, or 50,000 litres.</p>
+</div>
+<div class="sum">
+  <p class="eq">Length × width × depth = cubic metres held</p>
+  <p>A scrape 20 m long, 10 m wide and 1 m deep holds about <strong>200 cubic metres</strong>, a bit less once the sides are sloped. It is far below the 10,000 m³ reservoir limit.</p>
+</div>
+<p class="small">One cubic metre is 1,000 litres, or about one IBC.</p>
+
+<h2>Help with the cost</h2>
+<div class="tbl"><table>
+<thead><tr><th>Scheme</th><th>What it pays</th><th>When</th></tr></thead>
+<tbody>
+<tr><td>Future Farming Investment Scheme</td><td>Up to £20,000 per business. The 2025 list included water harvesting equipment. Check the 2026 list.</td><td>Opens 30 November 2026</td></tr>
+<tr><td>AECS irrigation lagoon</td><td>£2.94 per m³ unlined, £8.20 lined, £35.46 per metre of roof-water pipe. Up to £40,000. Only in target areas, and the lagoon must not be on a burn.</td><td>The 2027 round is not yet announced</td></tr>
+<tr><td>AECS pond for wildlife</td><td>£4.50 per m², up to 600 m² a pond</td><td>With the AECS round</td></tr>
+<tr><td>Farm Advisory Service</td><td>Free advice, and a basic farm water resilience audit</td><td>Now. Helpline 0300 323 0161</td></tr>
+</tbody></table></div>
+<p class="small">Grant schemes often need approval <em>before</em> you start. If you want a grant, apply first and dig after.</p>
+
+<h2>Who to ask</h2>
+<ul>
+  <li><strong>Farm Advisory Service</strong>: 0300 323 0161, <a href="https://www.fas.scot/" target="_blank" rel="noopener">fas.scot ↗</a></li>
+  <li><strong>SEPA</strong>, for burns, wetlands and pumping: <a href="https://www.sepa.org.uk/" target="_blank" rel="noopener">sepa.org.uk ↗</a></li>
+  <li><strong>Rural Payments (RPID)</strong>, for irrigation screening and grants: <a href="https://www.ruralpayments.org/" target="_blank" rel="noopener">ruralpayments.org ↗</a></li>
+  <li><strong>Your council planning office</strong>: Perth &amp; Kinross, Angus or Dundee</li>
+  <li><strong>NatureScot</strong>, for protected sites and species: <a href="https://www.nature.scot/" target="_blank" rel="noopener">nature.scot ↗</a></li>
+  <li><strong>Buried services</strong>: <a href="https://www.linesearchbeforeudig.co.uk/" target="_blank" rel="noopener">Linesearch beforeUdig ↗</a></li>
+</ul>
+
+<h2>What this is based on</h2>
+<p class="small">This is a plain summary of the rules as of November 2026. It is not legal advice. The rules changed on 1 November 2025, when SEPA moved water rules into new regulations (EASR). Some SEPA web pages still use the old wording. Three points are our reading of the law, not something SEPA has written down: that rain off a roof is not "taking water", that a pond fully below ground is not a reservoir, and that a large tank may need notice to the council.</p>
+<ol class="sources">
+  <li>Environmental Authorisations (Scotland) Regulations 2018, Schedule 9, general binding rules: <a href="https://www.legislation.gov.uk/ssi/2018/219/schedule/9/part/1/chapter/2" target="_blank" rel="noopener">legislation.gov.uk ↗</a></li>
+  <li>SEPA, engineering activities that do not need an authorisation: <a href="https://www.sepa.org.uk/regulation/authorisations/easr-authorisations/water-activities/engineering/activities-that-do-not-require-an-authorisation/" target="_blank" rel="noopener">sepa.org.uk ↗</a></li>
+  <li>SEPA, abstraction from an offline impoundment (EASR-SC-047): <a href="https://www.sepa.org.uk/regulation/authorisations-and-compliance/easr-authorisations/water-activities/abstraction/surface-water-and-groundwater-abstraction/the-abstraction-of-water-from-an-offline-impoundment-easr-sc-047/" target="_blank" rel="noopener">sepa.org.uk ↗</a></li>
+  <li>Farm Advisory Service, EASR explained for farmers, February 2026: <a href="https://www.fas.scot/article/easr-explained-updated-rules-for-farmers-drawing-water-from-rivers-and-burns/" target="_blank" rel="noopener">fas.scot ↗</a></li>
+  <li>Reservoirs (Scotland) Act 2011, section 1: <a href="https://www.legislation.gov.uk/asp/2011/9/section/1" target="_blank" rel="noopener">legislation.gov.uk ↗</a></li>
+  <li>Permitted development, Class 18 agricultural operations: <a href="https://www.legislation.gov.uk/uksi/1992/223/schedule/1/part/6" target="_blank" rel="noopener">legislation.gov.uk ↗</a></li>
+  <li>Environmental Impact Assessment (Agriculture) (Scotland) Regulations 2017: <a href="https://www.legislation.gov.uk/ssi/2017/114" target="_blank" rel="noopener">legislation.gov.uk ↗</a></li>
+  <li>SEPA, reuse of greenfield soils: <a href="https://www.sepa.org.uk/media/154233/reuse_greenfield_soils_construction.pdf" target="_blank" rel="noopener">sepa.org.uk ↗</a></li>
+  <li>Rural Payments, irrigation lagoon capital item: <a href="https://www.ruralpayments.org/topics/all-schemes/agri-environment-climate-scheme/management-options-and-capital-items/water-use-efficiency---irrigation-lagoon" target="_blank" rel="noopener">ruralpayments.org ↗</a></li>
+  <li>Rural Payments, Future Farming Investment Scheme: <a href="https://www.ruralpayments.org/topics/all-schemes/ffis/" target="_blank" rel="noopener">ruralpayments.org ↗</a></li>
+  <li>SEPA, Tayside abstraction restrictions, August 2026: <a href="https://www.sepa.org.uk/news/2026/sepa-extend-temporary-water-abstraction-restrictions-across-parts-of-tayside-and-scottish-borders/" target="_blank" rel="noopener">sepa.org.uk ↗</a></li>
+</ol>
+
+</div>
+</main>
+<!-- fai:footer -->
+<footer class="fai-footer">
+  <div class="fai-footer__inner">
+    <span>Part of Dark Matter Labs' <a href="https://optionality.darkmatterlabs.org/" target="_blank" rel="noopener">xCO portfolio<span aria-hidden="true"> ↗</span></a>, expanding civilizational optionality.</span>
+  </div>
+</footer>
+<!-- /fai:footer -->
+</body>
+</html>

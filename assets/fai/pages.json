@@ -341,6 +341,30 @@
       "summary": "Small, off-the-record situation rooms that trace a near-term shock to the decisions finance and policy leaders hold, starting with food.",
       "pdf": false,
       "surface": "paper"
+    },
+    {
+      "n": 27,
+      "sym": "Cw",
+      "file": "BR/catch-water-this-winter.html",
+      "name": "Catch Water This Winter",
+      "scope": "tayside",
+      "status": "draft",
+      "listed": false,
+      "title": "Catch water this winter",
+      "summary": "What Tayside farmers can build this winter to store water without asking permission, and when they need to ask first.",
+      "surface": "paper"
+    },
+    {
+      "n": 28,
+      "sym": "Tw",
+      "file": "BR/tayside-water-stores.html",
+      "name": "Tayside Water Stores",
+      "scope": "tayside",
+      "status": "draft",
+      "listed": false,
+      "title": "Tayside water stores",
+      "summary": "Who could build hundreds of small farm water stores across Tayside, and how a regional programme could pay for itself.",
+      "surface": "paper"
     }
   ]
 }
