@@ -1,5 +1,5 @@
 {
-  "_comment": "One entry per page. n = position in the library table, sym = two-letter element symbol (unique), name = short name for the site bar, short = optional shorter name for the library tile, title/summary = library listing, scope = london | camden | islington | hackney, status = live | draft, listed = shown in the library, pdf = a snapshot exists in assets/library-pdfs/. surface = paper | canvas (STYLE.md rule 1). social_title and social_photo optionally override the sharing card. summary is also the page's meta description.",
+  "_comment": "One entry per page. n = position in the library table, sym = two-letter element symbol (unique), name = short name for the site bar, short = optional shorter name for the library tile, title/summary = library listing, scope = london | camden | islington | hackney, status = live | draft, listed = shown in the library, pdf = a snapshot exists in assets/library-pdfs/. surface = paper | canvas (STYLE.md rule 1). social_title and social_photo optionally override the sharing card. summary is also the page's meta description. font_href optionally adds a second Google Fonts stylesheet (the BR/ pages use Work Sans).",
   "pages": [
     {
       "n": 1,
@@ -341,6 +341,32 @@
       "summary": "Small, off-the-record situation rooms that trace a near-term shock to the decisions finance and policy leaders hold, starting with food.",
       "pdf": false,
       "surface": "paper"
+    },
+    {
+      "n": 27,
+      "sym": "Cw",
+      "file": "BR/catch-water-this-winter.html",
+      "name": "Catch Water This Winter",
+      "scope": "tayside",
+      "status": "draft",
+      "listed": false,
+      "title": "Catch water this winter",
+      "summary": "What Tayside farmers can build this winter to store water without asking permission, and when they need to ask first.",
+      "surface": "paper",
+      "font_href": "https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700&display=swap"
+    },
+    {
+      "n": 28,
+      "sym": "Tw",
+      "file": "BR/tayside-water-stores.html",
+      "name": "Tayside Water Stores",
+      "scope": "tayside",
+      "status": "draft",
+      "listed": false,
+      "title": "Tayside water stores",
+      "summary": "Who could build hundreds of small farm water stores across Tayside, and how a regional programme could pay for itself.",
+      "surface": "paper",
+      "font_href": "https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700&display=swap"
     }
   ]
 }

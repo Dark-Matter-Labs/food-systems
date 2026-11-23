@@ -39,6 +39,17 @@ SUFFIX = "Food as Infrastructure"
 XCO_URL = "https://optionality.darkmatterlabs.org/"
 
 
+def up(page):
+    """Relative prefix back to the site root, for pages kept in a subfolder (e.g. BR/)."""
+    return "../" * (len(Path(page["file"]).parts) - 1)
+
+
+def extra_font(page):
+    """An optional second Google Fonts stylesheet, for pages that borrow a partner document's look (e.g. BR/)."""
+    href = page.get("font_href")
+    return f'\n<link rel="stylesheet" href="{html.escape(href, quote=True)}">' if href else ""
+
+
 def page_url(page):
     return SITE_URL if page["file"] == "index.html" else SITE_URL + page["file"]
 
@@ -83,11 +94,11 @@ def head_block(page):
 <meta name="twitter:description" content="{a(summary)}">
 <meta name="twitter:image" content="{image}">
 <meta name="twitter:image:alt" content="{a(alt)}">
-<link rel="icon" href="assets/fai/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="{up(page)}assets/fai/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="{FONT_HREF}">
-<link rel="stylesheet" href="assets/fai/fai.css">
+<link rel="stylesheet" href="{FONT_HREF}">{extra_font(page)}
+<link rel="stylesheet" href="{up(page)}assets/fai/fai.css">
 <!-- /fai:head -->"""
 
 
@@ -130,10 +141,11 @@ def element_tile(page):
 
 def site_bar(page):
     is_home = page["file"] == "index.html"
+    root = up(page)
 
     def link(href, label):
         current = ' aria-current="page"' if href == page["file"] else ""
-        return f'<a href="{href}"{current}>{label}</a>'
+        return f'<a href="{root}{href}"{current}>{label}</a>'
 
     here = ""
     if not is_home:
@@ -144,9 +156,9 @@ def site_bar(page):
     return f"""<!-- fai:bar -->
 <div class="fai-bar">
   <div class="fai-bar__inner">
-    <a class="fai-bar__dm" href="https://darkmatterlabs.org/"><img class="fai-bar__lockup" src="assets/brand/dm-logo-v1-white.svg" alt="Dark Matter Labs" width="102" height="20"><img class="fai-bar__stamp" src="assets/brand/dm-stamp-white.svg" alt="Dark Matter Labs" width="20" height="20"></a>
+    <a class="fai-bar__dm" href="https://darkmatterlabs.org/"><img class="fai-bar__lockup" src="{root}assets/brand/dm-logo-v1-white.svg" alt="Dark Matter Labs" width="102" height="20"><img class="fai-bar__stamp" src="{root}assets/brand/dm-stamp-white.svg" alt="Dark Matter Labs" width="20" height="20"></a>
     <span class="fai-bar__sep" aria-hidden="true"></span>
-    <a class="fai-bar__mission" href="index.html">Food as Infrastructure</a>{here}
+    <a class="fai-bar__mission" href="{root}index.html">Food as Infrastructure</a>{here}
     <a class="fai-bar__xco" href="{XCO_URL}" target="_blank" rel="noopener" title="Dark Matter Labs' Expanding Civilizational Optionality portfolio">xCO portfolio<span aria-hidden="true"> ↗</span></a>
     <div class="fai-bar__links" role="navigation" aria-label="Site">{link("index.html", "Portfolio")}{link("library.html", "Library")}</div>
   </div>
