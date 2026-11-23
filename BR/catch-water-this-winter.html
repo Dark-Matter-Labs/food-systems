@@ -6,56 +6,85 @@
 <meta name="robots" content="noindex, nofollow">
 <title>Catch water this winter (draft) — Food as Infrastructure</title>
 <style>
-/* Paper document in a single 68ch reading column. Link-only page in BR/, kept out of the library. */
-body{margin:0;background:var(--fai-paper);color:var(--fai-ink);font-size:17px;line-height:1.6}
-.wrap{max-width:1200px;margin:0 auto;padding-left:32px;padding-right:32px;padding-bottom:96px}
-@media (max-width:640px){.wrap{padding-left:16px;padding-right:16px;padding-bottom:56px}}
+/* After "Seeding Scotland's Natural Capital Market" (Dark Matter Labs, 2021): a mint cover band with the
+   isometric landscape, Work Sans set bold and dark green, light body text, mint blocks behind tree clusters.
+   Link-only page in BR/, kept out of the library. */
+:root{
+  --br-green:#13533A;   /* headings */
+  --br-text:#1E4636;    /* body */
+  --br-text-2:#4A6A5D;  /* secondary */
+  --br-mint:#BCDFD3;    /* cover and blocks, sampled from the document */
+  --br-mint-2:#E4F2EC;  /* boxes on white */
+  --br-tide:#1F6390;    /* sub-title blue */
+  --br-leaf:#00C27A;    /* tree green, fills only */
+  --br-rule:#CCE2D8;
+  --br-font:"Work Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+main.br{--fai-sans:var(--br-font);--fai-focus:var(--br-tide)}
+body{margin:0;background:#fff;color:var(--br-text)}
+main.br{font-size:18px;line-height:1.6;font-weight:400}
+.cover{background:var(--br-mint)}
+.cover__in,.wrap{max-width:1200px;margin:0 auto;padding-left:32px;padding-right:32px}
+@media (max-width:640px){.cover__in,.wrap{padding-left:16px;padding-right:16px}}
+.cover__in{padding-top:56px;padding-bottom:24px}
+.run{font-size:13px;font-weight:600;color:var(--br-text-2);margin:0 0 28px}
+.br h1{font-size:clamp(40px,6.4vw,80px);font-weight:700;line-height:1.05;color:var(--br-green);margin:0;max-width:14ch}
+.sub{font-size:clamp(24px,3vw,34px);font-weight:600;color:var(--br-tide);margin:18px 0 0;line-height:1.2}
+.date{font-size:15px;font-weight:600;color:var(--br-tide);margin:8px 0 0}
+.br .lede{font-size:clamp(19px,2vw,22px);font-weight:300;line-height:1.45;color:var(--br-text);max-width:42ch;margin:24px 0 0}
+.land{display:block;width:100%;max-width:1100px;height:auto;margin:16px 0 0 auto}
+@media (min-width:1000px){
+  .cover__in{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);column-gap:24px;padding-bottom:48px}
+  .cover__in>*{grid-column:1}
+  .cover__in .land{grid-column:2;grid-row:1 / span 6;align-self:end;margin:0 -16px 0 0;width:calc(100% + 16px)}
+}
 .col{max-width:68ch}
-.status-strip{padding-top:32px}
-.status-note{background:var(--fai-field);border-left:3px solid var(--fai-beet);padding:14px 18px;font-size:15px;line-height:1.5}
+.status-note{background:var(--br-mint-2);border-left:4px solid var(--br-green);padding:14px 18px;font-size:15px;line-height:1.5;margin:40px 0 0}
 .status-note p{margin:0}
-.hero{padding-block:40px 8px}
-.kicker{font-size:14px;color:var(--fai-ink-3);margin:0 0 12px}
-h1{font-size:clamp(40px,6vw,76px);font-weight:500;line-height:1.02;margin:0}
-h2{font-size:clamp(28px,3.4vw,40px);font-weight:500;line-height:1.1;margin:72px 0 0;padding-top:24px;border-top:1px solid var(--fai-rule)}
-h3{font-size:21px;font-weight:600;line-height:1.25;margin:32px 0 0}
-.lede{font-size:21px;line-height:1.45;color:var(--fai-ink-2);margin:20px 0 0}
-p,ul,ol{margin:14px 0} li{margin:6px 0}
-.wrap a{color:var(--fai-ink);text-decoration:underline;text-decoration-color:var(--fai-beet);text-decoration-thickness:1px;text-underline-offset:3px}
-.wrap a:hover{color:var(--fai-beet)}
-.small,.meta{font-size:14px;line-height:1.45;color:var(--fai-ink-3)}
-.note,.item,.ask,.sum{background:var(--fai-field);padding:18px 20px;margin:20px 0}
-.ask h3,.item h3{margin-top:0}
+.br h2{font-size:clamp(28px,3.6vw,42px);font-weight:700;line-height:1.12;color:var(--br-green);margin:80px 0 0}
+.br h3{font-size:21px;font-weight:700;line-height:1.25;color:var(--br-green);margin:32px 0 0}
+.br p,.br ul,.br ol{margin:14px 0} .br li{margin:6px 0}
+.br .col a{color:var(--br-green);font-weight:500;text-decoration:underline;text-decoration-color:var(--br-leaf);text-decoration-thickness:2px;text-underline-offset:3px}
+.br .col a:hover{color:var(--br-tide)}
+.small,.meta{font-size:14px;line-height:1.45;color:var(--br-text-2)}
+.note,.item,.ask,.sum{background:var(--br-mint-2);padding:20px 22px;margin:22px 0}
+.ask{background:var(--br-mint)}
 .note>:first-child,.ask>:first-child,.sum>:first-child,.item>:first-child{margin-top:0}
-.note>:last-child,.ask>:last-child,.sum>:last-child{margin-bottom:0}
+.note>:last-child,.ask>:last-child,.sum>:last-child,.item>:last-child{margin-bottom:0}
+.ask h3,.item h3{margin-top:0}
 .item p{margin:8px 0 0}
-.three{display:grid;gap:12px;margin:20px 0}
-.three .item{margin:0}
-.figs{display:grid;grid-template-columns:repeat(auto-fit,minmax(14rem,1fr));gap:24px;margin:28px 0}
-.fig{border-top:1px solid var(--fai-ink);padding-top:10px;min-width:0}
-.fig b{display:block;font-size:40px;font-weight:500;line-height:1.1;color:var(--fai-beet);font-variant-numeric:tabular-nums}
-.fig span{font-size:15px;color:var(--fai-ink-2)}
-.inf,.conf{display:inline-block;font-size:13px;line-height:1.4;padding:1px 9px;border:1px solid var(--fai-rule-strong);border-radius:999px;color:var(--fai-ink-2);white-space:nowrap;font-weight:400}
-.conf.c-h{border-color:var(--fai-ink);color:var(--fai-ink)}
-.conf.c-l{border-style:dashed}
-.tbl{overflow-x:auto;margin:20px 0;max-width:100%}
-table{border-collapse:collapse;width:100%;min-width:34rem;font-size:15px}
-th,td{text-align:left;vertical-align:top;padding:10px 12px;border-bottom:1px solid var(--fai-rule)}
-th{background:var(--fai-field);font-weight:600}
-td.num{text-align:right;white-space:nowrap}
+.three{display:grid;gap:12px;margin:22px 0}
+.three .item{margin:0;border-top:4px solid var(--br-leaf)}
+.figs{display:grid;grid-template-columns:repeat(auto-fit,minmax(14rem,1fr));gap:28px;margin:28px 0}
+.fig{min-width:0}
+.fig b{display:block;font-size:52px;font-weight:700;line-height:1.05;color:var(--br-green);font-variant-numeric:tabular-nums}
+.fig span{font-size:15px;color:var(--br-text-2);font-weight:400}
+.inf,.conf{display:inline-block;font-size:13px;line-height:1.4;padding:2px 10px;border-radius:999px;background:var(--br-mint);color:var(--br-green);white-space:nowrap;font-weight:600}
+.conf.c-m{background:var(--br-mint-2)}
+.conf.c-l{background:#fff;box-shadow:inset 0 0 0 1px var(--br-rule);color:var(--br-text-2)}
+.tbl{overflow-x:auto;margin:22px 0;max-width:100%}
+.br table{border-collapse:collapse;width:100%;min-width:34rem;font-size:15px}
+.br th,.br td{text-align:left;vertical-align:top;padding:10px 12px;border-bottom:1px solid var(--br-rule)}
+.br th{background:var(--br-mint);color:var(--br-green);font-weight:700}
+.br td.num{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
 .checks{list-style:none;padding:0;margin:16px 0}
-.checks li{margin:0;border-bottom:1px solid var(--fai-rule)}
-.checks label{display:grid;grid-template-columns:28px 1fr;gap:12px;padding:12px 0;cursor:pointer;align-items:start}
-.checks input{width:20px;height:20px;margin:3px 0 0;accent-color:var(--fai-beet)}
-.checks input:checked + span{color:var(--fai-ink-3)}
+.checks li{margin:0;border-bottom:1px solid var(--br-rule)}
+.checks label{display:grid;grid-template-columns:30px 1fr;gap:12px;padding:12px 0;cursor:pointer;align-items:start}
+.checks input{width:22px;height:22px;margin:3px 0 0;accent-color:var(--br-green)}
+.checks input:checked + span{color:var(--br-text-2)}
+.br strong{font-weight:700;color:var(--br-green)}
 .ask ul{padding-left:20px}
-.sum .eq{font-size:19px;font-weight:600}
-.stack{list-style:none;padding:0;margin:20px 0;display:grid;gap:14px}
-.stack li{display:grid;grid-template-columns:32px 1fr;gap:12px;margin:0}
-.stack .k{font-size:24px;font-weight:500;color:var(--fai-beet);line-height:1.2}
-.sources{font-size:14px;color:var(--fai-ink-2);padding-left:20px}
+.sum .eq{font-size:20px;font-weight:700;color:var(--br-green)}
+.stack{list-style:none;padding:0;margin:22px 0;display:grid;gap:16px}
+.stack li{display:grid;grid-template-columns:36px 1fr;gap:12px;margin:0}
+.stack .k{font-size:28px;font-weight:700;color:var(--br-leaf);line-height:1.1}
+.grove{position:relative;margin:88px 0 0;max-width:68ch;height:260px}
+.grove::before{content:"";position:absolute;right:8%;top:0;width:120px;height:150px;background:var(--br-mint)}
+.grove img{position:absolute;right:14%;top:28px;width:260px;max-width:60%;height:auto}
+.sources{font-size:14px;color:var(--br-text-2);padding-left:20px}
 .sources li{overflow-wrap:anywhere}
-.endnote{margin-top:56px;padding-top:16px;border-top:1px solid var(--fai-rule);font-size:14px;color:var(--fai-ink-3)}
+.endnote{margin-top:56px;padding-top:16px;border-top:1px solid var(--br-rule);font-size:14px;color:var(--br-text-2)}
+.wrap{padding-bottom:88px}
 </style>
 <!-- fai:head -->
 <meta name="description" content="What Tayside farmers can build this winter to store water without asking permission, and when they need to ask first.">
@@ -80,6 +109,7 @@ td.num{text-align:right;white-space:nowrap}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400..900;1,400..700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700&amp;display=swap">
 <link rel="stylesheet" href="../assets/fai/fai.css">
 <!-- /fai:head -->
 </head>
@@ -96,13 +126,17 @@ td.num{text-align:right;white-space:nowrap}
   </div>
 </div>
 <!-- /fai:bar -->
-<main class="wrap">
-<div class="status-strip col"><div class="status-note"><p>Draft for checking. Prepared by Dark Matter Labs with Bioregioning Tayside in November 2026. SEPA and the Farm Advisory Service should read it before it goes to farmers.</p></div></div>
-<header class="hero col">
-  <p class="kicker">For farmers and landowners in Perth and Kinross, Angus and Dundee</p>
-  <h1>Catch water this winter</h1>
+<main class="br">
+<section class="cover" aria-labelledby="page-title"><div class="cover__in">
+  <p class="run">Dark Matter Labs / Bioregioning Tayside</p>
+  <h1 id="page-title">Catch water this winter</h1>
+  <p class="sub">Information for farmers</p>
+  <p class="date">November 2026</p>
   <p class="lede">SEPA restricted farm water licences in Tayside in 2025 and again in 2026. The rain still comes in winter. This sheet sets out what you can build on your own land to hold some of it, without asking anyone. It also says when you do need to ask.</p>
-</header>
+  <img class="land" src="img/tayside-landscape.png" width="1650" height="985" alt="An illustrated Scottish landscape of hills, forest, farmland, a river, a pond, a town and the sea.">
+</div></section>
+<div class="wrap">
+<div class="col"><div class="status-note"><p>Draft for checking. Prepared by Dark Matter Labs with Bioregioning Tayside in November 2026. SEPA and the Farm Advisory Service should read it before it goes to farmers.</p></div></div>
 <div class="col">
 <h2>Three things you can do without permission</h2>
 <div class="three">
@@ -198,6 +232,7 @@ td.num{text-align:right;white-space:nowrap}
   <li><strong>Buried services</strong>: <a href="https://www.linesearchbeforeudig.co.uk/" target="_blank" rel="noopener">Linesearch beforeUdig ↗</a></li>
 </ul>
 
+<div class="grove" aria-hidden="true"><img src="img/tree-cluster.png" width="729" height="667" alt=""></div>
 <h2>What this is based on</h2>
 <p class="small">This is a plain summary of the rules as of November 2026. It is not legal advice. The rules changed on 1 November 2025, when SEPA moved water rules into new regulations (EASR). Some SEPA web pages still use the old wording. Three points are our reading of the law, not something SEPA has written down: that rain off a roof is not "taking water", that a pond fully below ground is not a reservoir, and that a large tank may need notice to the council.</p>
 <ol class="sources">
@@ -214,6 +249,7 @@ td.num{text-align:right;white-space:nowrap}
   <li>SEPA, Tayside abstraction restrictions, August 2026: <a href="https://www.sepa.org.uk/news/2026/sepa-extend-temporary-water-abstraction-restrictions-across-parts-of-tayside-and-scottish-borders/" target="_blank" rel="noopener">sepa.org.uk ↗</a></li>
 </ol>
 
+</div>
 </div>
 </main>
 <!-- fai:footer -->

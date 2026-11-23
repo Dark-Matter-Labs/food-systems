@@ -44,6 +44,12 @@ def up(page):
     return "../" * (len(Path(page["file"]).parts) - 1)
 
 
+def extra_font(page):
+    """An optional second Google Fonts stylesheet, for pages that borrow a partner document's look (e.g. BR/)."""
+    href = page.get("font_href")
+    return f'\n<link rel="stylesheet" href="{html.escape(href, quote=True)}">' if href else ""
+
+
 def page_url(page):
     return SITE_URL if page["file"] == "index.html" else SITE_URL + page["file"]
 
@@ -91,7 +97,7 @@ def head_block(page):
 <link rel="icon" href="{up(page)}assets/fai/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="{FONT_HREF}">
+<link rel="stylesheet" href="{FONT_HREF}">{extra_font(page)}
 <link rel="stylesheet" href="{up(page)}assets/fai/fai.css">
 <!-- /fai:head -->"""
 
